@@ -630,7 +630,13 @@
 		<time datetime="2024-06-14" class="text-body-secondary">2024年06月14日</time>
         
 	</div>
-	<p>[tableOfContents]</p>
+	<style>
+.copy-btn {
+    margin-left: 5px; /* 与代码块保持一定间隔 */
+    cursor: pointer; /* 鼠标悬停时显示为手形图标 */
+}
+</style>
+<p>[tableOfContents]</p>
 <p>[TOC]</p>
 <h1 id="一-画图测试1"><strong>一、画图测试1</strong><a class="td-heading-self-link" href="#%e4%b8%80-%e7%94%bb%e5%9b%be%e6%b5%8b%e8%af%951" aria-label="Heading self-link"></a></h1>
 <h2 id="1-1-声音按钮"><strong>1.1 声音按钮</strong><a class="td-heading-self-link" href="#1-1-%e5%a3%b0%e9%9f%b3%e6%8c%89%e9%92%ae" aria-label="Heading self-link"></a></h2>
@@ -659,7 +665,7 @@
 </code></pre></li>
 <li>
 <p>效果图</p>
-<p>![Untitled 11](/2024/June/1/Untitled 11.png)</p>
+<p>![Untitled 11.png](/2024/June/1/Untitled 11.png)</p>
 <p><img alt="ai-image(1).png" src="/2024/June/1/ai-image(1).png"></p>
 </li>
 </ul>
@@ -671,7 +677,7 @@
 </code></pre></li>
 <li>
 <p>效果图</p>
-<p><img alt="Untitled" src="/2024/June/1/Untitled.jpeg"></p>
+<p><img alt="Untitled.jpeg" src="/2024/June/1/Untitled.jpeg"></p>
 </li>
 </ul>
 <h3 id="1-1-4-谷歌">1.1.4 谷歌<a class="td-heading-self-link" href="#1-1-4-%e8%b0%b7%e6%ad%8c" aria-label="Heading self-link"></a></h3>
@@ -744,7 +750,12 @@ The icon should be easily recognizable and visually appealing, with a clear indi
 <li>
 <p>prompt提示词1</p>
 <pre tabindex="0"><code>A sleek, minimalist &#34;Album&#34; button, its icon instantly recognizable against a transparent background. This image is a digital graphic, meant to be clear and precise in its functionality. The button is elegantly designed, with a modern feel and a user-friendly interface. The detailing is impeccable, from the crisp lines to the subtle shading, showcasing the designer&#39;s attention to quality and precision. It exudes a sense of sophistication and professionalism, making it a standout feature of any interface.
-</code></pre></li>
+</code></pre><pre><code class="copyable-code">
+// 这里是您的代码
+A sleek, minimalist "Album" button, its icon instantly recognizable against a transparent background. This image is a digital graphic, meant to be clear and precise in its functionality. The button is elegantly designed, with a modern feel and a user-friendly interface. The detailing is impeccable, from the crisp lines to the subtle shading, showcasing the designer's attention to quality and precision. It exudes a sense of sophistication and professionalism, making it a standout feature of any interface.
+</code></pre>
+<p><button class="copy-btn" data-target="code1">复制</button></p>
+</li>
 <li>
 <p>效果图1</p>
 <p><img alt="baytto_e_High-detail_icon_design_black_background_album_entranc_dba2db32-0cfe-4ffc-b68a-6b55a90139d1.png" src="/2024/June/1/baytto_e_High-detail_icon_design_black_background_album_entranc_dba2db32-0cfe-4ffc-b68a-6b55a90139d1.png"></p>
@@ -784,11 +795,11 @@ Avoid any musical or maze-like elements. The icon should be modern, easily recog
 </code></pre></li>
 <li>
 <p>配置截图</p>
-<p>![Untitled 12](/2024/June/1/Untitled 12.png)</p>
+<p>![Untitled 12.png](/2024/June/1/Untitled 12.png)</p>
 </li>
 <li>
 <p>终端日志</p>
-<p>![Untitled 13](/2024/June/1/Untitled 13.png)</p>
+<p>![Untitled 13.png](/2024/June/1/Untitled 13.png)</p>
 </li>
 <li>
 <p>耗时</p>
@@ -841,6 +852,27 @@ Avoid any musical or maze-like elements. The icon should be modern, easily recog
 <p>效果图</p>
 <p><img alt="ComfyUI_00008_.png" src="/2024/June/1/ComfyUI_00008_.png"></p>
 <p><img alt="ComfyUI_00009_.png" src="/2024/June/1/ComfyUI_00009_.png"></p>
+<script>
+// JavaScript函数，为所有.copyable-code添加复制按钮
+document.querySelectorAll('.copyable-code').forEach(function(codeBlock) {
+    // 找到对应的按钮并设置点击事件
+    var btn = document.querySelector('.copy-btn[data-target="' + codeBlock.id + '"]');
+    if (btn) {
+        btn.addEventListener('click', function() {
+            copyCode(codeBlock.innerText);
+        });
+    }
+});
+
+// 复制文本到剪贴板的函数
+function copyCode(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('代码已复制到剪贴板');
+    }, function() {
+        alert('复制失败，请手动复制');
+    });
+}
+</script>
 </li>
 </ul>
 
