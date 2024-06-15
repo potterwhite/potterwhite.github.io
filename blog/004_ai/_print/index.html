@@ -222,6 +222,27 @@
     cursor: pointer; /* 鼠标悬停时显示为手形图标 */
 }
 </style>
+<script>
+// JavaScript函数，为所有.copyable-code添加复制按钮
+document.querySelectorAll('.copyable-code').forEach(function(codeBlock) {
+    // 找到对应的按钮并设置点击事件
+    var btn = document.querySelector('.copy-btn[data-target="' + codeBlock.id + '"]');
+    if (btn) {
+        btn.addEventListener('click', function() {
+            copyCode(codeBlock.innerText);
+        });
+    }
+});
+
+// 复制文本到剪贴板的函数
+function copyCode(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('代码已复制到剪贴板');
+    }, function() {
+        alert('复制失败，请手动复制');
+    });
+}
+</script>
 <p>[tableOfContents]</p>
 <p>[TOC]</p>
 <h1 id="一-画图测试1"><strong>一、画图测试1</strong><a class="td-heading-self-link" href="#%e4%b8%80-%e7%94%bb%e5%9b%be%e6%b5%8b%e8%af%951" aria-label="Heading self-link"></a></h1>
@@ -438,27 +459,6 @@ Avoid any musical or maze-like elements. The icon should be modern, easily recog
 <p>效果图</p>
 <p><img alt="ComfyUI_00008_.png" src="/2024/June/1/ComfyUI_00008_.png"></p>
 <p><img alt="ComfyUI_00009_.png" src="/2024/June/1/ComfyUI_00009_.png"></p>
-<script>
-// JavaScript函数，为所有.copyable-code添加复制按钮
-document.querySelectorAll('.copyable-code').forEach(function(codeBlock) {
-    // 找到对应的按钮并设置点击事件
-    var btn = document.querySelector('.copy-btn[data-target="' + codeBlock.id + '"]');
-    if (btn) {
-        btn.addEventListener('click', function() {
-            copyCode(codeBlock.innerText);
-        });
-    }
-});
-
-// 复制文本到剪贴板的函数
-function copyCode(text) {
-    navigator.clipboard.writeText(text).then(function() {
-        alert('代码已复制到剪贴板');
-    }, function() {
-        alert('复制失败，请手动复制');
-    });
-}
-</script>
 </li>
 </ul>
 
