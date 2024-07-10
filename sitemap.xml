@@ -2,14 +2,14 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <sitemap>
-    <loc>https://potterwhite.github.io/zh-cn/sitemap.xml</loc>
+    <loc>http://localhost:1313/zh-cn/sitemap.xml</loc>
     
-      <lastmod>2024-06-15T09:26:02+00:00</lastmod>
+      <lastmod>2024-07-10T00:00:00+00:00</lastmod>
     
   </sitemap>
   
   <sitemap>
-    <loc>https://potterwhite.github.io/en/sitemap.xml</loc>
+    <loc>http://localhost:1313/en/sitemap.xml</loc>
     
       <lastmod>2024-06-10T12:59:09+08:00</lastmod>
     
