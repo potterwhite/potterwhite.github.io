@@ -27,13 +27,13 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
     <meta property="article:published_time" content="2024-06-10T00:00:00+00:00">
-    <meta property="article:modified_time" content="2024-06-15T09:26:02+00:00">
+    <meta property="article:modified_time" content="2024-07-10T17:33:53+08:00">
 
   <meta itemprop="name" content="NewBie_Deploy_Docsy_Hugo">
   <meta itemprop="description" content="This is my NewBie_Deploy_Docsy_Hugo.">
   <meta itemprop="datePublished" content="2024-06-10T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-06-15T09:26:02+00:00">
-  <meta itemprop="wordCount" content="1">
+  <meta itemprop="dateModified" content="2024-07-10T17:33:53+08:00">
+  <meta itemprop="wordCount" content="41">
   <meta itemprop="keywords" content="Blog">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="NewBie_Deploy_Docsy_Hugo">
@@ -216,11 +216,23 @@
 
 </div>
 
-            
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
         </ul>
     </div>
   
@@ -247,8 +259,30 @@
 </div>
 
   </header>
-	<p>Docsy确实好用</p>
-
+	<details>
+    <summary>001. categories如何增加子类呢？</summary>
+<h4 id="例如-categories-blog-erp">例如：categories: [&quot;blog&quot;][&quot;ERP&quot;]<a class="td-heading-self-link" href="#%e4%be%8b%e5%a6%82-categories-blog-erp" aria-label="Heading self-link"></a></h4>
+<h5 id="错误提示">错误提示：<a class="td-heading-self-link" href="#%e9%94%99%e8%af%af%e6%8f%90%e7%a4%ba" aria-label="Heading self-link"></a></h5>
+<pre><code>    Error: error building site: process: readAndProcessContent: &quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key
+</code></pre>
+<h5 id="正确做法">正确做法：<a class="td-heading-self-link" href="#%e6%ad%a3%e7%a1%ae%e5%81%9a%e6%b3%95" aria-label="Heading self-link"></a></h5>
+<pre><code>    categories: 
+        - blog
+        - ERP
+        - ERPNext
+</code></pre>
+</details>
+<details>
+<summary>002. 如何制造缩进</summary>
+<h5 id="示例代码">示例代码：<a class="td-heading-self-link" href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" aria-label="Heading self-link"></a></h5>
+<pre><code>**&lt;details&gt;**
+    **&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;**
+    ...
+    所有的内容可以填在此处
+    ...
+**&lt;/details&gt;**
+</code></pre>
+</details>
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
   <li>
     <a class="btn btn-primary disabled"><span class="me-1">←</span>上一页</a>
@@ -259,7 +293,7 @@
 </ul>
 
 	<div class="td-page-meta__lastmod">
-  最后修改 2024年06月15日: <a href="https://github.com/google/docsy-example/commit/424045e9284e3656136bea399ddd78443b056616">write new md with some tricks like seperate lines like code block like header and so on... create paper of first experiencing with sd3 (424045e)</a>
+  最后修改 2024年07月10日: <a href="https://github.com/google/docsy-example/commit/71bac113661ee2fa601fd7cc069922e9f091297a">add two new md and add css in erpnext.md but still failed in layout/_default/baseof.html (71bac11)</a>
 </div>
 </div>
 

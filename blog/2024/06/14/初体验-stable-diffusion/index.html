@@ -33,7 +33,7 @@
   <meta itemprop="description" content="本地搭建stable diffusion全过程">
   <meta itemprop="datePublished" content="2024-06-14T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-06-14T00:00:00+00:00">
-  <meta itemprop="wordCount" content="883">
+  <meta itemprop="wordCount" content="879">
   <meta itemprop="keywords" content="Blog">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="初体验-stable diffusion">
@@ -56,13 +56,6 @@
       <li class="nav-item">
         <a class="nav-link active" href="/blog/"><span>博客文章</span></a>
       </li>
-      <li class="nav-item dropdown d-none d-lg-block">
-        <div class="dropdown">
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/en/">English</a></li>
-    </ul>
-</div></li>
       <li class="td-light-dark-menu nav-item dropdown">
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
   <symbol id="check2" viewBox="0 0 16 16">
@@ -139,14 +132,6 @@
     </button>
   </form>
   <nav class="td-sidebar-nav collapse" id="td-section-nav">
-    <div class="td-sidebar-nav__section nav-item dropdown d-block d-lg-none">
-      <div class="dropdown">
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/en/">English</a></li>
-    </ul>
-</div>
-    </div>
     <ul class="td-sidebar-nav__section pe-md-3 ul-0">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-li">
   <a href="/blog/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-blog"><span class="">博客文章</span></a>
@@ -154,26 +139,29 @@
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-001-theology-li">
   <a href="/blog/001_theology/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-001-theology"><span class="">001_Grp_Theology</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-06-10-roe-v-wade-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-roe-v-wade-li">
   <a href="/blog/2024/06/10/roe-v.-wade/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-roe-v-wade"><span class="">Roe v. Wade</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e-li">
   <a href="/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e"><span class="">关于堕胎</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-002-hugodocsy-li">
   <a href="/blog/002_hugodocsy/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-002-hugodocsy"><span class="">002_Grp_HugoDocsy</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-06-10-newbie-deploy-docsy-hugo-li">
-  <a href="/blog/2024/06/10/newbie_deploy_docsy_hugo/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-newbie-deploy-docsy-hugo"><span class="">NewBie_Deploy_Docsy_Hugo</span></a>
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-docsy-e4-b8-bb-e9-a2-98-e7-9a-84-e8-ae-be-e7-bd-ae-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-docsy-e4-b8-bb-e9-a2-98-e7-9a-84-e8-ae-be-e7-bd-ae-e6-8a-80-e5-b7-a7"><span class="">Docsy主题的设置技巧</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-003-linux-li">
-  <a href="/blog/003_linux/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-003-linux"><span class="">003_Grp_Linux</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-003-erp-li">
+  <a href="/blog/003_erp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-003-erp"><span class="">003_Grp_ERP</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-06-14-kernel-test-li">
-  <a href="/blog/2024/06/14/kernel_test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-kernel-test"><span class="">Kernel_test</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-06-10-kernel-analysis-li">
-  <a href="/blog/2024/06/10/kernel_analysis/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-kernel-analysis"><span class="">Kernel_Analysis</span></a>
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-003-erp-003-001-erpnext-li">
+  <a href="/blog/003_erp/003_001_erpnext/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-003-erp-003-001-erpnext"><span class="">003_001_Grp_ERPNext</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-10-e4-b8-8eerpnext-e7-9a-84-e5-88-9d-e6-ac-a1-e8-a7-81-e9-9d-a2-li">
+  <a href="/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-10-e4-b8-8eerpnext-e7-9a-84-e5-88-9d-e6-ac-a1-e8-a7-81-e9-9d-a2"><span class="">与ERPNext的初次见面</span></a>
+</li>
+  </ul>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-004-ai-li">
@@ -185,16 +173,20 @@
   <a href="/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-e9-80-89-e6-8b-a9-e6-96-87-e7-94-9f-e5-9b-be-e5-b7-a5-e5-85-b7-e4-b9-8b-e8-b7-af"><span class="">选择文生图工具之路</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-005-erp-li">
-  <a href="/blog/005_erp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-erp"><span class="">005_Grp_ERP</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-010-linux-li">
+  <a href="/blog/010_linux/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-010-linux"><span class="">010_Grp_Linux</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-005-erp-005-001-erpnext-li">
-  <a href="/blog/005_erp/005_001_erpnext/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-erp-005-001-erpnext"><span class="">005_001_Grp_ERPNext</span></a>
-  <ul class="ul-3 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-07-10-e4-b8-8eerpnext-e7-9a-84-e5-88-9d-e6-ac-a1-e8-a7-81-e9-9d-a2-li">
-  <a href="/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-10-e4-b8-8eerpnext-e7-9a-84-e5-88-9d-e6-ac-a1-e8-a7-81-e9-9d-a2"><span class="">与ERPNext的初次见面</span></a>
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-14-kernel-test-li">
+  <a href="/blog/2024/06/14/kernel_test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-kernel-test"><span class="">Kernel_test</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-kernel-analysis-li">
+  <a href="/blog/2024/06/10/kernel_analysis/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-kernel-analysis"><span class="">Kernel_Analysis</span></a>
 </li>
   </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-011-windows-li">
+  <a href="/blog/011_windows/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-011-windows"><span class="">011_Grp_Windows</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae-li">
+  <a href="/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae"><span class="">声卡项目</span></a>
 </li>
   </ul>
 </li>
@@ -249,7 +241,11 @@
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">9</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">1</span></a></li>
         </ul>
     </div>
   
@@ -305,10 +301,7 @@ function copyCode(text) {
 </script>
 <p>[tableOfContents]</p>
 <p>[TOC]</p>
-<h1 id="一-画图测试1"><strong>一、画图测试1</strong><a class="td-heading-self-link" href="#%e4%b8%80-%e7%94%bb%e5%9b%be%e6%b5%8b%e8%af%951" aria-label="Heading self-link"></a></h1>
-<h2 id="1-1-声音按钮"><strong>1.1 声音按钮</strong><a class="td-heading-self-link" href="#1-1-%e5%a3%b0%e9%9f%b3%e6%8c%89%e9%92%ae" aria-label="Heading self-link"></a></h2>
-<h3 id="1-1-1-阿里-通义万相作品">1.1.1 [阿里]通义万相作品<a class="td-heading-self-link" href="#1-1-1-%e9%98%bf%e9%87%8c-%e9%80%9a%e4%b9%89%e4%b8%87%e7%9b%b8%e4%bd%9c%e5%93%81" aria-label="Heading self-link"></a></h3>
-<ul>
+<h1 id="一-画图测试1"><strong>一、画图测试1</strong><a class="td-heading-self-link" href="#%e4%b8%80-%e7%94%bb%e5%9b%be%e6%b5%8b%e8%af%951" aria-label="Heading self-link"></a></h1><h2 id="1-1-声音按钮"><strong>1.1 声音按钮</strong><a class="td-heading-self-link" href="#1-1-%e5%a3%b0%e9%9f%b3%e6%8c%89%e9%92%ae" aria-label="Heading self-link"></a></h2><h3 id="1-1-1-阿里-通义万相作品">1.1.1 [阿里]通义万相作品<a class="td-heading-self-link" href="#1-1-1-%e9%98%bf%e9%87%8c-%e9%80%9a%e4%b9%89%e4%b8%87%e7%9b%b8%e4%bd%9c%e5%93%81" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>提示词</p>
 <pre tabindex="0"><code>赛博朋克，“声音”，按键，图标，背景透明。简约一点，能一眼就看出是这个按键按下去会有声音相关的设置出现，而不是画一个声音。
@@ -324,8 +317,7 @@ function copyCode(text) {
 <p><img alt="c3ae169c39204702a7245bc2afd301db_2.png" src="/2024/June/1/c3ae169c39204702a7245bc2afd301db_2.png"></p>
 </li>
 </ul>
-<h3 id="1-1-2-pixco">1.1.2  pixco<a class="td-heading-self-link" href="#1-1-2-pixco" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-1-2-pixco">1.1.2  pixco<a class="td-heading-self-link" href="#1-1-2-pixco" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>提示词</p>
 <pre tabindex="0"><code>赛博朋克，“声音”，按键，图标，背景透明。简约一点，能一眼就看出是这个按键按下去会有声音相关的设置出现，而不是画一个声音。
@@ -336,8 +328,7 @@ function copyCode(text) {
 <p><img alt="ai-image(1).png" src="/2024/June/1/ai-image(1).png"></p>
 </li>
 </ul>
-<h3 id="1-1-3-腾讯">1.1.3 腾讯<a class="td-heading-self-link" href="#1-1-3-%e8%85%be%e8%ae%af" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-1-3-腾讯">1.1.3 腾讯<a class="td-heading-self-link" href="#1-1-3-%e8%85%be%e8%ae%af" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>提示词</p>
 <pre tabindex="0"><code>赛博朋克，“声音”，按键，图标，背景透明。简约一点，能一眼就看出是这个按键按下去会有声音相关的设置出现，而不是画一个声音。
@@ -347,8 +338,7 @@ function copyCode(text) {
 <p><img alt="Untitled.jpeg" src="/2024/June/1/Untitled.jpeg"></p>
 </li>
 </ul>
-<h3 id="1-1-4-谷歌">1.1.4 谷歌<a class="td-heading-self-link" href="#1-1-4-%e8%b0%b7%e6%ad%8c" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-1-4-谷歌">1.1.4 谷歌<a class="td-heading-self-link" href="#1-1-4-%e8%b0%b7%e6%ad%8c" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>提示词</p>
 <pre tabindex="0"><code>赛博朋克，“声音”，按键，图标，背景透明。简约一点，能一眼就看出是这个按键按下去会有声音相关的设置出现，而不是画一个声音。
@@ -361,8 +351,7 @@ function copyCode(text) {
 <p><img alt="image_fx_generate_a_highdetail_11_ratio_transparen.jpg" src="/2024/June/1/image_fx_generate_a_highdetail_11_ratio_transparen.jpg"></p>
 </li>
 </ul>
-<h3 id="1-1-5-sd3">1.1.5 sd3<a class="td-heading-self-link" href="#1-1-5-sd3" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-1-5-sd3">1.1.5 sd3<a class="td-heading-self-link" href="#1-1-5-sd3" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>提示词</p>
 <pre tabindex="0"><code>Generate a high-detail, 1:1 ratio, transparent background UI icon for a sound-related function. The icon should be instantly recognizable as a sound button, and clicking it should reveal sound-related content. Use a primarily black color scheme for the icon, with bold and vibrant accents to represent sound waves or audio elements. Incorporate geometric shapes and clean lines to create a modern and sleek design. The icon should be detailed enough to be zoomed in without losing clarity. The design should convey the idea of sound, music, or audio playback.
@@ -387,9 +376,7 @@ The icon should be easily recognizable and visually appealing, with a clear indi
 </li>
 </ul>
 <hr>
-<h2 id="1-2-相册按钮"><strong>1.2 相册按钮</strong><a class="td-heading-self-link" href="#1-2-%e7%9b%b8%e5%86%8c%e6%8c%89%e9%92%ae" aria-label="Heading self-link"></a></h2>
-<h3 id="1-2-1-pixso">1.2.1 pixso<a class="td-heading-self-link" href="#1-2-1-pixso" aria-label="Heading self-link"></a></h3>
-<ul>
+<h2 id="1-2-相册按钮"><strong>1.2 相册按钮</strong><a class="td-heading-self-link" href="#1-2-%e7%9b%b8%e5%86%8c%e6%8c%89%e9%92%ae" aria-label="Heading self-link"></a></h2><h3 id="1-2-1-pixso">1.2.1 pixso<a class="td-heading-self-link" href="#1-2-1-pixso" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>prompt提示词</p>
 <pre tabindex="0"><code>“相册”按键，这个按键的图标，背景透明。简约一点，能一眼就看出是这个按键的功能。不要花里胡哨。
@@ -399,8 +386,7 @@ The icon should be easily recognizable and visually appealing, with a clear indi
 <p><img alt="ai-image.png" src="/2024/June/1/ai-image.png"></p>
 </li>
 </ul>
-<h3 id="1-2-2-leonardo-ai">1.2.2 Leonardo.ai<a class="td-heading-self-link" href="#1-2-2-leonardo-ai" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-2-2-leonardo-ai">1.2.2 Leonardo.ai<a class="td-heading-self-link" href="#1-2-2-leonardo-ai" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>prompt</p>
 <pre tabindex="0"><code>A sleek, minimalist &#34;Album&#34; button, its icon instantly recognizable against a transparent background. This image is a digital graphic, meant to be clear and precise in its functionality. The button is elegantly designed, with a modern feel and a user-friendly interface. The detailing is impeccable, from the crisp lines to the subtle shading, showcasing the designer&#39;s attention to quality and precision. It exudes a sense of sophistication and professionalism, making it a standout feature of any interface.
@@ -412,8 +398,7 @@ The icon should be easily recognizable and visually appealing, with a clear indi
 <p><img alt="Default_A_sleek_minimalist_Album_button_its_icon_instantly_rec_0.png" src="/2024/June/1/Default_A_sleek_minimalist_Album_button_its_icon_instantly_rec_0.png"></p>
 </li>
 </ul>
-<h3 id="1-2-3-mj">1.2.3 mj<a class="td-heading-self-link" href="#1-2-3-mj" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-2-3-mj">1.2.3 mj<a class="td-heading-self-link" href="#1-2-3-mj" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>prompt提示词1</p>
 <pre tabindex="0"><code>A sleek, minimalist &#34;Album&#34; button, its icon instantly recognizable against a transparent background. This image is a digital graphic, meant to be clear and precise in its functionality. The button is elegantly designed, with a modern feel and a user-friendly interface. The detailing is impeccable, from the crisp lines to the subtle shading, showcasing the designer&#39;s attention to quality and precision. It exudes a sense of sophistication and professionalism, making it a standout feature of any interface.
@@ -442,8 +427,7 @@ Avoid any musical or maze-like elements. The icon should be modern, easily recog
 <p><img alt="baytto_e_High-detail_icon_design_black_background_representing__e299ce21-e059-4de3-909a-2d5d2324bbd0.png" src="/2024/June/1/baytto_e_High-detail_icon_design_black_background_representing__e299ce21-e059-4de3-909a-2d5d2324bbd0.png"></p>
 </li>
 </ul>
-<h3 id="1-2-4-sd3">1.2.4 sd3<a class="td-heading-self-link" href="#1-2-4-sd3" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-2-4-sd3">1.2.4 sd3<a class="td-heading-self-link" href="#1-2-4-sd3" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>模型</p>
 <pre tabindex="0"><code>sd3_medium_incl_clips_t5xxlfp8.safetensors
@@ -476,9 +460,7 @@ Avoid any musical or maze-like elements. The icon should be modern, easily recog
 <p><img alt="ComfyUI_00007_.png" src="/2024/June/1/ComfyUI_00007_.png"></p>
 </li>
 </ul>
-<h2 id="1-3-推流信息配置按钮"><strong>1.3 推流信息配置按钮</strong><a class="td-heading-self-link" href="#1-3-%e6%8e%a8%e6%b5%81%e4%bf%a1%e6%81%af%e9%85%8d%e7%bd%ae%e6%8c%89%e9%92%ae" aria-label="Heading self-link"></a></h2>
-<h3 id="1-3-1-mj">1.3.1 mj<a class="td-heading-self-link" href="#1-3-1-mj" aria-label="Heading self-link"></a></h3>
-<ul>
+<h2 id="1-3-推流信息配置按钮"><strong>1.3 推流信息配置按钮</strong><a class="td-heading-self-link" href="#1-3-%e6%8e%a8%e6%b5%81%e4%bf%a1%e6%81%af%e9%85%8d%e7%bd%ae%e6%8c%89%e9%92%ae" aria-label="Heading self-link"></a></h2><h3 id="1-3-1-mj">1.3.1 mj<a class="td-heading-self-link" href="#1-3-1-mj" aria-label="Heading self-link"></a></h3><ul>
 <li>
 <p>提示词</p>
 <pre tabindex="0"><code>High-detail icon design, black background, representing a streaming settings configuration entrance. The icon should clearly indicate that pressing it will take the user to a streaming configuration settings menu. Include elements such as a streaming signal, a gear or settings symbol, and visual indicators of streaming options like frame rate, bitrate, streaming address, recording storage, and recording time settings. Ensure the icon is simple, clear, and not overly decorative. It should immediately convey the purpose of configuring streaming settings at a glance, with a focus on clarity and direct visual communication. Modern design style, high contrast to make it stand out on the black background, suitable for use as an application icon.
@@ -488,8 +470,7 @@ Avoid any musical or maze-like elements. The icon should be modern, easily recog
 <p><img alt="baytto_e_High-detail_icon_design_black_background_representing__199adc6a-564e-4f38-9b98-f620c50a76ec.png" src="/2024/June/1/baytto_e_High-detail_icon_design_black_background_representing__199adc6a-564e-4f38-9b98-f620c50a76ec.png"></p>
 </li>
 </ul>
-<h3 id="1-3-2-sd3">1.3.2 sd3<a class="td-heading-self-link" href="#1-3-2-sd3" aria-label="Heading self-link"></a></h3>
-<ul>
+<h3 id="1-3-2-sd3">1.3.2 sd3<a class="td-heading-self-link" href="#1-3-2-sd3" aria-label="Heading self-link"></a></h3><ul>
 <li>模型</li>
 </ul>
 <pre tabindex="0"><code>sd3_medium_incl_clips_t5xxlfp8.safetensors
