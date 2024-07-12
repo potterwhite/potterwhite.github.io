@@ -30,7 +30,7 @@
 
   <meta itemprop="name" content="002_Grp_HugoDocsy">
   <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
-  <meta itemprop="dateModified" content="2024-07-10T17:33:53+08:00">
+  <meta itemprop="dateModified" content="2024-07-11T09:41:43+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="002_Grp_HugoDocsy">
   <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
@@ -203,14 +203,14 @@
     <summary>001. categories如何增加子类呢？</summary>
 <h4 id="例如-categories-blog-erp">例如：categories: [&quot;blog&quot;][&quot;ERP&quot;]<a class="td-heading-self-link" href="#%e4%be%8b%e5%a6%82-categories-blog-erp" aria-label="Heading self-link"></a></h4><h5 id="错误提示">错误提示：<a class="td-heading-self-link" href="#%e9%94%99%e8%af%af%e6%8f%90%e7%a4%ba" aria-label="Heading self-link"></a></h5><pre><code>    Error: error building site: process: readAndProcessContent: &quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key
 </code></pre>
-<h5 id="正确做法">正确做法：<a class="td-heading-self-link" href="#%e6%ad%a3%e7%a1%ae%e5%81%9a%e6%b3%95" aria-label="Heading self-link"></a></h5><pre><code>    categories: 
+<h5 id="正确做法">正确做法：<a class="td-heading-self-link" href="#%e6%ad%a3%e7%a1%ae%e5%81%9a%e6%b3%95" aria-label="Heading self-link"></a></h5><pre><code>    categories:
         - blog
         - ERP
         - ERPNext
 </code></pre>
 </details>
 <details>
-<summary>002. 如何制造缩进</summary>
+<summary>002. 如何制造块缩进</summary>
 <h5 id="示例代码">示例代码：<a class="td-heading-self-link" href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" aria-label="Heading self-link"></a></h5><pre><code>&lt;details&gt;
     &lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;
     ...
@@ -255,6 +255,20 @@ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.mi
 还可以以svg、png形式在网页上直接预览
 这种方式极好</p>
 </details>
+<details>
+<summary>004. 如何设置颜色(背景色、粗体、斜体、下划线)</summary>
+<pre tabindex="0"><code>
+&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt;
+</code></pre></details>
+
 </div>
 
 

@@ -18,17 +18,19 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>Docsy主题的设置技巧 | 嵌入式系统 Enthusiast</title>
-<meta name="description" content="001. categories如何增加子类呢？例如：categories: [&amp;quot;blog&amp;quot;][&amp;quot;ERP&amp;quot;]错误提示： Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories: - blog- ERP- ERPNext002. 如何制造缩进示例代码：&amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;附注1：企业规模的标准是什么？&amp;lt;/summary&amp;gt;...所有的内容可以填在此处...&amp;lt;/details&amp;gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+<meta name="description" content="001. categories如何增加子类呢？例如：categories: [&amp;quot;blog&amp;quot;][&amp;quot;ERP&amp;quot;]错误提示： Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;附注1：企业规模的标准是什么？&amp;lt;/summary&amp;gt;...所有的内容可以填在此处...&amp;lt;/details&amp;gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
 &amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;流程图x&amp;lt;/summary&amp;gt;&amp;lt;pre class=&amp;quot;mermaid&amp;quot;&amp;gt;graph TDA[开始]......&amp;lt;/pre&amp;gt;&amp;lt;/details&amp;gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
 第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好">
+可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
+004. 如何设置颜色(背景色、粗体、斜体、下划线)&amp;lt;span style=&amp;#34;color: red;&amp;#34;&amp;gt;This is red color&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;background-color: gray;&amp;#34;&amp;gt;This is gray bg color&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;font-weight: bold;&amp;#34;&amp;gt;This is bold font&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;font-style: italic;&amp;#34;&amp;gt;This is italic font&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;text-decoration: underline;&amp;#34;&amp;gt;This is underline&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt; ">
 <meta property="og:url" content="http://localhost:1313/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/">
   <meta property="og:site_name" content="嵌入式系统 Enthusiast">
   <meta property="og:title" content="Docsy主题的设置技巧">
-  <meta property="og:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories: - blog- ERP- ERPNext002. 如何制造缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+  <meta property="og:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
 &lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
 第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好">
+可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
+004. 如何设置颜色(背景色、粗体、斜体、下划线)&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt; ">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
@@ -36,20 +38,22 @@
     <meta property="article:modified_time" content="2024-06-10T00:00:00+00:00">
 
   <meta itemprop="name" content="Docsy主题的设置技巧">
-  <meta itemprop="description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories: - blog- ERP- ERPNext002. 如何制造缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+  <meta itemprop="description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
 &lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
 第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好">
+可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
+004. 如何设置颜色(背景色、粗体、斜体、下划线)&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt; ">
   <meta itemprop="datePublished" content="2024-06-10T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-06-10T00:00:00+00:00">
-  <meta itemprop="wordCount" content="68">
+  <meta itemprop="wordCount" content="100">
   <meta itemprop="keywords" content="Blog,Docsy">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Docsy主题的设置技巧">
-  <meta name="twitter:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories: - blog- ERP- ERPNext002. 如何制造缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+  <meta name="twitter:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
 &lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
 第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好">
+可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
+004. 如何设置颜色(背景色、粗体、斜体、下划线)&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt; ">
 <link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -185,6 +189,18 @@
   <a href="/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-e9-80-89-e6-8b-a9-e6-96-87-e7-94-9f-e5-9b-be-e5-b7-a5-e5-85-b7-e4-b9-8b-e8-b7-af"><span class="">选择文生图工具之路</span></a>
 </li>
   </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-005-tools-li">
+  <a href="/blog/005_tools/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools"><span class="">005_Grp_Tools</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-005-tools-005-001-vscode-li">
+  <a href="/blog/005_tools/005_001_vscode/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools-005-001-vscode"><span class="">005_001_Grp_VSCode</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-12-vscode-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/07/12/vscode%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-12-vscode-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="">VSCode使用技巧</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-010-linux-li">
   <a href="/blog/010_linux/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-010-linux"><span class="">010_Grp_Linux</span></a>
   <ul class="ul-2 foldable">
@@ -238,10 +254,12 @@
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">9</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">10</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">1</span></a></li>
         </ul>
     </div>
@@ -274,14 +292,14 @@
     <summary>001. categories如何增加子类呢？</summary>
 <h4 id="例如-categories-blog-erp">例如：categories: [&quot;blog&quot;][&quot;ERP&quot;]<a class="td-heading-self-link" href="#%e4%be%8b%e5%a6%82-categories-blog-erp" aria-label="Heading self-link"></a></h4><h5 id="错误提示">错误提示：<a class="td-heading-self-link" href="#%e9%94%99%e8%af%af%e6%8f%90%e7%a4%ba" aria-label="Heading self-link"></a></h5><pre><code>    Error: error building site: process: readAndProcessContent: &quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key
 </code></pre>
-<h5 id="正确做法">正确做法：<a class="td-heading-self-link" href="#%e6%ad%a3%e7%a1%ae%e5%81%9a%e6%b3%95" aria-label="Heading self-link"></a></h5><pre><code>    categories: 
+<h5 id="正确做法">正确做法：<a class="td-heading-self-link" href="#%e6%ad%a3%e7%a1%ae%e5%81%9a%e6%b3%95" aria-label="Heading self-link"></a></h5><pre><code>    categories:
         - blog
         - ERP
         - ERPNext
 </code></pre>
 </details>
 <details>
-<summary>002. 如何制造缩进</summary>
+<summary>002. 如何制造块缩进</summary>
 <h5 id="示例代码">示例代码：<a class="td-heading-self-link" href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" aria-label="Heading self-link"></a></h5><pre><code>&lt;details&gt;
     &lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;
     ...
@@ -326,6 +344,20 @@ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.mi
 还可以以svg、png形式在网页上直接预览
 这种方式极好</p>
 </details>
+<details>
+<summary>004. 如何设置颜色(背景色、粗体、斜体、下划线)</summary>
+<pre tabindex="0"><code>
+&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;
+
+&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt;
+</code></pre></details>
+
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
   <li>
     <a class="btn btn-primary disabled"><span class="me-1">←</span>上一页</a>

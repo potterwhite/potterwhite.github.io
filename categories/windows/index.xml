@@ -13,7 +13,7 @@
       <link>http://localhost:1313/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/</link>
       <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/</guid>
-      <description>一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下&#xA;二、主要的函数&#xD;流程图1 _EnumerateAudioEndpoints 001. 创建com的对象 _Check_return_&#xD;WINOLEAPI&#xD;CoCreateInstance(&#xD;_In_ REFCLSID rclsid, _In_opt_ LPUNKNOWN pUnkOuter,&#xD;_In_ DWORD dwClsContext,&#xD;_In_ REFIID riid,&#xD;_COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID FAR * ppv&#xD;);&#xD;[in] rclsid&#xD;The CLSID associated with the data and code that will be used to create the object.&#xD;[in] pUnkOuter&#xD;If NULL, indicates that the object is not being created as part of an aggregate. If non-NULL, pointer to the aggregate object&#39;s IUnknown interface (the controlling IUnknown).</description>
+      <description>一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下&#xA;二、主要的函数&#xD;流程图1 _EnumerateAudioEndpoints&#xD;001. 创建com的对象 CoCreateInstance _Check_return_&#xD;WINOLEAPI&#xD;CoCreateInstance(&#xD;_In_ REFCLSID rclsid,&#xD;_In_opt_ LPUNKNOWN pUnkOuter,&#xD;_In_ DWORD dwClsContext,&#xD;_In_ REFIID riid,&#xD;_COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID FAR * ppv&#xD;); Refrence1. CoCreateInstance MS Learning 2. COM basic tutorial&#xA;IntroduceCoCreateInstance is used for instance of object creating in local machine. CoCreateInstanceEx is used for instance of object creating in REMOTE machine. CoGetClassObject is used for MULTI instances of object creating in local machine.</description>
     </item>
   </channel>
 </rss>
