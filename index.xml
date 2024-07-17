@@ -6,8 +6,22 @@
     <description>Recent content in 欢迎光临 on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 12 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown使用技巧</title>
+      <link>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>&#xD;001.how to collapse a piece of code&#xD;&amp;lt;details&amp;gt; &amp;lt;summary&amp;gt;The title you wanna fill in&amp;lt;/summary&amp;gt; the content you wanna put it in &amp;lt;details&amp;gt; 002. </description>
+    </item>
+    <item>
+      <title>Mermaid使用技巧</title>
+      <link>http://localhost:1313/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>001.how to set style patter(color etc.,) in mermaid&#xD;a. single node setting methodstyle d fill:#6a0035,stroke:#333,stroke-width:1px like the css code above, the &amp;quot;d&amp;quot; node will be set to the following pattern as u said&#xA;b. multi nodes setting method#anything above# c --&amp;gt; d{&amp;#34;1st_Key\nIMMDeviceEnumerator.\nEnumAudioEndpoints()&amp;#34;}:::css_keypoint d --&amp;gt; |&amp;#34;((HRESULT)(hr)) &amp;lt; 0&amp;#34;| e(Release Object of\nIMMDeviceEnumerator) e --&amp;gt; z[end] d --&amp;gt; |&amp;#34;((HRESULT)(hr)) &amp;gt;= 0&amp;#34;|f(Return \nIMMDeviceCollection) f --&amp;gt; g(&amp;#34;2nd_Key\nIMMDeviceCollection.\nGetCount()&amp;#34;):::css_keypoint classDef css_keypoint fill:#6a0035,stroke:#333,stroke-width:1px now node &amp;quot;d&amp;quot; &amp;amp; &amp;quot;g&amp;quot; will be set to special css pattern</description>
+    </item>
     <item>
       <title>VSCode使用技巧</title>
       <link>http://localhost:1313/blog/2024/07/12/vscode%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
@@ -20,7 +34,7 @@
       <link>http://localhost:1313/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/</link>
       <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/</guid>
-      <description>一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下&#xA;二、主要的函数&#xD;流程图1 _EnumerateAudioEndpoints&#xD;001. 创建com的对象 CoCreateInstance _Check_return_&#xD;WINOLEAPI&#xD;CoCreateInstance(&#xD;_In_ REFCLSID rclsid,&#xD;_In_opt_ LPUNKNOWN pUnkOuter,&#xD;_In_ DWORD dwClsContext,&#xD;_In_ REFIID riid,&#xD;_COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID FAR * ppv&#xD;); Refrence1. CoCreateInstance MS Learning 2. COM basic tutorial&#xA;IntroduceCoCreateInstance is used for instance of object creating in local machine. CoCreateInstanceEx is used for instance of object creating in REMOTE machine. CoGetClassObject is used for MULTI instances of object creating in local machine.</description>
+      <description>一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下&#xA;二、主要的函数&#xD;流程图1 _EnumerateAudioEndpoints&#xD;this is the first operation of our process A. and it start with CoCreateInstance() to create object of IMMDeviceEnumerator B. then if success, use IMMDeviceEnumerator.EnumAudioEndpoint() to enumerate all endpoints(actually include all input &amp;amp; output devices, but API can choose i or o or both devices) in this machine. C. if there exist endpoint, to check the number of endpoints with IMMDeviceCollection.GetCount(). D. use for loop to enum every endpoint, retrieve its data with IMMDeviceCollection.</description>
     </item>
     <item>
       <title>与ERPNext的初次见面</title>

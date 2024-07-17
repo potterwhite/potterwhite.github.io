@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>005_003_Grp_Markdown on 嵌入式系统 Enthusiast</title>
+    <link>http://localhost:1313/blog/005_tools/005_003_markdown/</link>
+    <description>Recent content in 005_003_Grp_Markdown on 嵌入式系统 Enthusiast</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 17 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/005_tools/005_003_markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown使用技巧</title>
+      <link>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>&#xD;001.how to collapse a piece of code&#xD;&amp;lt;details&amp;gt; &amp;lt;summary&amp;gt;The title you wanna fill in&amp;lt;/summary&amp;gt; the content you wanna put it in &amp;lt;details&amp;gt; 002. </description>
+    </item>
+  </channel>
+</rss>
