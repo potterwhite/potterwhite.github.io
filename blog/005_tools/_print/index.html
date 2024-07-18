@@ -184,6 +184,68 @@
     </ul>
     
   
+    
+    
+	
+
+    <li><a href="#pg-13b61fc80e0e1f82565712fb4d68732a">005_002_Grp_Mermaid</a></li>
+
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-591916c0250e708137178f5f6ab4e225">Mermaid使用技巧</a></li>
+
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-105e49fe3e617dd43df432c820b4c853">005_003_Grp_Markdown</a></li>
+
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-647c6c0cb1d84553bc784d7939287457">Markdown使用技巧</a></li>
+
+
+
+    
+  
+
+    </ul>
+    
+  
 
     </ul>
 
@@ -254,6 +316,206 @@
         
 	</div>
 	<h5 id="001">001.<a class="td-heading-self-link" href="#001" aria-label="Heading self-link"></a></h5>
+</div>
+
+
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-13b61fc80e0e1f82565712fb4d68732a">005_002_Grp_Mermaid</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-17" class="text-body-secondary">2024年07月17日</time>
+        
+	</div>
+	
+</div>
+
+
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-591916c0250e708137178f5f6ab4e225">Mermaid使用技巧</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-17" class="text-body-secondary">2024年07月17日</time>
+        
+	</div>
+	<details>
+<summary>001.how to set style patter(color etc.,) in mermaid</summary>
+<h6 id="a-single-node-setting-method"><strong>a. single node setting method</strong><a class="td-heading-self-link" href="#a-single-node-setting-method" aria-label="Heading self-link"></a></h6><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">style</span> <span style="color:#008000;font-weight:bold">d</span> <span style="color:#008000;font-weight:bold">fill</span><span style="color:#666">:</span>#<span style="color:#00f;font-weight:bold">6a0035</span><span style="color:#666">,</span><span style="color:#008000;font-weight:bold">stroke</span><span style="color:#666">:</span>#<span style="color:#00f;font-weight:bold">333</span><span style="color:#666">,</span><span style="color:#008000;font-weight:bold">stroke-width</span>:<span style="color:#a2f">1px</span>
+</span></span></code></pre></div><p>  like the css code above, the &quot;d&quot; node will be set to the following pattern as u said</p>
+<h6 id="b-multi-nodes-setting-method"><strong>b. multi nodes setting method</strong><a class="td-heading-self-link" href="#b-multi-nodes-setting-method" aria-label="Heading self-link"></a></h6><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>#<span style="color:#00f;font-weight:bold">anything</span> <span style="color:#008000;font-weight:bold">above</span><span style="">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">c</span> <span style="color:#008000;font-weight:bold">--</span><span style="color:#666">&gt;</span> <span style="color:#008000;font-weight:bold">d</span>{<span style="">&#34;1st_Key\nIMMDeviceEnumerator.\nEnumAudioEndpoints()&#34;</span>}<span style="color:#666">:</span>::<span style="color:#a2f">css_keypoint</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">d</span> <span style="color:#008000;font-weight:bold">--</span><span style="color:#666">&gt;</span> <span style="color:#666">|</span><span style="color:#b44">&#34;((HRESULT)(hr)) &lt; 0&#34;</span><span style="color:#666">|</span> <span style="color:#008000;font-weight:bold">e</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">Release</span> <span style="color:#008000;font-weight:bold">Object</span> <span style="color:#008000;font-weight:bold">of</span><span style="">\</span><span style="color:#008000;font-weight:bold">nIMMDeviceEnumerator</span><span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">e</span> <span style="color:#008000;font-weight:bold">--</span><span style="color:#666">&gt;</span> <span style="color:#008000;font-weight:bold">z</span><span style="color:#666">[</span><span style="color:#008000;font-weight:bold">end</span><span style="color:#666">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">d</span> <span style="color:#008000;font-weight:bold">--</span><span style="color:#666">&gt;</span> <span style="color:#666">|</span><span style="color:#b44">&#34;((HRESULT)(hr)) &gt;= 0&#34;</span><span style="color:#666">|</span><span style="color:#008000;font-weight:bold">f</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">Return</span> <span style="">\</span><span style="color:#008000;font-weight:bold">nIMMDeviceCollection</span><span style="color:#666">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#008000;font-weight:bold">f</span> <span style="color:#008000;font-weight:bold">--</span><span style="color:#666">&gt;</span> <span style="color:#008000;font-weight:bold">g</span><span style="color:#666">(</span><span style="color:#b44">&#34;2nd_Key\nIMMDeviceCollection.\nGetCount()&#34;</span><span style="color:#666">):</span>::<span style="color:#a2f">css_keypoint</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">classDef</span> <span style="color:#008000;font-weight:bold">css_keypoint</span> <span style="color:#008000;font-weight:bold">fill</span><span style="color:#666">:</span>#<span style="color:#00f;font-weight:bold">6a0035</span><span style="color:#666">,</span><span style="color:#008000;font-weight:bold">stroke</span><span style="color:#666">:</span>#<span style="color:#00f;font-weight:bold">333</span><span style="color:#666">,</span><span style="color:#008000;font-weight:bold">stroke-width</span>:<span style="color:#a2f">1px</span>
+</span></span></code></pre></div><p>  now node &quot;d&quot; &amp; &quot;g&quot; will be set to special css pattern</p>
+</details>
+<!-- ##################################################### -->
+<details>
+<summary>002. summary of all kinds of shapes in mermaid</summary>
+<h5 id="a-方形-square"><strong>a. 方形（Square）</strong><a class="td-heading-self-link" href="#a-%e6%96%b9%e5%bd%a2-square" aria-label="Heading self-link"></a></h5><p>Represents ordinary nodes or process steps.</br>
+Denoted by &quot;[]&quot;.</br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>A[Ordinary node or process]
+</span></span></code></pre></div><h5 id="b-圆形-round"><strong>b. 圆形（Round）</strong><a class="td-heading-self-link" href="#b-%e5%9c%86%e5%bd%a2-round" aria-label="Heading self-link"></a></h5><p>Represents start or end points.</br>
+Denoted by &quot;()&quot; .</br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>A((Start or end))
+</span></span></code></pre></div><h5 id="c-菱形-diamond"><strong>c. 菱形（Diamond）</strong><a class="td-heading-self-link" href="#c-%e8%8f%b1%e5%bd%a2-diamond" aria-label="Heading self-link"></a></h5><p>Represents decision points or conditions.</br>
+Denoted by &quot;{}&quot;.</br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>A{Decision or condition}
+</span></span></code></pre></div><h5 id="d-流程-flowchart"><strong>d. 流程（Flowchart）</strong><a class="td-heading-self-link" href="#d-%e6%b5%81%e7%a8%8b-flowchart" aria-label="Heading self-link"></a></h5><p>Represents general flowchart nodes with specific shapes.</br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>A&gt;Flowchart node]
+</span></span></code></pre></div><h5 id="e-矩形-rectangle"><strong>e. 矩形（Rectangle）</strong><a class="td-heading-self-link" href="#e-%e7%9f%a9%e5%bd%a2-rectangle" aria-label="Heading self-link"></a></h5><p>Represents emphasized nodes or specific operation steps.</br>
+Denoted by &quot;()&quot; .</br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>A(Rectangle node)
+</span></span></code></pre></div></details>
+<!-- ##################################################### -->
+<details>
+<summary>003.how to show parentheses in mermaid</summary>
+<p>use <code>quotes</code> to embrace the parentheses</p>
+<pre tabindex="0"><code>A0((start)) --&gt; A{&#34;CoCreateInstance()&#34;\nCreate COM Object}
+</code></pre></details>
+<!-- ##################################################### -->
+<details>
+<summary>004. </summary>
+</details>
+<!-- ##################################################### -->
+<details>
+<summary>005.</summary>
+</details>
+</div>
+
+
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-105e49fe3e617dd43df432c820b4c853">005_003_Grp_Markdown</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-17" class="text-body-secondary">2024年07月17日</time>
+        
+	</div>
+	
+</div>
+
+
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-647c6c0cb1d84553bc784d7939287457">Markdown使用技巧</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-17" class="text-body-secondary">2024年07月17日</time>
+        
+	</div>
+	<details>
+<summary>001.how to collapse a piece of code</summary>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#008000;font-weight:bold">details</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#008000;font-weight:bold">summary</span>&gt;The title you wanna fill in&lt;/<span style="color:#008000;font-weight:bold">summary</span>&gt;
+</span></span><span style="display:flex;"><span>  the content you wanna put it in
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#008000;font-weight:bold">details</span>&gt;
+</span></span></code></pre></div></details>
+<!-- ##################################################### -->
+<details>
+<summary>002. how to show svg (legally and fix method)</summary>
+<h5 id="normal-way">normal way<a class="td-heading-self-link" href="#normal-way" aria-label="Heading self-link"></a></h5><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>![<span style="color:#008000;font-weight:bold">_EnumerateAudioEndpoints</span>](<span style="color:#b44">/2024/July/17/flowchart_of_EnumerateEndpoint.svg</span>)
+</span></span></code></pre></div><h5 id="abnormal-way">abnormal way<a class="td-heading-self-link" href="#abnormal-way" aria-label="Heading self-link"></a></h5><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#008000;font-weight:bold">iframe</span> <span style="color:#b44">src</span><span style="color:#666">=</span><span style="color:#b44">&#34;/2024/July/17/flow_no_zoom.svg&#34;</span> <span style="color:#b44">width</span><span style="color:#666">=</span><span style="color:#b44">&#34;900&#34;</span> <span style="color:#b44">height</span><span style="color:#666">=</span><span style="color:#b44">&#34;2000&#34;</span> <span style="color:#b44">style</span><span style="color:#666">=</span><span style="color:#b44">&#34;border:none; overflow:scroll; background: #333333;&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#008000;font-weight:bold">iframe</span>&gt;
+</span></span></code></pre></div><p>now this method is not very good because when we scroll or zoom in and out the page, the svg shows not sync with the mother page.</p>
+</details>
+<!-- ##################################################### -->
+<details>
+<summary>003. </summary>
+</details>
+<!-- ##################################################### -->
+<details>
+<summary>004. </summary>
+</details>
 </div>
 
 

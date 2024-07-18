@@ -13,7 +13,7 @@
       <link>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
-      <description>&#xD;001.how to collapse a piece of code&#xD;&amp;lt;details&amp;gt; &amp;lt;summary&amp;gt;The title you wanna fill in&amp;lt;/summary&amp;gt; the content you wanna put it in &amp;lt;details&amp;gt; 002. </description>
+      <description>001.how to collapse a piece of code&#xD;&amp;lt;details&amp;gt; &amp;lt;summary&amp;gt;The title you wanna fill in&amp;lt;/summary&amp;gt; the content you wanna put it in &amp;lt;details&amp;gt; 002. how to show svg (legally and fix method)&#xD;normal way![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) abnormal way&amp;lt;iframe src=&amp;#34;/2024/July/17/flow_no_zoom.svg&amp;#34; width=&amp;#34;900&amp;#34; height=&amp;#34;2000&amp;#34; style=&amp;#34;border:none; overflow:scroll; background: #333333;&amp;#34;&amp;gt; &amp;lt;/iframe&amp;gt; now this method is not very good because when we scroll or zoom in and out the page, the svg shows not sync with the mother page.</description>
     </item>
   </channel>
 </rss>

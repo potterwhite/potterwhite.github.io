@@ -6,8 +6,22 @@
     <description>Recent content in Tools on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 12 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown使用技巧</title>
+      <link>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>001.how to collapse a piece of code&#xD;&amp;lt;details&amp;gt; &amp;lt;summary&amp;gt;The title you wanna fill in&amp;lt;/summary&amp;gt; the content you wanna put it in &amp;lt;details&amp;gt; 002. how to show svg (legally and fix method)&#xD;normal way![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) abnormal way&amp;lt;iframe src=&amp;#34;/2024/July/17/flow_no_zoom.svg&amp;#34; width=&amp;#34;900&amp;#34; height=&amp;#34;2000&amp;#34; style=&amp;#34;border:none; overflow:scroll; background: #333333;&amp;#34;&amp;gt; &amp;lt;/iframe&amp;gt; now this method is not very good because when we scroll or zoom in and out the page, the svg shows not sync with the mother page.</description>
+    </item>
+    <item>
+      <title>Mermaid使用技巧</title>
+      <link>http://localhost:1313/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>001.how to set style patter(color etc.,) in mermaid&#xD;a. single node setting methodstyle d fill:#6a0035,stroke:#333,stroke-width:1px like the css code above, the &amp;quot;d&amp;quot; node will be set to the following pattern as u said&#xA;b. multi nodes setting method#anything above# c --&amp;gt; d{&amp;#34;1st_Key\nIMMDeviceEnumerator.\nEnumAudioEndpoints()&amp;#34;}:::css_keypoint d --&amp;gt; |&amp;#34;((HRESULT)(hr)) &amp;lt; 0&amp;#34;| e(Release Object of\nIMMDeviceEnumerator) e --&amp;gt; z[end] d --&amp;gt; |&amp;#34;((HRESULT)(hr)) &amp;gt;= 0&amp;#34;|f(Return \nIMMDeviceCollection) f --&amp;gt; g(&amp;#34;2nd_Key\nIMMDeviceCollection.\nGetCount()&amp;#34;):::css_keypoint classDef css_keypoint fill:#6a0035,stroke:#333,stroke-width:1px now node &amp;quot;d&amp;quot; &amp;amp; &amp;quot;g&amp;quot; will be set to special css pattern</description>
+    </item>
     <item>
       <title>VSCode使用技巧</title>
       <link>http://localhost:1313/blog/2024/07/12/vscode%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>

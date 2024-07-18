@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CMake on 嵌入式系统 Enthusiast</title>
+    <link>http://localhost:1313/categories/cmake/</link>
+    <description>Recent content in CMake on 嵌入式系统 Enthusiast</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/cmake/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CMake Key Points in Qt6</title>
+      <link>http://localhost:1313/blog/2024/07/18/cmake-key-points-in-qt6/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/18/cmake-key-points-in-qt6/</guid>
+      <description>001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)&#xD;find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usages&#xD;find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：&#xA;这行代码试图找到名为 Qt6 或 Qt5 的 Qt 版本，并且要求找到其中的 Core 组件。 如果系统上安装了 Qt6，这行代码会找到 Qt6；如果没有找到 Qt6，会尝试找到 Qt5。&#xA;find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：&#xA;这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。</description>
+    </item>
+  </channel>
+</rss>

@@ -6,19 +6,54 @@
     <description>Recent content in Categories on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 12 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog</title>
       <link>http://localhost:1313/categories/blog/</link>
-      <pubDate>Fri, 12 Jul 2024 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/blog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docsy</title>
+      <link>http://localhost:1313/categories/docsy/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/docsy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HTML</title>
+      <link>http://localhost:1313/categories/html/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/html/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web Development</title>
+      <link>http://localhost:1313/categories/web-development/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/web-development/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Markdown</title>
+      <link>http://localhost:1313/categories/markdown/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/markdown/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mermaid</title>
+      <link>http://localhost:1313/categories/mermaid/</link>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/mermaid/</guid>
       <description></description>
     </item>
     <item>
       <title>Tools</title>
       <link>http://localhost:1313/categories/tools/</link>
-      <pubDate>Fri, 12 Jul 2024 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/tools/</guid>
       <description></description>
     </item>
@@ -37,6 +72,20 @@
       <description></description>
     </item>
     <item>
+      <title>DevOps</title>
+      <link>http://localhost:1313/categories/devops/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/devops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker</title>
+      <link>http://localhost:1313/categories/docker/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/docker/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>ERP</title>
       <link>http://localhost:1313/categories/erp/</link>
       <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
@@ -51,10 +100,45 @@
       <description></description>
     </item>
     <item>
-      <title>Docsy</title>
-      <link>http://localhost:1313/categories/docsy/</link>
-      <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/docsy/</guid>
+      <title>H</title>
+      <link>http://localhost:1313/categories/h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/h/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>W</title>
+      <link>http://localhost:1313/categories/w/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/w/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web</title>
+      <link>http://localhost:1313/categories/web/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/web/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web De</title>
+      <link>http://localhost:1313/categories/web-de/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/web-de/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web Deve</title>
+      <link>http://localhost:1313/categories/web-deve/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/web-deve/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Web Develop</title>
+      <link>http://localhost:1313/categories/web-develop/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/web-develop/</guid>
       <description></description>
     </item>
   </channel>

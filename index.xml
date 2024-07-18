@@ -6,14 +6,28 @@
     <description>Recent content in 欢迎光临 on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 17 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docsy`s Interesting Tricks</title>
+      <link>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</guid>
+      <description>001. if date is in the future, this markdown file will not be shown right now --- title: &amp;#34;Docker使用&amp;#34; date: 2024-07-19 categories: - blog - DevOps - Docker noindex: true --- and today is 2024-07-18, so that no blog will be shown within this section.</description>
+    </item>
+    <item>
+      <title>html tricks</title>
+      <link>http://localhost:1313/blog/2024/07/18/html-tricks/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/18/html-tricks/</guid>
+      <description>001. what is the unit of &#34;em&#34;?&#xD;em does not have its full-name. it standed for the width of alphabet &amp;quot;M&amp;quot; now it always stands for the unit of with of font.</description>
+    </item>
     <item>
       <title>Markdown使用技巧</title>
       <link>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
-      <description>&#xD;001.how to collapse a piece of code&#xD;&amp;lt;details&amp;gt; &amp;lt;summary&amp;gt;The title you wanna fill in&amp;lt;/summary&amp;gt; the content you wanna put it in &amp;lt;details&amp;gt; 002. </description>
+      <description>001.how to collapse a piece of code&#xD;&amp;lt;details&amp;gt; &amp;lt;summary&amp;gt;The title you wanna fill in&amp;lt;/summary&amp;gt; the content you wanna put it in &amp;lt;details&amp;gt; 002. how to show svg (legally and fix method)&#xD;normal way![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) abnormal way&amp;lt;iframe src=&amp;#34;/2024/July/17/flow_no_zoom.svg&amp;#34; width=&amp;#34;900&amp;#34; height=&amp;#34;2000&amp;#34; style=&amp;#34;border:none; overflow:scroll; background: #333333;&amp;#34;&amp;gt; &amp;lt;/iframe&amp;gt; now this method is not very good because when we scroll or zoom in and out the page, the svg shows not sync with the mother page.</description>
     </item>
     <item>
       <title>Mermaid使用技巧</title>
@@ -37,11 +51,25 @@
       <description>一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下&#xA;二、主要的函数&#xD;流程图1 _EnumerateAudioEndpoints&#xD;this is the first operation of our process A. and it start with CoCreateInstance() to create object of IMMDeviceEnumerator B. then if success, use IMMDeviceEnumerator.EnumAudioEndpoint() to enumerate all endpoints(actually include all input &amp;amp; output devices, but API can choose i or o or both devices) in this machine. C. if there exist endpoint, to check the number of endpoints with IMMDeviceCollection.GetCount(). D. use for loop to enum every endpoint, retrieve its data with IMMDeviceCollection.</description>
     </item>
     <item>
+      <title>Docker使用</title>
+      <link>http://localhost:1313/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</guid>
+      <description> </description>
+    </item>
+    <item>
       <title>与ERPNext的初次见面</title>
       <link>http://localhost:1313/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/</link>
       <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/</guid>
       <description>一、最后的结论ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。 但是不应该有但是了，因为人家免费，还想怎么样。&#xA;二、经过我负责研发部的项目管理(3月11日）至今已经17周了。&#xA;2.1 痛点a. 文档的格式各种各样每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。&#xA;b. 老板对于文档没有办法呈现时间进度c. 对于员工每周的工作周报没有办法在开会时看见三、优缺点3.1 优点a. frappe-forum 非常活跃。半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。&#xA;b. 轻度使用，性能稳定c. 结合website，可以实现企业的官方网站融合估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。 它里面给了很多框架。&#xA;d. 可以通过邮件与外部直接打通可以发送成功，但是耗时2~3分钟 gmail可以收到 qqmail可以收到 3.2 缺点a. 中文汉化得不完整有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。 在UOM（unity of measure）中，所有的测量单位全都是英文。 例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）&#xA;附注1：企业规模的标准是什么？&#xD;企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：&#xA;中国的企业规模标准在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：&#xA;工业企业 微型企业：从业人员少于20人，营业收入少于300万元。 小型企业：从业人员20-300人，营业收入300万-2000万元。 中型企业：从业人员300-1000人，营业收入2000万-4亿元。 大型企业：从业人员超过1000人，营业收入超过4亿元。 建筑业 微型企业：从业人员少于50人，营业收入少于300万元。 小型企业：从业人员50-300人，营业收入300万-3000万元。 中型企业：从业人员300-3000人，营业收入3000万-2亿元。 大型企业：从业人员超过3000人，营业收入超过2亿元。 国际标准国际上，企业规模的划分也有不同的标准。例如：&#xA;欧盟标准欧盟对中小企业的定义主要依据《中小企业定义指南》：&#xA;微型企业：员工少于10人，年营业额或资产总额不超过200万欧元。 小型企业：员工少于50人，年营业额或资产总额不超过1000万欧元。 中型企业：员工少于250人，年营业额不超过5000万欧元或资产总额不超过4300万欧元。 美国标准美国小企业管理局（SBA）根据《小企业法》制定了中小企业的定义标准，通常依据行业、员工数量或年营业额。以下是几个例子：&#xA;制造业和矿业：员工少于500人。 批发业：员工少于100人。 零售业和服务业：年营业额不超过750万美元（根据行业不同而有所不同）。 总结不同国家和组织根据自身经济结构和实际情况制定了不同的企业规模标准。通常，政府机构和统计部门会根据企业的员工数量、营业收入、资产规模等多个指标综合考量，并制定相应的划分标准。&#xA;对于中国的具体标准，可以参考国家统计局发布的《中小企业划型标准规定》。国际上，欧盟和美国也有各自的标准，具体情况会因行业和地区而异。</description>
+    </item>
+    <item>
+      <title>Kernel_test</title>
+      <link>http://localhost:1313/blog/2024/06/14/kernel_test/</link>
+      <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/06/14/kernel_test/</guid>
+      <description>nice</description>
     </item>
     <item>
       <title>Kernel_test</title>
@@ -69,7 +97,7 @@
       <link>http://localhost:1313/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</guid>
-      <description>&#xD;001. categories如何增加子类呢？&#xD;例如：categories: [&amp;quot;blog&amp;quot;][&amp;quot;ERP&amp;quot;]错误提示： Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key&#xD;正确做法： categories:&#xD;- blog&#xD;- ERP&#xD;- ERPNext&#xD;002. 如何制造块缩进&#xD;示例代码：&amp;lt;details&amp;gt;&#xD;&amp;lt;summary&amp;gt;附注1：企业规模的标准是什么？&amp;lt;/summary&amp;gt;&#xD;...&#xD;所有的内容可以填在此处&#xD;...&#xD;&amp;lt;/details&amp;gt;&#xD;003. 如何嵌入Merimaid流程图&#xD;第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：&#xA;&amp;lt;details&amp;gt;&#xD;&amp;lt;summary&amp;gt;流程图x&amp;lt;/summary&amp;gt;&#xD;&amp;lt;pre class=&amp;quot;mermaid&amp;quot;&amp;gt;&#xD;graph TD&#xD;A[开始]&#xD;...&#xD;...&#xD;&amp;lt;/pre&amp;gt;&#xD;&amp;lt;/details&amp;gt;&#xD;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行&#xA;第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor&#xA;可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好&#xA;004. 如何设置颜色(背景色、粗体、斜体、下划线)&#xD;&amp;lt;span style=&amp;#34;color: red;&amp;#34;&amp;gt;This is red color&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&#xD;&amp;lt;span style=&amp;#34;background-color: gray;&amp;#34;&amp;gt;This is gray bg color&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&#xD;&amp;lt;span style=&amp;#34;font-weight: bold;&amp;#34;&amp;gt;This is bold font&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&#xD;&amp;lt;span style=&amp;#34;font-style: italic;&amp;#34;&amp;gt;This is italic font&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&#xD;&amp;lt;span style=&amp;#34;text-decoration: underline;&amp;#34;&amp;gt;This is underline&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt; </description>
+      <description>001. categories如何增加子类呢？&#xD;例如：categories: [&amp;quot;blog&amp;quot;][&amp;quot;ERP&amp;quot;]错误提示： Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key&#xD;正确做法： categories:&#xD;- blog&#xD;- ERP&#xD;- ERPNext&#xD;002. 如何制造块缩进&#xD;&amp;lt;div style=&amp;#34;padding-left: 2em;&amp;#34;&amp;gt; now the contents included by this div section will be indented 2em.&#xA;003. 如何嵌入Merimaid流程图&#xD;第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：&#xA;&amp;lt;details&amp;gt;&#xD;&amp;lt;summary&amp;gt;流程图x&amp;lt;/summary&amp;gt;&#xD;&amp;lt;pre class=&amp;quot;mermaid&amp;quot;&amp;gt;&#xD;graph TD&#xD;A[开始]&#xD;...&#xD;...&#xD;&amp;lt;/pre&amp;gt;&#xD;&amp;lt;/details&amp;gt;&#xD;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行</description>
     </item>
     <item>
       <title>Kernel_Analysis</title>

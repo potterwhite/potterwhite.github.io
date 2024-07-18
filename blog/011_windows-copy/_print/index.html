@@ -1,0 +1,584 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="canonical" type="text/html" href="http://localhost:1313/blog/011_windows-copy/">
+<link rel="alternate" type="application/rss&#43;xml" href="http://localhost:1313/blog/011_windows-copy/index.xml">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>011_Grp_Windows | 嵌入式系统 Enthusiast</title>
+<meta name="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
+<meta property="og:url" content="http://localhost:1313/blog/011_windows-copy/">
+  <meta property="og:site_name" content="嵌入式系统 Enthusiast">
+  <meta property="og:title" content="011_Grp_Windows">
+  <meta property="og:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="011_Grp_Windows">
+  <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
+  <meta itemprop="datePublished" content="2024-07-11T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-07-11T00:00:00+00:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="011_Grp_Windows">
+  <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
+<link href="/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-section td-blog">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500"><g><path style="fill:#fff" d="M116.8525 421.9722c-5.7041.0-10.3442-4.3127-10.3442-9.6129V88.183c0-5.3002 4.6401-9.6117 10.3442-9.6117H320.858c3.0347.0 9.3959.5498 11.7506 2.6302l.3545.3442 58.905 63.2912c2.3101 2.491 2.9202 8.4928 2.9202 11.3184v256.2039c0 5.3002-4.6407 9.6129-10.3436 9.6129H116.8525z"/><g><g><g><path style="fill:#767676" d="M384.4445 423.2066H116.852c-6.3839.0-11.5786-4.8658-11.5786-10.8474V88.1831c0-5.9804 5.1947-10.8461 11.5786-10.8461h204.0062c.377.0 9.2786.0329 12.568 2.9389l.3947.3833 58.9508 63.337c3.2135 3.4652 3.2514 11.7924 3.2514 12.1593v256.2036C396.0231 418.3408 390.8284 423.2066 384.4445 423.2066zM116.5079 411.9189c.0848.0278.1999.0531.3441.0531h267.5925c.1442.0.2581-.0253.3441-.0531V156.1556c-.0076-.9033-.3593-3.7347-.7034-5.0037l-57.6527-61.9416c-1.4651-.3176-4.4533-.6389-5.5742-.6389H116.852c-.143.0-.2594.024-.3441.0531V411.9189zm267.4533-261.149zM327.0321 89.371v.0013V89.371z"/></g></g></g><g><g><path style="fill:#5b7fc0" d="M189.0874 210.1754l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4473C177.5953 212.627 183.0601 210.1742 189.0874 210.1754zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 234.1722 197.0804 232.033z"/><path style="opacity:.3;fill:#fff" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/><g><defs><path id="SVGID_1_" d="M194.7376 237.6875c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 234.2399 196.1861 236.239 194.7376 237.6875z"/></defs><clipPath id="SVGID_2_"><use xlink:href="#SVGID_1_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_2_);fill:#fff" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/><path style="opacity:.13;clip-path:url(#SVGID_2_);fill:#020202" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/></g><g><defs><path id="SVGID_3_" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/></defs><clipPath id="SVGID_4_"><use xlink:href="#SVGID_3_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_4_);fill:#5b7fc0" d="M172.6595 215.6045c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8475-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 209.1953 176.6171 211.647 172.6595 215.6045z"/></g></g><rect x="198.8952" y="225.1043" style="fill:#5b7fc0" width="122.6266" height="13.8671"/></g><g><path style="fill:#d95140" d="M189.0874 155.7611l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.0249 2.454-11.4897 6.4116-15.4473C177.5953 158.2128 183.0601 155.7599 189.0874 155.7611zm7.993 21.8577c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.2508 181.7667 197.0816 179.758 197.0804 177.6188z"/><path style="opacity:.3;fill:#fff" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/><g><defs><path id="SVGID_5_" d="M194.7376 183.2733c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 179.8256 196.1861 181.8248 194.7376 183.2733z"/></defs><clipPath id="SVGID_6_"><use xlink:href="#SVGID_5_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_6_);fill:#fff" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/><path style="opacity:.13;clip-path:url(#SVGID_6_);fill:#020202" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/></g><g><defs><path id="SVGID_7_" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/></defs><clipPath id="SVGID_8_"><use xlink:href="#SVGID_7_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_8_);fill:#d95140" d="M172.6595 161.1903c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 154.7811 176.6171 157.2327 172.6595 161.1903z"/></g><rect x="198.8952" y="170.69" style="fill:#d95140" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#56a55c" d="M189.5379 264.6147l.0012-.0012c7.7751.0012 15.0294 4.1862 18.932 10.9235 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032-5.8394.0-11.3281-2.2733-15.458-6.4032-4.13-4.13-6.4032-9.6186-6.4056-15.4628.0012-6.0249 2.454-11.4897 6.4116-15.4472C178.0458 267.0663 183.5105 264.6135 189.5379 264.6147zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6538 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.7013 290.6202 197.5321 288.6115 197.5309 286.4723z"/><path style="opacity:.3;fill:#fff" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/><g><defs><path id="SVGID_9_" d="M195.1881 292.1268c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9941 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.5344 288.6792 196.6366 290.6783 195.1881 292.1268z"/></defs><clipPath id="SVGID_10_"><use xlink:href="#SVGID_9_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_10_);fill:#fff" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/><path style="opacity:.13;clip-path:url(#SVGID_10_);fill:#020202" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/></g><g><defs><path id="SVGID_11_" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/></defs><clipPath id="SVGID_12_"><use xlink:href="#SVGID_11_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_12_);fill:#56a55c" d="M173.11 270.0439c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7325-11.1497-10.9151-18.926-10.9151C182.5311 263.6346 177.0676 266.0863 173.11 270.0439z"/></g></g><rect x="199.3456" y="279.5436" style="fill:#56a55c" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#f1bc42" d="M189.0874 318.7208l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3305-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4472C177.5953 321.1724 183.0601 318.7196 189.0874 318.7208zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 342.7176 197.0804 340.5784z"/><path style="opacity:.3;fill:#fff" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/><g><defs><path id="SVGID_13_" d="M194.7376 346.2329c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 342.7853 196.1861 344.7844 194.7376 346.2329z"/></defs><clipPath id="SVGID_14_"><use xlink:href="#SVGID_13_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_14_);fill:#fff" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/><path style="opacity:.13;clip-path:url(#SVGID_14_);fill:#020202" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/></g><g><defs><path id="SVGID_15_" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/></defs><clipPath id="SVGID_16_"><use xlink:href="#SVGID_15_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_16_);fill:#f1bc42" d="M172.6595 324.15c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8474-1.0151-7.6327-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 317.7407 176.6171 320.1924 172.6595 324.15z"/></g></g><rect x="198.8952" y="333.6497" style="fill:#f1bc42" width="122.6266" height="13.8671"/></g></g></svg></span><span class="navbar-brand__name">嵌入式系统 Enthusiast</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" class="td-search__input form-control td-search-input" placeholder="站内搜索…" aria-label="站内搜索…" autocomplete="off">
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
+            
+
+
+
+
+<div class="td-content">
+<div class="pageinfo pageinfo-primary d-print-none">
+<p>
+这是本节的多页打印视图。
+<a href="#" onclick="print();return false;">点击此处打印</a>.
+</p><p>
+<a href="/blog/011_windows-copy/">返回本页常规视图</a>.
+</p>
+</div>
+
+
+
+<h1 class="title">011_Grp_Windows</h1>
+
+
+
+
+
+    <ul>
+    
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-7a5f74e17323d7f8e9a4a1efc63b9c71">声卡项目</a></li>
+
+
+
+    
+  
+
+    </ul>
+
+
+<div class="content">
+      
+</div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-7a5f74e17323d7f8e9a4a1efc63b9c71">声卡项目</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-11" class="text-body-secondary">2024年07月11日</time>
+        
+	</div>
+	<!-- <script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script> -->
+<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
+<h3 id="一-介绍">一、介绍<a class="td-heading-self-link" href="#%e4%b8%80-%e4%bb%8b%e7%bb%8d" aria-label="Heading self-link"></a></h3><p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p>
+<h3 id="二-主要的函数">二、主要的函数<a class="td-heading-self-link" href="#%e4%ba%8c-%e4%b8%bb%e8%a6%81%e7%9a%84%e5%87%bd%e6%95%b0" aria-label="Heading self-link"></a></h3><details>
+    <summary>流程图1 _EnumerateAudioEndpoints</summary>
+<!-- ![_EnumerateAudioEndpoints](/2024/July/11/soundcard_flow_1.svg) -->
+<p>this is the first operation of our process</br>
+A. and it start with CoCreateInstance() to create object of <code>IMMDeviceEnumerator</code></br>
+B. then if success, use <code>IMMDeviceEnumerator.EnumAudioEndpoint()</code> to enumerate all endpoints(actually include all input &amp; output devices, but API can choose i or o or both devices) in this machine.</br>
+C. if there exist endpoint, to check the number of endpoints with <code>IMMDeviceCollection.GetCount()</code>.</br>
+D. use for loop to enum every endpoint, retrieve its data with <code>IMMDeviceCollection.Item()</code></br>
+E. finally, if retrieving process runs smoothly and there is data who came with Item() operation, push it into endpoint global data pool.</br></p>
+<!-- <object type="image/svg+xml" data="/2024/July/17/flowchart_of_EnumerateEndpoint.svg" style="width: 100%; height: 1000%;">
+    Your browser does not support SVG
+</object> -->
+<iframe src="/2024/July/17/flow_no_zoom.svg" width="900" height="2000" style="border:none; overflow:scroll; background: #333333;">
+</iframe>
+<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
+</details>
+<details>
+    <summary> 001. 创建com的对象 CoCreateInstance </summary>
+<div style="padding-left: 2em;">
+</br>
+<pre tabindex="0"><code>_Check_return_
+WINOLEAPI
+CoCreateInstance(
+    _In_ REFCLSID rclsid,
+    _In_opt_ LPUNKNOWN pUnkOuter,
+    _In_ DWORD dwClsContext,
+    _In_ REFIID riid,
+    _COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID  FAR * ppv
+);
+</code></pre></br>
+<h3 id="refrence"><strong>Refrence</strong><a class="td-heading-self-link" href="#refrence" aria-label="Heading self-link"></a></h3><p><a href="https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance">1. CoCreateInstance MS Learning</a></br>
+<a href="https://developer.aliyun.com/article/48371">2. COM basic tutorial</a></br></p>
+</br>
+<h3 id="introduce"><strong>Introduce</strong><a class="td-heading-self-link" href="#introduce" aria-label="Heading self-link"></a></h3><p><strong>CoCreateInstance</strong> is used for instance of object creating in local machine.
+<strong>CoCreateInstanceEx</strong> is used for instance of object creating in REMOTE machine.
+<strong>CoGetClassObject</strong> is used for MULTI instances of object creating in local machine.
+CoCreateInstance encapsulates the CoGetClassObject in the low-level.
+CoCreateInstance connects the object with the ID.
+</br></br></p>
+<h3 id="requirement"><strong>Requirement</strong><a class="td-heading-self-link" href="#requirement" aria-label="Heading self-link"></a></h3><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Library</td>
+<td>Ole32.lib</td>
+<td></td>
+</tr>
+<tr>
+<td>Dynamic Link Library</td>
+<td>Ole32.dll</td>
+<td></td>
+</tr>
+<tr>
+<td>Header file</td>
+<td>combaseapi.h</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>...\Windows Kits\10\Include\10.0.22621.0\shared\guiddef.h</td>
+<td>REFCLSID &amp; IID definition</td>
+</tr>
+<tr>
+<td></td>
+<td>...\Windows Kits\10\Include\10.0.22621.0\um\mmdeviceapi.h</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Minimum System Version</td>
+<td>Windows 2000 and above</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p></br></br></p>
+<h3 id="parameters"><strong>Parameters</strong><a class="td-heading-self-link" href="#parameters" aria-label="Heading self-link"></a></h3><p><span style="background-color: gray;">(1/5)[in] rclsid</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+The CLSID associated with the data and code that will be used to create the object.</br>
+<p>REFCLSID:</br>
+REF=Reference</br>
+CLS=Class</br>
+ID=Identifier</br>
+REFCLSID rclsid：是 const CLSID&amp; 的别名，表示对 CLSID 的引用。这样传递参数时，不需要复制整个 CLSID 对象，只需要传递它的引用，从而提高效率。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#080;font-style:italic">/*mmdeviceapi.h
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> * here is the definition of MMDevice Enumerator
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> * we are using &#34;__uuidof(MMDeviceEnumerator)&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#080">#ifdef __cplusplus
+</span></span></span><span style="display:flex;"><span><span style="color:#080"></span>class <span style="color:#00a000">DECLSPEC_UUID</span>(<span style="color:#b44">&#34;BCDE0395-E52F-467C-8E3D-C4579291692E&#34;</span>)
+</span></span><span style="display:flex;"><span>MMDeviceEnumerator;
+</span></span><span style="display:flex;"><span><span style="color:#080">#endif
+</span></span></span></code></pre></div><details>
+    <summary>UUID为什么有中间的“-”连字符</summary>
+    UUID（Universally Unique Identifier）或 GUID（Globally Unique Identifier）中使用连字符（`-`）是为了增加可读性和标准化。虽然连字符没有任何技术上的必要性，但它们有助于分隔和识别 UUID 的不同部分。
+<h3 id="uuid-格式">UUID 格式<a class="td-heading-self-link" href="#uuid-%e6%a0%bc%e5%bc%8f" aria-label="Heading self-link"></a></h3><p>一个标准的 UUID 格式为 8-4-4-4-12，即总共 32 个十六进制字符分为五个部分，每个部分用连字符分隔。这种格式定义在 RFC 4122 中。</p>
+<p>例如：</p>
+<pre tabindex="0"><code>BCDE0395-E52F-467C-8E3D-C4579291692E
+</code></pre><h3 id="格式的分隔意义">格式的分隔意义<a class="td-heading-self-link" href="#%e6%a0%bc%e5%bc%8f%e7%9a%84%e5%88%86%e9%9a%94%e6%84%8f%e4%b9%89" aria-label="Heading self-link"></a></h3><ol>
+<li><strong>时间戳部分（8个字符）</strong>：UUID 的前 8 个字符通常表示时间戳的高位部分。</li>
+<li><strong>时间戳的中间部分（4个字符）</strong>：接下来的 4 个字符表示时间戳的中间部分。</li>
+<li><strong>时间戳的低位部分和版本号（4个字符）</strong>：接下来的 4 个字符表示时间戳的低位部分和版本号。</li>
+<li><strong>时钟序列（4个字符）</strong>：接下来的 4 个字符表示时钟序列。</li>
+<li><strong>节点（12个字符）</strong>：最后的 12 个字符表示节点信息（通常是基于网络地址）。</li>
+</ol>
+<p>这种分隔方式有助于解析和理解 UUID 的不同部分，并确保它们的唯一性。</p>
+<h3 id="使用连字符的好处">使用连字符的好处<a class="td-heading-self-link" href="#%e4%bd%bf%e7%94%a8%e8%bf%9e%e5%ad%97%e7%ac%a6%e7%9a%84%e5%a5%bd%e5%a4%84" aria-label="Heading self-link"></a></h3><ol>
+<li><strong>可读性</strong>：连字符使得 UUID 更加可读，更容易分辨和检查。</li>
+<li><strong>标准化</strong>：按照 RFC 4122 标准定义的格式，有助于在不同系统和平台之间保持一致性。</li>
+<li><strong>解析和验证</strong>：连字符分隔使得解析和验证 UUID 更加简单和明确。</li>
+</ol>
+<h3 id="无连字符表示">无连字符表示<a class="td-heading-self-link" href="#%e6%97%a0%e8%bf%9e%e5%ad%97%e7%ac%a6%e8%a1%a8%e7%a4%ba" aria-label="Heading self-link"></a></h3><p>在一些情况下，可以去掉连字符并连续地写下所有字符。例如：</p>
+<pre tabindex="0"><code>BCDE0395E52F467C8E3DC4579291692E
+</code></pre><p>这种形式在某些编程语言和库中也是支持的，但为了确保一致性和标准化，通常还是建议使用带有连字符的格式。</p>
+<h3 id="总结">总结<a class="td-heading-self-link" href="#%e6%80%bb%e7%bb%93" aria-label="Heading self-link"></a></h3><ul>
+<li><strong>连字符的作用</strong>：主要是增加可读性和标准化。</li>
+<li><strong>UUID 格式</strong>：8-4-4-4-12 的格式有助于分隔和识别不同的部分。</li>
+<li><strong>使用连字符的好处</strong>：使得 UUID 更加可读、标准化，便于解析和验证。</li>
+</ul>
+<p>尽管技术上可以省略连字符，但使用标准格式带来的可读性和一致性优势使得它成为惯用的做法。</p>
+</details>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#080;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> * guiddef.h
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#080">#define REFCLSID const IID &amp;
+</span></span></span></code></pre></div></div>
+</br>
+<p><span style="background-color: gray;">(2/5)[in] pUnkOuter</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+If NULL, indicates that the object is not being created as part of an aggregate.</br>
+If non-NULL, pointer to the aggregate object's IUnknown interface (the controlling IUnknown).</br>
+<details>
+    <summary>关于Aggregate，更详尽的解释-FromGpt4o</summary>
+    在 `CoCreateInstance` 函数中，第二个参数 `pUnkOuter` 是一个指向 `IUnknown` 接口的指针，通常用于支持 COM 对象的聚合。聚合是 COM 中的一种技术，允许一个对象（外部对象）包含另一个对象（内部对象），并使内部对象的接口看起来像是外部对象的一部分。
+<h3 id="参数详细解释">参数详细解释<a class="td-heading-self-link" href="#%e5%8f%82%e6%95%b0%e8%af%a6%e7%bb%86%e8%a7%a3%e9%87%8a" aria-label="Heading self-link"></a></h3><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT <span style="color:#00a000">CoCreateInstance</span>(
+</span></span><span style="display:flex;"><span>  REFCLSID rclsid,     <span style="color:#666">//</span> Class identifier (CLSID) of the object to be created
+</span></span><span style="display:flex;"><span>  LPUNKNOWN pUnkOuter, <span style="color:#080;font-style:italic">// Pointer to controlling IUnknown (for aggregation)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>  DWORD dwClsContext,  <span style="color:#080;font-style:italic">// Context in which the code that manages the newly created object will run
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>  REFIID riid,         <span style="color:#080;font-style:italic">// Interface identifier (IID) of the interface to be used to communicate with the object
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>  LPVOID <span style="color:#666">*</span>ppv          <span style="color:#080;font-style:italic">// Address of pointer variable that receives the interface pointer requested in riid
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>);
+</span></span></code></pre></div><h3 id="punkouter-参数"><code>pUnkOuter</code> 参数<a class="td-heading-self-link" href="#punkouter-%e5%8f%82%e6%95%b0" aria-label="Heading self-link"></a></h3><ul>
+<li><strong><code>pUnkOuter</code></strong>：指向控制未知接口（<code>IUnknown</code>）的指针。如果不使用聚合，则传递 <code>NULL</code>。在聚合的情况下，<code>pUnkOuter</code> 应该是外部对象的 <code>IUnknown</code> 指针。</li>
+</ul>
+<h3 id="聚合-aggregation">聚合（Aggregation）<a class="td-heading-self-link" href="#%e8%81%9a%e5%90%88-aggregation" aria-label="Heading self-link"></a></h3><p>聚合是一种将一个对象嵌入到另一个对象中的机制，使得内部对象的接口对外部对象的客户端透明。聚合在以下情况下有用：</p>
+<ol>
+<li><strong>对象组合</strong>：允许组合对象共享一个公共的 <code>IUnknown</code> 接口，从而表现为一个单一对象。</li>
+<li><strong>对象封装</strong>：允许一个对象封装另一个对象，并公开其接口，而不暴露内部实现细节。</li>
+</ol>
+<h3 id="聚合的使用">聚合的使用<a class="td-heading-self-link" href="#%e8%81%9a%e5%90%88%e7%9a%84%e4%bd%bf%e7%94%a8" aria-label="Heading self-link"></a></h3><p>当你使用聚合时，外部对象将包含内部对象，并通过内部对象的接口来实现外部对象的部分功能。在这种情况下，<code>CoCreateInstance</code> 的第二个参数 <code>pUnkOuter</code> 将指向外部对象的 <code>IUnknown</code> 接口，以便内部对象可以调用外部对象的接口。</p>
+<p>如果你不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>，表示不进行聚合。</p>
+<h3 id="示例代码">示例代码<a class="td-heading-self-link" href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" aria-label="Heading self-link"></a></h3><h4 id="不使用聚合">不使用聚合<a class="td-heading-self-link" href="#%e4%b8%8d%e4%bd%bf%e7%94%a8%e8%81%9a%e5%90%88" aria-label="Heading self-link"></a></h4><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>IMMDeviceEnumerator<span style="color:#666">*</span> deviceEnumerator <span style="color:#666">=</span> <span style="color:#a2f">NULL</span>;
+</span></span><span style="display:flex;"><span>HRESULT hr <span style="color:#666">=</span> CoCreateInstance(
+</span></span><span style="display:flex;"><span>    __uuidof(MMDeviceEnumerator),  <span style="color:#080;font-style:italic">// CLSID
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="color:#a2f">NULL</span>,                          <span style="color:#080;font-style:italic">// pUnkOuter (no aggregation)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    CLSCTX_ALL,                    <span style="color:#080;font-style:italic">// Context
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    __uuidof(IMMDeviceEnumerator), <span style="color:#080;font-style:italic">// IID
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    (<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span>)<span style="color:#666">&amp;</span>deviceEnumerator      <span style="color:#080;font-style:italic">// Interface pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>);
+</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为 <code>NULL</code>，表示不使用聚合。</p>
+<h4 id="使用聚合">使用聚合<a class="td-heading-self-link" href="#%e4%bd%bf%e7%94%a8%e8%81%9a%e5%90%88" aria-label="Heading self-link"></a></h4><p>假设你有一个类 <code>COuter</code>，它希望包含一个内部对象 <code>CInner</code>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">COuter</span> <span style="color:#666">:</span> <span style="color:#a2f;font-weight:bold">public</span> IUnknown {
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">public</span><span style="color:#666">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// Implement IUnknown methods
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    HRESULT QueryInterface(REFIID riid, <span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span> ppv) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span> (riid <span style="color:#666">==</span> IID_IUnknown) {
+</span></span><span style="display:flex;"><span>            <span style="color:#666">*</span>ppv <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">static_cast</span><span style="color:#666">&lt;</span>IUnknown<span style="color:#666">*&gt;</span>(<span style="color:#a2f;font-weight:bold">this</span>);
+</span></span><span style="display:flex;"><span>            AddRef();
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">return</span> S_OK;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic">// Handle other interfaces
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>        <span style="color:#a2f;font-weight:bold">return</span> E_NOINTERFACE;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ULONG <span style="color:#00a000">AddRef</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">return</span> InterlockedIncrement(<span style="color:#666">&amp;</span>m_refCount);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ULONG <span style="color:#00a000">Release</span>() {
+</span></span><span style="display:flex;"><span>        ULONG count <span style="color:#666">=</span> InterlockedDecrement(<span style="color:#666">&amp;</span>m_refCount);
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span> (count <span style="color:#666">==</span> <span style="color:#666">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">delete</span> <span style="color:#a2f;font-weight:bold">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">return</span> count;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">private</span><span style="color:#666">:</span>
+</span></span><span style="display:flex;"><span>    ULONG m_refCount;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// Create an instance of COuter and aggregate CInner
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>COuter<span style="color:#666">*</span> pOuter <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">new</span> COuter();
+</span></span><span style="display:flex;"><span>IUnknown<span style="color:#666">*</span> pUnkOuter <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">static_cast</span><span style="color:#666">&lt;</span>IUnknown<span style="color:#666">*&gt;</span>(pOuter);
+</span></span><span style="display:flex;"><span>CInner<span style="color:#666">*</span> pInner <span style="color:#666">=</span> <span style="color:#a2f">NULL</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>HRESULT hr <span style="color:#666">=</span> CoCreateInstance(
+</span></span><span style="display:flex;"><span>    CLSID_CInner,         <span style="color:#080;font-style:italic">// CLSID of the inner object
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    pUnkOuter,            <span style="color:#080;font-style:italic">// pUnkOuter (aggregation)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    CLSCTX_INPROC_SERVER, <span style="color:#080;font-style:italic">// Context
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    IID_IUnknown,         <span style="color:#080;font-style:italic">// IID of the interface
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    (<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span>)<span style="color:#666">&amp;</span>pInner       <span style="color:#080;font-style:italic">// Interface pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> (SUCCEEDED(hr)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// Use pInner
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>}
+</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为外部对象的 <code>IUnknown</code> 指针，以便内部对象可以进行聚合。</p>
+<h3 id="总结-1">总结<a class="td-heading-self-link" href="#%e6%80%bb%e7%bb%93-1" aria-label="Heading self-link"></a></h3><ul>
+<li><strong><code>pUnkOuter</code></strong> 是一个指向 <code>IUnknown</code> 接口的指针，用于支持聚合。</li>
+<li><strong>聚合</strong> 允许一个对象包含另一个对象，并使内部对象的接口对外部对象的客户端透明。</li>
+<li>如果不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>。</li>
+</ul>
+<p>通过理解 <code>pUnkOuter</code> 参数的用途和聚合的概念，可以更好地理解和使用 COM 编程模型中的聚合特性。</p>
+</details>
+</div>
+</br>
+<p><span style="background-color: gray;">(3/5)[in] dwClsContext</span></br></p>
+<div style="padding-left: 2em;">
+Context in which the code that manages the newly created object will run.</br>
+The values are taken from the enumeration CLSCTX.</br>
+<p><code>dwClsContext</code>:</br>
+ <code>dw</code>=double world;(microsoft<code>s naming style)&lt;/br&gt; &amp;emsp;</code>Cls<code>=Class; (Class of COM object)&lt;/br&gt; &amp;emsp;</code>Context` means the environment which the object running</br></p>
+<pre class="c">
+    <code>
+#...\Windows Kits\10\Include\10.0.22621.0\um\combaseapi.h
+
+#define CLSCTX_ALL              (CLSCTX_INPROC_SERVER| \
+                                CLSCTX_INPROC_HANDLER| \
+                                CLSCTX_LOCAL_SERVER| \
+                                CLSCTX_REMOTE_SERVER)
+    </code>
+</pre>
+<p>and these macros are found in</p>
+<pre class="c">
+    <code>
+#...\Windows Kits\10\Include\10.0.22621.0\shared\WTypesbase.h
+typedef
+enum tagCLSCTX
+{
+    CLSCTX_INPROC_SERVER	= 0x1,
+    CLSCTX_INPROC_HANDLER	= 0x2,
+    CLSCTX_LOCAL_SERVER	= 0x4,
+    CLSCTX_INPROC_SERVER16	= 0x8,
+    CLSCTX_REMOTE_SERVER	= 0x10,
+    CLSCTX_INPROC_HANDLER16	= 0x20,
+    CLSCTX_RESERVED1	= 0x40,
+    CLSCTX_RESERVED2	= 0x80,
+    CLSCTX_RESERVED3	= 0x100,
+    CLSCTX_RESERVED4	= 0x200,
+    CLSCTX_NO_CODE_DOWNLOAD	= 0x400,
+    CLSCTX_RESERVED5	= 0x800,
+    CLSCTX_NO_CUSTOM_MARSHAL	= 0x1000,
+    CLSCTX_ENABLE_CODE_DOWNLOAD	= 0x2000,
+    CLSCTX_NO_FAILURE_LOG	= 0x4000,
+    CLSCTX_DISABLE_AAA	= 0x8000,
+    CLSCTX_ENABLE_AAA	= 0x10000,
+    CLSCTX_FROM_DEFAULT_CONTEXT	= 0x20000,
+    CLSCTX_ACTIVATE_X86_SERVER	= 0x40000,
+    CLSCTX_ACTIVATE_32_BIT_SERVER	= CLSCTX_ACTIVATE_X86_SERVER,
+    CLSCTX_ACTIVATE_64_BIT_SERVER	= 0x80000,
+    CLSCTX_ENABLE_CLOAKING	= 0x100000,
+    CLSCTX_APPCONTAINER	= 0x400000,
+    CLSCTX_ACTIVATE_AAA_AS_IU	= 0x800000,
+    CLSCTX_RESERVED6	= 0x1000000,
+    CLSCTX_ACTIVATE_ARM32_SERVER	= 0x2000000,
+    CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION	= 0x4000000,
+    CLSCTX_PS_DLL	= 0x80000000
+} 	CLSCTX;
+
+    </code>
+</pre>
+</div>
+</br>
+<p><span style="background-color: gray;">(4/5)[in] riid</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+A reference to the identifier of the interface to be used to communicate with the object.</br>
+</br>
+<p><em>In</em> REFIID riid</br>
+<code>REFIID riid</code>：</br>
+是 const IID&amp; 的别名，表示对 IID 的引用。它的作用与 REFCLSID 类似。</br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#080">#define REFIID const IID &amp;
+</span></span></span></code></pre></div></div>
+</br>
+<p><span style="background-color: gray;">(5/5)[out] ppv</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+Address of pointer variable that receives the interface pointer requested in riid.</br>
+Upon successful return, *ppv contains the requested interface pointer.</br>
+Upon failure, *ppv contains NULL.</br>
+</div>
+</br>
+<p><code>ppv</code>: Pointer to Pointer to Void</p>
+</details>
+</div>
+
+</div>
+
+
+
+
+
+    
+	
+  
+
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Twitter" aria-label="Twitter">
+    <a target="_blank" rel="noopener" href="https://example.org/twitter" aria-label="Twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/google/docsy" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2024
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.js"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

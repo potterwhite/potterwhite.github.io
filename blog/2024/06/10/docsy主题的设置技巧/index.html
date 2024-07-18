@@ -18,19 +18,15 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>Docsy主题的设置技巧 | 嵌入式系统 Enthusiast</title>
-<meta name="description" content="001. categories如何增加子类呢？例如：categories: [&amp;quot;blog&amp;quot;][&amp;quot;ERP&amp;quot;]错误提示： Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;附注1：企业规模的标准是什么？&amp;lt;/summary&amp;gt;...所有的内容可以填在此处...&amp;lt;/details&amp;gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
-&amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;流程图x&amp;lt;/summary&amp;gt;&amp;lt;pre class=&amp;quot;mermaid&amp;quot;&amp;gt;graph TDA[开始]......&amp;lt;/pre&amp;gt;&amp;lt;/details&amp;gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
-第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
-004. 如何设置颜色(背景色、粗体、斜体、下划线)&amp;lt;span style=&amp;#34;color: red;&amp;#34;&amp;gt;This is red color&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;background-color: gray;&amp;#34;&amp;gt;This is gray bg color&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;font-weight: bold;&amp;#34;&amp;gt;This is bold font&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;font-style: italic;&amp;#34;&amp;gt;This is italic font&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt;&amp;lt;span style=&amp;#34;text-decoration: underline;&amp;#34;&amp;gt;This is underline&amp;lt;/span&amp;gt;&amp;lt;/br&amp;gt; ">
+<meta name="description" content="001. categories如何增加子类呢？例如：categories: [&amp;quot;blog&amp;quot;][&amp;quot;ERP&amp;quot;]错误提示： Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进&amp;lt;div style=&amp;#34;padding-left: 2em;&amp;#34;&amp;gt; now the contents included by this div section will be indented 2em.
+003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+&amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;流程图x&amp;lt;/summary&amp;gt;&amp;lt;pre class=&amp;quot;mermaid&amp;quot;&amp;gt;graph TDA[开始]......&amp;lt;/pre&amp;gt;&amp;lt;/details&amp;gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行">
 <meta property="og:url" content="http://localhost:1313/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/">
   <meta property="og:site_name" content="嵌入式系统 Enthusiast">
   <meta property="og:title" content="Docsy主题的设置技巧">
-  <meta property="og:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
-&lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
-第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
-004. 如何设置颜色(背景色、粗体、斜体、下划线)&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt; ">
+  <meta property="og:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进&lt;div style=&#34;padding-left: 2em;&#34;&gt; now the contents included by this div section will be indented 2em.
+003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+&lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
@@ -38,22 +34,18 @@
     <meta property="article:modified_time" content="2024-06-10T00:00:00+00:00">
 
   <meta itemprop="name" content="Docsy主题的设置技巧">
-  <meta itemprop="description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
-&lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
-第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
-004. 如何设置颜色(背景色、粗体、斜体、下划线)&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt; ">
+  <meta itemprop="description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进&lt;div style=&#34;padding-left: 2em;&#34;&gt; now the contents included by this div section will be indented 2em.
+003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+&lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行">
   <meta itemprop="datePublished" content="2024-06-10T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-06-10T00:00:00+00:00">
-  <meta itemprop="wordCount" content="100">
+  <meta itemprop="wordCount" content="109">
   <meta itemprop="keywords" content="Blog,Docsy">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Docsy主题的设置技巧">
-  <meta name="twitter:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进示例代码：&lt;details&gt;&lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;...所有的内容可以填在此处...&lt;/details&gt;003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
-&lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行
-第三种是直接把流程图转换成图片【推荐】转换网站如下： Mermaid Live Editor
-可以转成svg、png、复制到clipboard 还可以以svg、png形式在网页上直接预览 这种方式极好
-004. 如何设置颜色(背景色、粗体、斜体、下划线)&lt;span style=&#34;color: red;&#34;&gt;This is red color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;background-color: gray;&#34;&gt;This is gray bg color&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-weight: bold;&#34;&gt;This is bold font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;font-style: italic;&#34;&gt;This is italic font&lt;/span&gt;&lt;/br&gt;&lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt; ">
+  <meta name="twitter:description" content="001. categories如何增加子类呢？例如：categories: [&#34;blog&#34;][&#34;ERP&#34;]错误提示： Error: error building site: process: readAndProcessContent: &#34;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&#34;: failed to unmarshal YAML: yaml: line 3: did not find expected key正确做法： categories:- blog- ERP- ERPNext002. 如何制造块缩进&lt;div style=&#34;padding-left: 2em;&#34;&gt; now the contents included by this div section will be indented 2em.
+003. 如何嵌入Merimaid流程图第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：
+&lt;details&gt;&lt;summary&gt;流程图x&lt;/summary&gt;&lt;pre class=&#34;mermaid&#34;&gt;graph TDA[开始]......&lt;/pre&gt;&lt;/details&gt;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行">
 <link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -164,7 +156,9 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-002-hugodocsy-li">
   <a href="/blog/002_hugodocsy/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-002-hugodocsy"><span class="">002_Grp_HugoDocsy</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-blog-2024-06-10-docsy-e4-b8-bb-e9-a2-98-e7-9a-84-e8-ae-be-e7-bd-ae-e6-8a-80-e5-b7-a7-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-07-18-docsys-interesting-tricks-li">
+  <a href="/blog/2024/07/18/docsys-interesting-tricks/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-18-docsys-interesting-tricks"><span class="">Docsy`s Interesting Tricks</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-blog-2024-06-10-docsy-e4-b8-bb-e9-a2-98-e7-9a-84-e8-ae-be-e7-bd-ae-e6-8a-80-e5-b7-a7-li">
   <a href="/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-docsy-e4-b8-bb-e9-a2-98-e7-9a-84-e8-ae-be-e7-bd-ae-e6-8a-80-e5-b7-a7"><span class="td-sidebar-nav-active-item">Docsy主题的设置技巧</span></a>
 </li>
   </ul>
@@ -199,10 +193,31 @@
   <a href="/blog/2024/07/12/vscode%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-12-vscode-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="">VSCode使用技巧</span></a>
 </li>
   </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-005-tools-005-002-mermaid-li">
+  <a href="/blog/005_tools/005_002_mermaid/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools-005-002-mermaid"><span class="">005_002_Grp_Mermaid</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-17-mermaid-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-17-mermaid-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="">Mermaid使用技巧</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-006-devops-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-005-tools-005-003-markdown-li">
+  <a href="/blog/005_tools/005_003_markdown/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools-005-003-markdown"><span class="">005_003_Grp_Markdown</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-17-markdown-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-17-markdown-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="">Markdown使用技巧</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-006-devops-li">
   <a href="/blog/006_devops/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-006-devops"><span class="">006_Grp_DevOps</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8-li">
+  <a href="/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8"><span class="">Docker使用</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-14-kernel-test-li">
+  <a href="/blog/2024/06/14/kernel_test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-kernel-test"><span class="">Kernel_test</span></a>
+</li>
+  </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-010-linux-li">
   <a href="/blog/010_linux/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-010-linux"><span class="">010_Grp_Linux</span></a>
   <ul class="ul-2 foldable">
@@ -217,6 +232,30 @@
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae-li">
   <a href="/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae"><span class="">声卡项目</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-012-web-development-li">
+  <a href="/blog/012_web_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-012-web-development"><span class="">012_Grp_WebDevelopment</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-012-web-development-html-css-javascript-li">
+  <a href="/blog/012_web_development/html&#43;css&#43;javascript/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-012-web-development-html-css-javascript"><span class="">012_001_Grp_HTML&#43;CSS&#43;JAVASCRIPT</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-18-html-tricks-li">
+  <a href="/blog/2024/07/18/html-tricks/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-18-html-tricks"><span class="">html tricks</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-013-qt-development-li">
+  <a href="/blog/013_qt_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-013-qt-development"><span class="">013_Grp_QtDevelopment</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-013-qt-development-qt6-li">
+  <a href="/blog/013_qt_development/qt6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-013-qt-development-qt6"><span class="">013_001_Grp_QtDevelopment</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-18-cmake-key-points-in-qt6-li">
+  <a href="/blog/2024/07/18/cmake-key-points-in-qt6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-18-cmake-key-points-in-qt6"><span class="">CMake Key Points in Qt6</span></a>
+</li>
+  </ul>
 </li>
   </ul>
 </li>
@@ -256,12 +295,21 @@
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">10</span></a></li>
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">17</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/markdown/" data-taxonomy-term="markdown"><span class="taxonomy-label">Markdown</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">1</span></a></li>
         </ul>
     </div>
@@ -300,16 +348,15 @@
         - ERPNext
 </code></pre>
 </details>
+<!-- ######################################################################### -->
 <details>
 <summary>002. 如何制造块缩进</summary>
-<h5 id="示例代码">示例代码：<a class="td-heading-self-link" href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" aria-label="Heading self-link"></a></h5><pre><code>&lt;details&gt;
-    &lt;summary&gt;附注1：企业规模的标准是什么？&lt;/summary&gt;
-    ...
-    所有的内容可以填在此处
-    ...
-&lt;/details&gt;
-</code></pre>
+<div style="padding-left: 2em;">
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#008000;font-weight:bold">div</span> <span style="color:#b44">style</span><span style="color:#666">=</span><span style="color:#b44">&#34;padding-left: 2em;&#34;</span>&gt;
+</span></span></code></pre></div><p>now the contents included by this div section will be indented 2em.</p>
+</div>
 </details>
+<!-- ######################################################################### -->
 <!-- 第三问 -->
 <details>
 <summary>003. 如何嵌入Merimaid流程图</summary>
@@ -359,13 +406,13 @@ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.mi
 
 &lt;span style=&#34;text-decoration: underline;&#34;&gt;This is underline&lt;/span&gt;&lt;/br&gt;
 </code></pre></details>
-
+<!-- ######################################################################### -->
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
   <li>
     <a class="btn btn-primary disabled"><span class="me-1">←</span>上一页</a>
   </li>
   <li>
-    <a class="btn btn-primary disabled">下一页<span class="ms-1">→</span></a>
+    <a href="/blog/2024/07/18/docsys-interesting-tricks/" aria-label="下一页 - Docsy`s Interesting Tricks" class="btn btn-primary">下一页<span class="ms-1">→</span></a>
   </li>
 </ul>
 

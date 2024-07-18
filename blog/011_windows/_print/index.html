@@ -199,10 +199,11 @@
 		<time datetime="2024-07-11" class="text-body-secondary">2024年07月11日</time>
         
 	</div>
-	<script type="module">
+	<!-- <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
-</script>
+</script> -->
+<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
 <h3 id="一-介绍">一、介绍<a class="td-heading-self-link" href="#%e4%b8%80-%e4%bb%8b%e7%bb%8d" aria-label="Heading self-link"></a></h3><p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p>
 <h3 id="二-主要的函数">二、主要的函数<a class="td-heading-self-link" href="#%e4%ba%8c-%e4%b8%bb%e8%a6%81%e7%9a%84%e5%87%bd%e6%95%b0" aria-label="Heading self-link"></a></h3><details>
     <summary>流程图1 _EnumerateAudioEndpoints</summary>
@@ -213,7 +214,12 @@ B. then if success, use <code>IMMDeviceEnumerator.EnumAudioEndpoint()</code> to 
 C. if there exist endpoint, to check the number of endpoints with <code>IMMDeviceCollection.GetCount()</code>.</br>
 D. use for loop to enum every endpoint, retrieve its data with <code>IMMDeviceCollection.Item()</code></br>
 E. finally, if retrieving process runs smoothly and there is data who came with Item() operation, push it into endpoint global data pool.</br></p>
-<p><img alt="_EnumerateAudioEndpoints" src="/2024/July/17/flowchart_of_EnumerateEndpoint.svg"></p>
+<!-- <object type="image/svg+xml" data="/2024/July/17/flowchart_of_EnumerateEndpoint.svg" style="width: 100%; height: 1000%;">
+    Your browser does not support SVG
+</object> -->
+<iframe src="/2024/July/17/flow_no_zoom.svg" width="900" height="2000" style="border:none; overflow:scroll; background: #333333;">
+</iframe>
+<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
 </details>
 <details>
     <summary> 001. 创建com的对象 CoCreateInstance </summary>
@@ -506,6 +512,7 @@ Upon failure, *ppv contains NULL.</br>
 <p><code>ppv</code>: Pointer to Pointer to Void</p>
 </details>
 </div>
+
 </div>
 
 

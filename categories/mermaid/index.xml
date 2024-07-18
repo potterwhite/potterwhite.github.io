@@ -13,7 +13,7 @@
       <link>http://localhost:1313/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
       <pubDate>Wed, 17 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
-      <description>001.</description>
+      <description>001.how to set style patter(color etc.,) in mermaid&#xD;a. single node setting methodstyle d fill:#6a0035,stroke:#333,stroke-width:1px like the css code above, the &amp;quot;d&amp;quot; node will be set to the following pattern as u said&#xA;b. multi nodes setting method#anything above# c --&amp;gt; d{&amp;#34;1st_Key\nIMMDeviceEnumerator.\nEnumAudioEndpoints()&amp;#34;}:::css_keypoint d --&amp;gt; |&amp;#34;((HRESULT)(hr)) &amp;lt; 0&amp;#34;| e(Release Object of\nIMMDeviceEnumerator) e --&amp;gt; z[end] d --&amp;gt; |&amp;#34;((HRESULT)(hr)) &amp;gt;= 0&amp;#34;|f(Return \nIMMDeviceCollection) f --&amp;gt; g(&amp;#34;2nd_Key\nIMMDeviceCollection.\nGetCount()&amp;#34;):::css_keypoint classDef css_keypoint fill:#6a0035,stroke:#333,stroke-width:1px now node &amp;quot;d&amp;quot; &amp;amp; &amp;quot;g&amp;quot; will be set to special css pattern</description>
     </item>
   </channel>
 </rss>
