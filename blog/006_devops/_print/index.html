@@ -157,17 +157,69 @@
     
 	
 
-    <li><a href="#pg-6b1a720377c21aeba1be6c898691f16d">Docker使用</a></li>
+    <li><a href="#pg-c1109b0d5e523f7a0249d4dc1fcb6280">6.1 Ubuntu Ops</a></li>
 
 
 
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-1a156d4d8f5ab3dc2152a1da447b5542">Grub Setting</a></li>
+
+
+
+    
+  
+
+    </ul>
     
   
     
     
 	
 
-    <li><a href="#pg-93cbd76168361d8909953dc0ad235678">Kernel_test</a></li>
+    <li><a href="#pg-c82325af1963eb96ae55714cd2c5e1eb">6.2 Docker Ops</a></li>
+
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-29f397f8eb1e12e0169dbf04f6568600">Docker使用</a></li>
+
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-9f4c5c72311caa0305635cb1ebb65afa">DevOps Definition</a></li>
 
 
 
@@ -201,7 +253,176 @@
   
 
 <div class="td-content" style="">
-    <h1 id="pg-6b1a720377c21aeba1be6c898691f16d">Docker使用</h1>
+    <h1 id="pg-c1109b0d5e523f7a0249d4dc1fcb6280">6.1 Ubuntu Ops</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-19" class="text-body-secondary">2024年07月19日</time>
+        
+	</div>
+	
+</div>
+
+
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-1a156d4d8f5ab3dc2152a1da447b5542">Grub Setting</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-19" class="text-body-secondary">2024年07月19日</time>
+        
+	</div>
+	<h2 id="001-grub-set-bakcground"><strong><code>001. Grub set Bakcground</code></strong><a class="td-heading-self-link" href="#001-grub-set-bakcground" aria-label="Heading self-link"></a></h2><div style="padding-left: 2em;">
+<h3 id="a-确认背景图片路径和格式">a. 确认背景图片路径和格式<a class="td-heading-self-link" href="#a-%e7%a1%ae%e8%ae%a4%e8%83%8c%e6%99%af%e5%9b%be%e7%89%87%e8%b7%af%e5%be%84%e5%92%8c%e6%a0%bc%e5%bc%8f" aria-label="Heading self-link"></a></h3><ol>
+<li>
+<p><strong>检查图片路径和权限</strong>：
+确保图片路径正确且具有正确的权限。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -l /boot/grub/xxx.JPG
+</span></span></code></pre></div><p>输出应类似于：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>-rw-r--r-- 1 root root 123456 Jul 16 12:34 /boot/grub/xxx.JPG
+</span></span></code></pre></div><p>如果权限不正确，可以运行以下命令进行修改：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chmod <span style="color:#666">644</span> /boot/grub/xxx.JPG
+</span></span><span style="display:flex;"><span>sudo chown root:root /boot/grub/xxx.JPG
+</span></span></code></pre></div></li>
+<li>
+<p><strong>legal format</strong>:
+图片应该是 JPG、PNG 或 TGA 格式。</p>
+</li>
+<li>
+<p><strong>确认 GRUB 支持的分辨率</strong>：
+在 GRUB 命令行界面（启动时按 <code>c</code> 键进入）运行 <code>vbeinfo</code> 命令以查看支持的分辨率。选择一个适合你屏幕的分辨率。</p>
+</li>
+</ol>
+<h3 id="b-更新-grub-配置文件">b. 更新 GRUB 配置文件<a class="td-heading-self-link" href="#b-%e6%9b%b4%e6%96%b0-grub-%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6" aria-label="Heading self-link"></a></h3><ol start="4">
+<li>
+<p><strong>编辑 GRUB 配置文件</strong>：
+打开 <code>/etc/default/grub</code> 文件进行编辑：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo nano /etc/default/grub
+</span></span></code></pre></div><p>确保以下配置行存在，并且取消注释（去掉行首的 <code>#</code>）：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#b44">GRUB_BACKGROUND</span><span style="color:#666">=</span><span style="color:#b44">/boot/grub/xxx.JPG</span>
+</span></span><span style="display:flex;"><span><span style="color:#b44">GRUB_TERMINAL</span><span style="color:#666">=</span><span style="color:#b44">gfxterm</span>
+</span></span><span style="display:flex;"><span><span style="color:#b44">GRUB_GFXMODE</span><span style="color:#666">=</span><span style="color:#b44">1024x768       # 修改为你希望的分辨率</span>
+</span></span><span style="display:flex;"><span><span style="color:#b44">GRUB_GFXPAYLOAD_LINUX</span><span style="color:#666">=</span><span style="color:#b44">keep</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>更新 GRUB 配置</strong>：
+保存并关闭文件后，运行以下命令以应用更改：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo update-grub
+</span></span></code></pre></div></li>
+<li>
+<p><strong>重启系统</strong>：
+重启系统，查看 GRUB 菜单是否显示背景图片，并且文本大小是否合适。</p>
+</li>
+</ol>
+<h3 id="c-调整字体大小">c. 调整字体大小<a class="td-heading-self-link" href="#c-%e8%b0%83%e6%95%b4%e5%ad%97%e4%bd%93%e5%a4%a7%e5%b0%8f" aria-label="Heading self-link"></a></h3><p>如果分辨率设置后仍然觉得字体太小，可以调整 GRUB 字体大小。</p>
+<ol>
+<li>
+<p><strong>生成自定义字体</strong>：
+下载并安装 <code>grub2-common</code> 包（如果尚未安装）：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install grub2-common
+</span></span></code></pre></div><p>生成适合的字体文件：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo grub-mkfont --output<span style="color:#666">=</span>/boot/grub/custom_font.pf2 --size<span style="color:#666">=</span><span style="color:#666">24</span> /usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf
+</span></span></code></pre></div></li>
+<li>
+<p><strong>配置 GRUB 使用自定义字体</strong>：
+编辑 <code>/etc/default/grub</code> 文件，添加以下行：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#b44">GRUB_FONT</span><span style="color:#666">=</span><span style="color:#b44">/boot/grub/custom_font.pf2</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>更新 GRUB 配置</strong>：
+保存并关闭文件后，运行以下命令以应用更改：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo update-grub
+</span></span></code></pre></div></li>
+<li>
+<p><strong>重启系统</strong>：
+重启系统后，GRUB 菜单应该显示使用自定义字体和背景图片。</p>
+</li>
+</ol>
+<p>通过以上步骤，你应该能够配置 GRUB 菜单使用自定义背景图片和适当的分辨率/字体大小。如果你有任何进一步的问题，请随时提问。</p>
+</div>
+<h2 id="001-grub-set-bakcground-1"><strong><code>001. Grub set Bakcground</code></strong><a class="td-heading-self-link" href="#001-grub-set-bakcground-1" aria-label="Heading self-link"></a></h2>
+</div>
+
+
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-c82325af1963eb96ae55714cd2c5e1eb">6.2 Docker Ops</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-19" class="text-body-secondary">2024年07月19日</time>
+        
+	</div>
+	
+</div>
+
+
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-29f397f8eb1e12e0169dbf04f6568600">Docker使用</h1>
 	
 	<div class="td-byline mb-4">
 		
@@ -229,6 +450,10 @@ noindex: true
     
 	
   
+
+    
+	
+  
     
     
 	
@@ -238,15 +463,31 @@ noindex: true
   
 
 <div class="td-content" style="page-break-before: always">
-    <h1 id="pg-93cbd76168361d8909953dc0ad235678">Kernel_test</h1>
+    <h1 id="pg-9f4c5c72311caa0305635cb1ebb65afa">DevOps Definition</h1>
 	
 	<div class="td-byline mb-4">
 		
         
-		<time datetime="2024-06-14" class="text-body-secondary">2024年06月14日</time>
+		<time datetime="2024-07-19" class="text-body-secondary">2024年07月19日</time>
         
 	</div>
-	<p>nice</p>
+	<h3 id="devops的定义-https-www-google-com-url-sa-t-source-web-rct-j-opi-89978449-url-https-aws-amazon-com-devops-what-is-devops-ved-2ahukewios9yz-7ghaxutsfybhercbgcqfnoecboqaw-usg-aovvaw2hgsm1ugkyzz4wqceeg1et"><a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://aws.amazon.com/devops/what-is-devops/&ved=2ahUKEwiOs9yZ-7GHAxUTsFYBHeRCBgcQFnoECBoQAw&usg=AOvVaw2hGSM1UgKYzZ4WqCEEg1ET">DevOps的定义</a><a class="td-heading-self-link" href="#devops%e7%9a%84%e5%ae%9a%e4%b9%89-https-www-google-com-url-sa-t-source-web-rct-j-opi-89978449-url-https-aws-amazon-com-devops-what-is-devops-ved-2ahukewios9yz-7ghaxutsfybhercbgcqfnoecboqaw-usg-aovvaw2hgsm1ugkyzz4wqceeg1et" aria-label="Heading self-link"></a></h3><p>您所说的 &quot;开发和操作环境达到一致&quot; 是对DevOps的一个简单理解，但DevOps的概念要比这广泛和深入得多。最权威的定义之一来自DevOps研究和评估（DORA，DevOps Research and Assessment）和一些行业权威机构，如亚马逊AWS、谷歌云和微软Azure。</p>
+<p><strong>DevOps</strong> 是一种结合软件开发（Dev）和IT运营（Ops）的方法，其目标是通过自动化、持续集成和持续交付（CI/CD）等手段，加速软件开发和发布的速度，提高软件质量和稳定性。DevOps强调跨职能团队之间的协作和沟通，包括开发人员、质量保证人员、运营人员和其他相关人员。</p>
+<p>一个较为权威的定义来自于亚马逊AWS：</p>
+<blockquote>
+<p>&quot;DevOps is the combination of cultural philosophies, practices, and tools that increases an organization’s ability to deliver applications and services at high velocity: evolving and improving products at a faster pace than organizations using traditional software development and infrastructure management processes.&quot;</p>
+</blockquote>
+<p>翻译成中文：</p>
+<blockquote>
+<p>“DevOps 是一种结合了文化理念、实践和工具的方法，能够提高组织以高速度交付应用程序和服务的能力：以比采用传统软件开发和基础设施管理流程的组织更快的速度演变和改进产品。”</p>
+</blockquote>
+<h3 id="grub的配置是否属于devops范围">GRUB的配置是否属于DevOps范围<a class="td-heading-self-link" href="#grub%e7%9a%84%e9%85%8d%e7%bd%ae%e6%98%af%e5%90%a6%e5%b1%9e%e4%ba%8edevops%e8%8c%83%e5%9b%b4" aria-label="Heading self-link"></a></h3><p>严格来说，GRUB（GRand Unified Bootloader）的配置可以算作系统运维（Operations）的一部分，而运维是DevOps的一部分。因此，GRUB的配置是涵盖在DevOps范围内的。</p>
+<p>在具体的DevOps实践中，涉及系统配置和管理的任务，比如GRUB配置、系统引导加载程序配置、内核参数调整等，通常属于运维团队的职责。这些任务在DevOps环境下可能会通过基础设施即代码（Infrastructure as Code, IaC）工具来自动化，以确保环境的一致性和可重复性。例如，使用Ansible、Puppet或Chef等工具可以自动化配置GRUB等系统设置。</p>
+<p>总结：</p>
+<ul>
+<li><strong>DevOps的定义</strong>更广泛，包括文化、实践和工具的结合，旨在加快软件交付和提高质量。</li>
+<li><strong>GRUB的配置</strong>属于系统运维的一部分，因此可以算作DevOps范围的一部分，尤其是在自动化和基础设施管理的上下文中。</li>
+</ul>
 
 </div>
 

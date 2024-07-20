@@ -6,8 +6,50 @@
     <description>Recent content in Blog on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>6.1 Ubuntu Ops</title>
+      <link>http://localhost:1313/blog/006_devops/006_001_ubuntu/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/006_devops/006_001_ubuntu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>6.2 Docker Ops</title>
+      <link>http://localhost:1313/blog/006_devops/006_002_docker/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/006_devops/006_002_docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DevOps Definition</title>
+      <link>http://localhost:1313/blog/2024/07/19/devops-definition/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/19/devops-definition/</guid>
+      <description>DevOps的定义您所说的 &amp;quot;开发和操作环境达到一致&amp;quot; 是对DevOps的一个简单理解，但DevOps的概念要比这广泛和深入得多。最权威的定义之一来自DevOps研究和评估（DORA，DevOps Research and Assessment）和一些行业权威机构，如亚马逊AWS、谷歌云和微软Azure。&#xA;DevOps 是一种结合软件开发（Dev）和IT运营（Ops）的方法，其目标是通过自动化、持续集成和持续交付（CI/CD）等手段，加速软件开发和发布的速度，提高软件质量和稳定性。DevOps强调跨职能团队之间的协作和沟通，包括开发人员、质量保证人员、运营人员和其他相关人员。&#xA;一个较为权威的定义来自于亚马逊AWS：&#xA;&amp;quot;DevOps is the combination of cultural philosophies, practices, and tools that increases an organization’s ability to deliver applications and services at high velocity: evolving and improving products at a faster pace than organizations using traditional software development and infrastructure management processes.&amp;quot;&#xA;翻译成中文：&#xA;“DevOps 是一种结合了文化理念、实践和工具的方法，能够提高组织以高速度交付应用程序和服务的能力：以比采用传统软件开发和基础设施管理流程的组织更快的速度演变和改进产品。”&#xA;GRUB的配置是否属于DevOps范围严格来说，GRUB（GRand Unified Bootloader）的配置可以算作系统运维（Operations）的一部分，而运维是DevOps的一部分。因此，GRUB的配置是涵盖在DevOps范围内的。&#xA;在具体的DevOps实践中，涉及系统配置和管理的任务，比如GRUB配置、系统引导加载程序配置、内核参数调整等，通常属于运维团队的职责。这些任务在DevOps环境下可能会通过基础设施即代码（Infrastructure as Code, IaC）工具来自动化，以确保环境的一致性和可重复性。例如，使用Ansible、Puppet或Chef等工具可以自动化配置GRUB等系统设置。&#xA;总结：&#xA;DevOps的定义更广泛，包括文化、实践和工具的结合，旨在加快软件交付和提高质量。 GRUB的配置属于系统运维的一部分，因此可以算作DevOps范围的一部分，尤其是在自动化和基础设施管理的上下文中。 </description>
+    </item>
+    <item>
+      <title>Grub Setting</title>
+      <link>http://localhost:1313/blog/2024/07/19/grub-setting/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/19/grub-setting/</guid>
+      <description>001. Grub set Bakcground&#xD;a. 确认背景图片路径和格式 检查图片路径和权限： 确保图片路径正确且具有正确的权限。&#xA;ls -l /boot/grub/xxx.JPG 输出应类似于：&#xA;-rw-r--r-- 1 root root 123456 Jul 16 12:34 /boot/grub/xxx.JPG 如果权限不正确，可以运行以下命令进行修改：&#xA;sudo chmod 644 /boot/grub/xxx.JPG sudo chown root:root /boot/grub/xxx.JPG legal format: 图片应该是 JPG、PNG 或 TGA 格式。&#xA;确认 GRUB 支持的分辨率： 在 GRUB 命令行界面（启动时按 c 键进入）运行 vbeinfo 命令以查看支持的分辨率。选择一个适合你屏幕的分辨率。&#xA;b. 更新 GRUB 配置文件 编辑 GRUB 配置文件： 打开 /etc/default/grub 文件进行编辑：&#xA;sudo nano /etc/default/grub 确保以下配置行存在，并且取消注释（去掉行首的 #）：&#xA;GRUB_BACKGROUND=/boot/grub/xxx.JPG GRUB_TERMINAL=gfxterm GRUB_GFXMODE=1024x768 # 修改为你希望的分辨率 GRUB_GFXPAYLOAD_LINUX=keep 更新 GRUB 配置： 保存并关闭文件后，运行以下命令以应用更改：</description>
+    </item>
+    <item>
+      <title>Quantum</title>
+      <link>http://localhost:1313/blog/2024/07/19/quantum/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/19/quantum/</guid>
+      <description>https://youtu.be/rBm73zxSL8U?si=3Q7FuuCCgTLttpom&#xA;1. TermsQuantum Supermacy量子计算机在该领域实现对传统计算机的碾压&#xA;Superposition中文翻译作“量子叠加” 粒子在量子叠加态下，可以同时有多个值&#xA;Entanglement中文翻译作“量子纠缠” 两个粒子，其中一个的状态被改变，另一个例子的状态也立刻被改变。 也会称为“相干性” 2020年7月20日，日本东北大学&amp;amp;悉尼威尔士大学，把相干性（量子比特维持量子态的时间）延长到10ms（毫秒） 已经比过去提升1000倍&#xA;需要同时处理N（上万遍或更多）遍同一个问题，最后统计结果得出数值 因此，一个53qubit的计算机，实际有效的量子比特可能是12qubit，因为还有大量的qubits需要进行冗余的计算，以防止某一个qubit因为波函数坍缩而失去计算能力&#xA;波函数坍塌的现象就叫做“退相干” 技术奇点： 因为宇宙射线无法在地表被屏蔽，所以宇宙射线会造成退相干问题。&#xA;波函数坍缩薛定谔的猫 受到探测或宇宙射线的干扰，就立刻会让粒子产生波函数坍缩，得到一个固定的结果，即，不是1就是0.&#xA;2. 方案&#xD;超导量子计算机a. 需要： 需要超低温 b. 公司 google &amp;amp; ibm&#xA;拓扑离子阱电子计算机光量子计算机中国大陆潘建伟团队&#xA;3. 未来的可能a. 太空制造量子计算机b. 密码学需要全新的密码算法&#xD;c. AI人工智能计算力的蓬勃发展，&#xD;d. 短期天气预报极其精准&#xD;e. 生物医疗</description>
+    </item>
+    <item>
+      <title>CMake Key Points in Qt6</title>
+      <link>http://localhost:1313/blog/2024/07/18/cmake-key-points-in-qt6/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/18/cmake-key-points-in-qt6/</guid>
+      <description>&#xD;001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)&#xD;find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usages&#xD;find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：&#xA;这行代码试图找到名为 Qt6 或 Qt5 的 Qt 版本，并且要求找到其中的 Core 组件。 如果系统上安装了 Qt6，这行代码会找到 Qt6；如果没有找到 Qt6，会尝试找到 Qt5。&#xA;find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：&#xA;这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。&#xA;cmake_minimum_required(VERSION 3.14)project(LibDiyToolsWrapper LANGUAGES CXX)set(CMAKE_AUTOUIC ON)set(CMAKE_CXX_STANDARD 17)set(CMAKE_CXX_STANDARD_REQUIRED ON)add_library( LibDiyToolsWrapper SHARED LibDiyToolsWrapper_global.h )include_directories( .. ../inc )target_link_libraries( LibDiyToolsWrapper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )target_compile_definitions(LibDiyToolsWrapper PRIVATE LIBDIYTOOLSWRAPPER_LIBRARY)set( DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug,) 嵌套&#xD;set( DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug, DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Release, DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Profile, ${CMAKE_BINARY_DIR}/Unknown&amp;gt;&amp;gt;&amp;gt; ) $&amp;lt;IF: # 第一层开始 $&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/Debug, # 第一层条件和结果 $&amp;lt;IF: # 第二层开始 $&amp;lt;CONFIG:Release&amp;gt;,${CMAKE_BINARY_DIR}/Release, # 第二层条件和结果 $&amp;lt;IF: # 第三层开始 $&amp;lt;CONFIG:Profile&amp;gt;,${CMAKE_BINARY_DIR}/Profile, # 第三层条件和结果 ${CMAKE_BINARY_DIR}/Unknown # 默认值 &amp;gt; # 第三层结束 &amp;gt; # 第二层结束 &amp;gt; # 第一层结束 </description>
+    </item>
     <item>
       <title>Docsy`s Interesting Tricks</title>
       <link>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</link>
@@ -62,14 +104,7 @@
       <link>http://localhost:1313/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/</link>
       <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/</guid>
-      <description>一、最后的结论ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。 但是不应该有但是了，因为人家免费，还想怎么样。&#xA;二、经过我负责研发部的项目管理(3月11日）至今已经17周了。&#xA;2.1 痛点a. 文档的格式各种各样每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。&#xA;b. 老板对于文档没有办法呈现时间进度c. 对于员工每周的工作周报没有办法在开会时看见三、优缺点3.1 优点a. frappe-forum 非常活跃。半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。&#xA;b. 轻度使用，性能稳定c. 结合website，可以实现企业的官方网站融合估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。 它里面给了很多框架。&#xA;d. 可以通过邮件与外部直接打通可以发送成功，但是耗时2~3分钟 gmail可以收到 qqmail可以收到 3.2 缺点a. 中文汉化得不完整有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。 在UOM（unity of measure）中，所有的测量单位全都是英文。 例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）&#xA;附注1：企业规模的标准是什么？&#xD;企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：&#xA;中国的企业规模标准在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：&#xA;工业企业 微型企业：从业人员少于20人，营业收入少于300万元。 小型企业：从业人员20-300人，营业收入300万-2000万元。 中型企业：从业人员300-1000人，营业收入2000万-4亿元。 大型企业：从业人员超过1000人，营业收入超过4亿元。 建筑业 微型企业：从业人员少于50人，营业收入少于300万元。 小型企业：从业人员50-300人，营业收入300万-3000万元。 中型企业：从业人员300-3000人，营业收入3000万-2亿元。 大型企业：从业人员超过3000人，营业收入超过2亿元。 国际标准国际上，企业规模的划分也有不同的标准。例如：&#xA;欧盟标准欧盟对中小企业的定义主要依据《中小企业定义指南》：&#xA;微型企业：员工少于10人，年营业额或资产总额不超过200万欧元。 小型企业：员工少于50人，年营业额或资产总额不超过1000万欧元。 中型企业：员工少于250人，年营业额不超过5000万欧元或资产总额不超过4300万欧元。 美国标准美国小企业管理局（SBA）根据《小企业法》制定了中小企业的定义标准，通常依据行业、员工数量或年营业额。以下是几个例子：&#xA;制造业和矿业：员工少于500人。 批发业：员工少于100人。 零售业和服务业：年营业额不超过750万美元（根据行业不同而有所不同）。 总结不同国家和组织根据自身经济结构和实际情况制定了不同的企业规模标准。通常，政府机构和统计部门会根据企业的员工数量、营业收入、资产规模等多个指标综合考量，并制定相应的划分标准。&#xA;对于中国的具体标准，可以参考国家统计局发布的《中小企业划型标准规定》。国际上，欧盟和美国也有各自的标准，具体情况会因行业和地区而异。</description>
-    </item>
-    <item>
-      <title>Kernel_test</title>
-      <link>http://localhost:1313/blog/2024/06/14/kernel_test/</link>
-      <pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/2024/06/14/kernel_test/</guid>
-      <description>nice</description>
+      <description>一、最后的结论ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。 但是不应该有但是了，因为人家免费，还想怎么样。&#xA;二、经过我负责项目管理已经17周了。&#xA;2.1 痛点a. 文档的格式各种各样每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。&#xA;b. 老板对于文档没有办法呈现时间进度c. 对于员工每周的工作周报没有办法在开会时看见三、优缺点3.1 优点a. frappe-forum 非常活跃。半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。&#xA;b. 轻度使用，性能稳定c. 结合website，可以实现企业的官方网站融合估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。 它里面给了很多框架。&#xA;d. 可以通过邮件与外部直接打通可以发送成功，但是耗时2~3分钟 gmail可以收到 qqmail可以收到 3.2 缺点a. 中文汉化得不完整有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。 在UOM（unity of measure）中，所有的测量单位全都是英文。 例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）&#xA;附注1：企业规模的标准是什么？&#xD;企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：&#xA;中国的企业规模标准在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：&#xA;工业企业 微型企业：从业人员少于20人，营业收入少于300万元。 小型企业：从业人员20-300人，营业收入300万-2000万元。 中型企业：从业人员300-1000人，营业收入2000万-4亿元。 大型企业：从业人员超过1000人，营业收入超过4亿元。 建筑业 微型企业：从业人员少于50人，营业收入少于300万元。 小型企业：从业人员50-300人，营业收入300万-3000万元。 中型企业：从业人员300-3000人，营业收入3000万-2亿元。 大型企业：从业人员超过3000人，营业收入超过2亿元。 国际标准国际上，企业规模的划分也有不同的标准。例如：&#xA;欧盟标准欧盟对中小企业的定义主要依据《中小企业定义指南》：&#xA;微型企业：员工少于10人，年营业额或资产总额不超过200万欧元。 小型企业：员工少于50人，年营业额或资产总额不超过1000万欧元。 中型企业：员工少于250人，年营业额不超过5000万欧元或资产总额不超过4300万欧元。 美国标准美国小企业管理局（SBA）根据《小企业法》制定了中小企业的定义标准，通常依据行业、员工数量或年营业额。以下是几个例子：&#xA;制造业和矿业：员工少于500人。 批发业：员工少于100人。 零售业和服务业：年营业额不超过750万美元（根据行业不同而有所不同）。 总结不同国家和组织根据自身经济结构和实际情况制定了不同的企业规模标准。通常，政府机构和统计部门会根据企业的员工数量、营业收入、资产规模等多个指标综合考量，并制定相应的划分标准。&#xA;对于中国的具体标准，可以参考国家统计局发布的《中小企业划型标准规定》。国际上，欧盟和美国也有各自的标准，具体情况会因行业和地区而异。</description>
     </item>
     <item>
       <title>Kernel_test</title>
@@ -98,13 +133,6 @@
       <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</guid>
       <description>001. categories如何增加子类呢？&#xD;例如：categories: [&amp;quot;blog&amp;quot;][&amp;quot;ERP&amp;quot;]错误提示： Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key&#xD;正确做法： categories:&#xD;- blog&#xD;- ERP&#xD;- ERPNext&#xD;002. 如何制造块缩进&#xD;&amp;lt;div style=&amp;#34;padding-left: 2em;&amp;#34;&amp;gt; now the contents included by this div section will be indented 2em.&#xA;003. 如何嵌入Merimaid流程图&#xD;第一种是不需要加入折叠功能的显示 被注释掉的这两句代码是必须的 取消掉注释的那两句，就可以正常显示了 第二种是加入了折叠功能的显示Mermaid的参考资料 在要显示mermaid流程图的md文档中加入如下代码 然后还是在这一份md文档中，需要显示流程图的位置，如下格式写：&#xA;&amp;lt;details&amp;gt;&#xD;&amp;lt;summary&amp;gt;流程图x&amp;lt;/summary&amp;gt;&#xD;&amp;lt;pre class=&amp;quot;mermaid&amp;quot;&amp;gt;&#xD;graph TD&#xD;A[开始]&#xD;...&#xD;...&#xD;&amp;lt;/pre&amp;gt;&#xD;&amp;lt;/details&amp;gt;&#xD;这里有一个无法忽略的BUG 清空网页cookie之后，该流程图就正常显示，但是一旦按下F5刷新网页之后，流程图就显示出错了 所以这种方法其实不行</description>
-    </item>
-    <item>
-      <title>Kernel_Analysis</title>
-      <link>http://localhost:1313/blog/2024/06/10/kernel_analysis/</link>
-      <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/2024/06/10/kernel_analysis/</guid>
-      <description>Docsy确实好用 试试看</description>
     </item>
     <item>
       <title>Roe v. Wade</title>

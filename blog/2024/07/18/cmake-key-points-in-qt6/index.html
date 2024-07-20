@@ -18,17 +18,19 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>CMake Key Points in Qt6 | 嵌入式系统 Enthusiast</title>
-<meta name="description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
+<meta name="description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
 这行代码试图找到名为 Qt6 或 Qt5 的 Qt 版本，并且要求找到其中的 Core 组件。 如果系统上安装了 Qt6，这行代码会找到 Qt6；如果没有找到 Qt6，会尝试找到 Qt5。
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
-这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。">
+这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。
+cmake_minimum_required(VERSION 3.14)project(LibDiyToolsWrapper LANGUAGES CXX)set(CMAKE_AUTOUIC ON)set(CMAKE_CXX_STANDARD 17)set(CMAKE_CXX_STANDARD_REQUIRED ON)add_library( LibDiyToolsWrapper SHARED LibDiyToolsWrapper_global.h )include_directories( .. ../inc )target_link_libraries( LibDiyToolsWrapper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )target_compile_definitions(LibDiyToolsWrapper PRIVATE LIBDIYTOOLSWRAPPER_LIBRARY)set( DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug,) 嵌套set( DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug, DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Release, DESTINATION_DIR $&amp;lt;IF:$&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/finalDLLs/Profile, ${CMAKE_BINARY_DIR}/Unknown&amp;gt;&amp;gt;&amp;gt; ) $&amp;lt;IF: # 第一层开始 $&amp;lt;CONFIG:Debug&amp;gt;,${CMAKE_BINARY_DIR}/Debug, # 第一层条件和结果 $&amp;lt;IF: # 第二层开始 $&amp;lt;CONFIG:Release&amp;gt;,${CMAKE_BINARY_DIR}/Release, # 第二层条件和结果 $&amp;lt;IF: # 第三层开始 $&amp;lt;CONFIG:Profile&amp;gt;,${CMAKE_BINARY_DIR}/Profile, # 第三层条件和结果 ${CMAKE_BINARY_DIR}/Unknown # 默认值 &amp;gt; # 第三层结束 &amp;gt; # 第二层结束 &amp;gt; # 第一层结束 ">
 <meta property="og:url" content="http://localhost:1313/blog/2024/07/18/cmake-key-points-in-qt6/">
   <meta property="og:site_name" content="嵌入式系统 Enthusiast">
   <meta property="og:title" content="CMake Key Points in Qt6">
-  <meta property="og:description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
+  <meta property="og:description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
 这行代码试图找到名为 Qt6 或 Qt5 的 Qt 版本，并且要求找到其中的 Core 组件。 如果系统上安装了 Qt6，这行代码会找到 Qt6；如果没有找到 Qt6，会尝试找到 Qt5。
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
-这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。">
+这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。
+cmake_minimum_required(VERSION 3.14)project(LibDiyToolsWrapper LANGUAGES CXX)set(CMAKE_AUTOUIC ON)set(CMAKE_CXX_STANDARD 17)set(CMAKE_CXX_STANDARD_REQUIRED ON)add_library( LibDiyToolsWrapper SHARED LibDiyToolsWrapper_global.h )include_directories( .. ../inc )target_link_libraries( LibDiyToolsWrapper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )target_compile_definitions(LibDiyToolsWrapper PRIVATE LIBDIYTOOLSWRAPPER_LIBRARY)set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug,) 嵌套set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug, DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Release, DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Profile, ${CMAKE_BINARY_DIR}/Unknown&gt;&gt;&gt; ) $&lt;IF: # 第一层开始 $&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/Debug, # 第一层条件和结果 $&lt;IF: # 第二层开始 $&lt;CONFIG:Release&gt;,${CMAKE_BINARY_DIR}/Release, # 第二层条件和结果 $&lt;IF: # 第三层开始 $&lt;CONFIG:Profile&gt;,${CMAKE_BINARY_DIR}/Profile, # 第三层条件和结果 ${CMAKE_BINARY_DIR}/Unknown # 默认值 &gt; # 第三层结束 &gt; # 第二层结束 &gt; # 第一层结束 ">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
@@ -36,20 +38,22 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
     <meta property="article:modified_time" content="2024-07-18T00:00:00+00:00">
 
   <meta itemprop="name" content="CMake Key Points in Qt6">
-  <meta itemprop="description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
+  <meta itemprop="description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
 这行代码试图找到名为 Qt6 或 Qt5 的 Qt 版本，并且要求找到其中的 Core 组件。 如果系统上安装了 Qt6，这行代码会找到 Qt6；如果没有找到 Qt6，会尝试找到 Qt5。
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
-这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。">
+这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。
+cmake_minimum_required(VERSION 3.14)project(LibDiyToolsWrapper LANGUAGES CXX)set(CMAKE_AUTOUIC ON)set(CMAKE_CXX_STANDARD 17)set(CMAKE_CXX_STANDARD_REQUIRED ON)add_library( LibDiyToolsWrapper SHARED LibDiyToolsWrapper_global.h )include_directories( .. ../inc )target_link_libraries( LibDiyToolsWrapper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )target_compile_definitions(LibDiyToolsWrapper PRIVATE LIBDIYTOOLSWRAPPER_LIBRARY)set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug,) 嵌套set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug, DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Release, DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Profile, ${CMAKE_BINARY_DIR}/Unknown&gt;&gt;&gt; ) $&lt;IF: # 第一层开始 $&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/Debug, # 第一层条件和结果 $&lt;IF: # 第二层开始 $&lt;CONFIG:Release&gt;,${CMAKE_BINARY_DIR}/Release, # 第二层条件和结果 $&lt;IF: # 第三层开始 $&lt;CONFIG:Profile&gt;,${CMAKE_BINARY_DIR}/Profile, # 第三层条件和结果 ${CMAKE_BINARY_DIR}/Unknown # 默认值 &gt; # 第三层结束 &gt; # 第二层结束 &gt; # 第一层结束 ">
   <meta itemprop="datePublished" content="2024-07-18T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-07-18T00:00:00+00:00">
-  <meta itemprop="wordCount" content="49">
+  <meta itemprop="wordCount" content="111">
   <meta itemprop="keywords" content="Blog,Qt Development,Qt6,CMake">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="CMake Key Points in Qt6">
-  <meta name="twitter:description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
+  <meta name="twitter:description" content="001. find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets)find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets) Usagesfind_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)：
 这行代码试图找到名为 Qt6 或 Qt5 的 Qt 版本，并且要求找到其中的 Core 组件。 如果系统上安装了 Qt6，这行代码会找到 Qt6；如果没有找到 Qt6，会尝试找到 Qt5。
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
-这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。">
+这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。
+cmake_minimum_required(VERSION 3.14)project(LibDiyToolsWrapper LANGUAGES CXX)set(CMAKE_AUTOUIC ON)set(CMAKE_CXX_STANDARD 17)set(CMAKE_CXX_STANDARD_REQUIRED ON)add_library( LibDiyToolsWrapper SHARED LibDiyToolsWrapper_global.h )include_directories( .. ../inc )target_link_libraries( LibDiyToolsWrapper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )target_compile_definitions(LibDiyToolsWrapper PRIVATE LIBDIYTOOLSWRAPPER_LIBRARY)set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug,) 嵌套set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug, DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Release, DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Profile, ${CMAKE_BINARY_DIR}/Unknown&gt;&gt;&gt; ) $&lt;IF: # 第一层开始 $&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/Debug, # 第一层条件和结果 $&lt;IF: # 第二层开始 $&lt;CONFIG:Release&gt;,${CMAKE_BINARY_DIR}/Release, # 第二层条件和结果 $&lt;IF: # 第三层开始 $&lt;CONFIG:Profile&gt;,${CMAKE_BINARY_DIR}/Profile, # 第三层条件和结果 ${CMAKE_BINARY_DIR}/Unknown # 默认值 &gt; # 第三层结束 &gt; # 第二层结束 &gt; # 第一层结束 ">
 <link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -216,23 +220,40 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-006-devops-li">
   <a href="/blog/006_devops/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-006-devops"><span class="">006_Grp_DevOps</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8-li">
-  <a href="/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8"><span class="">Docker使用</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-14-kernel-test-li">
-  <a href="/blog/2024/06/14/kernel_test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-kernel-test"><span class="">Kernel_test</span></a>
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-006-devops-006-001-ubuntu-li">
+  <a href="/blog/006_devops/006_001_ubuntu/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-006-devops-006-001-ubuntu"><span class="">6.1 Ubuntu Ops</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-19-grub-setting-li">
+  <a href="/blog/2024/07/19/grub-setting/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-19-grub-setting"><span class="">Grub Setting</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-010-linux-li">
-  <a href="/blog/010_linux/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-010-linux"><span class="">010_Grp_Linux</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-006-devops-006-002-docker-li">
+  <a href="/blog/006_devops/006_002_docker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-006-devops-006-002-docker"><span class="">6.2 Docker Ops</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8-li">
+  <a href="/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8"><span class="">Docker使用</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-19-devops-definition-li">
+  <a href="/blog/2024/07/19/devops-definition/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-19-devops-definition"><span class="">DevOps Definition</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-007-quantum-li">
+  <a href="/blog/007_quantum/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-007-quantum"><span class="">007_Grp_Quamtum</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-19-quantum-li">
+  <a href="/blog/2024/07/19/quantum/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-19-quantum"><span class="">Quantum</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-010-linux-development-li">
+  <a href="/blog/010_linux_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-010-linux-development"><span class="">010_Grp_Linux</span></a>
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-14-kernel-test-li">
   <a href="/blog/2024/06/14/kernel_test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-kernel-test"><span class="">Kernel_test</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-kernel-analysis-li">
-  <a href="/blog/2024/06/10/kernel_analysis/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-kernel-analysis"><span class="">Kernel_Analysis</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-011-windows-li">
-  <a href="/blog/011_windows/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-011-windows"><span class="">011_Grp_Windows</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-011-windows-development-li">
+  <a href="/blog/011_windows_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-011-windows-development"><span class="">011_Grp_Windows</span></a>
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae-li">
   <a href="/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae"><span class="">声卡项目</span></a>
@@ -281,13 +302,25 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
 
 </div>
 
-            
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#set-destination-dir-if-config-debug-cmake-binary-dir-finaldlls-debug-嵌套"><code>set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug,) 嵌套</code></a></li>
+  </ul>
+</nav>
+      </div>
+    
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">17</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">20</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">5</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
@@ -297,7 +330,9 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/ubuntu-ops/" data-taxonomy-term="ubuntu-ops"><span class="taxonomy-label">Ubuntu Ops</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">1</span></a></li>
@@ -341,7 +376,25 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)：
 <p><code>find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)</code>：</p>
 <p>这行代码利用第一个 find_package 结果中设置的 QT_VERSION_MAJOR 变量来找到具体的 Qt 版本及其 Core 组件。</p>
 </div>
-</details>    
+</details>
+<h4 id="cmake-minimum-required-version-3-14"><code>cmake_minimum_required(VERSION 3.14)</code><a class="td-heading-self-link" href="#cmake-minimum-required-version-3-14" aria-label="Heading self-link"></a></h4><h4 id="project-libdiytoolswrapper-languages-cxx"><code>project(LibDiyToolsWrapper LANGUAGES CXX)</code><a class="td-heading-self-link" href="#project-libdiytoolswrapper-languages-cxx" aria-label="Heading self-link"></a></h4><h4 id="set-cmake-autouic-on"><code>set(CMAKE_AUTOUIC ON)</code><a class="td-heading-self-link" href="#set-cmake-autouic-on" aria-label="Heading self-link"></a></h4><h4 id="set-cmake-cxx-standard-17"><code>set(CMAKE_CXX_STANDARD 17)</code><a class="td-heading-self-link" href="#set-cmake-cxx-standard-17" aria-label="Heading self-link"></a></h4><h4 id="set-cmake-cxx-standard-required-on"><code>set(CMAKE_CXX_STANDARD_REQUIRED ON)</code><a class="td-heading-self-link" href="#set-cmake-cxx-standard-required-on" aria-label="Heading self-link"></a></h4><h4 id="add-library-libdiytoolswrapper-shared-libdiytoolswrapper-global-h"><code>add_library( LibDiyToolsWrapper SHARED  LibDiyToolsWrapper_global.h  )</code><a class="td-heading-self-link" href="#add-library-libdiytoolswrapper-shared-libdiytoolswrapper-global-h" aria-label="Heading self-link"></a></h4><h4 id="include-directories-inc"><code>include_directories( .. ../inc )</code><a class="td-heading-self-link" href="#include-directories-inc" aria-label="Heading self-link"></a></h4><h4 id="target-link-libraries-libdiytoolswrapper-private-qt-qt-version-major-widgets"><code>target_link_libraries( LibDiyToolsWrapper PRIVATE Qt${QT_VERSION_MAJOR}::Widgets )</code><a class="td-heading-self-link" href="#target-link-libraries-libdiytoolswrapper-private-qt-qt-version-major-widgets" aria-label="Heading self-link"></a></h4><h4 id="target-compile-definitions-libdiytoolswrapper-private-libdiytoolswrapper-library"><code>target_compile_definitions(LibDiyToolsWrapper PRIVATE LIBDIYTOOLSWRAPPER_LIBRARY)</code><a class="td-heading-self-link" href="#target-compile-definitions-libdiytoolswrapper-private-libdiytoolswrapper-library" aria-label="Heading self-link"></a></h4><h2 id="set-destination-dir-if-config-debug-cmake-binary-dir-finaldlls-debug-嵌套"><code>set( DESTINATION_DIR $&lt;IF:$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/finalDLLs/Debug,) 嵌套</code><a class="td-heading-self-link" href="#set-destination-dir-if-config-debug-cmake-binary-dir-finaldlls-debug-%e5%b5%8c%e5%a5%97" aria-label="Heading self-link"></a></h2><div style="padding-left: 2em;">
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span><span style="color:#a2f">set</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">DESTINATION_DIR</span> <span style="color:#666">$&lt;</span><span style="color:#b8860b">IF:$&lt;CONFIG:Debug</span><span style="color:#666">&gt;</span><span style="color:#b44">,</span><span style="color:#666">${</span><span style="color:#b8860b">CMAKE_BINARY_DIR</span><span style="color:#666">}</span><span style="color:#b44">/finalDLLs/Debug,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">DESTINATION_DIR</span> <span style="color:#666">$&lt;</span><span style="color:#b8860b">IF:$&lt;CONFIG:Debug</span><span style="color:#666">&gt;</span><span style="color:#b44">,</span><span style="color:#666">${</span><span style="color:#b8860b">CMAKE_BINARY_DIR</span><span style="color:#666">}</span><span style="color:#b44">/finalDLLs/Release,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#b44">DESTINATION_DIR</span> <span style="color:#666">$&lt;</span><span style="color:#b8860b">IF:$&lt;CONFIG:Debug</span><span style="color:#666">&gt;</span><span style="color:#b44">,</span><span style="color:#666">${</span><span style="color:#b8860b">CMAKE_BINARY_DIR</span><span style="color:#666">}</span><span style="color:#b44">/finalDLLs/Profile,</span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#666">${</span><span style="color:#b8860b">CMAKE_BINARY_DIR</span><span style="color:#666">}</span><span style="color:#b44">/Unknown&gt;&gt;&gt;</span>
+</span></span><span style="display:flex;"><span>)<span style="">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span><span style="">$&lt;IF:</span>               <span style="color:#080;font-style:italic"># 第一层开始
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="">$&lt;CONFIG:Debug&gt;,${CMAKE_BINARY_DIR}/Debug,</span>  <span style="color:#080;font-style:italic"># 第一层条件和结果
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="">$&lt;IF:</span>           <span style="color:#080;font-style:italic"># 第二层开始
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>        <span style="">$&lt;CONFIG:Release&gt;,${CMAKE_BINARY_DIR}/Release,</span>  <span style="color:#080;font-style:italic"># 第二层条件和结果
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>        <span style="">$&lt;IF:</span>       <span style="color:#080;font-style:italic"># 第三层开始
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>            <span style="">$&lt;CONFIG:Profile&gt;,${CMAKE_BINARY_DIR}/Profile,</span>  <span style="color:#080;font-style:italic"># 第三层条件和结果
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>            <span style="">${CMAKE_BINARY_DIR}/Unknown</span>  <span style="color:#080;font-style:italic"># 默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>        <span style="">&gt;</span>  <span style="color:#080;font-style:italic"># 第三层结束
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="">&gt;</span>  <span style="color:#080;font-style:italic"># 第二层结束
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="">&gt;</span>  <span style="color:#080;font-style:italic"># 第一层结束
+</span></span></span></code></pre></div></div>
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
   <li>
     <a class="btn btn-primary disabled"><span class="me-1">←</span>上一页</a>
