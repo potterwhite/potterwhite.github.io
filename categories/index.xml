@@ -6,13 +6,20 @@
     <description>Recent content in Categories on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 22 Jul 2024 22:33:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog</title>
       <link>http://localhost:1313/categories/blog/</link>
-      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/blog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Theology</title>
+      <link>http://localhost:1313/categories/theology/</link>
+      <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/theology/</guid>
       <description></description>
     </item>
     <item>
