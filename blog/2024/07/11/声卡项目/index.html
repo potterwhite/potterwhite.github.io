@@ -36,7 +36,7 @@
 二、主要的函数流程图1 _EnumerateAudioEndpointsthis is the first operation of our process A. and it start with CoCreateInstance() to create object of IMMDeviceEnumerator B. then if success, use IMMDeviceEnumerator.EnumAudioEndpoint() to enumerate all endpoints(actually include all input &amp; output devices, but API can choose i or o or both devices) in this machine. C. if there exist endpoint, to check the number of endpoints with IMMDeviceCollection.GetCount(). D. use for loop to enum every endpoint, retrieve its data with IMMDeviceCollection.">
   <meta itemprop="datePublished" content="2024-07-11T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-07-11T00:00:00+00:00">
-  <meta itemprop="wordCount" content="894">
+  <meta itemprop="wordCount" content="928">
   <meta itemprop="keywords" content="Blog,Windows">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="声卡项目">
@@ -702,10 +702,40 @@ Upon failure, *ppv contains NULL.</br>
 </span></span><span style="display:flex;"><span>  [out] <span style="color:#0b0;font-weight:bold">void</span>        <span style="color:#666">**</span>ppInterface
 </span></span><span style="display:flex;"><span>);
 </span></span></code></pre></div><h3 id="parameters-description">Parameters Description<a class="td-heading-self-link" href="#parameters-description" aria-label="Heading self-link"></a></h3><p><code>iid</code>:
-interface identifier
-<code>dwClsCtx</code>:
-double word Class Context
-<code>pActivationParams</code>:</p>
+interface identifier</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#a0a000">Exp</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">const</span> IID IID_IAudioSessionControl2 <span style="color:#666">=</span> __uuidof(IAudioSessionControl2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">1.</span> IID_IAudioClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">2.</span> IID_IAudioEndpointVolume
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">3.</span> IID_IAudioMeterInformation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">4.</span> IID_IAudioSessionManager
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">5.</span> IID_IAudioSessionManager2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">6.</span> IID_IBaseFilter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">7.</span> IID_IDeviceTopology
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">8.</span> IID_IDirectSound
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">9.</span> IID_IDirectSound8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">10.</span> IID_IDirectSoundCapture
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">11.</span> IID_IDirectSoundCapture8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">12.</span> IID_IMFTrustedOutput
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">13.</span> IID_ISpatialAudioClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">14.</span> IID_ISpatialAudioMetadataClient
+</span></span></code></pre></div><p><code>dwClsCtx</code>:
+double word Class Context</p>
+<p><code>pActivationParams</code>:</p>
 <p><code>ppInterface</code></p>
 </div> 
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
