@@ -376,6 +376,16 @@
     </ul>
     
   
+    
+    
+	
+
+    <li><a href="#pg-1499ff69b052c9e5aaa6c92f8e495717">ChatGPT</a></li>
+
+
+
+    
+  
 
     </ul>
     
@@ -622,6 +632,37 @@
     
 	
 
+    <li><a href="#pg-0856e343750cb09f85d1ca37f55d4fc4">008_Compiler_Linker</a></li>
+
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-293adf722c4529b076e164d510ca4af6">QtCreator下的MinGW和MSVC编译器</a></li>
+
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+
     <li><a href="#pg-b2730c31ab14e370729f9c84d6670d0b">010_Grp_Linux</a></li>
 
 
@@ -665,6 +706,16 @@
   
   
 
+  
+    
+    
+	
+
+    <li><a href="#pg-47620737248f2f9a9b5731e3b312018e">ASIO</a></li>
+
+
+
+    
   
     
     
@@ -1825,6 +1876,60 @@ Leo是可以做API接入的，而且应该是有150个credit可以使用（每�
     
 	
   
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-1499ff69b052c9e5aaa6c92f8e495717">ChatGPT</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-01" class="text-body-secondary">2024年08月01日</time>
+        
+	</div>
+	<h3 id="5月13号以后-plus用户的权益-https-help-openai-com-en-articles-6950777-what-is-chatgpt-plus-h-d78bb59065"><a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus#h_d78bb59065">5月13号以后，Plus用户的权益</a><a class="td-heading-self-link" href="#5%e6%9c%8813%e5%8f%b7%e4%bb%a5%e5%90%8e-plus%e7%94%a8%e6%88%b7%e7%9a%84%e6%9d%83%e7%9b%8a-https-help-openai-com-en-articles-6950777-what-is-chatgpt-plus-h-d78bb59065" aria-label="Heading self-link"></a></h3><div style="padding-left: 2em;">
+<p>这里说的是plus，3小时80条</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Free</th>
+<th>Plus</th>
+<th>Team</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4o-Msg_limit</td>
+<td>16条/3小时</td>
+<td>80条/3小时</td>
+<td>160条/3小时</td>
+</tr>
+<tr>
+<td>4-Msg_limit</td>
+<td>8条/3小时</td>
+<td>40条/3小时</td>
+<td>80条/3小时</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+
+
+
+
+    
+	
+  
 
     
 	
@@ -2519,6 +2624,85 @@ google &amp; ibm</p>
   
 
 <div class="td-content" style="page-break-before: always">
+    <h1 id="pg-0856e343750cb09f85d1ca37f55d4fc4">008_Compiler_Linker</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-01" class="text-body-secondary">2024年08月01日</time>
+        
+	</div>
+	
+</div>
+
+
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-293adf722c4529b076e164d510ca4af6">QtCreator下的MinGW和MSVC编译器</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-01" class="text-body-secondary">2024年08月01日</time>
+        
+	</div>
+	<h2 id="problem"><code>Problem</code><a class="td-heading-self-link" href="#problem" aria-label="Heading self-link"></a></h2><p>My project is running at the kit of MSVC
+When it was switched to MinGW
+Everything weired</p>
+<p>call the dll, but no correct response happens.
+I tried to delete dllls all, then my Qt binary exe returns error that &quot;...dlls not found..&quot;</p>
+<p><img alt="错误提示1" src="/2024/August/1/dlls_not_found.png"></p>
+<p>so it told me implicitly that Qt exe did not call wrong dlls or buffers potentially.</p>
+<p>and i inserted many debug std::count msgs in dll, but i could not even find them one at Qt exe console screen.</p>
+<h2 id="reason"><code>Reason</code><a class="td-heading-self-link" href="#reason" aria-label="Heading self-link"></a></h2><p>I checked as many as possible aspect of my project, but nothing appeared in front of me.
+Until i realized that i changed this project`s kit from MSVC original to MinGW used to be for the reason of debugging other modules.</p>
+<p><img alt="my qt kits" src="/2024/August/1/kits.png"></p>
+<p><img alt="mingw" src="/2024/August/1/compilers_mingw.png"></p>
+<p><img alt="msvc" src="/2024/August/1/compilers_msvc++.png"></p>
+<h2 id="solution"><code>Solution</code><a class="td-heading-self-link" href="#solution" aria-label="Heading self-link"></a></h2><h2 id="conclusion"><code>Conclusion</code><a class="td-heading-self-link" href="#conclusion" aria-label="Heading self-link"></a></h2>
+</div>
+
+
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
     <h1 id="pg-b2730c31ab14e370729f9c84d6670d0b">010_Grp_Linux</h1>
 	
 	<div class="td-byline mb-4">
@@ -2617,6 +2801,95 @@ google &amp; ibm</p>
   
 
 <div class="td-content" style="">
+    <h1 id="pg-47620737248f2f9a9b5731e3b312018e">ASIO</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-31" class="text-body-secondary">2024年07月31日</time>
+        
+	</div>
+	<h2 id="a-introduction">A. Introduction<a class="td-heading-self-link" href="#a-introduction" aria-label="Heading self-link"></a></h2><p>其实张佩的文章已经写得很详细了，但是如果没有任何概念的时候，还是会被众多的经典概念绕晕。
+所以我的方法是：先去steinberg的forum去看一些英文原版的介绍，
+然后去下载asio 的sdk下来看文档，看代码，跑代码
+下载cubase下来，验证asio驱动。</p>
+<h2 id="b-concepts">B. Concepts<a class="td-heading-self-link" href="#b-concepts" aria-label="Heading self-link"></a></h2><h3 id="a-structure-各层的结构">a. Structure 各层的结构<a class="td-heading-self-link" href="#a-structure-%e5%90%84%e5%b1%82%e7%9a%84%e7%bb%93%e6%9e%84" aria-label="Heading self-link"></a></h3><h4 id="1-应用程序">1.应用程序<a class="td-heading-self-link" href="#1-%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f" aria-label="Heading self-link"></a></h4><p>（cubase、dorico、nuendo、wavelab等都是被明确指出需要ASIO driver的）</p>
+<h4 id="2-操作系统-用户空间-windows">2.操作系统-用户空间-windows<a class="td-heading-self-link" href="#2-%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f-%e7%94%a8%e6%88%b7%e7%a9%ba%e9%97%b4-windows" aria-label="Heading self-link"></a></h4><p>windows驱动</p>
+<p><strong>Steinberg built-in ASIO Driver（win10 x64 &amp; win11 only）</strong></p>
+<p>早期是Generic Low Latency ASIO Driver</p>
+<p>第三方的ASIO4ALL- from Michael Tippach</p>
+<h4 id="3-操作系统-内核空间-windows">3.操作系统-内核空间-windows<a class="td-heading-self-link" href="#3-%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f-%e5%86%85%e6%a0%b8%e7%a9%ba%e9%97%b4-windows" aria-label="Heading self-link"></a></h4><h4 id="4-硬件层">4.硬件层<a class="td-heading-self-link" href="#4-%e7%a1%ac%e4%bb%b6%e5%b1%82" aria-label="Heading self-link"></a></h4><p><strong>ASIO是需要声卡硬件支持的</strong>
+其实关于这一点，暂时还没有确定的答案，硬件上做什么样特殊的处理吗？
+但是走到操作系统的内核空间层，windows内核需要为ASIO这样一个第三方的公司定制一些特殊的模块，就像Linux那样，驱动目录下有各个不同厂商单独的文件夹。
+从理论上来看，当然是可能的。但是好像还没有看到ASIO有任何这方面的资料。
+如果在内核空间，所有的驱动模块都是通用的，即与AC97、Realtek等声卡所调用的驱动模块是完全一致的，那么ASIO就并不需要硬件支持了。
+用另一个方式来说，ASIO的特殊之处是在用户空间的驱动里，不论是WDM还是其他windows的库，ASIO推出一套标准，用不同的方法去调用内核空间给用户空间的API。
+它只是在用不同的方式或逻辑调用相同的内核API，与内核通信而已。</p>
+<h3 id="c">c.<a class="td-heading-self-link" href="#c" aria-label="Heading self-link"></a></h3><h2 id="c-asio-sdk">C. ASIO SDK<a class="td-heading-self-link" href="#c-asio-sdk" aria-label="Heading self-link"></a></h2><div style="padding-left: 2em;">
+<h3 id="a-asio-api试图提供的性能-from-asio-sdk-2-3">a. ASIO API试图提供的性能-From ASIO SDK 2.3<a class="td-heading-self-link" href="#a-asio-api%e8%af%95%e5%9b%be%e6%8f%90%e4%be%9b%e7%9a%84%e6%80%a7%e8%83%bd-from-asio-sdk-2-3" aria-label="Heading self-link"></a></h3><p>1.High data throughput</p>
+<pre><code>PCI 
+
+firewire
+</code></pre>
+<p>2.synchronization</p>
+<p>3.low latency</p>
+<p>4.extensibility on the audio hardware
+5.no limitation on the number of i/o channels
+6.no limitation on the sample rate</p>
+<pre><code>32khz
+
+96khz
+
+higher
+</code></pre>
+<p>7.no limitation on sample format</p>
+<pre><code>16
+
+24
+
+32 bit
+
+32/64 bit floating point formats
+</code></pre>
+</div>
+<h2 id="d-conclusion">D. Conclusion<a class="td-heading-self-link" href="#d-conclusion" aria-label="Heading self-link"></a></h2><div style="padding-left: 2em;">
+<p>今天一天，到下午四点的时候，终于用cubase试验了自己修改过的asio driver。</p>
+<p>虽然看起来很简单，但是其实是要仔细的去看asio sdk 2.3的整个包里面的文档。</p>
+<p>市面上对于asio驱动、支持asio声卡、asio 硬件等概念的介绍并没有特别有针对性的。</p>
+<p>asio应该理解为一种协议，cubase这类的软件都只识别这种协议的音频设备。</p>
+<p>它并没有太神奇的地方，就是在软件层面的一种封装罢了。</p>
+</div>
+<h2 id="e-appendix">E. Appendix<a class="td-heading-self-link" href="#e-appendix" aria-label="Heading self-link"></a></h2><div style="padding-left: 2em;">
+<p><a href="https://zhuanlan.zhihu.com/p/518363836">1.[***]在逃技术百晓声-ASIO、WDM和MME驱动的区别(一个比较简练的介绍)</a></p>
+<p><a href="info@steinberg.de">2.[**]Steinberg Email:info@steinberg.de</a></p>
+<p><a href="https://forums.steinberg.net/c/developer/103/none?_gl=1*107pk2r*_gcl_au*MjI0MDkyMTc2LjE3MjE5ODY2MDQ.">3.[***]Steinberg Forum</a></p>
+<p><a href="https://debug.fanzheng.org/post/use-cubase-without-independent-sound-card.html">4.[**]无独立声卡玩转Cubase</a></p>
+<p><a href="https://blog.csdn.net/blog_index/article/details/2537080?spm=1001.2014.3001.5502">5.[仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南</a></p>
+<p><a href="https://blog.csdn.net/blog_index/article/details/5411694?spm=1001.2014.3001.5502">6.[仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南 2.0</a></p>
+<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/17863730844946-Steinberg-built-in-ASIO-Driver-information-download">Steinberg built-in ASIO Driver: information &amp; download</a></p>
+<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/206111444-Audio-card-latency">Audio card latency</a></p>
+<p><a href="https://www.buckhorn.com.cn/index.php/support-zh/tech-doc-zh/43-asio-infrastructure-zh">跳羚科技 - Buckhorn之音频asio驱动开发</a></p>
+<p><a href="http://www.cymount.com/news/shownews.php?id=66">什么是 ASIO 声卡驱动？</a></p>
+<p><a href="http://www.cymount.com/news/shownews.php?id=80">WASAPI介绍</a></p>
+</div>
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
     <h1 id="pg-5637ca4afd986b1e0d9ae4793487f985">声卡项目</h1>
 	
 	<div class="td-byline mb-4">

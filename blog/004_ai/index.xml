@@ -7,5 +7,12 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <atom:link href="http://localhost:1313/blog/004_ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ChatGPT</title>
+      <link>http://localhost:1313/blog/2024/08/01/chatgpt/</link>
+      <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/01/chatgpt/</guid>
+      <description>5月13号以后，Plus用户的权益 这里说的是plus，3小时80条&#xA;Type Free Plus Team 4o-Msg_limit 16条/3小时 80条/3小时 160条/3小时 4-Msg_limit 8条/3小时 40条/3小时 80条/3小时 </description>
+    </item>
   </channel>
 </rss>
