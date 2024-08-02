@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/blog/000_collection/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/</loc>
     <lastmod>2024-07-16T09:20:13+00:00</lastmod>
   </url><url>
@@ -71,13 +74,57 @@
     <loc>http://localhost:1313/blog/013_qt_development/qt6/</loc>
     <lastmod>2024-07-22T22:33:38+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/ai/</loc>
-    <lastmod>2024-08-01T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/blog/013_qt_development/qml/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/014_cpu/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/014_cpu/mcu/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/blog/</loc>
-    <lastmod>2024-08-01T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/02/celebrity-quotes/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/collection/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/cpu/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/qml/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/02/qml-options/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/02/qml%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84content%E6%96%87%E4%BB%B6%E5%A4%B9/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/qt/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/quotes/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/02/reading-list/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/theology/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</loc>
+    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/ai/</loc>
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/08/01/chatgpt/</loc>
@@ -96,9 +143,6 @@
     <lastmod>2024-07-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/</loc>
-    <lastmod>2024-07-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/theology/</loc>
     <lastmod>2024-07-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/devops/</loc>

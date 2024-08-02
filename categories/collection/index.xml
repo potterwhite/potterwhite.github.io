@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Collection on 嵌入式系统 Enthusiast</title>
+    <link>http://localhost:1313/categories/collection/</link>
+    <description>Recent content in Collection on 嵌入式系统 Enthusiast</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/collection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reading List</title>
+      <link>http://localhost:1313/blog/2024/08/02/reading-list/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/02/reading-list/</guid>
+      <description>Hayek_The_Road_to_Serfdom.pdf</description>
+    </item>
+  </channel>
+</rss>

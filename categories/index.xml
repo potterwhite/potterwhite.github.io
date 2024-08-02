@@ -6,20 +6,62 @@
     <description>Recent content in Categories on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 01 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 02 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog</title>
+      <link>http://localhost:1313/categories/blog/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/blog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Collection</title>
+      <link>http://localhost:1313/categories/collection/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/collection/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CPU</title>
+      <link>http://localhost:1313/categories/cpu/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/cpu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>QML</title>
+      <link>http://localhost:1313/categories/qml/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/qml/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Qt</title>
+      <link>http://localhost:1313/categories/qt/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/qt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Quotes</title>
+      <link>http://localhost:1313/categories/quotes/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/quotes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Theology</title>
+      <link>http://localhost:1313/categories/theology/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/theology/</guid>
+      <description></description>
+    </item>
     <item>
       <title>AI</title>
       <link>http://localhost:1313/categories/ai/</link>
       <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/ai/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Blog</title>
-      <link>http://localhost:1313/categories/blog/</link>
-      <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/blog/</guid>
       <description></description>
     </item>
     <item>
@@ -34,13 +76,6 @@
       <link>http://localhost:1313/categories/windows/</link>
       <pubDate>Wed, 31 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/windows/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Theology</title>
-      <link>http://localhost:1313/categories/theology/</link>
-      <pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/theology/</guid>
       <description></description>
     </item>
     <item>
