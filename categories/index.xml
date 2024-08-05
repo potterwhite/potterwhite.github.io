@@ -23,34 +23,6 @@
       <description></description>
     </item>
     <item>
-      <title>CPU</title>
-      <link>http://localhost:1313/categories/cpu/</link>
-      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/cpu/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>QML</title>
-      <link>http://localhost:1313/categories/qml/</link>
-      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/qml/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Qt</title>
-      <link>http://localhost:1313/categories/qt/</link>
-      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/qt/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Quotes</title>
-      <link>http://localhost:1313/categories/quotes/</link>
-      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/quotes/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Theology</title>
       <link>http://localhost:1313/categories/theology/</link>
       <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
@@ -62,20 +34,6 @@
       <link>http://localhost:1313/categories/ai/</link>
       <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/ai/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Compiler&amp;Linker</title>
-      <link>http://localhost:1313/categories/compilerlinker/</link>
-      <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/compilerlinker/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Windows</title>
-      <link>http://localhost:1313/categories/windows/</link>
-      <pubDate>Wed, 31 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/windows/</guid>
       <description></description>
     </item>
     <item>
@@ -167,6 +125,13 @@
       <link>http://localhost:1313/categories/vscode/</link>
       <pubDate>Fri, 12 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/vscode/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Windows</title>
+      <link>http://localhost:1313/categories/windows/</link>
+      <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/windows/</guid>
       <description></description>
     </item>
     <item>
