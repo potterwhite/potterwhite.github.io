@@ -41,7 +41,7 @@ C. ASIO SDKa. ASIO API试图提供的性能(From ASIO SDK 2.3)1.High data throug
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
     <meta property="article:published_time" content="2024-07-31T00:00:00+00:00">
-    <meta property="article:modified_time" content="2024-07-31T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-08-05T07:10:07+00:00">
 
   <meta itemprop="name" content="ASIO">
   <meta itemprop="description" content="A. Introduction其实张佩的文章已经写得很详细了，但是如果没有任何概念的时候，还是会被众多的经典概念绕晕。 所以我的方法是：先去steinberg的forum去看一些英文原版的介绍， 然后去下载asio 的sdk下来看文档，看代码，跑代码 下载cubase下来，验证asio驱动。
@@ -53,7 +53,7 @@ Steinberg built-in ASIO Driver（win10 x64 &amp; win11 only）
 3.操作系统-内核空间-windows4.硬件层ASIO是需要声卡硬件支持的 其实关于这一点，暂时还没有确定的答案，硬件上做什么样特殊的处理吗？ 但是走到操作系统的内核空间层，windows内核需要为ASIO这样一个第三方的公司定制一些特殊的模块，就像Linux那样，驱动目录下有各个不同厂商单独的文件夹。 从理论上来看，当然是可能的。但是好像还没有看到ASIO有任何这方面的资料。 如果在内核空间，所有的驱动模块都是通用的，即与AC97、Realtek等声卡所调用的驱动模块是完全一致的，那么ASIO就并不需要硬件支持了。 用另一个方式来说，ASIO的特殊之处是在用户空间的驱动里，不论是WDM还是其他windows的库，ASIO推出一套标准，用不同的方法去调用内核空间给用户空间的API。 它只是在用不同的方式或逻辑调用相同的内核API，与内核通信而已。
 C. ASIO SDKa. ASIO API试图提供的性能(From ASIO SDK 2.3)1.High data throughputPCI firewire 2.synchronization3.low latency4.extensibility on the audio hardware 5.no limitation on the number of i/o channels 6.no limitation on the sample rate32khz96khzhigher 7.no limitation on sample format162432 bit32/64 bit floating point formats D.">
   <meta itemprop="datePublished" content="2024-07-31T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-07-31T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-05T07:10:07+00:00">
   <meta itemprop="wordCount" content="132">
   <meta itemprop="keywords" content="Blog,Windows">
   <meta name="twitter:card" content="summary">
@@ -482,7 +482,10 @@ higher
   </li>
 </ul>
 
-	</div>
+	<div class="td-page-meta__lastmod">
+  最后修改 2024年08月05日: <a href="https://github.com/google/docsy-example/commit/2c8e24f0bd9af9e101c42f9ce4336bf8efd41127">default (2c8e24f)</a>
+</div>
+</div>
 
 
           </main>
