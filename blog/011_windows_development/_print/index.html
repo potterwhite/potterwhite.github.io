@@ -157,6 +157,16 @@
     
 	
 
+    <li><a href="#pg-4b40b8f3a9fde137d7b53e3793fc482c">ASIO</a></li>
+
+
+
+    
+  
+    
+    
+	
+
     <li><a href="#pg-5637ca4afd986b1e0d9ae4793487f985">声卡项目</a></li>
 
 
@@ -191,6 +201,71 @@
   
 
 <div class="td-content" style="">
+    <h1 id="pg-4b40b8f3a9fde137d7b53e3793fc482c">ASIO</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-07-31" class="text-body-secondary">2024年07月31日</time>
+        
+	</div>
+	<h2 id="a-introduction"><strong>A. Introduction</strong><a class="td-heading-self-link" href="#a-introduction" aria-label="Heading self-link"></a></h2><p>其实张佩的文章已经写得很详细了，但是如果没有任何概念的时候，还是会被众多的经典概念绕晕。 所以我的方法是：先去steinberg的forum去看一些英文原版的介绍， 然后去下载asio 的sdk下来看文档，看代码，跑代码 下载cubase下来，验证asio驱动。</p>
+<h2 id="b-concepts"><strong>B. Concepts</strong><a class="td-heading-self-link" href="#b-concepts" aria-label="Heading self-link"></a></h2><h3 id="a-structure-各层的结构">a. Structure 各层的结构<a class="td-heading-self-link" href="#a-structure-%e5%90%84%e5%b1%82%e7%9a%84%e7%bb%93%e6%9e%84" aria-label="Heading self-link"></a></h3><h4 id="1-应用程序">1.应用程序<a class="td-heading-self-link" href="#1-%e5%ba%94%e7%94%a8%e7%a8%8b%e5%ba%8f" aria-label="Heading self-link"></a></h4><p>（cubase、dorico、nuendo、wavelab等都是被明确指出需要ASIO driver的）</p>
+<h4 id="2-操作系统-用户空间-windows">2.操作系统-用户空间-windows<a class="td-heading-self-link" href="#2-%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f-%e7%94%a8%e6%88%b7%e7%a9%ba%e9%97%b4-windows" aria-label="Heading self-link"></a></h4><p>windows驱动</p>
+<p>Steinberg built-in ASIO Driver（win10 x64 &amp; win11 only）</p>
+<p>早期是Generic Low Latency ASIO Driver</p>
+<p>第三方的ASIO4ALL- from Michael Tippach</p>
+<h4 id="3-操作系统-内核空间-windows">3.操作系统-内核空间-windows<a class="td-heading-self-link" href="#3-%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f-%e5%86%85%e6%a0%b8%e7%a9%ba%e9%97%b4-windows" aria-label="Heading self-link"></a></h4><h4 id="4-硬件层">4.硬件层<a class="td-heading-self-link" href="#4-%e7%a1%ac%e4%bb%b6%e5%b1%82" aria-label="Heading self-link"></a></h4><p>ASIO是需要声卡硬件支持的 其实关于这一点，暂时还没有确定的答案，硬件上做什么样特殊的处理吗？ 但是走到操作系统的内核空间层，windows内核需要为ASIO这样一个第三方的公司定制一些特殊的模块，就像Linux那样，驱动目录下有各个不同厂商单独的文件夹。 从理论上来看，当然是可能的。但是好像还没有看到ASIO有任何这方面的资料。 如果在内核空间，所有的驱动模块都是通用的，即与AC97、Realtek等声卡所调用的驱动模块是完全一致的，那么ASIO就并不需要硬件支持了。 用另一个方式来说，ASIO的特殊之处是在用户空间的驱动里，不论是WDM还是其他windows的库，ASIO推出一套标准，用不同的方法去调用内核空间给用户空间的API。 它只是在用不同的方式或逻辑调用相同的内核API，与内核通信而已。</p>
+<h2 id="c-asio-sdk"><strong>C. ASIO SDK</strong><a class="td-heading-self-link" href="#c-asio-sdk" aria-label="Heading self-link"></a></h2><h3 id="a-asio-api试图提供的性能-from-asio-sdk-2-3">a. ASIO API试图提供的性能(From ASIO SDK 2.3)<a class="td-heading-self-link" href="#a-asio-api%e8%af%95%e5%9b%be%e6%8f%90%e4%be%9b%e7%9a%84%e6%80%a7%e8%83%bd-from-asio-sdk-2-3" aria-label="Heading self-link"></a></h3><h4 id="1-high-data-throughput"><code>1.High data throughput</code><a class="td-heading-self-link" href="#1-high-data-throughput" aria-label="Heading self-link"></a></h4><pre tabindex="0"><code>PCI 
+
+firewire
+</code></pre><h4 id="2-synchronization"><code>2.synchronization</code><a class="td-heading-self-link" href="#2-synchronization" aria-label="Heading self-link"></a></h4><h4 id="3-low-latency"><code>3.low latency</code><a class="td-heading-self-link" href="#3-low-latency" aria-label="Heading self-link"></a></h4><h4 id="4-extensibility-on-the-audio-hardware"><code>4.extensibility on the audio hardware </code><a class="td-heading-self-link" href="#4-extensibility-on-the-audio-hardware" aria-label="Heading self-link"></a></h4><h4 id="5-no-limitation-on-the-number-of-i-o-channels"><code>5.no limitation on the number of i/o channels </code><a class="td-heading-self-link" href="#5-no-limitation-on-the-number-of-i-o-channels" aria-label="Heading self-link"></a></h4><h4 id="6-no-limitation-on-the-sample-rate"><code>6.no limitation on the sample rate</code><a class="td-heading-self-link" href="#6-no-limitation-on-the-sample-rate" aria-label="Heading self-link"></a></h4><pre tabindex="0"><code>32khz
+
+96khz
+
+higher
+</code></pre><h4 id="7-no-limitation-on-sample-format"><code>7.no limitation on sample format</code><a class="td-heading-self-link" href="#7-no-limitation-on-sample-format" aria-label="Heading self-link"></a></h4><pre tabindex="0"><code>16
+
+24
+
+32 bit
+
+32/64 bit floating point formats
+</code></pre><h2 id="d-conclusion"><strong>D. Conclusion</strong><a class="td-heading-self-link" href="#d-conclusion" aria-label="Heading self-link"></a></h2><p>今天一天，到下午四点的时候，终于用cubase试验了自己修改过的asio driver。</p>
+<p>虽然看起来很简单，但是其实是要仔细的去看asio sdk 2.3的整个包里面的文档。</p>
+<p>市面上对于asio驱动、支持asio声卡、asio 硬件等概念的介绍并没有特别有针对性的。</p>
+<p>asio应该理解为一种协议，cubase这类的软件都只识别这种协议的音频设备。</p>
+<p>它并没有太神奇的地方，就是在软件层面的一种封装罢了。</p>
+<h2 id="e-appendix"><strong>E. Appendix</strong><a class="td-heading-self-link" href="#e-appendix" aria-label="Heading self-link"></a></h2><p><a href="https://zhuanlan.zhihu.com/p/518363836">01. [***]在逃技术百晓声-ASIO、WDM和MME驱动的区别(一个比较简练的介绍)</a></p>
+<p><a href="https://potterwhite.github.io/blog/2024/07/31/asio/info@steinberg.de">02. [**]Steinberg Email:info@steinberg.de</a></p>
+<p><a href="https://forums.steinberg.net/c/developer/103/none?_gl=1*107pk2r*_gcl_au*MjI0MDkyMTc2LjE3MjE5ODY2MDQ.">03. [***]Steinberg Forum</a></p>
+<p><a href="https://debug.fanzheng.org/post/use-cubase-without-independent-sound-card.html">04. [**]无独立声卡玩转Cubase</a></p>
+<p><a href="https://blog.csdn.net/blog_index/article/details/2537080?spm=1001.2014.3001.5502">05. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南</a></p>
+<p><a href="https://blog.csdn.net/blog_index/article/details/5411694?spm=1001.2014.3001.5502">06. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南 2.0</a></p>
+<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/17863730844946-Steinberg-built-in-ASIO-Driver-information-download">07. Steinberg built-in ASIO Driver: information &amp; download</a></p>
+<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/206111444-Audio-card-latency">08. Audio card latency</a></p>
+<p><a href="https://www.buckhorn.com.cn/index.php/support-zh/tech-doc-zh/43-asio-infrastructure-zh">09. 跳羚科技 - Buckhorn之音频asio驱动开发</a></p>
+<p><a href="http://www.cymount.com/news/shownews.php?id=66">10. 什么是 ASIO 声卡驱动？</a></p>
+<p><a href="http://www.cymount.com/news/shownews.php?id=80">11. WASAPI介绍</a></p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
     <h1 id="pg-5637ca4afd986b1e0d9ae4793487f985">声卡项目</h1>
 	
 	<div class="td-byline mb-4">
@@ -204,8 +279,8 @@
   mermaid.initialize({ startOnLoad: true });
 </script> -->
 <!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
-<h3 id="一-介绍">一、介绍<a class="td-heading-self-link" href="#%e4%b8%80-%e4%bb%8b%e7%bb%8d" aria-label="Heading self-link"></a></h3><p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p>
-<h3 id="二-主要的函数">二、主要的函数<a class="td-heading-self-link" href="#%e4%ba%8c-%e4%b8%bb%e8%a6%81%e7%9a%84%e5%87%bd%e6%95%b0" aria-label="Heading self-link"></a></h3><details>
+<h1 id="一-介绍">一、介绍<a class="td-heading-self-link" href="#%e4%b8%80-%e4%bb%8b%e7%bb%8d" aria-label="Heading self-link"></a></h1><p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p>
+<h1 id="二-主要的函数">二、主要的函数<a class="td-heading-self-link" href="#%e4%ba%8c-%e4%b8%bb%e8%a6%81%e7%9a%84%e5%87%bd%e6%95%b0" aria-label="Heading self-link"></a></h1><details>
     <summary>流程图1 _EnumerateAudioEndpoints</summary>
 <!-- ![_EnumerateAudioEndpoints](/2024/July/11/soundcard_flow_1.svg) -->
 <p>this is the first operation of our process</br>
@@ -512,6 +587,47 @@ Upon failure, *ppv contains NULL.</br>
 <p><code>ppv</code>: Pointer to Pointer to Void</p>
 </details>
 </div>
+<h2 id="002-immdevice-activate"><strong>002. IMMDevice::Activate</strong><a class="td-heading-self-link" href="#002-immdevice-activate" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>HRESULT <span style="color:#00a000">Activate</span>(
+</span></span><span style="display:flex;"><span>  [in]  REFIID      iid,
+</span></span><span style="display:flex;"><span>  [in]  DWORD       dwClsCtx,
+</span></span><span style="display:flex;"><span>  [in]  PROPVARIANT <span style="color:#666">*</span>pActivationParams,
+</span></span><span style="display:flex;"><span>  [out] <span style="color:#0b0;font-weight:bold">void</span>        <span style="color:#666">**</span>ppInterface
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p><strong>Parameters Description</strong></p>
+<p><code>iid</code>: interface identifier</p>
+<p>Exp:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">const</span> IID IID_IAudioSessionControl2 <span style="color:#666">=</span> __uuidof(IAudioSessionControl2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">1.</span> IID_IAudioClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">2.</span> IID_IAudioEndpointVolume
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">3.</span> IID_IAudioMeterInformation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">4.</span> IID_IAudioSessionManager
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">5.</span> IID_IAudioSessionManager2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">6.</span> IID_IBaseFilter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">7.</span> IID_IDeviceTopology
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">8.</span> IID_IDirectSound
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">9.</span> IID_IDirectSound8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">10.</span> IID_IDirectSoundCapture
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">11.</span> IID_IDirectSoundCapture8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">12.</span> IID_IMFTrustedOutput
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">13.</span> IID_ISpatialAudioClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">14.</span> IID_ISpatialAudioMetadataClient
+</span></span></code></pre></div><p><code>dwClsCtx</code>: double word Class Context</p>
+<p><code>pActivationParams</code>:</p>
+<p><code>ppInterface</code></p>
 
 </div>
 

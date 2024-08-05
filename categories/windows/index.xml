@@ -6,8 +6,15 @@
     <description>Recent content in Windows on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 11 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 31 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ASIO</title>
+      <link>http://localhost:1313/blog/2024/07/31/asio/</link>
+      <pubDate>Wed, 31 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/31/asio/</guid>
+      <description>A. Introduction其实张佩的文章已经写得很详细了，但是如果没有任何概念的时候，还是会被众多的经典概念绕晕。 所以我的方法是：先去steinberg的forum去看一些英文原版的介绍， 然后去下载asio 的sdk下来看文档，看代码，跑代码 下载cubase下来，验证asio驱动。&#xA;B. Conceptsa. Structure 各层的结构1.应用程序（cubase、dorico、nuendo、wavelab等都是被明确指出需要ASIO driver的）&#xA;2.操作系统-用户空间-windowswindows驱动&#xA;Steinberg built-in ASIO Driver（win10 x64 &amp;amp; win11 only）&#xA;早期是Generic Low Latency ASIO Driver&#xA;第三方的ASIO4ALL- from Michael Tippach&#xA;3.操作系统-内核空间-windows4.硬件层ASIO是需要声卡硬件支持的 其实关于这一点，暂时还没有确定的答案，硬件上做什么样特殊的处理吗？ 但是走到操作系统的内核空间层，windows内核需要为ASIO这样一个第三方的公司定制一些特殊的模块，就像Linux那样，驱动目录下有各个不同厂商单独的文件夹。 从理论上来看，当然是可能的。但是好像还没有看到ASIO有任何这方面的资料。 如果在内核空间，所有的驱动模块都是通用的，即与AC97、Realtek等声卡所调用的驱动模块是完全一致的，那么ASIO就并不需要硬件支持了。 用另一个方式来说，ASIO的特殊之处是在用户空间的驱动里，不论是WDM还是其他windows的库，ASIO推出一套标准，用不同的方法去调用内核空间给用户空间的API。 它只是在用不同的方式或逻辑调用相同的内核API，与内核通信而已。&#xA;C. ASIO SDKa. ASIO API试图提供的性能(From ASIO SDK 2.3)1.High data throughputPCI firewire 2.synchronization3.low latency4.extensibility on the audio hardware 5.no limitation on the number of i/o channels 6.no limitation on the sample rate32khz&#xD;96khz&#xD;higher 7.no limitation on sample format16&#xD;24&#xD;32 bit&#xD;32/64 bit floating point formats D.</description>
+    </item>
     <item>
       <title>声卡项目</title>
       <link>http://localhost:1313/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/</link>

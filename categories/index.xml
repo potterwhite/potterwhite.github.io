@@ -23,6 +23,27 @@
       <description></description>
     </item>
     <item>
+      <title>CPU</title>
+      <link>http://localhost:1313/categories/cpu/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/cpu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>QML</title>
+      <link>http://localhost:1313/categories/qml/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/qml/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Qt Development</title>
+      <link>http://localhost:1313/categories/qt-development/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/qt-development/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Theology</title>
       <link>http://localhost:1313/categories/theology/</link>
       <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
@@ -37,17 +58,24 @@
       <description></description>
     </item>
     <item>
+      <title>Quantum</title>
+      <link>http://localhost:1313/categories/quantum/</link>
+      <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/quantum/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Windows</title>
+      <link>http://localhost:1313/categories/windows/</link>
+      <pubDate>Wed, 31 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/windows/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>DevOps</title>
       <link>http://localhost:1313/categories/devops/</link>
       <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/devops/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Quantum</title>
-      <link>http://localhost:1313/categories/quantum/</link>
-      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/quantum/</guid>
       <description></description>
     </item>
     <item>
@@ -76,13 +104,6 @@
       <link>http://localhost:1313/categories/html/</link>
       <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/html/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Qt Development</title>
-      <link>http://localhost:1313/categories/qt-development/</link>
-      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/qt-development/</guid>
       <description></description>
     </item>
     <item>
@@ -125,13 +146,6 @@
       <link>http://localhost:1313/categories/vscode/</link>
       <pubDate>Fri, 12 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/vscode/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Windows</title>
-      <link>http://localhost:1313/categories/windows/</link>
-      <pubDate>Thu, 11 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/windows/</guid>
       <description></description>
     </item>
     <item>

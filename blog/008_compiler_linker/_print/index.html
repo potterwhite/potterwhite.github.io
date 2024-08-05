@@ -19,21 +19,21 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>008_Compiler_Linker | 嵌入式系统 Enthusiast</title>
+<title>008_Grp_Compiler_Linker | 嵌入式系统 Enthusiast</title>
 <meta name="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
 <meta property="og:url" content="http://localhost:1313/blog/008_compiler_linker/">
   <meta property="og:site_name" content="嵌入式系统 Enthusiast">
-  <meta property="og:title" content="008_Compiler_Linker">
+  <meta property="og:title" content="008_Grp_Compiler_Linker">
   <meta property="og:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
   <meta property="og:locale" content="zh_cn">
   <meta property="og:type" content="website">
 
-  <meta itemprop="name" content="008_Compiler_Linker">
+  <meta itemprop="name" content="008_Grp_Compiler_Linker">
   <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
   <meta itemprop="datePublished" content="2024-08-01T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-08-01T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="008_Compiler_Linker">
+  <meta name="twitter:title" content="008_Grp_Compiler_Linker">
   <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
 <link href="/scss/main.css" rel="stylesheet">
 <script
@@ -140,7 +140,7 @@
 
 
 
-<h1 class="title">008_Compiler_Linker</h1>
+<h1 class="title">008_Grp_Compiler_Linker</h1>
 
 
 
@@ -158,7 +158,7 @@
     
 	
 
-    <li><a href="#pg-293adf722c4529b076e164d510ca4af6">QtCreator下的MinGW和MSVC编译器</a></li>
+    <li><a href="#pg-f38716843109fdbfba0dcc3c87688a3e">QtCreator下的MinGW和MSVC编译器</a></li>
 
 
 
@@ -192,7 +192,7 @@
   
 
 <div class="td-content" style="">
-    <h1 id="pg-293adf722c4529b076e164d510ca4af6">QtCreator下的MinGW和MSVC编译器</h1>
+    <h1 id="pg-f38716843109fdbfba0dcc3c87688a3e">QtCreator下的MinGW和MSVC编译器</h1>
 	
 	<div class="td-byline mb-4">
 		
@@ -200,20 +200,16 @@
 		<time datetime="2024-08-01" class="text-body-secondary">2024年08月01日</time>
         
 	</div>
-	<h2 id="problem"><code>Problem</code><a class="td-heading-self-link" href="#problem" aria-label="Heading self-link"></a></h2><p>My project is running at the kit of MSVC
-When it was switched to MinGW
-Everything weired</p>
-<p>call the dll, but no correct response happens.
-I tried to delete dllls all, then my Qt binary exe returns error that &quot;...dlls not found..&quot;</p>
+	<h2 id="problem"><strong>Problem</strong><a class="td-heading-self-link" href="#problem" aria-label="Heading self-link"></a></h2><p>My project is running at the kit of MSVC When it was switched to MinGW Everything weired</p>
+<p>call the dll, but no correct response happens. I tried to delete dllls all, then my Qt binary exe returns error that &quot;...dlls not found..&quot;</p>
 <p><img alt="错误提示1" src="/2024/August/1/dlls_not_found.png"></p>
 <p>so it told me implicitly that Qt exe did not call wrong dlls or buffers potentially.</p>
 <p>and i inserted many debug std::count msgs in dll, but i could not even find them one at Qt exe console screen.</p>
-<h2 id="reason"><code>Reason</code><a class="td-heading-self-link" href="#reason" aria-label="Heading self-link"></a></h2><p>I checked as many as possible aspect of my project, but nothing appeared in front of me.
-Until i realized that i changed this project`s kit from MSVC original to MinGW used to be for the reason of debugging other modules.</p>
+<h2 id="reason"><strong>Reason</strong><a class="td-heading-self-link" href="#reason" aria-label="Heading self-link"></a></h2><p>I checked as many as possible aspect of my project, but nothing appeared in front of me. Until i realized that i changed this project`s kit from MSVC original to MinGW used to be for the reason of debugging other modules.</p>
 <p><img alt="my qt kits" src="/2024/August/1/kits.png"></p>
 <p><img alt="mingw" src="/2024/August/1/compilers_mingw.png"></p>
 <p><img alt="msvc" src="/2024/August/1/compilers_msvc++.png"></p>
-<h2 id="solution"><code>Solution</code><a class="td-heading-self-link" href="#solution" aria-label="Heading self-link"></a></h2><h2 id="conclusion"><code>Conclusion</code><a class="td-heading-self-link" href="#conclusion" aria-label="Heading self-link"></a></h2>
+<h2 id="solution"><strong>Solution</strong><a class="td-heading-self-link" href="#solution" aria-label="Heading self-link"></a></h2><h2 id="conclusion"><strong>Conclusion</strong><a class="td-heading-self-link" href="#conclusion" aria-label="Heading self-link"></a></h2>
 </div>
 
 
