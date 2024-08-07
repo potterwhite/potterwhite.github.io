@@ -111,7 +111,7 @@
       <link>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</link>
       <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</guid>
-      <description>001. if date is in the future, this markdown file will not be shown right now --- title: &amp;#34;Docker使用&amp;#34; date: 2024-07-19 categories: - blog - DevOps - Docker noindex: true --- and today is 2024-07-18, so that no blog will be shown within this section.</description>
+      <description>001. if date is in the future, this markdown file will not be shown right now --- title: &amp;#34;Docker使用&amp;#34; date: 2024-07-19 categories: - blog - DevOps - Docker noindex: true --- and today is 2024-07-18, so that no blog will be shown within this section.&#xA;002. hugo server change detect does not work? How to fix it.Date: Aug07.2024&#xA;LNK: hugo server intro page&#xA;By default hugo will also watch your files for any changes you make and automatically rebuild the site.</description>
     </item>
     <item>
       <title>html tricks</title>
