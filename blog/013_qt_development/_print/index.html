@@ -30,7 +30,8 @@
 
   <meta itemprop="name" content="013_Grp_QtDevelopment">
   <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
-  <meta itemprop="dateModified" content="2024-07-22T22:33:38+00:00">
+  <meta itemprop="datePublished" content="2024-08-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-10T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="013_Grp_QtDevelopment">
   <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
@@ -208,6 +209,16 @@
     
 	
 
+    <li><a href="#pg-49d36b1405734a6bc5756f2bf5a35d44">qml notes</a></li>
+
+
+
+    
+  
+    
+    
+	
+
     <li><a href="#pg-f496d77e14cb6b42d6c47eb2588f6967">QML Options</a></li>
 
 
@@ -260,6 +271,8 @@
 	
 	<div class="td-byline mb-4">
 		
+        
+		<time datetime="2024-07-18" class="text-body-secondary">2024年07月18日</time>
         
 	</div>
 	
@@ -354,6 +367,8 @@
 	<div class="td-byline mb-4">
 		
         
+		<time datetime="2024-08-10" class="text-body-secondary">2024年08月10日</time>
+        
 	</div>
 	
 </div>
@@ -382,6 +397,45 @@
   
 
 <div class="td-content" style="">
+    <h1 id="pg-49d36b1405734a6bc5756f2bf5a35d44">qml notes</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-10" class="text-body-secondary">2024年08月10日</time>
+        
+	</div>
+	<h2 id="expose-properties-property-alias">**[Expose Properties]property alias **<a class="td-heading-self-link" href="#expose-properties-property-alias" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>property alias ${EXTERNAL_SHARED_ID}<span style="color:#666">:</span> ${INNER_ID}
+</span></span></code></pre></div><p>if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}</p>
+<h2 id="qml的模块化"><strong>QML的模块化</strong><a class="td-heading-self-link" href="#qml%e7%9a%84%e6%a8%a1%e5%9d%97%e5%8c%96" aria-label="Heading self-link"></a></h2><p>case：<strong>我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？</strong></p>
+<p><code>solutionA</code>:</p>
+<p>透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height；
+至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。</p>
+<p><code>solutionB</code>:
+用信号槽的方式
+这种方式是qt的原生自带的技术</p>
+<p><code>solutionC</code>:
+用property
+在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。</p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
     <h1 id="pg-f496d77e14cb6b42d6c47eb2588f6967">QML Options</h1>
 	
 	<div class="td-byline mb-4">
@@ -518,6 +572,175 @@ Application
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这些顶层容器类型及其结构可以根据具体需求选择和使用，从而满足不同类型的应用程序设计需求。</p>
+<h1 id="关键字-property"><strong>关键字：Property</strong><a class="td-heading-self-link" href="#%e5%85%b3%e9%94%ae%e5%ad%97-property" aria-label="Heading self-link"></a></h1><p>让我们深入探讨一下 QML 中 <code>property</code> 的作用、外部访问的机制，以及如何决定属性是否暴露给外部。</p>
+<h3 id="1-qml-中的属性访问机制">1. <strong>QML 中的属性访问机制</strong><a class="td-heading-self-link" href="#1-qml-%e4%b8%ad%e7%9a%84%e5%b1%9e%e6%80%a7%e8%ae%bf%e9%97%ae%e6%9c%ba%e5%88%b6" aria-label="Heading self-link"></a></h3><h4 id="内置属性-如-height-width-等"><strong>内置属性（如 <code>height</code>、<code>width</code> 等）</strong><a class="td-heading-self-link" href="#%e5%86%85%e7%bd%ae%e5%b1%9e%e6%80%a7-%e5%a6%82-height-width-%e7%ad%89" aria-label="Heading self-link"></a></h4><ul>
+<li>
+<p><strong>内置属性</strong>：QML 中的某些属性，如 <code>height</code>、<code>width</code>、<code>color</code> 等，是组件自带的内置属性，这些属性默认是对外暴露的。因此，父组件可以直接访问和设置这些属性。</p>
+</li>
+<li>
+<p><strong>访问方式</strong>：这些内置属性在定义组件时自动提供，可以直接通过组件的 <code>id</code> 在外部访问，例如：</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span>Rectangle {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">width:</span> <span style="color:#666">100</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">height:</span> <span style="color:#666">50</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Item {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">width:</span> rect.width  <span style="color:#080;font-style:italic">// 直接访问 rect 的 width 属性
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>}
+</span></span></code></pre></div><h3 id="2-property-的作用">2. <strong><code>property</code> 的作用</strong><a class="td-heading-self-link" href="#2-property-%e7%9a%84%e4%bd%9c%e7%94%a8" aria-label="Heading self-link"></a></h3><h4 id="定义自定义属性"><strong>定义自定义属性</strong><a class="td-heading-self-link" href="#%e5%ae%9a%e4%b9%89%e8%87%aa%e5%ae%9a%e4%b9%89%e5%b1%9e%e6%80%a7" aria-label="Heading self-link"></a></h4><ul>
+<li><strong>扩展属性</strong>：通过 <code>property</code>，你可以定义组件的自定义属性，这些属性不是组件的内置属性。<code>property</code> 使得这些自定义属性能够被外部访问和修改。例如，你可能会定义一个 <code>property</code> 来跟踪某个状态：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span>Rectangle {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    property <span style="color:#a2f;font-weight:bold">int</span> <span style="color:#a2f;font-weight:bold">myCustomHeight:</span> <span style="color:#666">100</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Item {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">width:</span> rect.myCustomHeight  <span style="color:#080;font-style:italic">// 访问自定义的 myCustomHeight 属性
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>}
+</span></span></code></pre></div><h4 id="绑定和初始值"><strong>绑定和初始值</strong><a class="td-heading-self-link" href="#%e7%bb%91%e5%ae%9a%e5%92%8c%e5%88%9d%e5%a7%8b%e5%80%bc" aria-label="Heading self-link"></a></h4><ul>
+<li><strong>属性绑定</strong>：<code>property</code> 可以与其他属性或表达式绑定，这使得属性之间能够自动更新。例如：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span>Rectangle {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    property <span style="color:#a2f;font-weight:bold">int</span> <span style="color:#a2f;font-weight:bold">myCustomHeight:</span> width <span style="color:#666">/</span> <span style="color:#666">2</span>  <span style="color:#080;font-style:italic">// myCustomHeight 随着 width 的变化而变化
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="color:#a2f;font-weight:bold">width:</span> <span style="color:#666">200</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="暴露内部状态"><strong>暴露内部状态</strong><a class="td-heading-self-link" href="#%e6%9a%b4%e9%9c%b2%e5%86%85%e9%83%a8%e7%8a%b6%e6%80%81" aria-label="Heading self-link"></a></h4><ul>
+<li><strong>状态管理</strong>：你可以通过 <code>property</code> 把组件的内部状态暴露给外部，从而实现更好的封装和模块化设计。例如，定义一个 <code>property</code> 来暴露内部的计算结果：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span>Rectangle {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    property real <span style="color:#a2f;font-weight:bold">area:</span> width <span style="color:#666">*</span> height  <span style="color:#080;font-style:italic">// 暴露矩形的面积
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>}
+</span></span></code></pre></div><h3 id="3-内部变量与-property-的区别">3. <strong>内部变量与 <code>property</code> 的区别</strong><a class="td-heading-self-link" href="#3-%e5%86%85%e9%83%a8%e5%8f%98%e9%87%8f%e4%b8%8e-property-%e7%9a%84%e5%8c%ba%e5%88%ab" aria-label="Heading self-link"></a></h3><ul>
+<li>
+<p><strong>局部变量</strong>：如果你只需要在组件内部使用某个值或状态，通常不会使用 <code>property</code>，而是使用局部变量或 JavaScript 变量。局部变量不会暴露给外部，也不会通过 <code>id</code> 访问到。</p>
+<ul>
+<li><strong>局部变量示例</strong>：
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span>Rectangle {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">width:</span> <span style="color:#666">100</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">height:</span> <span style="color:#666">50</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">var</span> internalValue <span style="color:#666">=</span> <span style="color:#666">200</span>  <span style="color:#080;font-style:italic">// 只在这个组件内部可见的变量
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>}
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p><strong><code>property</code> 的作用</strong>：<code>property</code> 主要用于定义和管理组件的外部可见状态或配置。通过 <code>property</code>，你可以把组件的某些内部状态暴露出来，供父组件或外部组件访问。</p>
+</li>
+</ul>
+<h3 id="4-总结-property-的功能与外部访问">4. <strong>总结：<code>property</code> 的功能与外部访问</strong><a class="td-heading-self-link" href="#4-%e6%80%bb%e7%bb%93-property-%e7%9a%84%e5%8a%9f%e8%83%bd%e4%b8%8e%e5%a4%96%e9%83%a8%e8%ae%bf%e9%97%ae" aria-label="Heading self-link"></a></h3><ul>
+<li>
+<p><strong>外部访问</strong>：内置属性（如 <code>height</code>、<code>width</code>）默认是暴露给外部的，而通过 <code>property</code> 定义的属性也会暴露给外部。没有 <code>property</code> 修饰的局部变量则不会被外部访问到。</p>
+</li>
+<li>
+<p><strong><code>property</code> 的用途</strong>：<code>property</code> 主要用于定义组件的自定义属性、管理属性绑定、或暴露内部状态给外部。<code>property</code> 还允许你为自定义属性设置初始值，并支持动态绑定。</p>
+</li>
+<li>
+<p><strong>局部变量 vs <code>property</code></strong>：如果你不希望某个状态或值被外部访问，且只需要在组件内部使用，那么应使用局部变量或 JavaScript 变量，而不是 <code>property</code>。<code>property</code> 用于那些需要外部访问和管理的属性。</p>
+</li>
+</ul>
+<p>通过理解这些概念，你可以更好地设计和组织 QML 代码，确保组件之间的低耦合性和良好的封装性。</p>
+<h2 id="003-singleton-单例对象">003.<strong>Singleton 单例对象</strong><a class="td-heading-self-link" href="#003-singleton-%e5%8d%95%e4%be%8b%e5%af%b9%e8%b1%a1" aria-label="Heading self-link"></a></h2><h3 id="使用场景"><strong>使用场景</strong><a class="td-heading-self-link" href="#%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="Heading self-link"></a></h3><ol>
+<li>
+<p>可以是要在外部动态的设置某一个程序的属性，让整个程序的其他组件都因此做出改变，可以用singleton</p>
+<p><a href="https://juejin.cn/post/6959740008240513037">QML Styling 及 Singleton 使用方法浅谈 - 掘金</a></p>
+</li>
+<li>
+<p>希望精简，模块不要反复被创建</p>
+</li>
+</ol>
+<h3 id="必要步骤-在相应的qml文件的顶行写pragma-singleton"><strong>【必要步骤】在相应的qml文件的顶行写pragma Singleton</strong><a class="td-heading-self-link" href="#%e5%bf%85%e8%a6%81%e6%ad%a5%e9%aa%a4-%e5%9c%a8%e7%9b%b8%e5%ba%94%e7%9a%84qml%e6%96%87%e4%bb%b6%e7%9a%84%e9%a1%b6%e8%a1%8c%e5%86%99pragma-singleton" aria-label="Heading self-link"></a></h3><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>pragma Singleton
+</span></span></code></pre></div><p><code>注意这条语句要写在import 语句之前</code></p>
+<h3 id="必要步骤-需要在相应的cmakelist-txt里设置qt-qml-singleton-type-为true"><strong>【必要步骤】需要在相应的CMakeList.txt里设置QT_QML_SINGLETON_TYPE 为TRUE</strong><a class="td-heading-self-link" href="#%e5%bf%85%e8%a6%81%e6%ad%a5%e9%aa%a4-%e9%9c%80%e8%a6%81%e5%9c%a8%e7%9b%b8%e5%ba%94%e7%9a%84cmakelist-txt%e9%87%8c%e8%ae%be%e7%bd%aeqt-qml-singleton-type-%e4%b8%batrue" aria-label="Heading self-link"></a></h3><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>set_source_files_properties(First_Color_Scheme.qml PROPERTIES
+</span></span><span style="display:flex;"><span>    QT_QML_SINGLETON_TYPE TRUE
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><ul>
+<li>
+<p>在哪一个CMakeList.txt呢？</p>
+<p>我的qml文件处在项目根目录下的一个叫content的文件夹中</p>
+<p>这个文件夹是专门存放所有qml文件的</p>
+<p>在content下有一个CMakeList.txt</p>
+<p>（不要放到项目根目录下的CMakeList.txt里面-因为放进去也没用）</p>
+</li>
+<li>
+<p>设置完会怎么样，请看build之后的目录下：</p>
+<p>build\6_5_3_MSVC2019_x64-Debug\qml\content\qmldir</p>
+<p><img alt="Untitled" src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/0516fb73-40ac-4ee0-bc2c-1fbf9ce55b9b/Untitled.png"></p>
+</li>
+<li>
+<p>设置技巧</p>
+<p>本语句的位置不能低于qt6_add_qml_module（或qt_add_qml_module）</p>
+<p><img alt="Untitled" src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/bf1470a6-0401-44a7-b7f5-350f9312960d/Untitled.png"></p>
+</li>
+</ul>
+<h3 id="必要步骤-需要在相应的cmakelist-txt里创建单例模块singleton-module-独立于其他qml模块"><strong>【必要步骤】需要在相应的CMakeList.txt里创建单例模块Singleton Module（独立于其他QML模块）</strong><a class="td-heading-self-link" href="#%e5%bf%85%e8%a6%81%e6%ad%a5%e9%aa%a4-%e9%9c%80%e8%a6%81%e5%9c%a8%e7%9b%b8%e5%ba%94%e7%9a%84cmakelist-txt%e9%87%8c%e5%88%9b%e5%bb%ba%e5%8d%95%e4%be%8b%e6%a8%a1%e5%9d%97singleton-module-%e7%8b%ac%e7%ab%8b%e4%ba%8e%e5%85%b6%e4%bb%96qml%e6%a8%a1%e5%9d%97" aria-label="Heading self-link"></a></h3><ul>
+<li>CMakeLists.txt的相关代码</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>qt6_add_qml_module(singleton
+</span></span><span style="display:flex;"><span>    URI <span style="color:#b44">&#34;singleton&#34;</span>
+</span></span><span style="display:flex;"><span>    VERSION <span style="color:#666">1.0</span>
+</span></span><span style="display:flex;"><span>    QML_FILES
+</span></span><span style="display:flex;"><span>        Color<span style="color:#666">/</span>First_Color_Scheme.qml
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><code>这里的URI很重要，最后我们要调用的地方，都需要import，而import后面的模块名称就是看URI的。</code></p>
+<h4 id="为什么一定要再这里创建单例模块呢"><strong>为什么一定要再这里创建单例模块呢？</strong><a class="td-heading-self-link" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%b8%80%e5%ae%9a%e8%a6%81%e5%86%8d%e8%bf%99%e9%87%8c%e5%88%9b%e5%bb%ba%e5%8d%95%e4%be%8b%e6%a8%a1%e5%9d%97%e5%91%a2" aria-label="Heading self-link"></a></h4><p>按照微软的文档：</p>
+<p><img alt="singleton.png" src="/2024/August/10/singleton.png"></p>
+<p>我们就是需要去把它做成一个模块的</p>
+<h3 id="必要步骤-调用singleton-object-单例对象-的办法"><strong>【必要步骤】调用singleton object（单例对象）的办法</strong><a class="td-heading-self-link" href="#%e5%bf%85%e8%a6%81%e6%ad%a5%e9%aa%a4-%e8%b0%83%e7%94%a8singleton-object-%e5%8d%95%e4%be%8b%e5%af%b9%e8%b1%a1-%e7%9a%84%e5%8a%9e%e6%b3%95" aria-label="Heading self-link"></a></h3><ul>
+<li>
+<p>不能用的办法1：创建它</p>
+<ul>
+<li>
+<p>代码</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>Second_TitleBar {
+</span></span><span style="display:flex;"><span>    id<span style="color:#666">:</span> bID_Instance_Module_TitleBar
+</span></span><span style="display:flex;"><span>    anchors.top<span style="color:#666">:</span> parent.top
+</span></span><span style="display:flex;"><span>    width<span style="color:#666">:</span> parent.width
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p>例如这种方法，就是去创建一个单例对象，这样会提示错误</p>
+<p><img alt="Untitled" src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/7cf70678-01e2-4d1d-a8c7-462045ac5e56/Untitled.png"></p>
+</li>
+<li>
+<p>错误信息</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>11:00:01: Starting C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe...
+</span></span><span style="display:flex;"><span>DLL_PROCESS_ATTACH: The DLL has been attached to the process at 00007FF902D40000
+</span></span><span style="display:flex;"><span>QML debugging is enabled. Only use this in a safe environment.
+</span></span><span style="display:flex;"><span>Ext_CreateAudioControl called.
+</span></span><span style="display:flex;"><span>ASCtl_Impl constructor called.
+</span></span><span style="display:flex;"><span>QQmlApplicationEngine failed to load component
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/Main/main.qml:7:1: Type App unavailable
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/App.qml:54:1: Type VolumeMixer unavailable
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/VolumeMixer.qml:20:5: Composite Singleton Type Second_TitleBar is not creatable.
+</span></span><span style="display:flex;"><span>DLL_PROCESS_DETACH: The DLL has been detached from the process at 00007FF902D40000
+</span></span><span style="display:flex;"><span>11:00:01: C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe exited with code -1
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>可能可以用的办法：把某个要作为单例的qml封装成一个module</p>
+<p>具体是在content/CMakeList.txt下，用qt6_add_qml_module去新建一个模块</p>
+<p>然后去import这个模块，例如import titlebar 1.0 / import controlpanel 1.0这样</p>
+<p>不过这个办法我也没有尝试过。</p>
+</li>
+<li>
+<p>需要注意：调用时要加入<code>Component.onCompleted: {</code></p>
+<p>已经在多处都看见这种做法了</p>
+<p><a href="https://qt.0voice.com/?id=5269">QML中如何实现一个单例-QT开发中文网</a></p>
+<p>可能谈到调用就是异步的。</p>
+</li>
+</ul>
+<h3 id="相关的帖子"><strong>相关的帖子</strong><a class="td-heading-self-link" href="#%e7%9b%b8%e5%85%b3%e7%9a%84%e5%b8%96%e5%ad%90" aria-label="Heading self-link"></a></h3><p><a href="https://doc.qt.io/qt-6/qml-singleton.html">Singletons in QML | Qt QML 6.7.2</a></p>
+<p><a href="https://forum.qt.io/topic/129738/singleton-qml-failed-to-load-as-module/2">Singleton QML failed to load as module</a></p>
+<p><a href="http://imaginativethinking.ca/make-qml-component-singleton/">How to make a QML Component a Singleton?</a></p>
+<p><a href="https://blog.csdn.net/HyEISN/article/details/130600566">Qt 创建 单例/Singleton qml 文件_pragma singleton-CSDN博客</a></p>
 
 </div>
 

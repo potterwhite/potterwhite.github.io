@@ -30,7 +30,8 @@
 
   <meta itemprop="name" content="002_Grp_HugoDocsy">
   <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
-  <meta itemprop="dateModified" content="2024-07-11T09:41:43+00:00">
+  <meta itemprop="datePublished" content="2024-07-18T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-07-18T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="002_Grp_HugoDocsy">
   <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
@@ -224,7 +225,7 @@
 </span></span><span style="display:flex;"><span>---
 </span></span></code></pre></div><p>and today is 2024-07-18, so that no blog will be shown within this section.</p>
 </div>
-<h2 id="002-hugo-server-change-detect-does-not-work-how-to-fix-it"><strong>002. hugo server change detect does not work? How to fix it.</strong><a class="td-heading-self-link" href="#002-hugo-server-change-detect-does-not-work-how-to-fix-it" aria-label="Heading self-link"></a></h2><p>Date: Aug07.2024</p>
+<h2 id="002-hugo-server-change-detection-does-not-work-how-to-fix-it"><strong>002. hugo server change detection does not work? How to fix it.</strong><a class="td-heading-self-link" href="#002-hugo-server-change-detection-does-not-work-how-to-fix-it" aria-label="Heading self-link"></a></h2><p>Date: Aug07.2024</p>
 <p><a href="https://gohugo.io/commands/hugo_server/">LNK: hugo server intro page</a></p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>By default hugo will also watch your files for any changes you make and automatically rebuild the site. It will then live reload any open browser pages and push the latest content to them. As most Hugo sites are built in a fraction of a second, you will be able to save and see your changes nearly instantly.
 </span></span></code></pre></div><h4 id="problem"><code>Problem</code><a class="td-heading-self-link" href="#problem" aria-label="Heading self-link"></a></h4><p>but when i edited my files via volume of docker which shared from host to guest os and the host os is windows 10 and the guest os is ubuntu 22.04, nothing will happen anyway.</p>
@@ -262,6 +263,11 @@
 </span></span><span style="display:flex;"><span>hugo server --bind 0.0.0.0 --port <span style="color:#666">1313</span> --disableFastRender --poll 1000ms
 </span></span><span style="display:flex;"><span>...
 </span></span></code></pre></div><p>this fixed my problem!</p>
+<h2 id="003-how-to-disable-enable-the-message-of-current-blog-s-last-modify-date">003. How to disable/enable the message of current blog`s last modify date ?<a class="td-heading-self-link" href="#003-how-to-disable-enable-the-message-of-current-blog-s-last-modify-date" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim hugo.yaml
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#008000;font-weight:bold">enableGitInfo</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span><span style="display:flex;"><span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">showLastUpdated</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span></span></span></code></pre></div><p>choose false will turn every message off
+and true will on</p>
 
 </div>
 
