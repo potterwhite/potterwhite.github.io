@@ -33,7 +33,7 @@
   <meta itemprop="description" content="001.how to collapse a piece of code&lt;details&gt; &lt;summary&gt;The title you wanna fill in&lt;/summary&gt; the content you wanna put it in &lt;details&gt; 002. how to show svg (legally and fix method)normal way![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) abnormal way&lt;iframe src=&#34;/2024/July/17/flow_no_zoom.svg&#34; width=&#34;900&#34; height=&#34;2000&#34; style=&#34;border:none; overflow:scroll; background: #333333;&#34;&gt; &lt;/iframe&gt; now this method is not very good because when we scroll or zoom in and out the page, the svg shows not sync with the mother page.">
   <meta itemprop="datePublished" content="2024-07-17T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-07-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="143">
+  <meta itemprop="wordCount" content="165">
   <meta itemprop="keywords" content="Blog,Tools,Markdown">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Markdown使用技巧">
@@ -224,6 +224,8 @@
   <a href="/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-17-markdown-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="td-sidebar-nav-active-item">Markdown使用技巧</span></a>
 </li>
   </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-08-12-time-zone-map-li">
+  <a href="/blog/2024/08/12/time-zone-map/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-12-time-zone-map"><span class="">Time Zone Map</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-006-devops-li">
@@ -355,6 +357,7 @@
         <li><a href="#示例">示例：</a></li>
       </ul>
     </li>
+    <li><a href="#004-set-svg-file-as-preview"><code>004. Set SVG file as preview</code></a></li>
   </ul>
 </nav>
       </div>
@@ -363,7 +366,7 @@
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">31</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">32</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/collection/" data-taxonomy-term="collection"><span class="taxonomy-label">Collection</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span><span class="taxonomy-count">1</span></a></li>
@@ -381,7 +384,7 @@
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">4</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/ubuntu-ops/" data-taxonomy-term="ubuntu-ops"><span class="taxonomy-label">Ubuntu Ops</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
@@ -487,9 +490,15 @@
 * 音频系统中，用于测量音频设备的输出功率。
 * 射频电路设计中，用于分析信号的功率增益和衰减。
 </code></pre><!-- ##################################################### -->
+<h2 id="004-set-svg-file-as-preview"><code>004. Set SVG file as preview</code><a class="td-heading-self-link" href="#004-set-svg-file-as-preview" aria-label="Heading self-link"></a></h2><p>correct form:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>![<span style="color:#008000;font-weight:bold">TimeZoneMap</span>](<span style="color:#b44">/2024/August/12/TimeZoneOfTheWorld.svg</span>)
+</span></span></code></pre></div><p>if without '!' like below, the svg will be displayed as a url</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>[<span style="color:#008000;font-weight:bold">TimeZoneMap</span>](<span style="color:#b44">/2024/August/12/TimeZoneOfTheWorld.svg</span>)
+</span></span></code></pre></div><!-- ##################################################### -->
 <details>
 <summary>004. </summary>
 </details>
+
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
   <li>
     <a class="btn btn-primary disabled"><span class="me-1">←</span>上一页</a>
