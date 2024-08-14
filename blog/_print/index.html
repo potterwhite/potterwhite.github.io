@@ -1161,7 +1161,12 @@
 		<time datetime="2024-08-13" class="text-body-secondary">2024年08月13日</time>
         
 	</div>
-	
+	<p>2024-8-14 08:32:20
+弄不清楚特权和人权的区别
+加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高
+而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相遇，你必须先朝我点头，甚至哈腰，我回之以充满“自信”的冷冰冰的热情，是给足你面子
+到茶水间加热猪骨头汤（但她是这里的当权者(的太太)）</p>
+
 </div>
 
 
@@ -4020,6 +4025,16 @@ now it always stands for the unit of with of font.</p>
 <p><code>solutionC</code>:
 用property
 在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。</p>
+<h2 id="debug-qt-gui-imageio-libpng-warning-iccp-known-incorrect-srgb-profile">Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile<a class="td-heading-self-link" href="#debug-qt-gui-imageio-libpng-warning-iccp-known-incorrect-srgb-profile" aria-label="Heading self-link"></a></h2><p><a href="https://bbs.archlinux.org/viewtopic.php?pid=1269845#p1269845">Post about the reason of this warning</a></p>
+<pre tabindex="0"><code>It&#39;s because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. 
+It&#39;s supposed to just be a warning, are you sure this is what&#39;s causing the build failure? 
+
+If so, you may need to replace the sRGB profile yourself or get upstream to do it.
+</code></pre><h2 id="取整怎么做">取整怎么做？<a class="td-heading-self-link" href="#%e5%8f%96%e6%95%b4%e6%80%8e%e4%b9%88%e5%81%9a" aria-label="Heading self-link"></a></h2><p>在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>    Math.floor(value): 返回不大于 value 的最大整数，即向下取整。
+</span></span><span style="display:flex;"><span>    Math.ceil(value): 返回不小于 value 的最小整数，即向上取整。
+</span></span><span style="display:flex;"><span>    Math.round(value): 返回四舍五入后的整数。
+</span></span></code></pre></div><h2 id="要点">要点<a class="td-heading-self-link" href="#%e8%a6%81%e7%82%b9" aria-label="Heading self-link"></a></h2><p>函数不能以大写字母开头</p>
 
 </div>
 
@@ -4366,7 +4381,8 @@ Application
 <h2 id="container-image">container: Image<a class="td-heading-self-link" href="#container-image" aria-label="Heading self-link"></a></h2><p>Property:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>sourceSize.width<span style="color:#666">:</span> 
 </span></span><span style="display:flex;"><span>sourceSize.height<span style="color:#666">:</span> 
-</span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.</p>
+</span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.
+if image.width &amp; image.height are illegal value(e.g,. 0), the sourceSize will have the original size of this picture.</p>
 
 </div>
 

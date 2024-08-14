@@ -42,7 +42,7 @@
 1. ApplicationWindowimport QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Windowimport QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialogimport QtQuick 6.2 import QtQuick.">
   <meta itemprop="datePublished" content="2024-08-02T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="590">
+  <meta itemprop="wordCount" content="608">
   <meta itemprop="keywords" content="Blog,Qt Development,QML">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="QML Options">
@@ -764,7 +764,8 @@ Application
 <h2 id="container-image">container: Image<a class="td-heading-self-link" href="#container-image" aria-label="Heading self-link"></a></h2><p>Property:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>sourceSize.width<span style="color:#666">:</span> 
 </span></span><span style="display:flex;"><span>sourceSize.height<span style="color:#666">:</span> 
-</span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.</p>
+</span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.
+if image.width &amp; image.height are illegal value(e.g,. 0), the sourceSize will have the original size of this picture.</p>
 
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
   <li>
