@@ -42,7 +42,7 @@
 1. ApplicationWindowimport QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Windowimport QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialogimport QtQuick 6.2 import QtQuick.">
   <meta itemprop="datePublished" content="2024-08-02T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="608">
+  <meta itemprop="wordCount" content="678">
   <meta itemprop="keywords" content="Blog,Qt Development,QML">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="QML Options">
@@ -326,6 +326,8 @@
   <a href="/blog/2024/08/02/qml%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84content%E6%96%87%E4%BB%B6%E5%A4%B9/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-qml-e5-b7-a5-e7-a8-8b-e9-87-8c-e7-9a-84content-e6-96-87-e4-bb-b6-e5-a4-b9"><span class="">QML工程里的content文件夹</span></a>
 </li>
   </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-08-15-qt-deployment-li">
+  <a href="/blog/2024/08/15/qt-deployment/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-15-qt-deployment"><span class="">Qt Deployment</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-014-cpu-li">
@@ -385,6 +387,7 @@
     </li>
     <li><a href="#004-qml中的signal-slot">004. QML中的signal &amp; slot</a></li>
     <li><a href="#container-image">container: Image</a></li>
+    <li><a href="#005-enum-qt-windowtype-flags-qt-windowflags"><strong>005. enum Qt::WindowType &amp; flags Qt::WindowFlags</strong></a></li>
   </ul>
 </nav>
       </div>
@@ -393,7 +396,7 @@
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">33</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">34</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/collection/" data-taxonomy-term="collection"><span class="taxonomy-label">Collection</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span><span class="taxonomy-count">1</span></a></li>
@@ -407,7 +410,7 @@
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/microblog/" data-taxonomy-term="microblog"><span class="taxonomy-label">Microblog</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">2</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">3</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
         <li><a class="taxonomy-term" href="http://localhost:1313/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">2</span></a></li>
@@ -766,6 +769,35 @@ Application
 </span></span><span style="display:flex;"><span>sourceSize.height<span style="color:#666">:</span> 
 </span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.
 if image.width &amp; image.height are illegal value(e.g,. 0), the sourceSize will have the original size of this picture.</p>
+<h2 id="005-enum-qt-windowtype-flags-qt-windowflags"><strong>005. enum Qt::WindowType &amp; flags Qt::WindowFlags</strong><a class="td-heading-self-link" href="#005-enum-qt-windowtype-flags-qt-windowflags" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="color:#080;font-style:italic">// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">//设置无框的窗口
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    flags<span style="color:#666">:</span> Qt.Window <span style="color:#666">|</span> Qt.FramelessWindowHint 
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
+</span></span></span></code></pre></div><p><a href="https://doc.qt.io/qt-6/qt.html#WindowType-enum">enum Qt::WindowType
+flags Qt::WindowFlags</a></p>
+<p>它的逻辑是首先判断是什么窗口类型，可选项有</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cxx" data-lang="cxx"><span style="display:flex;"><span><span style="color:#666">1.</span> Widget
+</span></span><span style="display:flex;"><span><span style="color:#666">2.</span> Window
+</span></span><span style="display:flex;"><span><span style="color:#666">3.</span> Dialog
+</span></span><span style="display:flex;"><span><span style="color:#666">4.</span> Sheet
+</span></span><span style="display:flex;"><span><span style="color:#666">5.</span> Drawer <span style="color:#080;font-style:italic">//outdated
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#666">6.</span> Popup
+</span></span><span style="display:flex;"><span><span style="color:#666">7.</span> Tool
+</span></span><span style="display:flex;"><span><span style="color:#666">8.</span> ToolTip
+</span></span><span style="display:flex;"><span><span style="color:#666">9.</span> SplashScreen
+</span></span><span style="display:flex;"><span><span style="color:#666">10.</span> SubWindow
+</span></span><span style="display:flex;"><span><span style="color:#666">11.</span> ForeignWindow
+</span></span><span style="display:flex;"><span><span style="color:#666">12.</span> CoverWindow
+</span></span></code></pre></div><p>所以这12种是所有的<code>窗口类型</code></p>
+<p>选择完我要的窗口Window，之后，我就可以进一步选择<code>窗口标志</code></p>
+<pre tabindex="0"><code>FramelessWindowHint
+CustomizeWindowHint
+</code></pre><p>当然flag可是不止这两种，但是目前我就主要用到了这两种，所以其他的以后再补充啦哈哈</p>
+<p>第一种就是无边框的窗体</p>
+<p>第二种就是自定义的窗体</p>
+<p>第二种接下来还有许多options是配合它出现的，也就是说，CustomizeWindowHint只是一个开关</p>
 
 	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
   <li>

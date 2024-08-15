@@ -30,8 +30,8 @@
 
   <meta itemprop="name" content="013_Grp_QtDevelopment">
   <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
-  <meta itemprop="datePublished" content="2024-08-10T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-08-10T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2024-08-15T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-15T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="013_Grp_QtDevelopment">
   <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
@@ -237,6 +237,16 @@
   
 
     </ul>
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-c9394ea69451a3716d73cb761bd5ae03">Qt Deployment</a></li>
+
+
+
     
   
 
@@ -775,6 +785,35 @@ Application
 </span></span><span style="display:flex;"><span>sourceSize.height<span style="color:#666">:</span> 
 </span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.
 if image.width &amp; image.height are illegal value(e.g,. 0), the sourceSize will have the original size of this picture.</p>
+<h2 id="005-enum-qt-windowtype-flags-qt-windowflags"><strong>005. enum Qt::WindowType &amp; flags Qt::WindowFlags</strong><a class="td-heading-self-link" href="#005-enum-qt-windowtype-flags-qt-windowflags" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="color:#080;font-style:italic">// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">//设置无框的窗口
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    flags<span style="color:#666">:</span> Qt.Window <span style="color:#666">|</span> Qt.FramelessWindowHint 
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
+</span></span></span></code></pre></div><p><a href="https://doc.qt.io/qt-6/qt.html#WindowType-enum">enum Qt::WindowType
+flags Qt::WindowFlags</a></p>
+<p>它的逻辑是首先判断是什么窗口类型，可选项有</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cxx" data-lang="cxx"><span style="display:flex;"><span><span style="color:#666">1.</span> Widget
+</span></span><span style="display:flex;"><span><span style="color:#666">2.</span> Window
+</span></span><span style="display:flex;"><span><span style="color:#666">3.</span> Dialog
+</span></span><span style="display:flex;"><span><span style="color:#666">4.</span> Sheet
+</span></span><span style="display:flex;"><span><span style="color:#666">5.</span> Drawer <span style="color:#080;font-style:italic">//outdated
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span><span style="color:#666">6.</span> Popup
+</span></span><span style="display:flex;"><span><span style="color:#666">7.</span> Tool
+</span></span><span style="display:flex;"><span><span style="color:#666">8.</span> ToolTip
+</span></span><span style="display:flex;"><span><span style="color:#666">9.</span> SplashScreen
+</span></span><span style="display:flex;"><span><span style="color:#666">10.</span> SubWindow
+</span></span><span style="display:flex;"><span><span style="color:#666">11.</span> ForeignWindow
+</span></span><span style="display:flex;"><span><span style="color:#666">12.</span> CoverWindow
+</span></span></code></pre></div><p>所以这12种是所有的<code>窗口类型</code></p>
+<p>选择完我要的窗口Window，之后，我就可以进一步选择<code>窗口标志</code></p>
+<pre tabindex="0"><code>FramelessWindowHint
+CustomizeWindowHint
+</code></pre><p>当然flag可是不止这两种，但是目前我就主要用到了这两种，所以其他的以后再补充啦哈哈</p>
+<p>第一种就是无边框的窗体</p>
+<p>第二种就是自定义的窗体</p>
+<p>第二种接下来还有许多options是配合它出现的，也就是说，CustomizeWindowHint只是一个开关</p>
 
 </div>
 
@@ -840,6 +879,46 @@ import content</p>
     
 	
   
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-c9394ea69451a3716d73cb761bd5ae03">Qt Deployment</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-15" class="text-body-secondary">2024年08月15日</time>
+        
+	</div>
+	<p>要完成Qt项目的部署，你可以按照以下步骤使用<code>windeployqt</code>工具：</p>
+<h3 id="1-准备可执行文件">1. 准备可执行文件<a class="td-heading-self-link" href="#1-%e5%87%86%e5%a4%87%e5%8f%af%e6%89%a7%e8%a1%8c%e6%96%87%e4%bb%b6" aria-label="Heading self-link"></a></h3><p>确保你已经生成了应用程序的可执行文件（如<code>.exe</code>文件），通常在<code>release</code>目录下。</p>
+<h3 id="2-运行-windeployqt">2. 运行<code>windeployqt</code><a class="td-heading-self-link" href="#2-%e8%bf%90%e8%a1%8c-windeployqt" aria-label="Heading self-link"></a></h3><p>打开命令行，导航到包含可执行文件的目录，然后运行以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>windeployqt your_application.exe
+</span></span></code></pre></div><p>此命令会自动扫描你的应用程序，并将所有必要的Qt库和插件复制到可执行文件所在的目录中。</p>
+<h3 id="3-检查依赖项">3. 检查依赖项<a class="td-heading-self-link" href="#3-%e6%a3%80%e6%9f%a5%e4%be%9d%e8%b5%96%e9%a1%b9" aria-label="Heading self-link"></a></h3><p>运行<code>windeployqt</code>后，检查输出目录中是否包含了所有必需的文件，包括Qt的DLL文件、插件、以及可能的配置文件。
+windeployqt会去把相关的依赖项都copy到exe当前的目录下
+但问题是，似乎有时候并不整全，我们需要在一个没安装qt sdk的机器上去运行这个deploy过的程序，它会一步一步的提醒缺少了xxx.dll。
+我们只要拷贝缺少的dll到项目文件夹下，即可。</p>
+<h3 id="4-测试部署包">4. 测试部署包<a class="td-heading-self-link" href="#4-%e6%b5%8b%e8%af%95%e9%83%a8%e7%bd%b2%e5%8c%85" aria-label="Heading self-link"></a></h3><p>在另一台没有安装Qt的Windows机器上测试你的应用程序，确保它能够正常运行。这是验证所有依赖项是否正确打包的关键步骤。</p>
+<h3 id="5-打包和分发">5. 打包和分发<a class="td-heading-self-link" href="#5-%e6%89%93%e5%8c%85%e5%92%8c%e5%88%86%e5%8f%91" aria-label="Heading self-link"></a></h3><p>将输出目录打包成安装程序（如使用Inno Setup）或压缩文件，然后分发给用户。</p>
+<h3 id="可能的扩展">可能的扩展<a class="td-heading-self-link" href="#%e5%8f%af%e8%83%bd%e7%9a%84%e6%89%a9%e5%b1%95" aria-label="Heading self-link"></a></h3><p>如果你的应用程序有额外的依赖项，比如特定的字体、资源文件或动态链接库（DLL），需要手动添加到部署包中。</p>
+<p>这样，你就可以完成Qt应用程序的基本部署。如果过程中遇到问题或需要更多细节，可以参考<a href="https://doc.qt.io/Qt-5/windows-deployment.html">官方文档</a>或向我求助。</p>
+
+</div>
+
+
+
+
 
     
 	

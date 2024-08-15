@@ -6,7 +6,7 @@
     <description>Recent content in Blog on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 13 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>6.1 Ubuntu Ops</title>
@@ -23,11 +23,18 @@
       <description></description>
     </item>
     <item>
+      <title>Qt Deployment</title>
+      <link>http://localhost:1313/blog/2024/08/15/qt-deployment/</link>
+      <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/15/qt-deployment/</guid>
+      <description>要完成Qt项目的部署，你可以按照以下步骤使用windeployqt工具：&#xA;1. 准备可执行文件确保你已经生成了应用程序的可执行文件（如.exe文件），通常在release目录下。&#xA;2. 运行windeployqt打开命令行，导航到包含可执行文件的目录，然后运行以下命令：&#xA;windeployqt your_application.exe 此命令会自动扫描你的应用程序，并将所有必要的Qt库和插件复制到可执行文件所在的目录中。&#xA;3. 检查依赖项运行windeployqt后，检查输出目录中是否包含了所有必需的文件，包括Qt的DLL文件、插件、以及可能的配置文件。 windeployqt会去把相关的依赖项都copy到exe当前的目录下 但问题是，似乎有时候并不整全，我们需要在一个没安装qt sdk的机器上去运行这个deploy过的程序，它会一步一步的提醒缺少了xxx.dll。 我们只要拷贝缺少的dll到项目文件夹下，即可。&#xA;4. 测试部署包在另一台没有安装Qt的Windows机器上测试你的应用程序，确保它能够正常运行。这是验证所有依赖项是否正确打包的关键步骤。&#xA;5. 打包和分发将输出目录打包成安装程序（如使用Inno Setup）或压缩文件，然后分发给用户。&#xA;可能的扩展如果你的应用程序有额外的依赖项，比如特定的字体、资源文件或动态链接库（DLL），需要手动添加到部署包中。&#xA;这样，你就可以完成Qt应用程序的基本部署。如果过程中遇到问题或需要更多细节，可以参考官方文档或向我求助。</description>
+    </item>
+    <item>
       <title>微博</title>
       <link>http://localhost:1313/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</link>
       <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</guid>
-      <description>2024-8-14 08:32:20 弄不清楚特权和人权的区别 加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高 而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相遇，你必须先朝我点头，甚至哈腰，我回之以充满“自信”的冷冰冰的热情，是给足你面子 到茶水间加热猪骨头汤（但她是这里的当权者(的太太)）</description>
+      <description>2024-08-15 14:27学习好，成绩好，守规矩，就应该rule the world 不要被猪给糟蹋了 论一个胡乱管理的管理者，因为自己的懒惰或无能或懒惰+无能，导致正常的审美和是非都有了不合时宜的恶心。&#xA;2024-08-14 08:32:20弄不清楚特权和人权的区别&#xA;加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高&#xA;而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相遇，你必须先朝我点头，甚至哈腰，我回之以充满“自信”的冷冰冰的热情，是给足你面子&#xA;到茶水间加热猪骨头汤（但她是这里的当权者(的太太)）</description>
     </item>
     <item>
       <title>Time Zone Map</title>
