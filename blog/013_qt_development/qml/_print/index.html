@@ -223,9 +223,9 @@
 		<time datetime="2024-08-10" class="text-body-secondary">2024年08月10日</time>
         
 	</div>
-	<h2 id="expose-properties-property-alias">**[Expose Properties]property alias **<a class="td-heading-self-link" href="#expose-properties-property-alias" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>property alias ${EXTERNAL_SHARED_ID}<span style="color:#666">:</span> ${INNER_ID}
+	<h2 id="001-expose-properties-property-alias">001. **[Expose Properties]property alias **<a class="td-heading-self-link" href="#001-expose-properties-property-alias" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>property alias ${EXTERNAL_SHARED_ID}<span style="color:#666">:</span> ${INNER_ID}
 </span></span></code></pre></div><p>if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}</p>
-<h2 id="qml的模块化"><strong>QML的模块化</strong><a class="td-heading-self-link" href="#qml%e7%9a%84%e6%a8%a1%e5%9d%97%e5%8c%96" aria-label="Heading self-link"></a></h2><p>case：<strong>我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？</strong></p>
+<h2 id="002-qml的模块化">002. <strong>QML的模块化</strong><a class="td-heading-self-link" href="#002-qml%e7%9a%84%e6%a8%a1%e5%9d%97%e5%8c%96" aria-label="Heading self-link"></a></h2><p>case：<strong>我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？</strong></p>
 <p><code>solutionA</code>:</p>
 <p>透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height；
 至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。</p>
@@ -235,16 +235,74 @@
 <p><code>solutionC</code>:
 用property
 在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。</p>
-<h2 id="debug-qt-gui-imageio-libpng-warning-iccp-known-incorrect-srgb-profile">Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile<a class="td-heading-self-link" href="#debug-qt-gui-imageio-libpng-warning-iccp-known-incorrect-srgb-profile" aria-label="Heading self-link"></a></h2><p><a href="https://bbs.archlinux.org/viewtopic.php?pid=1269845#p1269845">Post about the reason of this warning</a></p>
+<h2 id="003-debug-qt-gui-imageio-libpng-warning-iccp-known-incorrect-srgb-profile">003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile<a class="td-heading-self-link" href="#003-debug-qt-gui-imageio-libpng-warning-iccp-known-incorrect-srgb-profile" aria-label="Heading self-link"></a></h2><p><a href="https://bbs.archlinux.org/viewtopic.php?pid=1269845#p1269845">Post about the reason of this warning</a></p>
 <pre tabindex="0"><code>It&#39;s because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. 
 It&#39;s supposed to just be a warning, are you sure this is what&#39;s causing the build failure? 
 
 If so, you may need to replace the sRGB profile yourself or get upstream to do it.
-</code></pre><h2 id="取整怎么做">取整怎么做？<a class="td-heading-self-link" href="#%e5%8f%96%e6%95%b4%e6%80%8e%e4%b9%88%e5%81%9a" aria-label="Heading self-link"></a></h2><p>在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：</p>
+</code></pre><h2 id="004-取整怎么做">004. 取整怎么做？<a class="td-heading-self-link" href="#004-%e5%8f%96%e6%95%b4%e6%80%8e%e4%b9%88%e5%81%9a" aria-label="Heading self-link"></a></h2><p>在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>    Math.floor(value): 返回不大于 value 的最大整数，即向下取整。
 </span></span><span style="display:flex;"><span>    Math.ceil(value): 返回不小于 value 的最小整数，即向上取整。
 </span></span><span style="display:flex;"><span>    Math.round(value): 返回四舍五入后的整数。
-</span></span></code></pre></div><h2 id="要点">要点<a class="td-heading-self-link" href="#%e8%a6%81%e7%82%b9" aria-label="Heading self-link"></a></h2><p>函数不能以大写字母开头</p>
+</span></span></code></pre></div><h2 id="005-要点">005. 要点<a class="td-heading-self-link" href="#005-%e8%a6%81%e7%82%b9" aria-label="Heading self-link"></a></h2><p>函数不能以大写字母开头</p>
+<h2 id="006-startsystemmove-的逻辑"><strong>006. startSystemMove()的逻辑</strong><a class="td-heading-self-link" href="#006-startsystemmove-%e7%9a%84%e9%80%bb%e8%be%91" aria-label="Heading self-link"></a></h2><p><a href="https://doc.qt.io/qt-6/qwindow.html#startSystemMove">startSystemMove</a> is designed to send a system signal to the entrance of window moving model</p>
+<p>what gpt4o said:</p>
+<pre tabindex="0"><code>startSystemMove 是一个在某些框架或平台中使用的函数，通常用于启动窗口的移动操作。这个函数的具体实现和行为可能会因平台或框架的不同而有所差异。以下是一个典型的解释和行为描述，通常适用于 Windows 平台和基于 Qt 框架的环境：
+startSystemMove 函数的详细解析
+
+startSystemMove 通常是用来处理用户拖动窗口的情况。当用户按下鼠标左键并拖动窗口的非客户区（例如标题栏）时，系统会自动启动窗口的移动操作。startSystemMove 函数一般用于在自定义标题栏或无边框窗口中模拟这种行为。
+</code></pre><h3 id="problem"><strong>problem</strong><a class="td-heading-self-link" href="#problem" aria-label="Heading self-link"></a></h3><p>when i clicked left button of my mouse, the code will trigger <em><strong>vp_window_id.startSystemMove()</strong></em> for supporting window`s moving function.</p>
+<p>so i wrote it like below</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>onPressed<span style="color:#666">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">if</span>(SingletonModule.IfOnlyMouseLeftButtonPressed(titleMouseArea)){
+</span></span><span style="display:flex;"><span>        vp_window_id.startSystemMove()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    }<span style="color:#a2f;font-weight:bold">else</span> <span style="color:#a2f;font-weight:bold">if</span>(SingletonModule.IfOnlyMouseRightButtonPressed(titleMouseArea)){
+</span></span><span style="display:flex;"><span>        console.log(<span style="color:#b44">&#34;right&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>but now met the problem:
+when i clicked the left button of the mouse, and did not move the mouse (no position changed), the <em><strong>startSystemMove</strong></em> had been sent anyway. and now the <em><strong>titleMouseArea.pressedButtons</strong></em> always keep <em><strong>Qt.LeftButton</strong></em> actually equals <em><strong>1</strong></em>.Even i release the left button of my mouse quickly, the state did not change.
+so now when i clicked left button, nothing happened.
+when i clicked right button, illegal value of <em><strong>titleMouseArea.pressedButtons</strong></em> came with <em><strong>3</strong></em>, it is illegal actually like the pic below, it also means left button plus right button together.
+<img alt="QtMouseButtons" src="/2024/August/16/QtMouseButtons.png"></p>
+<h3 id="solution"><strong>solution</strong><a class="td-heading-self-link" href="#solution" aria-label="Heading self-link"></a></h3><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>onPressed<span style="color:#666">:</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MouseArea {
+</span></span><span style="display:flex;"><span>    id<span style="color:#666">:</span> titleMouseArea
+</span></span><span style="display:flex;"><span>    anchors.fill<span style="color:#666">:</span> parent
+</span></span><span style="display:flex;"><span>    acceptedButtons<span style="color:#666">:</span> Qt.LeftButton <span style="color:#666">|</span> Qt.RightButton
+</span></span><span style="display:flex;"><span>    preventStealing<span style="color:#666">:</span> <span style="color:#a2f;font-weight:bold">true</span>    
+</span></span><span style="display:flex;"><span>    pressAndHoldInterval<span style="color:#666">:</span> <span style="color:#666">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    property bool isDragging<span style="color:#666">:</span> <span style="color:#a2f;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>    onPressed<span style="color:#666">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span>(SingletonModule.IfOnlyMouseLeftButtonPressed(titleMouseArea)){
+</span></span><span style="display:flex;"><span>            isDragging <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        }<span style="color:#a2f;font-weight:bold">else</span> <span style="color:#a2f;font-weight:bold">if</span>(SingletonModule.IfOnlyMouseRightButtonPressed(titleMouseArea)){
+</span></span><span style="display:flex;"><span>            console.log(<span style="color:#b44">&#34;right&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        console.log(<span style="color:#b44">&#34;\n&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    onPositionChanged<span style="color:#666">:</span> {
+</span></span><span style="display:flex;"><span>            console.log(<span style="color:#b44">&#34;x=&#34;</span>, mouse.x,
+</span></span><span style="display:flex;"><span>                        <span style="color:#b44">&#34;y=&#34;</span>, mouse.y)
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span>(isDragging){
+</span></span><span style="display:flex;"><span>            vp_window_id.startSystemMove()
+</span></span><span style="display:flex;"><span>            console.log(<span style="color:#b44">&#34;position changed: left&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    onReleased<span style="color:#666">:</span> {
+</span></span><span style="display:flex;"><span>        isDragging <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>        console.log(<span style="color:#b44">&#34;Button released. Current pressedButtons:&#34;</span>, titleMouseArea.pressedButtons)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>the solution is a logic control that when i click left button, onPressed set the flag variable <em><strong>TRUE</strong></em>, and if i do not move the cursor away, the onRelease slot will set the flag variable to <em><strong>FALSE</strong></em>.
+Until i click and at the same time move the cursor away(position changed), the <em><strong>onPositionChanged</strong></em> slot will send <em><strong>vp_window_id.startSystemMove()</strong></em> out to the system.</p>
+<h3 id="conclusion"><strong>conclusion</strong><a class="td-heading-self-link" href="#conclusion" aria-label="Heading self-link"></a></h3><p>actually higher level language is boring because of that they could not control the low layer system at some times.
+and personaly customize the titlebar of a window is such a heave job.</p>
 
 </div>
 
