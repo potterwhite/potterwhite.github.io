@@ -6,8 +6,15 @@
     <description>Recent content in 013_002_Grp_QML on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 10 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/013_qt_development/qml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>QML的Menu容器</title>
+      <link>http://localhost:1313/blog/2024/08/19/qml%E7%9A%84menu%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Mon, 19 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/19/qml%E7%9A%84menu%E5%AE%B9%E5%99%A8/</guid>
+      <description>QML 中的 Menu 结构在 QML 中，Menu 是一个复杂的控件，它通常用于创建上下文菜单或主菜单。在 QML 中，像 Menu 这样的控件可以通过 background 和 contentItem 等属性来自定义其外观和行为。这些属性通常用于更改控件的默认布局和样式。&#xA;1. background 属性 background 属性是一个 Item 或任何其他可以作为背景的元素。它定义了 Menu 背景的样式。通常，你会使用 Rectangle 或其他图形元素来定义背景的颜色、边框、圆角等。 位置: background 位于 Menu 的最底层，用于显示菜单的背景。它通常覆盖整个 Menu 的区域。 2. contentItem 属性 contentItem 是一个 Item，定义了 Menu 的主要内容。通过自定义 contentItem，你可以完全控制 Menu 中菜单项的布局方式和样式。 位置: contentItem 位于 background 之上，包含 MenuItem 和其他控件的布局。 Menu 的基本结构可以将 Menu 看作一个容器，包含以下几个关键区域：&#xA;background:&#xA;功能: 负责绘制菜单的背景颜色、边框、阴影等样式。 自定义: 可以使用任何 Item 来自定义背景（通常是 Rectangle）。 默认行为: 如果不指定 background，菜单将使用系统默认的背景样式。 contentItem:&#xA;功能: 负责容纳并布局菜单项（MenuItem），可以是 Column、Row、Grid 等布局容器。 自定义: 可以使用 Column、Row、Grid 等来控制 MenuItem 的排列方式。 默认行为: 如果不指定 contentItem，Menu 将使用系统默认的布局来排列 MenuItem。 MenuItem:</description>
+    </item>
     <item>
       <title>qml notes</title>
       <link>http://localhost:1313/blog/2024/08/10/qml-notes/</link>

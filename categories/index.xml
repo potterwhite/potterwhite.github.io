@@ -6,13 +6,27 @@
     <description>Recent content in Categories on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 15 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog</title>
       <link>http://localhost:1313/categories/blog/</link>
-      <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/blog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>QML</title>
+      <link>http://localhost:1313/categories/qml/</link>
+      <pubDate>Mon, 19 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/qml/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Qt Development</title>
+      <link>http://localhost:1313/categories/qt-development/</link>
+      <pubDate>Mon, 19 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/qt-development/</guid>
       <description></description>
     </item>
     <item>
@@ -37,13 +51,6 @@
       <description></description>
     </item>
     <item>
-      <title>QML</title>
-      <link>http://localhost:1313/categories/qml/</link>
-      <pubDate>Sat, 10 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/qml/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Collection</title>
       <link>http://localhost:1313/categories/collection/</link>
       <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
@@ -55,13 +62,6 @@
       <link>http://localhost:1313/categories/cpu/</link>
       <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/cpu/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Qt Development</title>
-      <link>http://localhost:1313/categories/qt-development/</link>
-      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/qt-development/</guid>
       <description></description>
     </item>
     <item>

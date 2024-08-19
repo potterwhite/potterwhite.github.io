@@ -68,30 +68,42 @@
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/013_qt_development/</loc>
-    <lastmod>2024-08-15T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/013_qt_development/qt6/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/013_qt_development/qml/</loc>
-    <lastmod>2024-08-10T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/014_cpu/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/blog/</loc>
-    <lastmod>2024-08-15T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-08-15T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/19/q_property/</loc>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/qml/</loc>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/19/qml%E7%9A%84menu%E5%AE%B9%E5%99%A8/</loc>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/qt-development/</loc>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/</loc>
+    <lastmod>2024-08-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/qt/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/08/15/qt-deployment/</loc>
-    <lastmod>2024-08-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/blog/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/microblog/</loc>
@@ -105,9 +117,6 @@
   </url><url>
     <loc>http://localhost:1313/categories/tools/</loc>
     <lastmod>2024-08-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/qml/</loc>
-    <lastmod>2024-08-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/08/10/qml-notes/</loc>
     <lastmod>2024-08-10T00:00:00+00:00</lastmod>
@@ -125,9 +134,6 @@
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/08/02/qml%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84content%E6%96%87%E4%BB%B6%E5%A4%B9/</loc>
-    <lastmod>2024-08-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/qt-development/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/08/02/reading-list/</loc>
