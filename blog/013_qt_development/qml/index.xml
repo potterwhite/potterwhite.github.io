@@ -6,8 +6,15 @@
     <description>Recent content in 013_002_Grp_QML on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 19 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/013_qt_development/qml/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>QtQuick工程里的main函数解析</title>
+      <link>http://localhost:1313/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Tue, 20 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/</guid>
+      <description>当然！这是对 main 函数的详细解读，涵盖了各个部分的功能和目的。&#xA;代码逐行解释int main(int argc, char *argv[]) { QGuiApplication::setAttribute(Qt::AA_UseSoftwareOpenGL); QGuiApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);：设置 Qt 应用程序的属性，强制使用软件渲染 OpenGL。这在没有硬件加速的环境中（例如某些虚拟机或嵌入式系统）非常有用，确保 OpenGL 渲染功能的兼容性。 set_qt_environment(); set_qt_environment()：这似乎是一个自定义函数，用于设置 Qt 环境的其他参数或配置。具体内容取决于你的实际实现。 QGuiApplication GUI_app(argc, argv); QGuiApplication：创建 Qt 的 GUI 应用程序对象，处理与用户界面相关的任务。argc 和 argv 用于传递命令行参数。 // 文件路径 QString iconPath = &amp;#34;://images/icons/app_icon.svg&amp;#34;; iconPath：指定应用程序图标的路径。路径使用 Qt 的资源系统（:// 表示 Qt 资源路径）。 // 检查文件是否存在 if (QFile::exists(iconPath)) { // 文件存在，设置图标 glb_GUI_app.setWindowIcon(QIcon(iconPath)); // qDebug() &amp;lt;&amp;lt; &amp;#34;Icon found and set.&amp;#34;; } else { // 文件不存在，处理错误 qDebug() &amp;lt;&amp;lt; &amp;#34;main(): Icon file not found:&amp;#34; &amp;lt;&amp;lt; iconPath &amp;lt;&amp;lt;&amp;#34;currentDir=&amp;#34;&amp;lt;&amp;lt; QDir::currentPath(); } QFile::exists(iconPath)：检查指定路径的图标文件是否存在。 glb_GUI_app.</description>
+    </item>
     <item>
       <title>QML的Menu容器</title>
       <link>http://localhost:1313/blog/2024/08/19/qml%E7%9A%84menu%E5%AE%B9%E5%99%A8/</link>

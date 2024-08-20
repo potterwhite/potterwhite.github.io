@@ -27,7 +27,7 @@
       <link>http://localhost:1313/blog/2024/08/19/q_property/</link>
       <pubDate>Mon, 19 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/08/19/q_property/</guid>
-      <description>Q_PROPERTY 的详细解释Q_PROPERTY 是 Qt 的元对象系统的一部分，它用于在 Qt 的元对象系统中注册属性，使得这些属性可以被 QML 和其他 Qt 的特性（如信号与槽机制）访问。它的作用包括：&#xA;属性的声明和管理：通过 Q_PROPERTY 声明的属性可以在 Qt 的元对象系统中被识别和管理，使得它们可以在 QML 中访问和绑定。 提供 getter 和 setter：Q_PROPERTY 允许你指定一个属性的 getter 和 setter 方法，这些方法用于访问和修改属性值。 通知属性变化：Q_PROPERTY 允许你定义一个变化通知信号，这样当属性的值发生变化时，可以发出信号通知 QML 或其他对象。 支持绑定：在 QML 中，你可以绑定 UI 元素的属性到 C++ 类的属性，Q_PROPERTY 支持这种绑定机制，使得 UI 可以自动更新。 Q_PROPERTY 的基本语法如下：Q_PROPERTY(type name READ getter WRITE setter NOTIFY signal) type：属性的数据类型。 name：属性的名称。 READ getter：指定一个 getter 方法来获取属性值。 WRITE setter：指定一个 setter 方法来设置属性值。 NOTIFY signal：指定一个信号，当属性值发生变化时发出此信号。 </description>
+      <description>Q_PROPERTY 的详细解释Q_PROPERTY 是 Qt 的元对象系统的一部分，它用于在 Qt 的元对象系统中注册属性，使得这些属性可以被 QML 和其他 Qt 的特性（如信号与槽机制）访问。它的作用包括：&#xA;属性的声明和管理：通过 Q_PROPERTY 声明的属性可以在 Qt 的元对象系统中被识别和管理，使得它们可以在 QML 中访问和绑定。 提供 getter 和 setter：Q_PROPERTY 允许你指定一个属性的 getter 和 setter 方法，这些方法用于访问和修改属性值。 通知属性变化：Q_PROPERTY 允许你定义一个变化通知信号，这样当属性的值发生变化时，可以发出信号通知 QML 或其他对象。 支持绑定：在 QML 中，你可以绑定 UI 元素的属性到 C++ 类的属性，Q_PROPERTY 支持这种绑定机制，使得 UI 可以自动更新。 Q_PROPERTY 的基本语法如下：Q_PROPERTY(type name READ getter WRITE setter NOTIFY signal) type：属性的数据类型。 name：属性的名称。 READ getter：指定一个 getter 方法来获取属性值。 WRITE setter：指定一个 setter 方法来设置属性值。 可以加const； 必须是在public 作用限定符修饰下； 不能是指针或引用，必须是可以复制的值； NOTIFY signal：指定一个信号，当属性值发生变化时发出此信号。 </description>
     </item>
     <item>
       <title>QML的Menu容器</title>
@@ -48,7 +48,7 @@
       <link>http://localhost:1313/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</link>
       <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</guid>
-      <description>2024-08-15 14:27学习好，成绩好，守规矩，就应该rule the world 不要被猪给糟蹋了 论一个胡乱管理的管理者，因为自己的懒惰或无能或懒惰+无能，导致正常的审美和是非都有了不合时宜的恶心。&#xA;2024-08-14 08:32:20弄不清楚特权和人权的区别&#xA;加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高&#xA;而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相遇，你必须先朝我点头，甚至哈腰，我回之以充满“自信”的冷冰冰的热情，是给足你面子&#xA;到茶水间加热猪骨头汤（但她是这里的当权者(的太太)）</description>
+      <description>2024-08-15 14:27学习好，成绩好，守规矩，就应该rule the world 不要被猪给糟蹋了 论一个胡乱管理的管理者，因为自己的懒惰或无能或懒惰+无能，导致正常的审美和是非都有了不合时宜的恶心。&#xA;2024-08-14 08:32:20弄不清楚特权和人权的区别&#xA;加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高&#xA;而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相遇，你必须先朝我点头，甚至哈腰，我回之以充满“自信”的冷冰冰的热情，是给足你面子</description>
     </item>
     <item>
       <title>Time Zone Map</title>
