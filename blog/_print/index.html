@@ -30,8 +30,8 @@
 
   <meta itemprop="name" content="博客文章">
   <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
-  <meta itemprop="datePublished" content="2024-08-20T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-08-20T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2024-08-29T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-29T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="博客文章">
   <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
@@ -1017,6 +1017,37 @@
   
   
 
+  
+    
+    
+	
+
+    <li><a href="#pg-41ae5e79d72cfcb320d4e419c371c607">014_01_SOC</a></li>
+
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-1fded1403e2e2c59e1b7c946eada291f">音视频设备数据流分析</a></li>
+
+
+
+    
+  
+
+    </ul>
+    
   
     
     
@@ -5018,7 +5049,7 @@ windeployqt会去把相关的依赖项都copy到exe当前的目录下
 	<div class="td-byline mb-4">
 		
         
-		<time datetime="2024-08-02" class="text-body-secondary">2024年08月02日</time>
+		<time datetime="2024-08-29" class="text-body-secondary">2024年08月29日</time>
         
 	</div>
 	
@@ -5048,6 +5079,118 @@ windeployqt会去把相关的依赖项都copy到exe当前的目录下
   
 
 <div class="td-content" style="">
+    <h1 id="pg-41ae5e79d72cfcb320d4e419c371c607">014_01_SOC</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-29" class="text-body-secondary">2024年08月29日</time>
+        
+	</div>
+	
+</div>
+
+
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-1fded1403e2e2c59e1b7c946eada291f">音视频设备数据流分析</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-29" class="text-body-secondary">2024年08月29日</time>
+        
+	</div>
+	<h1 id="关键节点介绍">关键节点介绍<a class="td-heading-self-link" href="#%e5%85%b3%e9%94%ae%e8%8a%82%e7%82%b9%e4%bb%8b%e7%bb%8d" aria-label="Heading self-link"></a></h1><h3 id="input">Input:<a class="td-heading-self-link" href="#input" aria-label="Heading self-link"></a></h3><pre><code>HDMI/SDI Camera or PC Desktop Captured Video
+</code></pre>
+<h3 id="output">Output:<a class="td-heading-self-link" href="#output" aria-label="Heading self-link"></a></h3><pre><code>HDMI/SDI Monitor or PC Display
+</code></pre>
+<h3 id="主控芯片-mpu">主控芯片：MPU<a class="td-heading-self-link" href="#%e4%b8%bb%e6%8e%a7%e8%8a%af%e7%89%87-mpu" aria-label="Heading self-link"></a></h3><pre><code>Rockchip RK3568 
+NXP i.MX8M Plus
+</code></pre>
+<h3 id="encode-ip-module">Encode IP Module<a class="td-heading-self-link" href="#encode-ip-module" aria-label="Heading self-link"></a></h3><pre tabindex="0"><code>FPGA(Field Programable Gate Array)
+ASIC(Application-Specific Integrated Circuit)
+    Standalone Encode Chip
+</code></pre><h3 id="decode-ip-module">Decode IP Module<a class="td-heading-self-link" href="#decode-ip-module" aria-label="Heading self-link"></a></h3><pre tabindex="0"><code>ASIC
+    Standalone Decode Chip
+</code></pre><hr>
+<h1 id="宏观层面的数据流走向-把mpu看做一个黑盒blackbox"><strong>宏观层面的数据流走向</strong>（把MPU看做一个黑盒Blackbox）：<a class="td-heading-self-link" href="#%e5%ae%8f%e8%a7%82%e5%b1%82%e9%9d%a2%e7%9a%84%e6%95%b0%e6%8d%ae%e6%b5%81%e8%b5%b0%e5%90%91-%e6%8a%8ampu%e7%9c%8b%e5%81%9a%e4%b8%80%e4%b8%aa%e9%bb%91%e7%9b%92blackbox" aria-label="Heading self-link"></a></h1><p>Input直接进入MPU，MPU将进来的数据进行编码，然后放进内存中</p>
+<p>从软件层面看，早期的Framebuffer方式显示，是开辟一块内存区，将编码后的数据进行解码，解码后的数据拷贝到特定的内存区中，
+相应的显示设备上就有了内存区域中的相关显示内容了。</p>
+<p>其实，这里还有非常重要的核心问题：</p>
+<pre tabindex="0"><code>为什么需要进行编码？
+</code></pre><p>如果没有编码，就不需要解码，直接发到内存里，既显示速度快，又便宜。省去了编解码器，肯定有一定的成本下降。
+这个的确很重要，坦白说，我也没有系统的去研究过，所以为了聚焦本文的重点，也为了有尽可能权威的回答，我另外开一篇来说。</p>
+<p>本文主要是介绍宏观微观视角下的数据流走向。
+而接下来，我们就要进入微观层面了</p>
+<h1 id="微观层面的数据流走向-进入mpu内部"><strong>微观层面的数据流走向（进入MPU内部）</strong><a class="td-heading-self-link" href="#%e5%be%ae%e8%a7%82%e5%b1%82%e9%9d%a2%e7%9a%84%e6%95%b0%e6%8d%ae%e6%b5%81%e8%b5%b0%e5%90%91-%e8%bf%9b%e5%85%a5mpu%e5%86%85%e9%83%a8" aria-label="Heading self-link"></a></h1><h2 id="simple-scene"><strong>Simple Scene</strong><a class="td-heading-self-link" href="#simple-scene" aria-label="Heading self-link"></a></h2><p><img alt="alt text" src="/2024/August/29/rk3568_block_diagram.png"></p>
+<p><code>这里，特别看红色圈住的区域。</code></p>
+<p>这里面至少有GPU/Decoder/Encoder等7个模块，站在Soc(System On Chip)片上系统的角度来看，他们都是独立的<code>IP核心（Intellectual Property）</code></p>
+<p>IP的中文叫知识产权（至于这里为什么叫这么一个名字，是因为每一个IP都是设计好的，能够直接被拿来使用的，因此命名为知识产权。并非中文世界所认为的是一种无形资产而已）。</p>
+<p>关于IP所处的整个产业链的位置，我借鉴了抖音号(<code>ICshow</code>)，名为（<code>芯片工程师阿伟「芯片设计服务」</code>）的图。因为我认为，要了解一个新的术语，需要放在整个立体的产业结构中去看，这样最容易准确抓住它的定义，即便短期内没法下准定义，但是起码朦胧的认识已经有了。
+图如下
+<img alt="alt text" src="/2024/August/29/chip_industry_structure.jpg"></p>
+<p>也就是说MPU要对外实现编解码功能、图形渲染等图形处理单元的功能，是靠内部的IP来提供。</p>
+<p>MPU内部的IP Cores之间倚靠总线（总线的详细知识点后期我会进一步补充）进行连接。</p>
+<p>从ASIC的英文全称来看，它的定义是特殊应用的集成电路。因此，它最大的特点是：一旦制造出来，它的结构是不可以重新设计或调整的。正因为这样，我们可以把MPU当成一个大的ASIC。（RISC-V的特殊性，可扩展指令，在此，我们先把它剔除在该分类之外）</p>
+<p>在MPU这个ASIC里面，有众多的IP Cores。当Input有数据接入MPU，会先进行简单的图像处理（模拟信号转换成数字信号等）。然后送到VPU这个IP里面，VPU内部又有编码器和解码器以及缓存，可以对输入进来的信号进行编码，从RGB这样的显示格式转换成H.264这样的数字格式。</p>
+<p>编码后，会经过高速数据总线（AXI）传输到内存里。（因为高清HD甚至超高清UHD的视频传输，经过总线和内存，因此，<code>内存的带宽</code>和<code>总线的带宽</code>是重要的参数，是否会成为瓶颈，这里必须要关注。）</p>
+<p>之后，若需要显示在mpu的hdmi output interface上，还需要将已经编码的数据再次解码成为RGB或YUV这样的图像数据。
+也可以将编码后的数据透过ethernet或usb等interface发出去。</p>
+<h2 id="complex-scene"><strong>Complex Scene</strong><a class="td-heading-self-link" href="#complex-scene" aria-label="Heading self-link"></a></h2><p>在一个更复杂的场景下，例如同时有16路camera接入mpu，这个时候，vpu本身的编码能力再强大，也无法进行实时的编码了。
+这个时候，就要考虑使用外接的编码器了。</p>
+<p>例如，使用某一些为16路（或者更多路数）的信号接入进行并行计算的ASIC，这些ASIC可以以低功耗、低延迟的效果进行加速的计算，进而取代mpu原先内置的vpu。
+或者还有第二种办法，就是用可编程逻辑门阵列，就是FPGA。它能够灵活的设计电路结构，为某一种算法适配其加速功能。不足之处是功耗大，而且功能较多，有文章说：FPGA是通用可编辑的芯片，冗余功能比较多。不管你怎么设计，都会多出来一些部件。
+详细的关于FPGA和ASIC的对比，请看Reference的文章<code>1.到底什么是ASIC和FPGA?</code></p>
+<h2 id="总结"><strong>总结</strong><a class="td-heading-self-link" href="#%e6%80%bb%e7%bb%93" aria-label="Heading self-link"></a></h2><p>从内部来看MPU，是必须的，这样才能深刻去查看研究data sheet里面的block diagram到底想要表达什么，有多少module。
+从SOC的角度看IP core，看总线，看ASIC，看FPGA，进而看GPU，NPU， CPU，似乎它是一条线，把这些零散的概念，串起来了。
+感谢上帝。</p>
+<hr>
+<h1 id="references"><strong>References</strong><a class="td-heading-self-link" href="#references" aria-label="Heading self-link"></a></h1><p><a href="https://xueqiu.com/7282046183/273570315">1.到底什么是ASIC和FPGA?</a></p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
     <h1 id="pg-891a71f383854433046ce745fa980c6a">开发板选择</h1>
 	
 	<div class="td-byline mb-4">
