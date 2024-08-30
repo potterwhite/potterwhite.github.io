@@ -3,8 +3,6 @@
   <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="alternate" type="text/html" href="http://localhost:1313/blog/001_theology/_print/">
-<link rel="alternate" type="application/rss&#43;xml" href="http://localhost:1313/blog/001_theology/index.xml">
 <meta name="robots" content="noindex, nofollow">
 
 
@@ -19,22 +17,51 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>001_Grp_Theology | 嵌入式系统 Enthusiast</title>
-<meta name="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
-<meta property="og:url" content="http://localhost:1313/blog/001_theology/">
+<title>Chroma Subsampling是什么 | 嵌入式系统 Enthusiast</title>
+<meta name="description" content="色度采样是什么？
+1. 4:2:2 命名的含义在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
+<meta property="og:url" content="http://localhost:1313/blog/2024/08/30/chroma-subsampling%E6%98%AF%E4%BB%80%E4%B9%88/">
   <meta property="og:site_name" content="嵌入式系统 Enthusiast">
-  <meta property="og:title" content="001_Grp_Theology">
-  <meta property="og:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
+  <meta property="og:title" content="Chroma Subsampling是什么">
+  <meta property="og:description" content="色度采样是什么？
+1. 4:2:2 命名的含义在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
   <meta property="og:locale" content="zh_cn">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2024-08-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-08-30T00:00:00+00:00">
 
-  <meta itemprop="name" content="001_Grp_Theology">
-  <meta itemprop="description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
-  <meta itemprop="datePublished" content="2024-08-13T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-08-13T00:00:00+00:00">
+  <meta itemprop="name" content="Chroma Subsampling是什么">
+  <meta itemprop="description" content="色度采样是什么？
+1. 4:2:2 命名的含义在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
+  <meta itemprop="datePublished" content="2024-08-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="92">
+  <meta itemprop="keywords" content="Blog,CPU,SOC">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="001_Grp_Theology">
-  <meta name="twitter:description" content="First of All, I am a pure christian. Husband of my wife Father of my daughters Enthusiast of Embedded System, Linux/Docker/ERP/WASAPI/NodeJS/SockerIO/">
+  <meta name="twitter:title" content="Chroma Subsampling是什么">
+  <meta name="twitter:description" content="色度采样是什么？
+1. 4:2:2 命名的含义在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
 <link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -47,7 +74,7 @@
 <link rel="stylesheet" href="/css/prism.css"/>
 
   </head>
-  <body class="td-section td-blog">
+  <body class="td-page td-blog">
     <header>
       <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
 <div class="container-fluid flex-column flex-md-row">
@@ -172,18 +199,18 @@
   <a href="/blog/2024/08/02/reading-list/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-reading-list"><span class="">Reading List</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-001-theology-li">
-  <a href="/blog/001_theology/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__section" id="m-blog-001-theology"><span class="td-sidebar-nav-active-item">001_Grp_Theology</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-001-theology-li">
+  <a href="/blog/001_theology/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-001-theology"><span class="">001_Grp_Theology</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-08-13-e5-be-ae-e5-8d-9a-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-13-e5-be-ae-e5-8d-9a-li">
   <a href="/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-13-e5-be-ae-e5-8d-9a"><span class="">微博</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-08-02-e5-9f-ba-e6-9c-ac-e7-9a-84-e6-98-af-e9-9d-9e-e8-a7-82-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-e5-9f-ba-e6-9c-ac-e7-9a-84-e6-98-af-e9-9d-9e-e8-a7-82-li">
   <a href="/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-e5-9f-ba-e6-9c-ac-e7-9a-84-e6-98-af-e9-9d-9e-e8-a7-82"><span class="">基本的是非观</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-07-24-2024-e5-b9-b4-e9-ab-98-e8-80-83-e4-bd-99-e6-82-b8-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-24-2024-e5-b9-b4-e9-ab-98-e8-80-83-e4-bd-99-e6-82-b8-li">
   <a href="/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-24-2024-e5-b9-b4-e9-ab-98-e8-80-83-e4-bd-99-e6-82-b8"><span class="">2024年高考余悸</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-06-10-roe-v-wade-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-roe-v-wade-li">
   <a href="/blog/2024/06/10/roe-v.-wade/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-roe-v-wade"><span class="">Roe v. Wade</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e-li">
   <a href="/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e"><span class="">关于堕胎</span></a>
 </li>
   </ul>
@@ -350,21 +377,21 @@
   <a href="/blog/2024/08/15/qt-deployment/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-15-qt-deployment"><span class="">Qt Deployment</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-014-cpu-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-014-cpu-li">
   <a href="/blog/014_cpu/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-014-cpu"><span class="">014_Grp_CPU</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-014-cpu-014-01-soc-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-014-cpu-014-01-soc-li">
   <a href="/blog/014_cpu/014_01_soc/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-014-cpu-014-01-soc"><span class="">014_01_SOC</span></a>
   <ul class="ul-3 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-30-chroma-subsampling-e6-98-af-e4-bb-80-e4-b9-88-li">
-  <a href="/blog/2024/08/30/chroma-subsampling%E6%98%AF%E4%BB%80%E4%B9%88/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-30-chroma-subsampling-e6-98-af-e4-bb-80-e4-b9-88"><span class="">Chroma Subsampling是什么</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-30-hdr-e7-9a-84-e6-a0-87-e5-87-86-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-blog-2024-08-30-chroma-subsampling-e6-98-af-e4-bb-80-e4-b9-88-li">
+  <a href="/blog/2024/08/30/chroma-subsampling%E6%98%AF%E4%BB%80%E4%B9%88/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-30-chroma-subsampling-e6-98-af-e4-bb-80-e4-b9-88"><span class="td-sidebar-nav-active-item">Chroma Subsampling是什么</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-08-30-hdr-e7-9a-84-e6-a0-87-e5-87-86-li">
   <a href="/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-30-hdr-e7-9a-84-e6-a0-87-e5-87-86"><span class="">HDR的标准</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-29-e9-9f-b3-e8-a7-86-e9-a2-91-e8-ae-be-e5-a4-87-e6-95-b0-e6-8d-ae-e6-b5-81-e5-88-86-e6-9e-90-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-08-29-e9-9f-b3-e8-a7-86-e9-a2-91-e8-ae-be-e5-a4-87-e6-95-b0-e6-8d-ae-e6-b5-81-e5-88-86-e6-9e-90-li">
   <a href="/blog/2024/08/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-29-e9-9f-b3-e8-a7-86-e9-a2-91-e8-ae-be-e5-a4-87-e6-95-b0-e6-8d-ae-e6-b5-81-e5-88-86-e6-9e-90"><span class="">音视频设备数据流分析</span></a>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-e5-bc-80-e5-8f-91-e6-9d-bf-e9-80-89-e6-8b-a9-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-08-02-e5-bc-80-e5-8f-91-e6-9d-bf-e9-80-89-e6-8b-a9-li">
   <a href="/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-e5-bc-80-e5-8f-91-e6-9d-bf-e9-80-89-e6-8b-a9"><span class="">开发板选择</span></a>
 </li>
   </ul>
@@ -378,16 +405,31 @@
           </aside>
           <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
             <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
-<a href="https://github.com/potterwhite/tree/main/content/zh-cn/blog/001_Theology/_index.md" class="td-page-meta--view td-page-meta__view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> 查看页面源码</a>
-  <a href="https://github.com/potterwhite/edit/main/content/zh-cn/blog/001_Theology/_index.md" class="td-page-meta--edit td-page-meta__edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 编辑此页</a>
-  <a href="https://github.com/potterwhite/new/main/content/zh-cn/blog/001_Theology?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child td-page-meta__child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 添加子页面</a>
-  <a href="https://github.com/potterwhite/issues/new?title=001_Grp_Theology" class="td-page-meta--issue td-page-meta__issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> 提交文档问题</a>
+<a href="https://github.com/potterwhite/tree/main/content/zh-cn/blog/014_CPU/014_01_SOC/Chroma_Subsampling%e6%98%af%e4%bb%80%e4%b9%88.md" class="td-page-meta--view td-page-meta__view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> 查看页面源码</a>
+  <a href="https://github.com/potterwhite/edit/main/content/zh-cn/blog/014_CPU/014_01_SOC/Chroma_Subsampling%e6%98%af%e4%bb%80%e4%b9%88.md" class="td-page-meta--edit td-page-meta__edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 编辑此页</a>
+  <a href="https://github.com/potterwhite/new/main/content/zh-cn/blog/014_CPU/014_01_SOC?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child td-page-meta__child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 添加子页面</a>
+  <a href="https://github.com/potterwhite/issues/new?title=Chroma%20Subsampling%e6%98%af%e4%bb%80%e4%b9%88" class="td-page-meta--issue td-page-meta__issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> 提交文档问题</a>
   <a href="https://github.com/potterwhite/issues/new" class="td-page-meta--project td-page-meta__project-issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> 提交项目问题</a>
-  <a id="print" href="/blog/001_theology/_print/"><i class="fa-solid fa-print fa-fw"></i> 整节打印</a>
+  <a id="print" href="/blog/014_cpu/014_01_soc/_print/"><i class="fa-solid fa-print fa-fw"></i> 整节打印</a>
 
 </div>
 
-            
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-4-2-2-命名的含义">1. 4:2:2 命名的含义</a>
+      <ul>
+        <li><a href="#1-4-4-4">1. <strong>4:4:4</strong></a></li>
+        <li><a href="#2-4-2-2">2. <strong>4:2:2</strong></a></li>
+        <li><a href="#3-4-2-0">3. <strong>4:2:0</strong></a></li>
+        <li><a href="#4-4-1-1">4. <strong>4:1:1</strong></a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
@@ -424,156 +466,96 @@
 	
           </aside>
           <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
-            <a class="td-rss-button" title="RSS" href="/blog/001_theology/index.xml" target="_blank" rel="noopener">
+            <a class="td-rss-button" title="RSS" href="/blog/014_cpu/014_01_soc/index.xml" target="_blank" rel="noopener">
               <i class="fa-solid fa-rss" aria-hidden="true"></i>
             </a>
             
-<div class="td-blog-posts">
-  <div class="h2">撰写于 2024</div>
-    <ul class="td-blog-posts-list">
-      <li class="td-blog-posts-list__item">
-        <div class="td-blog-posts-list__body">
-          <h5 class="mt-0 mb-1"><a href="/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/">微博</a></h5>
-          <p class="mb-2 mb-md-3"><small class="text-body-secondary">2024年08月13日 在 001_Grp_Theology</small></p>
-          <header class="article-meta">
-            <div class="taxonomy taxonomy-terms-article taxo-categories">
+<div class="td-content">
+	<h1>Chroma Subsampling是什么</h1>
+	
+	<div class="td-byline mb-4">
+		
+		<time datetime="2024-08-30" class="text-body-secondary">2024年08月30日</time>
+	</div>
+	<header class="article-meta">
+		<div class="taxonomy taxonomy-terms-article taxo-categories">
   <h5 class="taxonomy-title">Categories:</h5>
   <ul class="taxonomy-terms">
     <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
-    <li><a class="taxonomy-term" href="http://localhost:1313/categories/microblog/" data-taxonomy-term="microblog"><span class="taxonomy-label">Microblog</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/soc/" data-taxonomy-term="soc"><span class="taxonomy-label">SOC</span></a></li>
     </ul>
 </div>
 
   <p class="reading-time"><i class="fa-solid fa-clock" aria-hidden="true"></i>&nbsp; 少于1分钟 &nbsp;</p>
 </header>
-          
+	<p><a href="https://www.sohu.com/a/699595331_121466058">色度采样是什么？</a></p>
+<h2 id="1-4-2-2-命名的含义">1. 4:2:2 命名的含义<a class="td-heading-self-link" href="#1-4-2-2-%e5%91%bd%e5%90%8d%e7%9a%84%e5%90%ab%e4%b9%89" aria-label="Heading self-link"></a></h2><p>在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：</p>
+<pre><code>4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。
+2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。
+2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。
+</code></pre>
+<p>颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：</p>
+<hr>
+<h3 id="1-4-4-4">1. <strong>4:4:4</strong><a class="td-heading-self-link" href="#1-4-4-4" aria-label="Heading self-link"></a></h3><ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每个像素采样一次。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>每个像素都有独立的亮度和色度信息。</li>
+<li><strong>每 1 个像素采样一次</strong>色度信息。</li>
+<li>无子采样，全分辨率，最高质量。</li>
+</ul>
+<h3 id="2-4-2-2">2. <strong>4:2:2</strong><a class="td-heading-self-link" href="#2-4-2-2" aria-label="Heading self-link"></a></h3><ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每两个像素共享一个色度信息（水平方向）。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。</li>
+<li><strong>每 2 个像素采样一次</strong>色度信息（水平方向）。</li>
+<li>水平色度分辨率减半，但垂直方向保持不变。</li>
+</ul>
+<h3 id="3-4-2-0">3. <strong>4:2:0</strong><a class="td-heading-self-link" href="#3-4-2-0" aria-label="Heading self-link"></a></h3><ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每 2x2 像素块共享一组色度信息。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>水平方向和垂直方向上每 2x2 像素块共享一组色度信息。</li>
+<li><strong>每 4 个像素采样一次</strong>色度信息。</li>
+<li>水平和垂直色度分辨率都减半。</li>
+</ul>
+<h3 id="4-4-1-1">4. <strong>4:1:1</strong><a class="td-heading-self-link" href="#4-4-1-1" aria-label="Heading self-link"></a></h3><ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每 4 个像素共享一组色度信息（水平方向）。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>水平方向上每 4 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。</li>
+<li><strong>每 4 个像素采样一次</strong>色度信息（水平方向）。</li>
+<li>水平色度分辨率降低为亮度分辨率的四分之一，垂直方向不变。</li>
+</ul>
+<h3 id="总结">总结<a class="td-heading-self-link" href="#%e6%80%bb%e7%bb%93" aria-label="Heading self-link"></a></h3><ul>
+<li><strong>4:4:4</strong>：每 1 个像素采样一次色度信息。</li>
+<li><strong>4:2:2</strong>：每 2 个像素采样一次色度信息。</li>
+<li><strong>4:2:0</strong>：每 4 个像素采样一次色度信息。</li>
+<li><strong>4:1:1</strong>：每 4 个像素采样一次色度信息（仅在水平方向）。</li>
+</ul>
+<p>这些子采样方法通过减少色度信息的采样频率来减少视频数据量，但会导致色度分辨率的降低。</p>
 
+	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
+  <li>
+    <a href="/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/" aria-label="上一页 - HDR的标准" class="btn btn-primary"><span class="me-1">←</span>上一页</a>
+  </li>
+  <li>
+    <a class="btn btn-primary disabled">下一页<span class="ms-1">→</span></a>
+  </li>
+</ul>
 
+	</div>
 
-
-<p class="pt-0 mt-0">2024-08-15 14:27学习好，成绩好，守规矩，就应该rule the world 不要被猪给糟蹋了 论一个胡乱管理的管理者，因为自己的懒惰或无能或懒惰+无能，导致正常的审美和是非都有了不合时宜的恶心。
-2024-08-14 08:32:20弄不清楚特权和人权的区别
-加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高
-而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相 …</p>
-          <p class="pt-0"><a href="/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/" aria-label="更多 - 微博">更多</a></p>
-        </div>
-      </li>
-      <li class="td-blog-posts-list__item">
-        <div class="td-blog-posts-list__body">
-          <h5 class="mt-0 mb-1"><a href="/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/">基本的是非观</a></h5>
-          <p class="mb-2 mb-md-3"><small class="text-body-secondary">2024年08月02日 在 001_Grp_Theology</small></p>
-          <header class="article-meta">
-            <div class="taxonomy taxonomy-terms-article taxo-categories">
-  <h5 class="taxonomy-title">Categories:</h5>
-  <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
-    <li><a class="taxonomy-term" href="http://localhost:1313/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span></a></li>
-    </ul>
-</div>
-
-  <p class="reading-time"><i class="fa-solid fa-clock" aria-hidden="true"></i>&nbsp; 少于1分钟 &nbsp;</p>
-</header>
-          
-
-
-
-
-<p class="pt-0 mt-0">今早看到姜文的电影《邪不压正》的一个自媒体影评 里面提到一句话： 李天然对他的养父亨德勒说：“车让人不是应当的吗？” 亨德勒大夫对李天然说：“这里是北平！”
-影评说：车不让人意味着没有人权。
-这句话深深刺痛着我的心。
-以色列和哈马斯的战火延烧
-哈马斯为何能够占据加沙，说来话长 得说到一个和平计划，当时因着这个和平计划，以色列将加沙整块让出来。 后来哈马斯在那里，竟然通过民选的方式上台，成为执政党 整个加沙开始了它的恐怖组织的培养皿的命运
-现在，哈马斯和巴勒斯坦地区的其他派别签署了《bj宣言》 国 …</p>
-          <p class="pt-0"><a href="/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/" aria-label="更多 - 基本的是非观">更多</a></p>
-        </div>
-      </li>
-      <li class="td-blog-posts-list__item">
-        <div class="td-blog-posts-list__body">
-          <h5 class="mt-0 mb-1"><a href="/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/">2024年高考余悸</a></h5>
-          <p class="mb-2 mb-md-3"><small class="text-body-secondary">2024年07月24日 在 001_Grp_Theology</small></p>
-          <header class="article-meta">
-            <div class="taxonomy taxonomy-terms-article taxo-categories">
-  <h5 class="taxonomy-title">Categories:</h5>
-  <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
-    <li><a class="taxonomy-term" href="http://localhost:1313/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span></a></li>
-    </ul>
-</div>
-
-  <p class="reading-time"><i class="fa-solid fa-clock" aria-hidden="true"></i>&nbsp; 少于1分钟 &nbsp;</p>
-</header>
-          
-
-
-
-
-<p class="pt-0 mt-0">人到中年，选择权是自己最后的一点体面
-人大博士举报自己的老师
-我觉得自己有一点的（恶）习惯，就是相信事情不会（这么快）临到自己。
-博士举报自己的导师，遇到的这种痛苦，是她所求甚多，我不求这么多，所以我不会被潜规则。
-可是等人到中年，如果希望继续秉持着这种只要事不关己的态度，那真的到最后可能会发现，很难要小孩，甚至结婚都觉得自己失去了“事不关己的自由”
-从社会学、人类学去看这种个体与群体的关系，都很容易知道现在的情况是病态
-本该青春洋溢，杀伐果断（因为没有踩过坑、吃过屎）的年纪，却被迫的要放下一切 …</p>
-          <p class="pt-0"><a href="/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/" aria-label="更多 - 2024年高考余悸">更多</a></p>
-        </div>
-      </li>
-      <li class="td-blog-posts-list__item">
-        <div class="td-blog-posts-list__body">
-          <h5 class="mt-0 mb-1"><a href="/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/">关于堕胎</a></h5>
-          <p class="mb-2 mb-md-3"><small class="text-body-secondary">2024年06月10日 在 001_Grp_Theology</small></p>
-          <header class="article-meta">
-            <div class="taxonomy taxonomy-terms-article taxo-categories">
-  <h5 class="taxonomy-title">Categories:</h5>
-  <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
-    </ul>
-</div>
-
-  <p class="reading-time"><i class="fa-solid fa-clock" aria-hidden="true"></i>&nbsp; 少于1分钟 &nbsp;</p>
-</header>
-          
-
-
-
-
-<p class="pt-0 mt-0">堕胎堕胎的定义 堕胎，这个词，在所所在的中国大陆的社会层面上，我个人认为的一般性理解是：在孩子尚未出母腹，终止孩子的生命。
-被挤占的空间孩子的成形，就已经开始挤占大人的空间。 母亲最开始可能有的妊娠反应，呕吐，食欲不振 父亲为了照顾状态时时变化中的母亲，需要不断把注意力分散到母亲和孩子身上。
-中期，可能会有身材的改变，体力的改变，衣服变得无法适用，需要全新的。体力也不如之前好，大着肚子要做家务和工作都是困难重重。 父亲将需要在这段时期，带着对母亲的心疼，走过相对感情上不用受到太多冲击的时期。因为 …</p>
-          <p class="pt-0"><a href="/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/" aria-label="更多 - 关于堕胎">更多</a></p>
-        </div>
-      </li>
-      <li class="td-blog-posts-list__item">
-        <div class="td-blog-posts-list__body">
-          <h5 class="mt-0 mb-1"><a href="/blog/2024/06/10/roe-v.-wade/">Roe v. Wade</a></h5>
-          <p class="mb-2 mb-md-3"><small class="text-body-secondary">2024年06月10日 在 001_Grp_Theology</small></p>
-          <header class="article-meta">
-            <div class="taxonomy taxonomy-terms-article taxo-categories">
-  <h5 class="taxonomy-title">Categories:</h5>
-  <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
-    </ul>
-</div>
-
-  <p class="reading-time"><i class="fa-solid fa-clock" aria-hidden="true"></i>&nbsp; 少于1分钟 &nbsp;</p>
-</header>
-          
-
-
-
-
-<p class="pt-0 mt-0">罗诉韦德案罗诉韦德案 （英语：Roe v. Wade），是一起美国联邦最高法院最高法院案例。
-真名Norma McCorvey，化名：Jane Roe简罗提起。
-1969年，Roe罗怀上了第三胎，但她不想要这个孩子。罗住在德克萨斯州，该州的法律规定只有在孕妇的生命受到威胁时才允许堕胎。
-Roe向美国联邦法院起诉当地的地方检察官亨利·韦德（英语：Henry Wade），并指控德克萨斯州的堕胎法违反美国宪法。
-德州的地方法院作出了有利于Roe罗的判决，判决德州的堕胎法违反美国宪法，随后，德州的相关团 …</p>
-          <p class="pt-0"><a href="/blog/2024/06/10/roe-v.-wade/" aria-label="更多 - Roe v. Wade">更多</a></p>
-        </div>
-      </li>
-      </ul>
-    
-</div>
-<div class="td-blog-posts__pagination">
-  </div>
 
           </main>
         </div>
