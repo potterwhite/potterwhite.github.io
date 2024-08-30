@@ -6,8 +6,15 @@
     <description>Recent content in Docsy on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/docsy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docsy 设置教程</title>
+      <link>http://localhost:1313/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 30 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</guid>
+      <description>docsy中文设置教程</description>
+    </item>
     <item>
       <title>Docsy`s Interesting Tricks</title>
       <link>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</link>

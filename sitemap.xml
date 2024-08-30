@@ -12,7 +12,7 @@
     <lastmod>2024-08-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/002_hugodocsy/</loc>
-    <lastmod>2024-07-18T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/003_erp/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
@@ -77,25 +77,43 @@
     <lastmod>2024-08-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/014_cpu/</loc>
-    <lastmod>2024-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/014_cpu/014_01_soc/</loc>
-    <lastmod>2024-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/news/aug.2024/</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/blog/</loc>
-    <lastmod>2024-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/cpu/</loc>
-    <lastmod>2024-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/docsy/</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/news/</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/news/</loc>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/soc/</loc>
-    <lastmod>2024-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/</loc>
-    <lastmod>2024-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/08/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90/</loc>
     <lastmod>2024-08-29T00:00:00+00:00</lastmod>
@@ -200,9 +218,6 @@
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/07/18/cmake-key-points-in-qt6/</loc>
-    <lastmod>2024-07-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/docsy/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</loc>

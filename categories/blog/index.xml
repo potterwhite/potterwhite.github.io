@@ -6,7 +6,7 @@
     <description>Recent content in Blog on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>6.1 Ubuntu Ops</title>
@@ -21,6 +21,20 @@
       <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/blog/006_devops/006_002_docker/</guid>
       <description></description>
+    </item>
+    <item>
+      <title>Docsy 设置教程</title>
+      <link>http://localhost:1313/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 30 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</guid>
+      <description>docsy中文设置教程</description>
+    </item>
+    <item>
+      <title>HDR的标准</title>
+      <link>http://localhost:1313/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/</link>
+      <pubDate>Fri, 30 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/</guid>
+      <description>HDR（High Dynamic Range，高动态范围）是一种影像技术，用于提升图像的对比度和色彩范围，使得明亮部分更亮、暗部更暗，从而呈现出更丰富的细节和更接近人眼视觉体验的画面。HDR技术可以应用于视频、照片等多种领域，常见的HDR标准有多种类型，每种类型都有其特定的应用场景和技术特点。&#xA;以下是几种常见的HDR类型：&#xA;序号 HDR类型 简介 技术特点 应用场景 1 HDR10 最常见、最广泛支持的HDR格式之一，开放标准，无需支付许可费用。 - 色深：10-bit&#xA;- 动态范围：最高1000尼特&#xA;- 元数据：静态元数据，SMPTE ST 2086标准定义。 4K UHD Blu-ray、流媒体服务（Netflix、Amazon Prime Video）、支持HDR10的电视和显示器。 2 HDR10+ 在HDR10基础上发展，由三星、亚马逊和松下合作开发。 - 色深：10-bit&#xA;- 动态范围：最高4000尼特&#xA;- 元数据：动态元数据，场景或帧调整。 高端电视、流媒体服务等。 3 Dolby Vision 杜比实验室开发，高级HDR格式，需要支付许可费用。 - 色深：12-bit&#xA;- 动态范围：最高10000尼特&#xA;- 元数据：动态元数据，逐帧调整。 高端电视、4K UHD Blu-ray、流媒体服务（Netflix、Disney+）等。 4 HLG BBC和NHK开发，主要用于直播电视。 - 色深：10-bit或12-bit&#xA;- 动态范围：适合实时广播&#xA;- 元数据：无，与传统SDR兼容。 广播电视、现场体育赛事等。 5 Advanced HDR by Technicolor Technicolor开发，旨在提供高质量视频内容。 包含SL-HDR1、SL-HDR2等技术，适用于不同应用场景。 广播、流媒体和电影制作。 1. HDR10 简介：HDR10是目前最常见、最广泛支持的HDR格式之一。它是一个开放的标准，不需要支付许可费用。 技术特点： 色深：10-bit（即每种颜色有1024级），支持超过10亿种颜色。 动态范围：支持最高1000尼特（nits）的亮度。 元数据：使用静态元数据，即整个视频内容只使用一组HDR信息，元数据通过SMPTE ST 2086标准定义。 应用：广泛应用于4K UHD Blu-ray、流媒体服务（如Netflix、Amazon Prime Video）和支持HDR10的电视和显示器。 2.</description>
     </item>
     <item>
       <title>音视频设备数据流分析</title>
