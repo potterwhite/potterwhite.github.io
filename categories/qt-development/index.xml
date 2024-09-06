@@ -6,8 +6,15 @@
     <description>Recent content in Qt Development on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Sep 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/qt-development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>QML Poor Performance In different Qt SDK</title>
+      <link>http://localhost:1313/blog/2024/09/06/qml-poor-performance-in-different-qt-sdk/</link>
+      <pubDate>Fri, 06 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/09/06/qml-poor-performance-in-different-qt-sdk/</guid>
+      <description>poor_performance.mp4&#xA;您的浏览器不支持视频播放。&#xD;</description>
+    </item>
     <item>
       <title>QtQuick工程里的main函数解析</title>
       <link>http://localhost:1313/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/</link>
