@@ -23,6 +23,13 @@
       <description></description>
     </item>
     <item>
+      <title>QML downgrade from 6 to 5</title>
+      <link>http://localhost:1313/blog/2024/09/06/qml-downgrade-from-6-to-5/</link>
+      <pubDate>Fri, 06 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/09/06/qml-downgrade-from-6-to-5/</guid>
+      <description>so many weird tricks that matter in Qt5 QML&#xA;1. the keyword &amp;quot;Window&amp;quot; is unrecongnizedYou must type this line in the top of your qml file&#xA;import QtQuick.Window 2.3 or the keyword &amp;quot;Window&amp;quot; will be unrecongnized&#xA;2. all imported system libs will have their versions//this is wrong import QtQuick.Window //this is correct import QtQuick.Window 2.3 3. the way of the organization of qml in each projectqt5 use qmldir way to organize every qml module.</description>
+    </item>
+    <item>
       <title>QML Poor Performance In different Qt SDK</title>
       <link>http://localhost:1313/blog/2024/09/06/qml-poor-performance-in-different-qt-sdk/</link>
       <pubDate>Fri, 06 Sep 2024 00:00:00 +0000</pubDate>
