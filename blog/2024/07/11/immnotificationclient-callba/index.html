@@ -1,0 +1,910 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>IMMNotificationClient Callba | 嵌入式系统 Enthusiast</title>
+<meta name="description" content="一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下
+二、主要的函数流程图1 _EnumerateAudioEndpointsthis is the first operation of our process A. and it start with CoCreateInstance() to create object of IMMDeviceEnumerator B. then if success, use IMMDeviceEnumerator.EnumAudioEndpoint() to enumerate all endpoints(actually include all input &amp;amp; output devices, but API can choose i or o or both devices) in this machine. C. if there exist endpoint, to check the number of endpoints with IMMDeviceCollection.GetCount(). D. use for loop to enum every endpoint, retrieve its data with IMMDeviceCollection.">
+<meta property="og:url" content="http://localhost:1313/blog/2024/07/11/immnotificationclient-callba/">
+  <meta property="og:site_name" content="嵌入式系统 Enthusiast">
+  <meta property="og:title" content="IMMNotificationClient Callba">
+  <meta property="og:description" content="一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下
+二、主要的函数流程图1 _EnumerateAudioEndpointsthis is the first operation of our process A. and it start with CoCreateInstance() to create object of IMMDeviceEnumerator B. then if success, use IMMDeviceEnumerator.EnumAudioEndpoint() to enumerate all endpoints(actually include all input &amp; output devices, but API can choose i or o or both devices) in this machine. C. if there exist endpoint, to check the number of endpoints with IMMDeviceCollection.GetCount(). D. use for loop to enum every endpoint, retrieve its data with IMMDeviceCollection.">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2024-07-11T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-07-11T00:00:00+00:00">
+
+  <meta itemprop="name" content="IMMNotificationClient Callba">
+  <meta itemprop="description" content="一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下
+二、主要的函数流程图1 _EnumerateAudioEndpointsthis is the first operation of our process A. and it start with CoCreateInstance() to create object of IMMDeviceEnumerator B. then if success, use IMMDeviceEnumerator.EnumAudioEndpoint() to enumerate all endpoints(actually include all input &amp; output devices, but API can choose i or o or both devices) in this machine. C. if there exist endpoint, to check the number of endpoints with IMMDeviceCollection.GetCount(). D. use for loop to enum every endpoint, retrieve its data with IMMDeviceCollection.">
+  <meta itemprop="datePublished" content="2024-07-11T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-07-11T00:00:00+00:00">
+  <meta itemprop="wordCount" content="928">
+  <meta itemprop="keywords" content="Blog,Windows">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="IMMNotificationClient Callba">
+  <meta name="twitter:description" content="一、介绍这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下
+二、主要的函数流程图1 _EnumerateAudioEndpointsthis is the first operation of our process A. and it start with CoCreateInstance() to create object of IMMDeviceEnumerator B. then if success, use IMMDeviceEnumerator.EnumAudioEndpoint() to enumerate all endpoints(actually include all input &amp; output devices, but API can choose i or o or both devices) in this machine. C. if there exist endpoint, to check the number of endpoints with IMMDeviceCollection.GetCount(). D. use for loop to enum every endpoint, retrieve its data with IMMDeviceCollection.">
+<link href="/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-page td-blog">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统 Enthusiast</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/project/"><span>我的项目</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/news/"><span>News</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="td-sidebar-nav collapse" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pe-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-li">
+  <a href="/blog/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-blog"><span class="">博客文章</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-000-collection-li">
+  <a href="/blog/000_collection/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-000-collection"><span class="">000_Grp_Collection</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-celebrity-quotes-li">
+  <a href="/blog/2024/08/02/celebrity-quotes/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-celebrity-quotes"><span class="">celebrity quotes</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-reading-list-li">
+  <a href="/blog/2024/08/02/reading-list/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-reading-list"><span class="">Reading List</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-001-theology-li">
+  <a href="/blog/001_theology/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-001-theology"><span class="">001_Grp_Theology</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-13-e5-be-ae-e5-8d-9a-li">
+  <a href="/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-13-e5-be-ae-e5-8d-9a"><span class="">微博</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-e5-9f-ba-e6-9c-ac-e7-9a-84-e6-98-af-e9-9d-9e-e8-a7-82-li">
+  <a href="/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-e5-9f-ba-e6-9c-ac-e7-9a-84-e6-98-af-e9-9d-9e-e8-a7-82"><span class="">基本的是非观</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-24-2024-e5-b9-b4-e9-ab-98-e8-80-83-e4-bd-99-e6-82-b8-li">
+  <a href="/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-24-2024-e5-b9-b4-e9-ab-98-e8-80-83-e4-bd-99-e6-82-b8"><span class="">2024年高考余悸</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-roe-v-wade-li">
+  <a href="/blog/2024/06/10/roe-v.-wade/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-roe-v-wade"><span class="">Roe v. Wade</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e-li">
+  <a href="/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-e5-85-b3-e4-ba-8e-e5-a0-95-e8-83-8e"><span class="">关于堕胎</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-002-hugodocsy-li">
+  <a href="/blog/002_hugodocsy/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-002-hugodocsy"><span class="">002_Grp_HugoDocsy</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-30-docsy-e8-ae-be-e7-bd-ae-e6-95-99-e7-a8-8b-li">
+  <a href="/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-30-docsy-e8-ae-be-e7-bd-ae-e6-95-99-e7-a8-8b"><span class="">Docsy 设置教程</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-18-docsys-interesting-tricks-li">
+  <a href="/blog/2024/07/18/docsys-interesting-tricks/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-18-docsys-interesting-tricks"><span class="">Docsy`s Interesting Tricks</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-10-docsy-e4-b8-bb-e9-a2-98-e7-9a-84-e8-ae-be-e7-bd-ae-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-10-docsy-e4-b8-bb-e9-a2-98-e7-9a-84-e8-ae-be-e7-bd-ae-e6-8a-80-e5-b7-a7"><span class="">Docsy主题的设置技巧</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-003-erp-li">
+  <a href="/blog/003_erp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-003-erp"><span class="">003_Grp_ERP</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-003-erp-003-001-erpnext-li">
+  <a href="/blog/003_erp/003_001_erpnext/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-003-erp-003-001-erpnext"><span class="">003_001_Grp_ERPNext</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-10-e4-b8-8eerpnext-e7-9a-84-e5-88-9d-e6-ac-a1-e8-a7-81-e9-9d-a2-li">
+  <a href="/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-10-e4-b8-8eerpnext-e7-9a-84-e5-88-9d-e6-ac-a1-e8-a7-81-e9-9d-a2"><span class="">与ERPNext的初次见面</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-004-ai-li">
+  <a href="/blog/004_ai/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-004-ai"><span class="">004_Grp_AI</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-004-ai-text-to-image-li">
+  <a href="/blog/004_ai/text-to-image/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-004-ai-text-to-image"><span class="">004_001_Grp_TTI</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-14-e5-88-9d-e4-bd-93-e9-aa-8c-stable-diffusion-li">
+  <a href="/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-e5-88-9d-e4-bd-93-e9-aa-8c-stable-diffusion"><span class="">初体验-stable diffusion</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-14-e9-80-89-e6-8b-a9-e6-96-87-e7-94-9f-e5-9b-be-e5-b7-a5-e5-85-b7-e4-b9-8b-e8-b7-af-li">
+  <a href="/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-e9-80-89-e6-8b-a9-e6-96-87-e7-94-9f-e5-9b-be-e5-b7-a5-e5-85-b7-e4-b9-8b-e8-b7-af"><span class="">选择文生图工具之路</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-004-ai-esp32-llm-li">
+  <a href="/blog/004_ai/esp32_llm/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-004-ai-esp32-llm"><span class="">004_010_Grp_ESP32</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-01-chatgpt-li">
+  <a href="/blog/2024/08/01/chatgpt/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-01-chatgpt"><span class="">ChatGPT</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-005-tools-li">
+  <a href="/blog/005_tools/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools"><span class="">005_Grp_Tools</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-005-tools-005-001-vscode-li">
+  <a href="/blog/005_tools/005_001_vscode/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools-005-001-vscode"><span class="">005_001_Grp_VSCode</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-12-vscode-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/07/12/vscode%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-12-vscode-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="">VSCode使用技巧</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-005-tools-005-002-mermaid-li">
+  <a href="/blog/005_tools/005_002_mermaid/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools-005-002-mermaid"><span class="">005_002_Grp_Mermaid</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-17-mermaid-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-17-mermaid-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="">Mermaid使用技巧</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-005-tools-005-003-markdown-li">
+  <a href="/blog/005_tools/005_003_markdown/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-005-tools-005-003-markdown"><span class="">005_003_Grp_Markdown</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-17-markdown-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7-li">
+  <a href="/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-17-markdown-e4-bd-bf-e7-94-a8-e6-8a-80-e5-b7-a7"><span class="">Markdown使用技巧</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-12-time-zone-map-li">
+  <a href="/blog/2024/08/12/time-zone-map/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-12-time-zone-map"><span class="">Time Zone Map</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-006-devops-li">
+  <a href="/blog/006_devops/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-006-devops"><span class="">006_Grp_DevOps</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-006-devops-006-001-ubuntu-li">
+  <a href="/blog/006_devops/006_001_ubuntu/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-006-devops-006-001-ubuntu"><span class="">6.1 Ubuntu Ops</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-19-grub-setting-li">
+  <a href="/blog/2024/07/19/grub-setting/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-19-grub-setting"><span class="">Grub Setting</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-006-devops-006-002-docker-li">
+  <a href="/blog/006_devops/006_002_docker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-006-devops-006-002-docker"><span class="">6.2 Docker Ops</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8-li">
+  <a href="/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-10-docker-e4-bd-bf-e7-94-a8"><span class="">Docker使用</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-19-devops-definition-li">
+  <a href="/blog/2024/07/19/devops-definition/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-19-devops-definition"><span class="">DevOps Definition</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-007-quantum-li">
+  <a href="/blog/007_quantum/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-007-quantum"><span class="">007_Grp_Quantum</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-19-quantum-li">
+  <a href="/blog/2024/07/19/quantum/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-19-quantum"><span class="">Quantum</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-008-compiler-linker-li">
+  <a href="/blog/008_compiler_linker/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-008-compiler-linker"><span class="">008_Grp_Compiler_Linker</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-01-qtcreator-e4-b8-8b-e7-9a-84mingw-e5-92-8cmsvc-e7-bc-96-e8-af-91-e5-99-a8-li">
+  <a href="/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-01-qtcreator-e4-b8-8b-e7-9a-84mingw-e5-92-8cmsvc-e7-bc-96-e8-af-91-e5-99-a8"><span class="">QtCreator下的MinGW和MSVC编译器</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-010-linux-development-li">
+  <a href="/blog/010_linux_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-010-linux-development"><span class="">010_Grp_Linux</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-06-14-kernel-test-li">
+  <a href="/blog/2024/06/14/kernel_test/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-06-14-kernel-test"><span class="">Kernel_test</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-011-windows-development-li">
+  <a href="/blog/011_windows_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-011-windows-development"><span class="">011_Grp_Windows</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-07-31-asio-li">
+  <a href="/blog/2024/07/31/asio/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-31-asio"><span class="">ASIO</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-blog-2024-07-11-immnotificationclient-callba-li">
+  <a href="/blog/2024/07/11/immnotificationclient-callba/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-11-immnotificationclient-callba"><span class="td-sidebar-nav-active-item">IMMNotificationClient Callba</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae-li">
+  <a href="/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-11-e5-a3-b0-e5-8d-a1-e9-a1-b9-e7-9b-ae"><span class="">声卡项目</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-012-web-development-li">
+  <a href="/blog/012_web_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-012-web-development"><span class="">012_Grp_WebDevelopment</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-012-web-development-html-css-javascript-li">
+  <a href="/blog/012_web_development/html&#43;css&#43;javascript/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-012-web-development-html-css-javascript"><span class="">012_001_Grp_HTML&#43;CSS&#43;JAVASCRIPT</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-18-html-tricks-li">
+  <a href="/blog/2024/07/18/html-tricks/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-18-html-tricks"><span class="">html tricks</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-013-qt-development-li">
+  <a href="/blog/013_qt_development/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-013-qt-development"><span class="">013_Grp_QtDevelopment</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-013-qt-development-qt6-li">
+  <a href="/blog/013_qt_development/qt6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-013-qt-development-qt6"><span class="">013_001_Grp_QtDevelopment</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-07-18-cmake-key-points-in-qt6-li">
+  <a href="/blog/2024/07/18/cmake-key-points-in-qt6/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-07-18-cmake-key-points-in-qt6"><span class="">CMake Key Points in Qt6</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-013-qt-development-qml-li">
+  <a href="/blog/013_qt_development/qml/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-013-qt-development-qml"><span class="">013_002_Grp_QML</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-09-06-qml-downgrade-from-6-to-5-li">
+  <a href="/blog/2024/09/06/qml-downgrade-from-6-to-5/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-09-06-qml-downgrade-from-6-to-5"><span class="">QML downgrade from 6 to 5</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-09-06-qml-poor-performance-in-different-qt-sdk-li">
+  <a href="/blog/2024/09/06/qml-poor-performance-in-different-qt-sdk/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-09-06-qml-poor-performance-in-different-qt-sdk"><span class="">QML Poor Performance In different Qt SDK</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-20-qtquick-e5-b7-a5-e7-a8-8b-e9-87-8c-e7-9a-84main-e5-87-bd-e6-95-b0-e8-a7-a3-e6-9e-90-li">
+  <a href="/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-20-qtquick-e5-b7-a5-e7-a8-8b-e9-87-8c-e7-9a-84main-e5-87-bd-e6-95-b0-e8-a7-a3-e6-9e-90"><span class="">QtQuick工程里的main函数解析</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-19-qml-e7-9a-84menu-e5-ae-b9-e5-99-a8-li">
+  <a href="/blog/2024/08/19/qml%E7%9A%84menu%E5%AE%B9%E5%99%A8/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-19-qml-e7-9a-84menu-e5-ae-b9-e5-99-a8"><span class="">QML的Menu容器</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-10-qml-notes-li">
+  <a href="/blog/2024/08/10/qml-notes/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-10-qml-notes"><span class="">qml notes</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-qml-options-li">
+  <a href="/blog/2024/08/02/qml-options/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-qml-options"><span class="">QML Options</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-qml-e5-b7-a5-e7-a8-8b-e9-87-8c-e7-9a-84content-e6-96-87-e4-bb-b6-e5-a4-b9-li">
+  <a href="/blog/2024/08/02/qml%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84content%E6%96%87%E4%BB%B6%E5%A4%B9/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-qml-e5-b7-a5-e7-a8-8b-e9-87-8c-e7-9a-84content-e6-96-87-e4-bb-b6-e5-a4-b9"><span class="">QML工程里的content文件夹</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-19-q-property-li">
+  <a href="/blog/2024/08/19/q_property/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-19-q-property"><span class="">Q_PROPERTY</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-15-qt-deployment-li">
+  <a href="/blog/2024/08/15/qt-deployment/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-15-qt-deployment"><span class="">Qt Deployment</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blog-014-cpu-li">
+  <a href="/blog/014_cpu/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-014-cpu"><span class="">014_Grp_CPU</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-blog-014-cpu-014-01-soc-li">
+  <a href="/blog/014_cpu/014_01_soc/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-blog-014-cpu-014-01-soc"><span class="">014_01_SOC</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-30-chroma-subsampling-e6-98-af-e4-bb-80-e4-b9-88-li">
+  <a href="/blog/2024/08/30/chroma-subsampling%E6%98%AF%E4%BB%80%E4%B9%88/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-30-chroma-subsampling-e6-98-af-e4-bb-80-e4-b9-88"><span class="">Chroma Subsampling是什么</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-30-hdr-e7-9a-84-e6-a0-87-e5-87-86-li">
+  <a href="/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-30-hdr-e7-9a-84-e6-a0-87-e5-87-86"><span class="">HDR的标准</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-29-e9-9f-b3-e8-a7-86-e9-a2-91-e8-ae-be-e5-a4-87-e6-95-b0-e6-8d-ae-e6-b5-81-e5-88-86-e6-9e-90-li">
+  <a href="/blog/2024/08/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-29-e9-9f-b3-e8-a7-86-e9-a2-91-e8-ae-be-e5-a4-87-e6-95-b0-e6-8d-ae-e6-b5-81-e5-88-86-e6-9e-90"><span class="">音视频设备数据流分析</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-blog-2024-08-02-e5-bc-80-e5-8f-91-e6-9d-bf-e9-80-89-e6-8b-a9-li">
+  <a href="/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-blog-2024-08-02-e5-bc-80-e5-8f-91-e6-9d-bf-e9-80-89-e6-8b-a9"><span class="">开发板选择</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            <div class="td-page-meta ms-2 pb-1 pt-2 mb-0">
+<a href="https://github.com/potterwhite/tree/main/content/zh-cn/blog/011_Windows_Development/IMMNotificationClient_callback_problem.md" class="td-page-meta--view td-page-meta__view" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines fa-fw"></i> 查看页面源码</a>
+  <a href="https://github.com/potterwhite/edit/main/content/zh-cn/blog/011_Windows_Development/IMMNotificationClient_callback_problem.md" class="td-page-meta--edit td-page-meta__edit" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 编辑此页</a>
+  <a href="https://github.com/potterwhite/new/main/content/zh-cn/blog/011_Windows_Development?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child td-page-meta__child" target="_blank" rel="noopener"><i class="fa-solid fa-pen-to-square fa-fw"></i> 添加子页面</a>
+  <a href="https://github.com/potterwhite/issues/new?title=IMMNotificationClient%20Callba" class="td-page-meta--issue td-page-meta__issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> 提交文档问题</a>
+  <a href="https://github.com/potterwhite/issues/new" class="td-page-meta--project td-page-meta__project-issue" target="_blank" rel="noopener"><i class="fa-solid fa-list-check fa-fw"></i> 提交项目问题</a>
+  <a id="print" href="/blog/011_windows_development/_print/"><i class="fa-solid fa-print fa-fw"></i> 整节打印</a>
+
+</div>
+
+            <div class="td-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#refrence"><strong>Refrence</strong></a></li>
+        <li><a href="#introduce"><strong>Introduce</strong></a></li>
+        <li><a href="#requirement"><strong>Requirement</strong></a></li>
+        <li><a href="#parameters"><strong>Parameters</strong></a></li>
+        <li><a href="#uuid-格式">UUID 格式</a></li>
+        <li><a href="#格式的分隔意义">格式的分隔意义</a></li>
+        <li><a href="#使用连字符的好处">使用连字符的好处</a></li>
+        <li><a href="#无连字符表示">无连字符表示</a></li>
+        <li><a href="#总结">总结</a></li>
+        <li><a href="#参数详细解释">参数详细解释</a></li>
+        <li><a href="#punkouter-参数"><code>pUnkOuter</code> 参数</a></li>
+        <li><a href="#聚合-aggregation">聚合（Aggregation）</a></li>
+        <li><a href="#聚合的使用">聚合的使用</a></li>
+        <li><a href="#示例代码">示例代码</a></li>
+        <li><a href="#总结-1">总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#002-immdevice-activate"><strong>002. IMMDevice::Activate</strong></a></li>
+  </ul>
+</nav>
+      </div>
+    
+            <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      <h5 class="taxonomy-title">Categories</h5>
+      <ul class="taxonomy-terms">
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">44</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/collection/" data-taxonomy-term="collection"><span class="taxonomy-label">Collection</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/markdown/" data-taxonomy-term="markdown"><span class="taxonomy-label">Markdown</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/microblog/" data-taxonomy-term="microblog"><span class="taxonomy-label">Microblog</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/news/" data-taxonomy-term="news"><span class="taxonomy-label">News</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span><span class="taxonomy-count">7</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/soc/" data-taxonomy-term="soc"><span class="taxonomy-label">SOC</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/ubuntu-ops/" data-taxonomy-term="ubuntu-ops"><span class="taxonomy-label">Ubuntu Ops</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">3</span></a></li>
+        </ul>
+    </div>
+  
+	
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
+            <a class="td-rss-button" title="RSS" href="/blog/011_windows_development/index.xml" target="_blank" rel="noopener">
+              <i class="fa-solid fa-rss" aria-hidden="true"></i>
+            </a>
+            
+<div class="td-content">
+	<h1>IMMNotificationClient Callba</h1>
+	
+	<div class="td-byline mb-4">
+		
+		<time datetime="2024-07-11" class="text-body-secondary">2024年07月11日</time>
+	</div>
+	<header class="article-meta">
+		<div class="taxonomy taxonomy-terms-article taxo-categories">
+  <h5 class="taxonomy-title">Categories:</h5>
+  <ul class="taxonomy-terms">
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span></a></li>
+    </ul>
+</div>
+
+  <p class="reading-time"><i class="fa-solid fa-clock" aria-hidden="true"></i>&nbsp; 5 分钟阅读 &nbsp;</p>
+</header>
+	<!-- <script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script> -->
+<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
+<h1 id="一-介绍">一、介绍<a class="td-heading-self-link" href="#%e4%b8%80-%e4%bb%8b%e7%bb%8d" aria-label="Heading self-link"></a></h1><p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p>
+<h1 id="二-主要的函数">二、主要的函数<a class="td-heading-self-link" href="#%e4%ba%8c-%e4%b8%bb%e8%a6%81%e7%9a%84%e5%87%bd%e6%95%b0" aria-label="Heading self-link"></a></h1><details>
+    <summary>流程图1 _EnumerateAudioEndpoints</summary>
+<!-- ![_EnumerateAudioEndpoints](/2024/July/11/soundcard_flow_1.svg) -->
+<p>this is the first operation of our process</br>
+A. and it start with CoCreateInstance() to create object of <code>IMMDeviceEnumerator</code></br>
+B. then if success, use <code>IMMDeviceEnumerator.EnumAudioEndpoint()</code> to enumerate all endpoints(actually include all input &amp; output devices, but API can choose i or o or both devices) in this machine.</br>
+C. if there exist endpoint, to check the number of endpoints with <code>IMMDeviceCollection.GetCount()</code>.</br>
+D. use for loop to enum every endpoint, retrieve its data with <code>IMMDeviceCollection.Item()</code></br>
+E. finally, if retrieving process runs smoothly and there is data who came with Item() operation, push it into endpoint global data pool.</br></p>
+<!-- <object type="image/svg+xml" data="/2024/July/17/flowchart_of_EnumerateEndpoint.svg" style="width: 100%; height: 1000%;">
+    Your browser does not support SVG
+</object> -->
+<iframe src="/2024/July/17/flow_no_zoom.svg" width="900" height="2000" style="border:none; overflow:scroll; background: #333333;">
+</iframe>
+<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
+</details>
+<details>
+    <summary> 001. 创建com的对象 CoCreateInstance </summary>
+<div style="padding-left: 2em;">
+</br>
+<pre tabindex="0"><code>_Check_return_
+WINOLEAPI
+CoCreateInstance(
+    _In_ REFCLSID rclsid,
+    _In_opt_ LPUNKNOWN pUnkOuter,
+    _In_ DWORD dwClsContext,
+    _In_ REFIID riid,
+    _COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID  FAR * ppv
+);
+</code></pre></br>
+<h3 id="refrence"><strong>Refrence</strong><a class="td-heading-self-link" href="#refrence" aria-label="Heading self-link"></a></h3><p><a href="https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance">1. CoCreateInstance MS Learning</a></br>
+<a href="https://developer.aliyun.com/article/48371">2. COM basic tutorial</a></br></p>
+</br>
+<h3 id="introduce"><strong>Introduce</strong><a class="td-heading-self-link" href="#introduce" aria-label="Heading self-link"></a></h3><p><strong>CoCreateInstance</strong> is used for instance of object creating in local machine.
+<strong>CoCreateInstanceEx</strong> is used for instance of object creating in REMOTE machine.
+<strong>CoGetClassObject</strong> is used for MULTI instances of object creating in local machine.
+CoCreateInstance encapsulates the CoGetClassObject in the low-level.
+CoCreateInstance connects the object with the ID.
+</br></br></p>
+<h3 id="requirement"><strong>Requirement</strong><a class="td-heading-self-link" href="#requirement" aria-label="Heading self-link"></a></h3><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Library</td>
+<td>Ole32.lib</td>
+<td></td>
+</tr>
+<tr>
+<td>Dynamic Link Library</td>
+<td>Ole32.dll</td>
+<td></td>
+</tr>
+<tr>
+<td>Header file</td>
+<td>combaseapi.h</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>...\Windows Kits\10\Include\10.0.22621.0\shared\guiddef.h</td>
+<td>REFCLSID &amp; IID definition</td>
+</tr>
+<tr>
+<td></td>
+<td>...\Windows Kits\10\Include\10.0.22621.0\um\mmdeviceapi.h</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Minimum System Version</td>
+<td>Windows 2000 and above</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p></br></br></p>
+<h3 id="parameters"><strong>Parameters</strong><a class="td-heading-self-link" href="#parameters" aria-label="Heading self-link"></a></h3><p><span style="background-color: gray;">(1/5)[in] rclsid</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+The CLSID associated with the data and code that will be used to create the object.</br>
+<p>REFCLSID:</br>
+REF=Reference</br>
+CLS=Class</br>
+ID=Identifier</br>
+REFCLSID rclsid：是 const CLSID&amp; 的别名，表示对 CLSID 的引用。这样传递参数时，不需要复制整个 CLSID 对象，只需要传递它的引用，从而提高效率。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#080;font-style:italic">/*mmdeviceapi.h
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> * here is the definition of MMDevice Enumerator
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> * we are using &#34;__uuidof(MMDeviceEnumerator)&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#080">#ifdef __cplusplus
+</span></span></span><span style="display:flex;"><span><span style="color:#080"></span>class <span style="color:#00a000">DECLSPEC_UUID</span>(<span style="color:#b44">&#34;BCDE0395-E52F-467C-8E3D-C4579291692E&#34;</span>)
+</span></span><span style="display:flex;"><span>MMDeviceEnumerator;
+</span></span><span style="display:flex;"><span><span style="color:#080">#endif
+</span></span></span></code></pre></div><details>
+    <summary>UUID为什么有中间的“-”连字符</summary>
+    UUID（Universally Unique Identifier）或 GUID（Globally Unique Identifier）中使用连字符（`-`）是为了增加可读性和标准化。虽然连字符没有任何技术上的必要性，但它们有助于分隔和识别 UUID 的不同部分。
+<h3 id="uuid-格式">UUID 格式<a class="td-heading-self-link" href="#uuid-%e6%a0%bc%e5%bc%8f" aria-label="Heading self-link"></a></h3><p>一个标准的 UUID 格式为 8-4-4-4-12，即总共 32 个十六进制字符分为五个部分，每个部分用连字符分隔。这种格式定义在 RFC 4122 中。</p>
+<p>例如：</p>
+<pre tabindex="0"><code>BCDE0395-E52F-467C-8E3D-C4579291692E
+</code></pre><h3 id="格式的分隔意义">格式的分隔意义<a class="td-heading-self-link" href="#%e6%a0%bc%e5%bc%8f%e7%9a%84%e5%88%86%e9%9a%94%e6%84%8f%e4%b9%89" aria-label="Heading self-link"></a></h3><ol>
+<li><strong>时间戳部分（8个字符）</strong>：UUID 的前 8 个字符通常表示时间戳的高位部分。</li>
+<li><strong>时间戳的中间部分（4个字符）</strong>：接下来的 4 个字符表示时间戳的中间部分。</li>
+<li><strong>时间戳的低位部分和版本号（4个字符）</strong>：接下来的 4 个字符表示时间戳的低位部分和版本号。</li>
+<li><strong>时钟序列（4个字符）</strong>：接下来的 4 个字符表示时钟序列。</li>
+<li><strong>节点（12个字符）</strong>：最后的 12 个字符表示节点信息（通常是基于网络地址）。</li>
+</ol>
+<p>这种分隔方式有助于解析和理解 UUID 的不同部分，并确保它们的唯一性。</p>
+<h3 id="使用连字符的好处">使用连字符的好处<a class="td-heading-self-link" href="#%e4%bd%bf%e7%94%a8%e8%bf%9e%e5%ad%97%e7%ac%a6%e7%9a%84%e5%a5%bd%e5%a4%84" aria-label="Heading self-link"></a></h3><ol>
+<li><strong>可读性</strong>：连字符使得 UUID 更加可读，更容易分辨和检查。</li>
+<li><strong>标准化</strong>：按照 RFC 4122 标准定义的格式，有助于在不同系统和平台之间保持一致性。</li>
+<li><strong>解析和验证</strong>：连字符分隔使得解析和验证 UUID 更加简单和明确。</li>
+</ol>
+<h3 id="无连字符表示">无连字符表示<a class="td-heading-self-link" href="#%e6%97%a0%e8%bf%9e%e5%ad%97%e7%ac%a6%e8%a1%a8%e7%a4%ba" aria-label="Heading self-link"></a></h3><p>在一些情况下，可以去掉连字符并连续地写下所有字符。例如：</p>
+<pre tabindex="0"><code>BCDE0395E52F467C8E3DC4579291692E
+</code></pre><p>这种形式在某些编程语言和库中也是支持的，但为了确保一致性和标准化，通常还是建议使用带有连字符的格式。</p>
+<h3 id="总结">总结<a class="td-heading-self-link" href="#%e6%80%bb%e7%bb%93" aria-label="Heading self-link"></a></h3><ul>
+<li><strong>连字符的作用</strong>：主要是增加可读性和标准化。</li>
+<li><strong>UUID 格式</strong>：8-4-4-4-12 的格式有助于分隔和识别不同的部分。</li>
+<li><strong>使用连字符的好处</strong>：使得 UUID 更加可读、标准化，便于解析和验证。</li>
+</ul>
+<p>尽管技术上可以省略连字符，但使用标准格式带来的可读性和一致性优势使得它成为惯用的做法。</p>
+</details>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#080;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> * guiddef.h
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#080">#define REFCLSID const IID &amp;
+</span></span></span></code></pre></div></div>
+</br>
+<p><span style="background-color: gray;">(2/5)[in] pUnkOuter</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+If NULL, indicates that the object is not being created as part of an aggregate.</br>
+If non-NULL, pointer to the aggregate object's IUnknown interface (the controlling IUnknown).</br>
+<details>
+    <summary>关于Aggregate，更详尽的解释-FromGpt4o</summary>
+    在 `CoCreateInstance` 函数中，第二个参数 `pUnkOuter` 是一个指向 `IUnknown` 接口的指针，通常用于支持 COM 对象的聚合。聚合是 COM 中的一种技术，允许一个对象（外部对象）包含另一个对象（内部对象），并使内部对象的接口看起来像是外部对象的一部分。
+<h3 id="参数详细解释">参数详细解释<a class="td-heading-self-link" href="#%e5%8f%82%e6%95%b0%e8%af%a6%e7%bb%86%e8%a7%a3%e9%87%8a" aria-label="Heading self-link"></a></h3><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT <span style="color:#00a000">CoCreateInstance</span>(
+</span></span><span style="display:flex;"><span>  REFCLSID rclsid,     <span style="color:#666">//</span> Class identifier (CLSID) of the object to be created
+</span></span><span style="display:flex;"><span>  LPUNKNOWN pUnkOuter, <span style="color:#080;font-style:italic">// Pointer to controlling IUnknown (for aggregation)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>  DWORD dwClsContext,  <span style="color:#080;font-style:italic">// Context in which the code that manages the newly created object will run
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>  REFIID riid,         <span style="color:#080;font-style:italic">// Interface identifier (IID) of the interface to be used to communicate with the object
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>  LPVOID <span style="color:#666">*</span>ppv          <span style="color:#080;font-style:italic">// Address of pointer variable that receives the interface pointer requested in riid
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>);
+</span></span></code></pre></div><h3 id="punkouter-参数"><code>pUnkOuter</code> 参数<a class="td-heading-self-link" href="#punkouter-%e5%8f%82%e6%95%b0" aria-label="Heading self-link"></a></h3><ul>
+<li><strong><code>pUnkOuter</code></strong>：指向控制未知接口（<code>IUnknown</code>）的指针。如果不使用聚合，则传递 <code>NULL</code>。在聚合的情况下，<code>pUnkOuter</code> 应该是外部对象的 <code>IUnknown</code> 指针。</li>
+</ul>
+<h3 id="聚合-aggregation">聚合（Aggregation）<a class="td-heading-self-link" href="#%e8%81%9a%e5%90%88-aggregation" aria-label="Heading self-link"></a></h3><p>聚合是一种将一个对象嵌入到另一个对象中的机制，使得内部对象的接口对外部对象的客户端透明。聚合在以下情况下有用：</p>
+<ol>
+<li><strong>对象组合</strong>：允许组合对象共享一个公共的 <code>IUnknown</code> 接口，从而表现为一个单一对象。</li>
+<li><strong>对象封装</strong>：允许一个对象封装另一个对象，并公开其接口，而不暴露内部实现细节。</li>
+</ol>
+<h3 id="聚合的使用">聚合的使用<a class="td-heading-self-link" href="#%e8%81%9a%e5%90%88%e7%9a%84%e4%bd%bf%e7%94%a8" aria-label="Heading self-link"></a></h3><p>当你使用聚合时，外部对象将包含内部对象，并通过内部对象的接口来实现外部对象的部分功能。在这种情况下，<code>CoCreateInstance</code> 的第二个参数 <code>pUnkOuter</code> 将指向外部对象的 <code>IUnknown</code> 接口，以便内部对象可以调用外部对象的接口。</p>
+<p>如果你不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>，表示不进行聚合。</p>
+<h3 id="示例代码">示例代码<a class="td-heading-self-link" href="#%e7%a4%ba%e4%be%8b%e4%bb%a3%e7%a0%81" aria-label="Heading self-link"></a></h3><h4 id="不使用聚合">不使用聚合<a class="td-heading-self-link" href="#%e4%b8%8d%e4%bd%bf%e7%94%a8%e8%81%9a%e5%90%88" aria-label="Heading self-link"></a></h4><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>IMMDeviceEnumerator<span style="color:#666">*</span> deviceEnumerator <span style="color:#666">=</span> <span style="color:#a2f">NULL</span>;
+</span></span><span style="display:flex;"><span>HRESULT hr <span style="color:#666">=</span> CoCreateInstance(
+</span></span><span style="display:flex;"><span>    __uuidof(MMDeviceEnumerator),  <span style="color:#080;font-style:italic">// CLSID
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    <span style="color:#a2f">NULL</span>,                          <span style="color:#080;font-style:italic">// pUnkOuter (no aggregation)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    CLSCTX_ALL,                    <span style="color:#080;font-style:italic">// Context
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    __uuidof(IMMDeviceEnumerator), <span style="color:#080;font-style:italic">// IID
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    (<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span>)<span style="color:#666">&amp;</span>deviceEnumerator      <span style="color:#080;font-style:italic">// Interface pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>);
+</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为 <code>NULL</code>，表示不使用聚合。</p>
+<h4 id="使用聚合">使用聚合<a class="td-heading-self-link" href="#%e4%bd%bf%e7%94%a8%e8%81%9a%e5%90%88" aria-label="Heading self-link"></a></h4><p>假设你有一个类 <code>COuter</code>，它希望包含一个内部对象 <code>CInner</code>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">COuter</span> <span style="color:#666">:</span> <span style="color:#a2f;font-weight:bold">public</span> IUnknown {
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">public</span><span style="color:#666">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// Implement IUnknown methods
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    HRESULT QueryInterface(REFIID riid, <span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span> ppv) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span> (riid <span style="color:#666">==</span> IID_IUnknown) {
+</span></span><span style="display:flex;"><span>            <span style="color:#666">*</span>ppv <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">static_cast</span><span style="color:#666">&lt;</span>IUnknown<span style="color:#666">*&gt;</span>(<span style="color:#a2f;font-weight:bold">this</span>);
+</span></span><span style="display:flex;"><span>            AddRef();
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">return</span> S_OK;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#080;font-style:italic">// Handle other interfaces
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>        <span style="color:#a2f;font-weight:bold">return</span> E_NOINTERFACE;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ULONG <span style="color:#00a000">AddRef</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">return</span> InterlockedIncrement(<span style="color:#666">&amp;</span>m_refCount);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ULONG <span style="color:#00a000">Release</span>() {
+</span></span><span style="display:flex;"><span>        ULONG count <span style="color:#666">=</span> InterlockedDecrement(<span style="color:#666">&amp;</span>m_refCount);
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">if</span> (count <span style="color:#666">==</span> <span style="color:#666">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a2f;font-weight:bold">delete</span> <span style="color:#a2f;font-weight:bold">this</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a2f;font-weight:bold">return</span> count;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">private</span><span style="color:#666">:</span>
+</span></span><span style="display:flex;"><span>    ULONG m_refCount;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic">// Create an instance of COuter and aggregate CInner
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>COuter<span style="color:#666">*</span> pOuter <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">new</span> COuter();
+</span></span><span style="display:flex;"><span>IUnknown<span style="color:#666">*</span> pUnkOuter <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">static_cast</span><span style="color:#666">&lt;</span>IUnknown<span style="color:#666">*&gt;</span>(pOuter);
+</span></span><span style="display:flex;"><span>CInner<span style="color:#666">*</span> pInner <span style="color:#666">=</span> <span style="color:#a2f">NULL</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>HRESULT hr <span style="color:#666">=</span> CoCreateInstance(
+</span></span><span style="display:flex;"><span>    CLSID_CInner,         <span style="color:#080;font-style:italic">// CLSID of the inner object
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    pUnkOuter,            <span style="color:#080;font-style:italic">// pUnkOuter (aggregation)
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    CLSCTX_INPROC_SERVER, <span style="color:#080;font-style:italic">// Context
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    IID_IUnknown,         <span style="color:#080;font-style:italic">// IID of the interface
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>    (<span style="color:#0b0;font-weight:bold">void</span><span style="color:#666">**</span>)<span style="color:#666">&amp;</span>pInner       <span style="color:#080;font-style:italic">// Interface pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a2f;font-weight:bold">if</span> (SUCCEEDED(hr)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#080;font-style:italic">// Use pInner
+</span></span></span><span style="display:flex;"><span><span style="color:#080;font-style:italic"></span>}
+</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为外部对象的 <code>IUnknown</code> 指针，以便内部对象可以进行聚合。</p>
+<h3 id="总结-1">总结<a class="td-heading-self-link" href="#%e6%80%bb%e7%bb%93-1" aria-label="Heading self-link"></a></h3><ul>
+<li><strong><code>pUnkOuter</code></strong> 是一个指向 <code>IUnknown</code> 接口的指针，用于支持聚合。</li>
+<li><strong>聚合</strong> 允许一个对象包含另一个对象，并使内部对象的接口对外部对象的客户端透明。</li>
+<li>如果不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>。</li>
+</ul>
+<p>通过理解 <code>pUnkOuter</code> 参数的用途和聚合的概念，可以更好地理解和使用 COM 编程模型中的聚合特性。</p>
+</details>
+</div>
+</br>
+<p><span style="background-color: gray;">(3/5)[in] dwClsContext</span></br></p>
+<div style="padding-left: 2em;">
+Context in which the code that manages the newly created object will run.</br>
+The values are taken from the enumeration CLSCTX.</br>
+<p><code>dwClsContext</code>:</br>
+ <code>dw</code>=double world;(microsoft<code>s naming style)&lt;/br&gt; &amp;emsp;</code>Cls<code>=Class; (Class of COM object)&lt;/br&gt; &amp;emsp;</code>Context` means the environment which the object running</br></p>
+<pre class="c">
+    <code>
+#...\Windows Kits\10\Include\10.0.22621.0\um\combaseapi.h
+
+#define CLSCTX_ALL              (CLSCTX_INPROC_SERVER| \
+                                CLSCTX_INPROC_HANDLER| \
+                                CLSCTX_LOCAL_SERVER| \
+                                CLSCTX_REMOTE_SERVER)
+    </code>
+</pre>
+<p>and these macros are found in</p>
+<pre class="c">
+    <code>
+#...\Windows Kits\10\Include\10.0.22621.0\shared\WTypesbase.h
+typedef
+enum tagCLSCTX
+{
+    CLSCTX_INPROC_SERVER	= 0x1,
+    CLSCTX_INPROC_HANDLER	= 0x2,
+    CLSCTX_LOCAL_SERVER	= 0x4,
+    CLSCTX_INPROC_SERVER16	= 0x8,
+    CLSCTX_REMOTE_SERVER	= 0x10,
+    CLSCTX_INPROC_HANDLER16	= 0x20,
+    CLSCTX_RESERVED1	= 0x40,
+    CLSCTX_RESERVED2	= 0x80,
+    CLSCTX_RESERVED3	= 0x100,
+    CLSCTX_RESERVED4	= 0x200,
+    CLSCTX_NO_CODE_DOWNLOAD	= 0x400,
+    CLSCTX_RESERVED5	= 0x800,
+    CLSCTX_NO_CUSTOM_MARSHAL	= 0x1000,
+    CLSCTX_ENABLE_CODE_DOWNLOAD	= 0x2000,
+    CLSCTX_NO_FAILURE_LOG	= 0x4000,
+    CLSCTX_DISABLE_AAA	= 0x8000,
+    CLSCTX_ENABLE_AAA	= 0x10000,
+    CLSCTX_FROM_DEFAULT_CONTEXT	= 0x20000,
+    CLSCTX_ACTIVATE_X86_SERVER	= 0x40000,
+    CLSCTX_ACTIVATE_32_BIT_SERVER	= CLSCTX_ACTIVATE_X86_SERVER,
+    CLSCTX_ACTIVATE_64_BIT_SERVER	= 0x80000,
+    CLSCTX_ENABLE_CLOAKING	= 0x100000,
+    CLSCTX_APPCONTAINER	= 0x400000,
+    CLSCTX_ACTIVATE_AAA_AS_IU	= 0x800000,
+    CLSCTX_RESERVED6	= 0x1000000,
+    CLSCTX_ACTIVATE_ARM32_SERVER	= 0x2000000,
+    CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION	= 0x4000000,
+    CLSCTX_PS_DLL	= 0x80000000
+} 	CLSCTX;
+
+    </code>
+</pre>
+</div>
+</br>
+<p><span style="background-color: gray;">(4/5)[in] riid</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+A reference to the identifier of the interface to be used to communicate with the object.</br>
+</br>
+<p><em>In</em> REFIID riid</br>
+<code>REFIID riid</code>：</br>
+是 const IID&amp; 的别名，表示对 IID 的引用。它的作用与 REFCLSID 类似。</br></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#080">#define REFIID const IID &amp;
+</span></span></span></code></pre></div></div>
+</br>
+<p><span style="background-color: gray;">(5/5)[out] ppv</span></br>
+</br></p>
+<div style="padding-left: 2em;">
+Address of pointer variable that receives the interface pointer requested in riid.</br>
+Upon successful return, *ppv contains the requested interface pointer.</br>
+Upon failure, *ppv contains NULL.</br>
+</div>
+</br>
+<p><code>ppv</code>: Pointer to Pointer to Void</p>
+</details>
+</div>
+<h2 id="002-immdevice-activate"><strong>002. IMMDevice::Activate</strong><a class="td-heading-self-link" href="#002-immdevice-activate" aria-label="Heading self-link"></a></h2><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>HRESULT <span style="color:#00a000">Activate</span>(
+</span></span><span style="display:flex;"><span>  [in]  REFIID      iid,
+</span></span><span style="display:flex;"><span>  [in]  DWORD       dwClsCtx,
+</span></span><span style="display:flex;"><span>  [in]  PROPVARIANT <span style="color:#666">*</span>pActivationParams,
+</span></span><span style="display:flex;"><span>  [out] <span style="color:#0b0;font-weight:bold">void</span>        <span style="color:#666">**</span>ppInterface
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><p><strong>Parameters Description</strong></p>
+<p><code>iid</code>: interface identifier</p>
+<p>Exp:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>    <span style="color:#a2f;font-weight:bold">const</span> IID IID_IAudioSessionControl2 <span style="color:#666">=</span> __uuidof(IAudioSessionControl2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">1.</span> IID_IAudioClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">2.</span> IID_IAudioEndpointVolume
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">3.</span> IID_IAudioMeterInformation
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">4.</span> IID_IAudioSessionManager
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">5.</span> IID_IAudioSessionManager2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">6.</span> IID_IBaseFilter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">7.</span> IID_IDeviceTopology
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">8.</span> IID_IDirectSound
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">9.</span> IID_IDirectSound8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">10.</span> IID_IDirectSoundCapture
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">11.</span> IID_IDirectSoundCapture8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">12.</span> IID_IMFTrustedOutput
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">13.</span> IID_ISpatialAudioClient
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#666">14.</span> IID_ISpatialAudioMetadataClient
+</span></span></code></pre></div><p><code>dwClsCtx</code>: double word Class Context</p>
+<p><code>pActivationParams</code>:</p>
+<p><code>ppInterface</code></p>
+
+	<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
+  <li>
+    <a href="/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/" aria-label="上一页 - 声卡项目" class="btn btn-primary"><span class="me-1">←</span>上一页</a>
+  </li>
+  <li>
+    <a href="/blog/2024/07/31/asio/" aria-label="下一页 - ASIO" class="btn btn-primary">下一页<span class="ms-1">→</span></a>
+  </li>
+</ul>
+
+	</div>
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2024
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.js"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

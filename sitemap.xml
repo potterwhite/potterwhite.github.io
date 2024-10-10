@@ -59,7 +59,7 @@
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/011_windows_development/</loc>
-    <lastmod>2024-07-31T00:00:00+00:00</lastmod>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/012_web_development/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
@@ -83,10 +83,19 @@
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/blog/</loc>
-    <lastmod>2024-09-06T00:00:00+00:00</lastmod>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-09-06T00:00:00+00:00</lastmod>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/2024/10/10/immnotificationclient-callback-problem/</loc>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/windows/</loc>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/</loc>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/qml/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
@@ -98,9 +107,6 @@
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/qt-development/</loc>
-    <lastmod>2024-09-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/blog/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/news/aug.2024/</loc>
@@ -200,9 +206,6 @@
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/07/31/asio/</loc>
-    <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/windows/</loc>
     <lastmod>2024-07-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/</loc>

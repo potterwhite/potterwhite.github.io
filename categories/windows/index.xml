@@ -6,8 +6,15 @@
     <description>Recent content in Windows on 嵌入式系统 Enthusiast</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 31 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Oct 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>IMMNotificationClient Callback Problem</title>
+      <link>http://localhost:1313/blog/2024/10/10/immnotificationclient-callback-problem/</link>
+      <pubDate>Thu, 10 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/10/10/immnotificationclient-callback-problem/</guid>
+      <description>&#xD;</description>
+    </item>
     <item>
       <title>ASIO</title>
       <link>http://localhost:1313/blog/2024/07/31/asio/</link>
