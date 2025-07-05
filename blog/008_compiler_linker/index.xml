@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>008_Grp_Compiler_Linker on 嵌入式系统爱好者</title>
-    <link>http://localhost:1313/blog/008_compiler_linker/</link>
+    <link>https://potterwhite.github.io/blog/008_compiler_linker/</link>
     <description>Recent content in 008_Grp_Compiler_Linker on 嵌入式系统爱好者</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 01 Aug 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/blog/008_compiler_linker/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://potterwhite.github.io/blog/008_compiler_linker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>QtCreator下的MinGW和MSVC编译器</title>
-      <link>http://localhost:1313/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</link>
+      <link>https://potterwhite.github.io/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</link>
       <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</guid>
-      <description>&lt;h2 id=&#34;problem&#34;&gt;&lt;strong&gt;Problem&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;My project is running at the kit of MSVC When it was switched to MinGW Everything weired&lt;/p&gt;&#xA;&lt;p&gt;call the dll, but no correct response happens. I tried to delete dllls all, then my Qt binary exe returns error that &amp;quot;...dlls not found..&amp;quot;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2024/August/1/dlls_not_found.png&#34; alt=&#34;错误提示1&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;so it told me implicitly that Qt exe did not call wrong dlls or buffers potentially.&lt;/p&gt;&#xA;&lt;p&gt;and i inserted many debug std::count msgs in dll, but i could not even find them one at Qt exe console screen.&lt;/p&gt;</description>
+      <guid>https://potterwhite.github.io/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</guid>
+      <description>&lt;h2 id=&#34;problem&#34;&gt;&lt;strong&gt;Problem&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;My project is running at the kit of MSVC When it was switched to MinGW Everything weired&lt;/p&gt;&#xA;&lt;p&gt;call the dll, but no correct response happens. I tried to delete dllls all, then my Qt binary exe returns error that &amp;quot;...dlls not found..&amp;quot;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2024/August/1/dlls_not_found.png&#34; alt=&#34;错误提示1&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;so it told me implicitly that Qt exe did not call wrong dlls or buffers potentially.&lt;/p&gt;&#xA;&lt;p&gt;and i inserted many debug std::count msgs in dll, but i could not even find them one at Qt exe console screen.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -1,623 +1,0 @@
-<!doctype html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
-
-
-<link rel="shortcut icon" href="/favicons/favicon.ico" >
-<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
-<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
-<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
-<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
-<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
-<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
-<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
-<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
-
-<title>QML Options | 嵌入式系统爱好者</title>
-<meta name="description" content="理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：
-顶层容器类型 $$ApplicationWindow用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。导入模块：QtQuick.ControlsWindow用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。导入模块：QtQuick.WindowDialog用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。导入模块：QtQuick.ControlsPopup用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。导入模块：QtQuick.ControlsItem用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。导入模块：QtQuickRectangle用途：用于创建简单的矩形区域，常用于布局和装饰。导入模块：QtQuickApplication用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。导入模块：QtQuick$$示例代码
-以下是每个顶层容器的简单示例：
-1. ApplicationWindow import QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Window import QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialog import QtQuick 6.2 import QtQuick.Controls 6.2 Dialog { visible: true width: 400 height: 300 title: &#34;Dialog Example&#34; standardButtons: Dialog.Ok | Dialog.Cancel } 4. Popup import QtQuick 6.2 import QtQuick.Controls 6.2 Popup { visible: true width: 200 height: 100 Text { anchors.centerIn: parent text: &#34;Popup Example&#34; } } 5. Item import QtQuick 6.2 Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } 6. Rectangle import QtQuick 6.2 Rectangle { width: 800 height: 600 color: &#34;lightgray&#34; Text { anchors.centerIn: parent text: &#34;Rectangle Example&#34; } } 7. Application import QtQuick 6.2 Application { id: app Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } } 顶层容器结构 顶层容器的结构通常如下：">
-<meta property="og:url" content="http://localhost:1313/zh-cn/blog/013_qt_development/qml/qml-options/">
-  <meta property="og:site_name" content="嵌入式系统爱好者">
-  <meta property="og:title" content="QML Options">
-  <meta property="og:description" content="理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：
-顶层容器类型 $$ApplicationWindow用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。导入模块：QtQuick.ControlsWindow用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。导入模块：QtQuick.WindowDialog用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。导入模块：QtQuick.ControlsPopup用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。导入模块：QtQuick.ControlsItem用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。导入模块：QtQuickRectangle用途：用于创建简单的矩形区域，常用于布局和装饰。导入模块：QtQuickApplication用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。导入模块：QtQuick$$示例代码
-以下是每个顶层容器的简单示例：
-1. ApplicationWindow import QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Window import QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialog import QtQuick 6.2 import QtQuick.Controls 6.2 Dialog { visible: true width: 400 height: 300 title: &#34;Dialog Example&#34; standardButtons: Dialog.Ok | Dialog.Cancel } 4. Popup import QtQuick 6.2 import QtQuick.Controls 6.2 Popup { visible: true width: 200 height: 100 Text { anchors.centerIn: parent text: &#34;Popup Example&#34; } } 5. Item import QtQuick 6.2 Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } 6. Rectangle import QtQuick 6.2 Rectangle { width: 800 height: 600 color: &#34;lightgray&#34; Text { anchors.centerIn: parent text: &#34;Rectangle Example&#34; } } 7. Application import QtQuick 6.2 Application { id: app Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } } 顶层容器结构 顶层容器的结构通常如下：">
-  <meta property="og:locale" content="zh_cn">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="zh-cn">
-    <meta property="article:published_time" content="2024-08-02T00:00:00+00:00">
-    <meta property="article:modified_time" content="2024-08-02T00:00:00+00:00">
-
-  <meta itemprop="name" content="QML Options">
-  <meta itemprop="description" content="理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：
-顶层容器类型 $$ApplicationWindow用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。导入模块：QtQuick.ControlsWindow用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。导入模块：QtQuick.WindowDialog用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。导入模块：QtQuick.ControlsPopup用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。导入模块：QtQuick.ControlsItem用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。导入模块：QtQuickRectangle用途：用于创建简单的矩形区域，常用于布局和装饰。导入模块：QtQuickApplication用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。导入模块：QtQuick$$示例代码
-以下是每个顶层容器的简单示例：
-1. ApplicationWindow import QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Window import QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialog import QtQuick 6.2 import QtQuick.Controls 6.2 Dialog { visible: true width: 400 height: 300 title: &#34;Dialog Example&#34; standardButtons: Dialog.Ok | Dialog.Cancel } 4. Popup import QtQuick 6.2 import QtQuick.Controls 6.2 Popup { visible: true width: 200 height: 100 Text { anchors.centerIn: parent text: &#34;Popup Example&#34; } } 5. Item import QtQuick 6.2 Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } 6. Rectangle import QtQuick 6.2 Rectangle { width: 800 height: 600 color: &#34;lightgray&#34; Text { anchors.centerIn: parent text: &#34;Rectangle Example&#34; } } 7. Application import QtQuick 6.2 Application { id: app Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } } 顶层容器结构 顶层容器的结构通常如下：">
-  <meta itemprop="datePublished" content="2024-08-02T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="696">
-  <meta itemprop="keywords" content="Blog,Qt Development,QML">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="QML Options">
-  <meta name="twitter:description" content="理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：
-顶层容器类型 $$ApplicationWindow用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。导入模块：QtQuick.ControlsWindow用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。导入模块：QtQuick.WindowDialog用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。导入模块：QtQuick.ControlsPopup用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。导入模块：QtQuick.ControlsItem用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。导入模块：QtQuickRectangle用途：用于创建简单的矩形区域，常用于布局和装饰。导入模块：QtQuickApplication用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。导入模块：QtQuick$$示例代码
-以下是每个顶层容器的简单示例：
-1. ApplicationWindow import QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Window import QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialog import QtQuick 6.2 import QtQuick.Controls 6.2 Dialog { visible: true width: 400 height: 300 title: &#34;Dialog Example&#34; standardButtons: Dialog.Ok | Dialog.Cancel } 4. Popup import QtQuick 6.2 import QtQuick.Controls 6.2 Popup { visible: true width: 200 height: 100 Text { anchors.centerIn: parent text: &#34;Popup Example&#34; } } 5. Item import QtQuick 6.2 Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } 6. Rectangle import QtQuick 6.2 Rectangle { width: 800 height: 600 color: &#34;lightgray&#34; Text { anchors.centerIn: parent text: &#34;Rectangle Example&#34; } } 7. Application import QtQuick 6.2 Application { id: app Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } } 顶层容器结构 顶层容器的结构通常如下：">
-<link href="/scss/main.css" rel="stylesheet">
-<script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-  crossorigin="anonymous"></script>
-<script defer
-  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
-  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
-  crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/css/prism.css"/>
-
-  </head>
-  <body class="td-page">
-    <header>
-      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
-<div class="container-fluid flex-column flex-md-row">
-  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统爱好者</span></a>
-  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/zh-cn/project/"><span>我的项目</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/zh-cn/news/"><span>News</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/zh-cn/blog/"><span>博客文章</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/en/about/"><span>About</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/fa/about/"><span>درباره‌ی ما</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/en/docs/"><span>Docs</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/no/docs/"><span>Dokumentasjon</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/fa/docs/"><span>مستندات</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/en/blog/"><span>Blog</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/fa/blog/"><span>بلاگ</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/en/community/"><span>Community</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/fa/community/"><span>انجمن</span></a>
-      </li>
-      <li class="nav-item dropdown d-none d-lg-block">
-        <div class="dropdown">
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/en/">English</a></li>
-    </ul>
-</div></li>
-      <li class="td-light-dark-menu nav-item dropdown">
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-  <symbol id="check2" viewBox="0 0 16 16">
-    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-  </symbol>
-  <symbol id="circle-half" viewBox="0 0 16 16">
-    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-  </symbol>
-  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-  </symbol>
-  <symbol id="sun-fill" viewBox="0 0 16 16">
-    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-  </symbol>
-</svg>
-
-<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
-        id="bd-theme"
-        type="button"
-        aria-expanded="false"
-        data-bs-toggle="dropdown"
-        data-bs-display="static"
-        aria-label="Toggle theme (auto)">
-  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
-</button>
-<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
-      Light
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
-      Dark
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
-      Auto
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-</ul>
-
-      </li>
-      </ul>
-  </div>
-  <div class="d-none d-lg-block">
-    <div class="td-search td-search--offline">
-  <div class="td-search__icon"></div>
-  <input
-    type="search"
-    class="td-search__input form-control"
-    placeholder="站内搜索…"
-    aria-label="站内搜索…"
-    autocomplete="off"
-    
-    data-offline-search-index-json-src="/offline-search-index.json"
-    data-offline-search-base-href="/"
-    data-offline-search-max-results="25"
-  >
-</div>
-  </div>
-</div>
-</nav>
-    </header>
-    <div class="container-fluid td-default td-outer">
-      <main role="main" class="td-main">
-        <p>理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：</p>
-<h1 id="顶层容器类型"><strong>顶层容器类型</strong></h1>
-
-<div class="chem">$$ApplicationWindow
-    用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。
-    导入模块：QtQuick.Controls
-
-Window
-    用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。
-    导入模块：QtQuick.Window
-
-Dialog
-    用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。
-    导入模块：QtQuick.Controls
-
-Popup
-    用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。
-    导入模块：QtQuick.Controls
-
-Item
-    用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。
-    导入模块：QtQuick
-
-Rectangle
-    用途：用于创建简单的矩形区域，常用于布局和装饰。
-    导入模块：QtQuick
-
-Application
-    用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。
-    导入模块：QtQuick$$</div><p>示例代码</p>
-<p>以下是每个顶层容器的简单示例：</p>
-<h4 id="1-applicationwindow"><code>1. ApplicationWindow</code></h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">ApplicationWindow</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;ApplicationWindow Example&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="2-window"><code>2. Window</code></h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Window</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Window Example&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="3-dialog"><code>3. Dialog</code></h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Dialog</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">400</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">300</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Dialog Example&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">standardButtons</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">Dialog</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Ok</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">Dialog</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Cancel</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="4-popup"><code>4. Popup</code></h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Popup</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">200</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">Text</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">centerIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Popup Example&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="5-item"><code>5. Item</code></h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;blue&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="6-rectangle"><code>6. Rectangle</code></h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;lightgray&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">Text</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">centerIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Rectangle Example&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="7-application"><code>7. Application</code></h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Application</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">app</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;blue&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="顶层容器结构">顶层容器结构</h4>
-<p>顶层容器的结构通常如下：</p>
-<pre><code>Application 或 ApplicationWindow 或 Window 或 Dialog 或 Popup
-    子元素：Item, Rectangle, Text, Button, ListView 等各种 UI 元素
-</code></pre>
-<h4 id="示例">示例：</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">ApplicationWindow</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;App Structure Example&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">height</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;lightgray&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">Text</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">centerIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Hello, World!&#34;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><p>这些顶层容器类型及其结构可以根据具体需求选择和使用，从而满足不同类型的应用程序设计需求。</p>
-<h1 id="关键字-property"><strong>关键字：Property</strong></h1>
-<p>让我们深入探讨一下 QML 中 <code>property</code> 的作用、外部访问的机制，以及如何决定属性是否暴露给外部。</p>
-<h3 id="1-qml-中的属性访问机制">1. <strong>QML 中的属性访问机制</strong></h3>
-<h4 id="内置属性-如"><strong>内置属性（如 <code>height</code>、<code>width</code> 等）</strong></h4>
-<ul>
-<li>
-<p><strong>内置属性</strong>：QML 中的某些属性，如 <code>height</code>、<code>width</code>、<code>color</code> 等，是组件自带的内置属性，这些属性默认是对外暴露的。因此，父组件可以直接访问和设置这些属性。</p>
-</li>
-<li>
-<p><strong>访问方式</strong>：这些内置属性在定义组件时自动提供，可以直接通过组件的 <code>id</code> 在外部访问，例如：</p>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">height:</span> <span style="color:#0000cf;font-weight:bold">50</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#000">rect</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span>  <span style="color:#8f5902;font-style:italic">// 直接访问 rect 的 width 属性
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h3 id="2-property">2. <strong><code>property</code> 的作用</strong></h3>
-<h4 id="定义自定义属性"><strong>定义自定义属性</strong></h4>
-<ul>
-<li><strong>扩展属性</strong>：通过 <code>property</code>，你可以定义组件的自定义属性，这些属性不是组件的内置属性。<code>property</code> 使得这些自定义属性能够被外部访问和修改。例如，你可能会定义一个 <code>property</code> 来跟踪某个状态：</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#204a87;font-weight:bold">myCustomHeight:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#000">rect</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">myCustomHeight</span>  <span style="color:#8f5902;font-style:italic">// 访问自定义的 myCustomHeight 属性
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="绑定和初始值"><strong>绑定和初始值</strong></h4>
-<ul>
-<li><strong>属性绑定</strong>：<code>property</code> 可以与其他属性或表达式绑定，这使得属性之间能够自动更新。例如：</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#204a87;font-weight:bold">myCustomHeight:</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>  <span style="color:#8f5902;font-style:italic">// myCustomHeight 随着 width 的变化而变化
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#0000cf;font-weight:bold">200</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h4 id="暴露内部状态"><strong>暴露内部状态</strong></h4>
-<ul>
-<li><strong>状态管理</strong>：你可以通过 <code>property</code> 把组件的内部状态暴露给外部，从而实现更好的封装和模块化设计。例如，定义一个 <code>property</code> 来暴露内部的计算结果：</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#000">real</span> <span style="color:#204a87;font-weight:bold">area:</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">height</span>  <span style="color:#8f5902;font-style:italic">// 暴露矩形的面积
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><h3 id="3-内部变量与">3. <strong>内部变量与 <code>property</code> 的区别</strong></h3>
-<ul>
-<li>
-<p><strong>局部变量</strong>：如果你只需要在组件内部使用某个值或状态，通常不会使用 <code>property</code>，而是使用局部变量或 JavaScript 变量。局部变量不会暴露给外部，也不会通过 <code>id</code> 访问到。</p>
-<ul>
-<li><strong>局部变量示例</strong>：
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#0000cf;font-weight:bold">100</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">height:</span> <span style="color:#0000cf;font-weight:bold">50</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">internalValue</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">200</span>  <span style="color:#8f5902;font-style:italic">// 只在这个组件内部可见的变量
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div></li>
-</ul>
-</li>
-<li>
-<p><strong><code>property</code> 的作用</strong>：<code>property</code> 主要用于定义和管理组件的外部可见状态或配置。通过 <code>property</code>，你可以把组件的某些内部状态暴露出来，供父组件或外部组件访问。</p>
-</li>
-</ul>
-<h3 id="4-总结">4. <strong>总结：<code>property</code> 的功能与外部访问</strong></h3>
-<ul>
-<li>
-<p><strong>外部访问</strong>：内置属性（如 <code>height</code>、<code>width</code>）默认是暴露给外部的，而通过 <code>property</code> 定义的属性也会暴露给外部。没有 <code>property</code> 修饰的局部变量则不会被外部访问到。</p>
-</li>
-<li>
-<p><strong><code>property</code> 的用途</strong>：<code>property</code> 主要用于定义组件的自定义属性、管理属性绑定、或暴露内部状态给外部。<code>property</code> 还允许你为自定义属性设置初始值，并支持动态绑定。</p>
-</li>
-<li>
-<p><strong>局部变量 vs <code>property</code></strong>：如果你不希望某个状态或值被外部访问，且只需要在组件内部使用，那么应使用局部变量或 JavaScript 变量，而不是 <code>property</code>。<code>property</code> 用于那些需要外部访问和管理的属性。</p>
-</li>
-</ul>
-<p>通过理解这些概念，你可以更好地设计和组织 QML 代码，确保组件之间的低耦合性和良好的封装性。</p>
-<h2 id="003-singleton-单例对象">003.<strong>Singleton 单例对象</strong></h2>
-<h3 id="使用场景"><strong>使用场景</strong></h3>
-<ol>
-<li>
-<p>可以是要在外部动态的设置某一个程序的属性，让整个程序的其他组件都因此做出改变，可以用singleton</p>
-<p><a href="https://juejin.cn/post/6959740008240513037">QML Styling 及 Singleton 使用方法浅谈 - 掘金</a></p>
-</li>
-<li>
-<p>希望精简，模块不要反复被创建</p>
-</li>
-</ol>
-<h3 id="必要步骤-在相应的qml文件的顶行写pragma-singleton"><strong>【必要步骤】在相应的qml文件的顶行写pragma Singleton</strong></h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">pragma</span> <span style="color:#000">Singleton</span>
-</span></span></code></pre></div><p><code>注意这条语句要写在import 语句之前</code></p>
-<h3 id="必要步骤-需要在相应的cmakelist-txt里设置qt"><strong>【必要步骤】需要在相应的CMakeList.txt里设置QT_QML_SINGLETON_TYPE 为TRUE</strong></h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">set_source_files_properties</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">First_Color_Scheme</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span> <span style="color:#000">PROPERTIES</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">QT_QML_SINGLETON_TYPE</span> <span style="color:#000">TRUE</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
-</span></span></code></pre></div><ul>
-<li>
-<p>在哪一个CMakeList.txt呢？</p>
-<p>我的qml文件处在项目根目录下的一个叫content的文件夹中</p>
-<p>这个文件夹是专门存放所有qml文件的</p>
-<p>在content下有一个CMakeList.txt</p>
-<p>（不要放到项目根目录下的CMakeList.txt里面-因为放进去也没用）</p>
-</li>
-<li>
-<p>设置完会怎么样，请看build之后的目录下：</p>
-<p>build\6_5_3_MSVC2019_x64-Debug\qml\content\qmldir</p>
-<p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/0516fb73-40ac-4ee0-bc2c-1fbf9ce55b9b/Untitled.png" alt="Untitled"></p>
-</li>
-<li>
-<p>设置技巧</p>
-<p>本语句的位置不能低于qt6_add_qml_module（或qt_add_qml_module）</p>
-<p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/bf1470a6-0401-44a7-b7f5-350f9312960d/Untitled.png" alt="Untitled"></p>
-</li>
-</ul>
-<h3 id="必要步骤-需要在相应的cmakelist-txt里创建单例模块singleton-module-独立于其他qml模块"><strong>【必要步骤】需要在相应的CMakeList.txt里创建单例模块Singleton Module（独立于其他QML模块）</strong></h3>
-<ul>
-<li>CMakeLists.txt的相关代码</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">qt6_add_qml_module</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">singleton</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">URI</span> <span style="color:#4e9a06">&#34;singleton&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">VERSION</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">QML_FILES</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">Color</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">First_Color_Scheme</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
-</span></span></code></pre></div><p><code>这里的URI很重要，最后我们要调用的地方，都需要import，而import后面的模块名称就是看URI的。</code></p>
-<h4 id="为什么一定要再这里创建单例模块呢"><strong>为什么一定要再这里创建单例模块呢？</strong></h4>
-<p>按照微软的文档：</p>
-<p><img src="/2024/August/10/singleton.png" alt="singleton.png"></p>
-<p>我们就是需要去把它做成一个模块的</p>
-<h3 id="必要步骤-调用singleton-object-单例对象-的办法"><strong>【必要步骤】调用singleton object（单例对象）的办法</strong></h3>
-<ul>
-<li>
-<p>不能用的办法1：创建它</p>
-<ul>
-<li>
-<p>代码</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">Second_TitleBar</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">bID_Instance_Module_TitleBar</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">top</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">top</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div></li>
-<li>
-<p>例如这种方法，就是去创建一个单例对象，这样会提示错误</p>
-<p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/7cf70678-01e2-4d1d-a8c7-462045ac5e56/Untitled.png" alt="Untitled"></p>
-</li>
-<li>
-<p>错误信息</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>11:00:01: Starting C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe...
-</span></span><span style="display:flex;"><span>DLL_PROCESS_ATTACH: The DLL has been attached to the process at 00007FF902D40000
-</span></span><span style="display:flex;"><span>QML debugging is enabled. Only use this in a safe environment.
-</span></span><span style="display:flex;"><span>Ext_CreateAudioControl called.
-</span></span><span style="display:flex;"><span>ASCtl_Impl constructor called.
-</span></span><span style="display:flex;"><span>QQmlApplicationEngine failed to load component
-</span></span><span style="display:flex;"><span>qrc:/qt/qml/Main/main.qml:7:1: Type App unavailable
-</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/App.qml:54:1: Type VolumeMixer unavailable
-</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/VolumeMixer.qml:20:5: Composite Singleton Type Second_TitleBar is not creatable.
-</span></span><span style="display:flex;"><span>DLL_PROCESS_DETACH: The DLL has been detached from the process at 00007FF902D40000
-</span></span><span style="display:flex;"><span>11:00:01: C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe exited with code -1
-</span></span></code></pre></div></li>
-</ul>
-</li>
-<li>
-<p>可能可以用的办法：把某个要作为单例的qml封装成一个module</p>
-<p>具体是在content/CMakeList.txt下，用qt6_add_qml_module去新建一个模块</p>
-<p>然后去import这个模块，例如import titlebar 1.0 / import controlpanel 1.0这样</p>
-<p>不过这个办法我也没有尝试过。</p>
-</li>
-<li>
-<p>需要注意：调用时要加入<code>Component.onCompleted: {</code></p>
-<p>已经在多处都看见这种做法了</p>
-<p><a href="https://qt.0voice.com/?id=5269">QML中如何实现一个单例-QT开发中文网</a></p>
-<p>可能谈到调用就是异步的。</p>
-</li>
-</ul>
-<h3 id="相关的帖子"><strong>相关的帖子</strong></h3>
-<p><a href="https://doc.qt.io/qt-6/qml-singleton.html">Singletons in QML | Qt QML 6.7.2</a></p>
-<p><a href="https://forum.qt.io/topic/129738/singleton-qml-failed-to-load-as-module/2">Singleton QML failed to load as module</a></p>
-<p><a href="http://imaginativethinking.ca/make-qml-component-singleton/">How to make a QML Component a Singleton?</a></p>
-<p><a href="https://blog.csdn.net/HyEISN/article/details/130600566">Qt 创建 单例/Singleton qml 文件_pragma singleton-CSDN博客</a></p>
-<h2 id="004-qml中的signal-slot">004. QML中的signal &amp; slot</h2>
-<p>要点：</p>
-<ul>
-<li>1.信号要在本qml文件中的<code>顶层容器</code>中进行定义
-就算触发信号的位置是在本qml文件中嵌套的component里面，也都要在顶层容器中进行定义</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">rectangle</span><span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">signal</span> <span style="color:#000">Sig_Name_XXX</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><ul>
-<li>2.信号的使用必须加圆括号()，可以不必加分号；，否则会发不出去</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">signal</span> <span style="color:#000">Sig_Name_XXX</span><span style="color:#000;font-weight:bold">()</span>
-</span></span></code></pre></div><ul>
-<li>3.信号的传递必须一层一层的传上去（若你是一层一层的封装好模块的话）
-因为信号的接受者只能识别被它创建的那一个对象里面信号</li>
-</ul>
-<h2 id="container-image">container: Image</h2>
-<p>Property:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">sourceSize</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> 
-</span></span><span style="display:flex;"><span><span style="color:#000">sourceSize</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> 
-</span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.
-if image.width &amp; image.height are illegal value(e.g,. 0), the sourceSize will have the original size of this picture.</p>
-<h2 id="005-enum-qt-windowtype-flags-qt-windowflags"><strong>005. enum Qt::WindowType &amp; flags Qt::WindowFlags</strong></h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#8f5902;font-style:italic">// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">//设置无框的窗口
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">flags</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">FramelessWindowHint</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
-</span></span></span></code></pre></div><p><a href="https://doc.qt.io/qt-6/qt.html#WindowType-enum">enum Qt::WindowType
-flags Qt::WindowFlags</a></p>
-<p>它的逻辑是首先判断是什么窗口类型，可选项有</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cxx" data-lang="cxx"><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">1.</span> <span style="color:#000">Widget</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">2.</span> <span style="color:#000">Window</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">3.</span> <span style="color:#000">Dialog</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">4.</span> <span style="color:#000">Sheet</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">5.</span> <span style="color:#000">Drawer</span> <span style="color:#8f5902;font-style:italic">//outdated
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#0000cf;font-weight:bold">6.</span> <span style="color:#000">Popup</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">7.</span> <span style="color:#000">Tool</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">8.</span> <span style="color:#000">ToolTip</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">9.</span> <span style="color:#000">SplashScreen</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">10.</span> <span style="color:#000">SubWindow</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">11.</span> <span style="color:#000">ForeignWindow</span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">12.</span> <span style="color:#000">CoverWindow</span>
-</span></span></code></pre></div><p>所以这12种是所有的<code>窗口类型</code></p>
-<p>选择完我要的窗口Window，之后，我就可以进一步选择<code>窗口标志</code></p>
-
-<div class="chem">$$FramelessWindowHint
-CustomizeWindowHint$$</div><p>当然flag可是不止这两种，但是目前我就主要用到了这两种，所以其他的以后再补充啦哈哈</p>
-<p>第一种就是无边框的窗体</p>
-<p>第二种就是自定义的窗体</p>
-<p>第二种接下来还有许多options是配合它出现的，也就是说，CustomizeWindowHint只是一个开关</p>
-
-      </main>
-      <footer class="td-footer row d-print-none">
-  <div class="container-fluid">
-    <div class="row mx-md-2">
-      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
-        <ul class="td-footer__links-list">
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
-    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
-      <i class="fab fa-twitter"></i>
-    </a>
-  </li>
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
-    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
-      <i class="fab fa-stack-overflow"></i>
-    </a>
-  </li>
-  
-</ul>
-
-      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
-        <ul class="td-footer__links-list">
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
-    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
-      <i class="fab fa-github"></i>
-    </a>
-  </li>
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
-    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
-      <i class="fab fa-slack"></i>
-    </a>
-  </li>
-  
-</ul>
-
-      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
-        <span class="td-footer__copyright">&copy;
-    2024&ndash;2025
-    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
-      </div>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <script src="/js/main.js"></script>
-<script src='/js/prism.js'></script>
-<script src='/js/tabpane-persist.js'></script>
-
-  </body>
-</html>
