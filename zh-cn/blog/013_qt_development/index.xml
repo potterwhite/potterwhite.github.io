@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>013_Grp_QtDevelopment on 嵌入式系统爱好者</title>
+    <link>http://localhost:1313/zh-cn/blog/013_qt_development/</link>
+    <description>Recent content in 013_Grp_QtDevelopment on 嵌入式系统爱好者</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 19 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/zh-cn/blog/013_qt_development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Q_PROPERTY</title>
+      <link>http://localhost:1313/zh-cn/blog/013_qt_development/q_property/</link>
+      <pubDate>Mon, 19 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/zh-cn/blog/013_qt_development/q_property/</guid>
+      <description>&lt;h2 id=&#34;q&#34;&gt;&lt;strong&gt;Q_PROPERTY 的详细解释&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Q_PROPERTY 是 Qt 的元对象系统的一部分，它用于在 Qt 的元对象系统中注册属性，使得这些属性可以被 QML 和其他 Qt 的特性（如信号与槽机制）访问。它的作用包括：&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;属性的声明和管理：通过 Q_PROPERTY 声明的属性可以在 Qt 的元对象系统中被识别和管理，使得它们可以在 QML 中访问和绑定。&#xA;&#xA;提供 getter 和 setter：Q_PROPERTY 允许你指定一个属性的 getter 和 setter 方法，这些方法用于访问和修改属性值。&#xA;&#xA;通知属性变化：Q_PROPERTY 允许你定义一个变化通知信号，这样当属性的值发生变化时，可以发出信号通知 QML 或其他对象。&#xA;&#xA;支持绑定：在 QML 中，你可以绑定 UI 元素的属性到 C++ 类的属性，Q_PROPERTY 支持这种绑定机制，使得 UI 可以自动更新。&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;h3 id=&#34;q-property-的基本语法如下&#34;&gt;Q_PROPERTY 的基本语法如下：&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;Q_PROPERTY&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;READ&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;getter&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;WRITE&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;setter&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;NOTIFY&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;signal&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;type：属性的数据类型。&#xA;name：属性的名称。&#xA;READ getter：指定一个 getter 方法来获取属性值。&#xA;WRITE setter：指定一个 setter 方法来设置属性值。&#xA;    可以加const；&#xA;    必须是在public 作用限定符修饰下；&#xA;    不能是指针或引用，必须是可以复制的值；&#xA;&#xA;NOTIFY signal：指定一个信号，当属性值发生变化时发出此信号。&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;&lt;/h3&gt;</description>
+    </item>
+    <item>
+      <title>Qt Deployment</title>
+      <link>http://localhost:1313/zh-cn/blog/013_qt_development/deployment/</link>
+      <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/zh-cn/blog/013_qt_development/deployment/</guid>
+      <description>&lt;p&gt;要完成Qt项目的部署，你可以按照以下步骤使用&lt;code&gt;windeployqt&lt;/code&gt;工具：&lt;/p&gt;&#xA;&lt;h3 id=&#34;1-准备可执行文件&#34;&gt;1. 准备可执行文件&lt;/h3&gt;&#xA;&lt;p&gt;确保你已经生成了应用程序的可执行文件（如&lt;code&gt;.exe&lt;/code&gt;文件），通常在&lt;code&gt;release&lt;/code&gt;目录下。&lt;/p&gt;&#xA;&lt;h3 id=&#34;2-运行windeployqt&#34;&gt;2. 运行&lt;code&gt;windeployqt&lt;/code&gt;&lt;/h3&gt;&#xA;&lt;p&gt;打开命令行，导航到包含可执行文件的目录，然后运行以下命令：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;windeployqt your_application.exe&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此命令会自动扫描你的应用程序，并将所有必要的Qt库和插件复制到可执行文件所在的目录中。&lt;/p&gt;&#xA;&lt;h3 id=&#34;3-检查依赖项&#34;&gt;3. 检查依赖项&lt;/h3&gt;&#xA;&lt;p&gt;运行&lt;code&gt;windeployqt&lt;/code&gt;后，检查输出目录中是否包含了所有必需的文件，包括Qt的DLL文件、插件、以及可能的配置文件。&#xA;windeployqt会去把相关的依赖项都copy到exe当前的目录下&#xA;但问题是，似乎有时候并不整全，我们需要在一个没安装qt sdk的机器上去运行这个deploy过的程序，它会一步一步的提醒缺少了xxx.dll。&#xA;我们只要拷贝缺少的dll到项目文件夹下，即可。&lt;/p&gt;&#xA;&lt;h3 id=&#34;4-测试部署包&#34;&gt;4. 测试部署包&lt;/h3&gt;&#xA;&lt;p&gt;在另一台没有安装Qt的Windows机器上测试你的应用程序，确保它能够正常运行。这是验证所有依赖项是否正确打包的关键步骤。&lt;/p&gt;&#xA;&lt;h3 id=&#34;5-打包和分发&#34;&gt;5. 打包和分发&lt;/h3&gt;&#xA;&lt;p&gt;将输出目录打包成安装程序（如使用Inno Setup）或压缩文件，然后分发给用户。&lt;/p&gt;&#xA;&lt;h3 id=&#34;可能的扩展&#34;&gt;可能的扩展&lt;/h3&gt;&#xA;&lt;p&gt;如果你的应用程序有额外的依赖项，比如特定的字体、资源文件或动态链接库（DLL），需要手动添加到部署包中。&lt;/p&gt;&#xA;&lt;p&gt;这样，你就可以完成Qt应用程序的基本部署。如果过程中遇到问题或需要更多细节，可以参考&lt;a href=&#34;https://doc.qt.io/Qt-5/windows-deployment.html&#34;&gt;官方文档&lt;/a&gt;或向我求助。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,343 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>与ERPNext的初次见面 | 嵌入式系统爱好者</title>
+<meta name="description" content="一、最后的结论 ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。 但是不应该有但是了，因为人家免费，还想怎么样。
+二、经过 我负责项目管理已经17周了。
+2.1 痛点 a. 文档的格式各种各样 每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。
+b. 老板对于文档没有办法呈现时间进度 c. 对于员工每周的工作周报没有办法在开会时看见 三、优缺点 3.1 优点 a. frappe-forum 非常活跃。 半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。
+b. 轻度使用，性能稳定 c. 结合website，可以实现企业的官方网站融合 估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。 它里面给了很多框架。
+d. 可以通过邮件与外部直接打通 可以发送成功，但是耗时2~3分钟 gmail可以收到 qqmail可以收到 3.2 缺点 a. 中文汉化得不完整 有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。 在UOM（unity of measure）中，所有的测量单位全都是英文。 例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）
+附注1：企业规模的标准是什么？企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：
+中国的企业规模标准 在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：
+工业企业 微型企业：从业人员少于20人，营业收入少于300万元。 小型企业：从业人员20-300人，营业收入300万-2000万元。 中型企业：从业人员300-1000人，营业收入2000万-4亿元。 大型企业：从业人员超过1000人，营业收入超过4亿元。 建筑业 微型企业：从业人员少于50人，营业收入少于300万元。 小型企业：从业人员50-300人，营业收入300万-3000万元。 中型企业：从业人员300-3000人，营业收入3000万-2亿元。 大型企业：从业人员超过3000人，营业收入超过2亿元。 国际标准 国际上，企业规模的划分也有不同的标准。例如：">
+<meta property="og:url" content="http://localhost:1313/zh-cn/blog/003_erp/003_001_erpnext/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/">
+  <meta property="og:site_name" content="嵌入式系统爱好者">
+  <meta property="og:title" content="与ERPNext的初次见面">
+  <meta property="og:description" content="一、最后的结论 ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。 但是不应该有但是了，因为人家免费，还想怎么样。
+二、经过 我负责项目管理已经17周了。
+2.1 痛点 a. 文档的格式各种各样 每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。
+b. 老板对于文档没有办法呈现时间进度 c. 对于员工每周的工作周报没有办法在开会时看见 三、优缺点 3.1 优点 a. frappe-forum 非常活跃。 半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。
+b. 轻度使用，性能稳定 c. 结合website，可以实现企业的官方网站融合 估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。 它里面给了很多框架。
+d. 可以通过邮件与外部直接打通 可以发送成功，但是耗时2~3分钟 gmail可以收到 qqmail可以收到 3.2 缺点 a. 中文汉化得不完整 有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。 在UOM（unity of measure）中，所有的测量单位全都是英文。 例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）
+附注1：企业规模的标准是什么？企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：
+中国的企业规模标准 在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：
+工业企业 微型企业：从业人员少于20人，营业收入少于300万元。 小型企业：从业人员20-300人，营业收入300万-2000万元。 中型企业：从业人员300-1000人，营业收入2000万-4亿元。 大型企业：从业人员超过1000人，营业收入超过4亿元。 建筑业 微型企业：从业人员少于50人，营业收入少于300万元。 小型企业：从业人员50-300人，营业收入300万-3000万元。 中型企业：从业人员300-3000人，营业收入3000万-2亿元。 大型企业：从业人员超过3000人，营业收入超过2亿元。 国际标准 国际上，企业规模的划分也有不同的标准。例如：">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="zh-cn">
+    <meta property="article:published_time" content="2024-07-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-07-10T00:00:00+00:00">
+
+  <meta itemprop="name" content="与ERPNext的初次见面">
+  <meta itemprop="description" content="一、最后的结论 ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。 但是不应该有但是了，因为人家免费，还想怎么样。
+二、经过 我负责项目管理已经17周了。
+2.1 痛点 a. 文档的格式各种各样 每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。
+b. 老板对于文档没有办法呈现时间进度 c. 对于员工每周的工作周报没有办法在开会时看见 三、优缺点 3.1 优点 a. frappe-forum 非常活跃。 半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。
+b. 轻度使用，性能稳定 c. 结合website，可以实现企业的官方网站融合 估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。 它里面给了很多框架。
+d. 可以通过邮件与外部直接打通 可以发送成功，但是耗时2~3分钟 gmail可以收到 qqmail可以收到 3.2 缺点 a. 中文汉化得不完整 有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。 在UOM（unity of measure）中，所有的测量单位全都是英文。 例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）
+附注1：企业规模的标准是什么？企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：
+中国的企业规模标准 在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：
+工业企业 微型企业：从业人员少于20人，营业收入少于300万元。 小型企业：从业人员20-300人，营业收入300万-2000万元。 中型企业：从业人员300-1000人，营业收入2000万-4亿元。 大型企业：从业人员超过1000人，营业收入超过4亿元。 建筑业 微型企业：从业人员少于50人，营业收入少于300万元。 小型企业：从业人员50-300人，营业收入300万-3000万元。 中型企业：从业人员300-3000人，营业收入3000万-2亿元。 大型企业：从业人员超过3000人，营业收入超过2亿元。 国际标准 国际上，企业规模的划分也有不同的标准。例如：">
+  <meta itemprop="datePublished" content="2024-07-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-07-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="70">
+  <meta itemprop="keywords" content="Blog,ERP,ERPNext">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="与ERPNext的初次见面">
+  <meta name="twitter:description" content="一、最后的结论 ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。 但是不应该有但是了，因为人家免费，还想怎么样。
+二、经过 我负责项目管理已经17周了。
+2.1 痛点 a. 文档的格式各种各样 每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。
+b. 老板对于文档没有办法呈现时间进度 c. 对于员工每周的工作周报没有办法在开会时看见 三、优缺点 3.1 优点 a. frappe-forum 非常活跃。 半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。
+b. 轻度使用，性能稳定 c. 结合website，可以实现企业的官方网站融合 估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。 它里面给了很多框架。
+d. 可以通过邮件与外部直接打通 可以发送成功，但是耗时2~3分钟 gmail可以收到 qqmail可以收到 3.2 缺点 a. 中文汉化得不完整 有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。 在UOM（unity of measure）中，所有的测量单位全都是英文。 例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）
+附注1：企业规模的标准是什么？企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：
+中国的企业规模标准 在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：
+工业企业 微型企业：从业人员少于20人，营业收入少于300万元。 小型企业：从业人员20-300人，营业收入300万-2000万元。 中型企业：从业人员300-1000人，营业收入2000万-4亿元。 大型企业：从业人员超过1000人，营业收入超过4亿元。 建筑业 微型企业：从业人员少于50人，营业收入少于300万元。 小型企业：从业人员50-300人，营业收入300万-3000万元。 中型企业：从业人员300-3000人，营业收入3000万-2亿元。 大型企业：从业人员超过3000人，营业收入超过2亿元。 国际标准 国际上，企业规模的划分也有不同的标准。例如：">
+<link href="/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统爱好者</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/project/"><span>我的项目</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/news/"><span>News</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/zh-cn/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/about/"><span>About</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/about/"><span>درباره‌ی ما</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/docs/"><span>Docs</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/no/docs/"><span>Dokumentasjon</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/docs/"><span>مستندات</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/blog/"><span>Blog</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/blog/"><span>بلاگ</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/community/"><span>Community</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/community/"><span>انجمن</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/en/">English</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        <!-- <style>
+    .CSS_First_color-title {
+        /* color: blue; */
+        color: #804000;
+    }
+
+    .CSS_First_color-important {
+        /* color: red; */
+        color: #ffff00;
+    }
+</style> -->
+<h1 id="一-最后的结论"><span class="CSS_First_color-title">一、最后的结论</span></h1>
+<p>ERPNext的好处当然是开源（免费），但是操作习惯与我（未用过其他ERP系统，连摸过都没有）的想象差距较大。
+但是不应该有但是了，因为人家免费，还想怎么样。</p>
+<h1 id="二-经过"><span class="CSS_First_color-title">二、经过</span></h1>
+<p>我负责项目管理已经17周了。</p>
+<h2 id="2-1-痛点">2.1 痛点</h2>
+<h3 id="a-文档的格式各种各样">a. 文档的格式各种各样</h3>
+<p>每种产品在excel里是一个单独的tab。每一个tab里的列宽行高都可能各不相同。</p>
+<h3 id="b-老板对于文档没有办法呈现时间进度">b. 老板对于文档没有办法呈现时间进度</h3>
+<h3 id="c-对于员工每周的工作周报没有办法在开会时看见">c. 对于员工每周的工作周报没有办法在开会时看见</h3>
+<h1 id="三-优缺点"><span class="CSS_First_color-title">三、优缺点</span></h1>
+<h2 id="3-1-优点">3.1 优点</h2>
+<h3 id="a-frappe-forum-非常活跃">a. frappe-forum 非常活跃。</h3>
+<p>半个钟头内，三个人回复我。而且第一个回复我的人还是frappe的工程师。</p>
+<h3 id="b-轻度使用-性能稳定">b. 轻度使用，性能稳定</h3>
+<h3 id="c-结合website-可以实现企业的官方网站融合">c. 结合website，可以实现企业的官方网站融合</h3>
+<p>估计要面对太庞大的官网，erpnext可能会反过来限制官网的功能，但是中小型企业（未查询标准之前，我认为300人以内）应该是可以使用它作为website。
+<img src="/2024/July/10/enterprise_thresholds.png" alt="中小型企业">
+它里面给了很多框架。</p>
+<h3 id="d-可以通过邮件与外部直接打通">d. 可以通过邮件与外部直接打通</h3>
+<p>可以发送成功，但是耗时2~3分钟</br>
+gmail可以收到
+<img src="/2024/July/11/email_sent_successfully.png" alt="gmail成功收到erp的发送截图">
+qqmail可以收到
+<img src="/2024/July/11/qqmail_recv_successfully.jpg" alt="qqmail成功收到erp的发送截图"></p>
+<h2 id="3-2-缺点">3.2 缺点</h2>
+<h3 id="a-中文汉化得不完整">a. 中文汉化得不完整</h3>
+<p>有时候，一段话有三行，其中只有标题被汉化了。其他三行内容全部都是英文出现。
+在UOM（unity of measure）中，所有的测量单位全都是英文。
+例如Nos，这谁知道它是啥单位。（当然，对于erp系统来说，我是彻头彻尾的门外汉）</p>
+<hr>
+<details>
+  <summary>附注1：企业规模的标准是什么？</summary>
+<p>企业的规模通常依据员工数量、营业收入、资产规模等多方面的指标来划分，不同国家和组织对企业规模的定义和标准有所不同。以下是一些常见的标准和制定这些标准的主要组织：</p>
+<h4 id="中国的企业规模标准">中国的企业规模标准</h4>
+<p>在中国，企业规模的划分标准由国家统计局制定，主要依据《中小企业划型标准规定》。企业按行业类别和员工数量、营业收入、资产总额等指标划分为微型、小型、中型和大型企业。以下是部分行业的划分标准：</p>
+<h5 id="工业企业">工业企业</h5>
+<ul>
+<li><strong>微型企业</strong>：从业人员少于20人，营业收入少于300万元。</li>
+<li><strong>小型企业</strong>：从业人员20-300人，营业收入300万-2000万元。</li>
+<li><strong>中型企业</strong>：从业人员300-1000人，营业收入2000万-4亿元。</li>
+<li><strong>大型企业</strong>：从业人员超过1000人，营业收入超过4亿元。</li>
+</ul>
+<h5 id="建筑业">建筑业</h5>
+<ul>
+<li><strong>微型企业</strong>：从业人员少于50人，营业收入少于300万元。</li>
+<li><strong>小型企业</strong>：从业人员50-300人，营业收入300万-3000万元。</li>
+<li><strong>中型企业</strong>：从业人员300-3000人，营业收入3000万-2亿元。</li>
+<li><strong>大型企业</strong>：从业人员超过3000人，营业收入超过2亿元。</li>
+</ul>
+<h4 id="国际标准">国际标准</h4>
+<p>国际上，企业规模的划分也有不同的标准。例如：</p>
+<h5 id="欧盟标准">欧盟标准</h5>
+<p>欧盟对中小企业的定义主要依据<a href="https://ec.europa.eu/docsroom/documents/42903/attachments/1/translations/en/renditions/pdf">《中小企业定义指南》</a>：</p>
+<ul>
+<li><strong>微型企业</strong>：员工少于10人，年营业额或资产总额不超过200万欧元。</li>
+<li><strong>小型企业</strong>：员工少于50人，年营业额或资产总额不超过1000万欧元。</li>
+<li><strong>中型企业</strong>：员工少于250人，年营业额不超过5000万欧元或资产总额不超过4300万欧元。</li>
+</ul>
+<h5 id="美国标准">美国标准</h5>
+<p>美国小企业管理局（SBA）根据《小企业法》制定了中小企业的定义标准，通常依据行业、员工数量或年营业额。以下是几个例子：</p>
+<ul>
+<li><strong>制造业和矿业</strong>：员工少于500人。</li>
+<li><strong>批发业</strong>：员工少于100人。</li>
+<li><strong>零售业和服务业</strong>：年营业额不超过750万美元（根据行业不同而有所不同）。</li>
+</ul>
+<h4 id="总结">总结</h4>
+<p>不同国家和组织根据自身经济结构和实际情况制定了不同的企业规模标准。通常，政府机构和统计部门会根据企业的员工数量、营业收入、资产规模等多个指标综合考量，并制定相应的划分标准。</p>
+<p>对于中国的具体标准，可以参考国家统计局发布的《中小企业划型标准规定》。国际上，欧盟和美国也有各自的标准，具体情况会因行业和地区而异。</p>
+</details>
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2025
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.js"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

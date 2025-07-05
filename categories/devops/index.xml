@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DevOps on 嵌入式系统爱好者</title>
+    <link>http://localhost:1313/categories/devops/</link>
+    <description>Recent content in DevOps on 嵌入式系统爱好者</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 19 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>6.1 Ubuntu Ops</title>
+      <link>http://localhost:1313/blog/006_devops/006_001_ubuntu/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/006_devops/006_001_ubuntu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>6.2 Docker Ops</title>
+      <link>http://localhost:1313/blog/006_devops/006_002_docker/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/006_devops/006_002_docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DevOps Definition</title>
+      <link>http://localhost:1313/blog/2024/07/19/devops-definition/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/19/devops-definition/</guid>
+      <description>&lt;h3 id=&#34;devops的定义&#34;&gt;&lt;a href=&#34;https://www.google.com/url?sa=t&amp;amp;source=web&amp;amp;rct=j&amp;amp;opi=89978449&amp;amp;url=https://aws.amazon.com/devops/what-is-devops/&amp;amp;ved=2ahUKEwiOs9yZ-7GHAxUTsFYBHeRCBgcQFnoECBoQAw&amp;amp;usg=AOvVaw2hGSM1UgKYzZ4WqCEEg1ET&#34;&gt;DevOps的定义&lt;/a&gt;&lt;/h3&gt;&#xA;&lt;p&gt;您所说的 &amp;quot;开发和操作环境达到一致&amp;quot; 是对DevOps的一个简单理解，但DevOps的概念要比这广泛和深入得多。最权威的定义之一来自DevOps研究和评估（DORA，DevOps Research and Assessment）和一些行业权威机构，如亚马逊AWS、谷歌云和微软Azure。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;DevOps&lt;/strong&gt; 是一种结合软件开发（Dev）和IT运营（Ops）的方法，其目标是通过自动化、持续集成和持续交付（CI/CD）等手段，加速软件开发和发布的速度，提高软件质量和稳定性。DevOps强调跨职能团队之间的协作和沟通，包括开发人员、质量保证人员、运营人员和其他相关人员。&lt;/p&gt;&#xA;&lt;p&gt;一个较为权威的定义来自于亚马逊AWS：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&amp;quot;DevOps is the combination of cultural philosophies, practices, and tools that increases an organization’s ability to deliver applications and services at high velocity: evolving and improving products at a faster pace than organizations using traditional software development and infrastructure management processes.&amp;quot;&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;翻译成中文：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;“DevOps 是一种结合了文化理念、实践和工具的方法，能够提高组织以高速度交付应用程序和服务的能力：以比采用传统软件开发和基础设施管理流程的组织更快的速度演变和改进产品。”&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;h3 id=&#34;grub的配置是否属于devops范围&#34;&gt;GRUB的配置是否属于DevOps范围&lt;/h3&gt;&#xA;&lt;p&gt;严格来说，GRUB（GRand Unified Bootloader）的配置可以算作系统运维（Operations）的一部分，而运维是DevOps的一部分。因此，GRUB的配置是涵盖在DevOps范围内的。&lt;/p&gt;&#xA;&lt;p&gt;在具体的DevOps实践中，涉及系统配置和管理的任务，比如GRUB配置、系统引导加载程序配置、内核参数调整等，通常属于运维团队的职责。这些任务在DevOps环境下可能会通过基础设施即代码（Infrastructure as Code, IaC）工具来自动化，以确保环境的一致性和可重复性。例如，使用Ansible、Puppet或Chef等工具可以自动化配置GRUB等系统设置。&lt;/p&gt;&#xA;&lt;p&gt;总结：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;DevOps的定义&lt;/strong&gt;更广泛，包括文化、实践和工具的结合，旨在加快软件交付和提高质量。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;GRUB的配置&lt;/strong&gt;属于系统运维的一部分，因此可以算作DevOps范围的一部分，尤其是在自动化和基础设施管理的上下文中。&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Grub Setting</title>
+      <link>http://localhost:1313/blog/2024/07/19/grub-setting/</link>
+      <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/19/grub-setting/</guid>
+      <description>&lt;h2 id=&#34;001-grub-set-bakcground&#34;&gt;&lt;strong&gt;&lt;code&gt;001. Grub set Bakcground&lt;/code&gt;&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;div style=&#34;padding-left: 2em;&#34;&gt;&#xD;&#xA;&lt;h3 id=&#34;a-确认背景图片路径和格式&#34;&gt;a. 确认背景图片路径和格式&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;检查图片路径和权限&lt;/strong&gt;：&#xA;确保图片路径正确且具有正确的权限。&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ls -l /boot/grub/xxx.JPG&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出应类似于：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-plaintext&#34; data-lang=&#34;plaintext&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw-r--r-- 1 root root 123456 Jul 16 12:34 /boot/grub/xxx.JPG&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果权限不正确，可以运行以下命令进行修改：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chmod &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;644&lt;/span&gt; /boot/grub/xxx.JPG&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chown root:root /boot/grub/xxx.JPG&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;legal format&lt;/strong&gt;:&#xA;图片应该是 JPG、PNG 或 TGA 格式。&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;确认 GRUB 支持的分辨率&lt;/strong&gt;：&#xA;在 GRUB 命令行界面（启动时按 &lt;code&gt;c&lt;/code&gt; 键进入）运行 &lt;code&gt;vbeinfo&lt;/code&gt; 命令以查看支持的分辨率。选择一个适合你屏幕的分辨率。&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;b-更新-grub-配置文件&#34;&gt;b. 更新 GRUB 配置文件&lt;/h3&gt;&#xA;&lt;ol start=&#34;4&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;编辑 GRUB 配置文件&lt;/strong&gt;：&#xA;打开 &lt;code&gt;/etc/default/grub&lt;/code&gt; 文件进行编辑：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo nano /etc/default/grub&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;确保以下配置行存在，并且取消注释（去掉行首的 &lt;code&gt;#&lt;/code&gt;）：&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;GRUB_BACKGROUND&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/boot/grub/xxx.JPG&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;GRUB_TERMINAL&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;gfxterm&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;GRUB_GFXMODE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;1024x768       # 修改为你希望的分辨率&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;GRUB_GFXPAYLOAD_LINUX&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;keep&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;更新 GRUB 配置&lt;/strong&gt;：&#xA;保存并关闭文件后，运行以下命令以应用更改：&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Docker使用</title>
+      <link>http://localhost:1313/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;!-- ---&#xA;title: &#34;Docker使用&#34;&#xA;date: 2024-07-17&#xA;description: &#34;&#34;&#xA;categories:&#xA;  - blog&#xA;  - DevOps&#xA;  - Docker&#xA;noindex: true&#xA;--- --&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,316 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Chroma Subsampling是什么 | 嵌入式系统爱好者</title>
+<meta name="description" content="色度采样是什么？
+1. 4:2:2 命名的含义 在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
+<meta property="og:url" content="http://localhost:1313/zh-cn/blog/014_cpu/014_01_soc/chroma_subsampling%E6%98%AF%E4%BB%80%E4%B9%88/">
+  <meta property="og:site_name" content="嵌入式系统爱好者">
+  <meta property="og:title" content="Chroma Subsampling是什么">
+  <meta property="og:description" content="色度采样是什么？
+1. 4:2:2 命名的含义 在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="zh-cn">
+    <meta property="article:published_time" content="2024-08-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-08-30T00:00:00+00:00">
+
+  <meta itemprop="name" content="Chroma Subsampling是什么">
+  <meta itemprop="description" content="色度采样是什么？
+1. 4:2:2 命名的含义 在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
+  <meta itemprop="datePublished" content="2024-08-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="93">
+  <meta itemprop="keywords" content="Blog,CPU,SOC">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Chroma Subsampling是什么">
+  <meta name="twitter:description" content="色度采样是什么？
+1. 4:2:2 命名的含义 在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：
+4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。 2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。 2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。 颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：
+1. 4:4:4 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每个像素采样一次。 子采样说明：
+每个像素都有独立的亮度和色度信息。 每 1 个像素采样一次色度信息。 无子采样，全分辨率，最高质量。 2. 4:2:2 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每两个像素共享一个色度信息（水平方向）。 子采样说明：
+水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。 每 2 个像素采样一次色度信息（水平方向）。 水平色度分辨率减半，但垂直方向保持不变。 3. 4:2:0 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 2x2 像素块共享一组色度信息。 子采样说明：
+水平方向和垂直方向上每 2x2 像素块共享一组色度信息。 每 4 个像素采样一次色度信息。 水平和垂直色度分辨率都减半。 4. 4:1:1 亮度（Y）：每个像素采样一次。 色度（Cb 和 Cr）：每 4 个像素共享一组色度信息（水平方向）。 子采样说明：">
+<link href="/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统爱好者</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/project/"><span>我的项目</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/news/"><span>News</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/zh-cn/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/about/"><span>About</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/about/"><span>درباره‌ی ما</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/docs/"><span>Docs</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/no/docs/"><span>Dokumentasjon</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/docs/"><span>مستندات</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/blog/"><span>Blog</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/blog/"><span>بلاگ</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/community/"><span>Community</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/community/"><span>انجمن</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/en/">English</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        <p><a href="https://www.sohu.com/a/699595331_121466058">色度采样是什么？</a></p>
+<h2 id="1-4-2-2-命名的含义">1. 4:2:2 命名的含义</h2>
+<p>在 4:2:2 这种颜色子采样格式中，每个数字都有特定的含义：</p>
+<pre><code>4：表示在一个采样区间内（通常是 4 个像素的水平线），亮度信息（Y）是每个像素采样一次，即逐像素采样。
+2：表示在同一个采样区间内，色度信息（Cb 和 Cr）每 2 个像素采样一次，即水平方向上色度的采样频率减半。
+2：同样表示在水平方向上，第二个色度通道（通常是 Cr）也以同样的频率（每 2 个像素采样一次）进行采样。
+</code></pre>
+<p>颜色子采样（Chroma Subsampling）通过减少色度信息的采样率来降低视频数据量。以下是常见的四种颜色子采样方法，以及每种方法中每多少个像素进行一次色度采样的解释：</p>
+<hr>
+<h3 id="1-4-4-4">1. <strong>4:4:4</strong></h3>
+<ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每个像素采样一次。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>每个像素都有独立的亮度和色度信息。</li>
+<li><strong>每 1 个像素采样一次</strong>色度信息。</li>
+<li>无子采样，全分辨率，最高质量。</li>
+</ul>
+<h3 id="2-4-2-2">2. <strong>4:2:2</strong></h3>
+<ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每两个像素共享一个色度信息（水平方向）。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>水平方向上每 2 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。</li>
+<li><strong>每 2 个像素采样一次</strong>色度信息（水平方向）。</li>
+<li>水平色度分辨率减半，但垂直方向保持不变。</li>
+</ul>
+<h3 id="3-4-2-0">3. <strong>4:2:0</strong></h3>
+<ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每 2x2 像素块共享一组色度信息。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>水平方向和垂直方向上每 2x2 像素块共享一组色度信息。</li>
+<li><strong>每 4 个像素采样一次</strong>色度信息。</li>
+<li>水平和垂直色度分辨率都减半。</li>
+</ul>
+<h3 id="4-4-1-1">4. <strong>4:1:1</strong></h3>
+<ul>
+<li><strong>亮度（Y）</strong>：每个像素采样一次。</li>
+<li><strong>色度（Cb 和 Cr）</strong>：每 4 个像素共享一组色度信息（水平方向）。</li>
+</ul>
+<p><strong>子采样说明</strong>：</p>
+<ul>
+<li>水平方向上每 4 个像素共享一组色度信息，垂直方向上每个像素都有独立的亮度信息。</li>
+<li><strong>每 4 个像素采样一次</strong>色度信息（水平方向）。</li>
+<li>水平色度分辨率降低为亮度分辨率的四分之一，垂直方向不变。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<ul>
+<li><strong>4:4:4</strong>：每 1 个像素采样一次色度信息。</li>
+<li><strong>4:2:2</strong>：每 2 个像素采样一次色度信息。</li>
+<li><strong>4:2:0</strong>：每 4 个像素采样一次色度信息。</li>
+<li><strong>4:1:1</strong>：每 4 个像素采样一次色度信息（仅在水平方向）。</li>
+</ul>
+<p>这些子采样方法通过减少色度信息的采样频率来减少视频数据量，但会导致色度分辨率的降低。</p>
+
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2025
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.js"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>
