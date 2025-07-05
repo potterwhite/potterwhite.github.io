@@ -1,0 +1,430 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>qml notes | 嵌入式系统爱好者</title>
+<meta name="description" content="001. **[Expose Properties]property alias ** property alias ${EXTERNAL_SHARED_ID}: ${INNER_ID} if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}
+002. QML的模块化 case：我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？
+solutionA:
+透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height； 至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。
+solutionB: 用信号槽的方式 这种方式是qt的原生自带的技术
+solutionC: 用property 在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。
+003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile Post about the reason of this warning
+$$It&#39;s because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. It&#39;s supposed to just be a warning, are you sure this is what&#39;s causing the build failure? If so, you may need to replace the sRGB profile yourself or get upstream to do it.$$004. 取整怎么做？ 在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：">
+<meta property="og:url" content="http://localhost:1313/zh-cn/blog/013_qt_development/qml/notes/">
+  <meta property="og:site_name" content="嵌入式系统爱好者">
+  <meta property="og:title" content="qml notes">
+  <meta property="og:description" content="001. **[Expose Properties]property alias ** property alias ${EXTERNAL_SHARED_ID}: ${INNER_ID} if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}
+002. QML的模块化 case：我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？
+solutionA:
+透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height； 至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。
+solutionB: 用信号槽的方式 这种方式是qt的原生自带的技术
+solutionC: 用property 在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。
+003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile Post about the reason of this warning
+$$It&#39;s because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. It&#39;s supposed to just be a warning, are you sure this is what&#39;s causing the build failure? If so, you may need to replace the sRGB profile yourself or get upstream to do it.$$004. 取整怎么做？ 在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="zh-cn">
+    <meta property="article:published_time" content="2024-08-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-08-10T00:00:00+00:00">
+
+  <meta itemprop="name" content="qml notes">
+  <meta itemprop="description" content="001. **[Expose Properties]property alias ** property alias ${EXTERNAL_SHARED_ID}: ${INNER_ID} if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}
+002. QML的模块化 case：我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？
+solutionA:
+透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height； 至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。
+solutionB: 用信号槽的方式 这种方式是qt的原生自带的技术
+solutionC: 用property 在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。
+003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile Post about the reason of this warning
+$$It&#39;s because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. It&#39;s supposed to just be a warning, are you sure this is what&#39;s causing the build failure? If so, you may need to replace the sRGB profile yourself or get upstream to do it.$$004. 取整怎么做？ 在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：">
+  <meta itemprop="datePublished" content="2024-08-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="653">
+  <meta itemprop="keywords" content="Blog,Qt,QML">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="qml notes">
+  <meta name="twitter:description" content="001. **[Expose Properties]property alias ** property alias ${EXTERNAL_SHARED_ID}: ${INNER_ID} if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}
+002. QML的模块化 case：我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？
+solutionA:
+透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height； 至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。
+solutionB: 用信号槽的方式 这种方式是qt的原生自带的技术
+solutionC: 用property 在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。
+003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile Post about the reason of this warning
+$$It&#39;s because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. It&#39;s supposed to just be a warning, are you sure this is what&#39;s causing the build failure? If so, you may need to replace the sRGB profile yourself or get upstream to do it.$$004. 取整怎么做？ 在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：">
+<link href="/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统爱好者</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/project/"><span>我的项目</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/news/"><span>News</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/zh-cn/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/about/"><span>About</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/about/"><span>درباره‌ی ما</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/docs/"><span>Docs</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/no/docs/"><span>Dokumentasjon</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/docs/"><span>مستندات</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/blog/"><span>Blog</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/blog/"><span>بلاگ</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/community/"><span>Community</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/community/"><span>انجمن</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/en/">English</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        <h2 id="001-expose-properties-property-alias">001. **[Expose Properties]property alias **</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">property</span> <span style="color:#000">alias</span> <span style="color:#000">$</span><span style="color:#000;font-weight:bold">{</span><span style="color:#000">EXTERNAL_SHARED_ID</span><span style="color:#000;font-weight:bold">}</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">$</span><span style="color:#000;font-weight:bold">{</span><span style="color:#000">INNER_ID</span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}</p>
+<h2 id="002-qml的模块化">002. <strong>QML的模块化</strong></h2>
+<p>case：<strong>我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？</strong></p>
+<p><code>solutionA</code>:</p>
+<p>透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height；
+至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。</p>
+<p><code>solutionB</code>:
+用信号槽的方式
+这种方式是qt的原生自带的技术</p>
+<p><code>solutionC</code>:
+用property
+在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。</p>
+<h2 id="003-debug-qt-gui-imageio-libpng-warning-iccp-known-incorrect-srgb-profile">003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile</h2>
+<p><a href="https://bbs.archlinux.org/viewtopic.php?pid=1269845#p1269845">Post about the reason of this warning</a></p>
+
+<div class="chem">$$It's because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. 
+It's supposed to just be a warning, are you sure this is what's causing the build failure? 
+
+If so, you may need to replace the sRGB profile yourself or get upstream to do it.$$</div><h2 id="004-取整怎么做">004. 取整怎么做？</h2>
+<p>在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>    Math.floor(value): 返回不大于 value 的最大整数，即向下取整。
+</span></span><span style="display:flex;"><span>    Math.ceil(value): 返回不小于 value 的最小整数，即向上取整。
+</span></span><span style="display:flex;"><span>    Math.round(value): 返回四舍五入后的整数。
+</span></span></code></pre></div><h2 id="005-要点">005. 要点</h2>
+<p>函数不能以大写字母开头</p>
+<h2 id="006-startsystemmove-的逻辑"><strong>006. startSystemMove()的逻辑</strong></h2>
+<p><a href="https://doc.qt.io/qt-6/qwindow.html#startSystemMove">startSystemMove</a> is designed to send a system signal to the entrance of window moving model</p>
+<p>what gpt4o said:</p>
+
+<div class="chem">$$startSystemMove 是一个在某些框架或平台中使用的函数，通常用于启动窗口的移动操作。这个函数的具体实现和行为可能会因平台或框架的不同而有所差异。以下是一个典型的解释和行为描述，通常适用于 Windows 平台和基于 Qt 框架的环境：
+startSystemMove 函数的详细解析
+
+startSystemMove 通常是用来处理用户拖动窗口的情况。当用户按下鼠标左键并拖动窗口的非客户区（例如标题栏）时，系统会自动启动窗口的移动操作。startSystemMove 函数一般用于在自定义标题栏或无边框窗口中模拟这种行为。$$</div><h3 id="problem"><strong>problem</strong></h3>
+<p>when i clicked left button of my mouse, the code will trigger <em><strong>vp_window_id.startSystemMove()</strong></em> for supporting window`s moving function.</p>
+<p>so i wrote it like below</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseLeftButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">vp_window_id</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">startSystemMove</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span><span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseRightButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;right&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>but now met the problem:
+when i clicked the left button of the mouse, and did not move the mouse (no position changed), the <em><strong>startSystemMove</strong></em> had been sent anyway. and now the <em><strong>titleMouseArea.pressedButtons</strong></em> always keep <em><strong>Qt.LeftButton</strong></em> actually equals <em><strong>1</strong></em>.Even i release the left button of my mouse quickly, the state did not change.
+so now when i clicked left button, nothing happened.
+when i clicked right button, illegal value of <em><strong>titleMouseArea.pressedButtons</strong></em> came with <em><strong>3</strong></em>, it is illegal actually like the pic below, it also means left button plus right button together.
+<img src="/2024/August/16/QtMouseButtons.png" alt="QtMouseButtons"></p>
+<h3 id="solution"><strong>solution</strong></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">MouseArea</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">titleMouseArea</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">fill</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">acceptedButtons</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">LeftButton</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">RightButton</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">preventStealing</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#000">pressAndHoldInterval</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#000">bool</span> <span style="color:#000">isDragging</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseLeftButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">isDragging</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span><span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseRightButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;right&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\n&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPositionChanged</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;x=&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#4e9a06">&#34;y=&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">isDragging</span><span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">vp_window_id</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">startSystemMove</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;position changed: left&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onReleased</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">isDragging</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Button released. Current pressedButtons:&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">pressedButtons</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>the solution is a logic control that when i click left button, onPressed set the flag variable <em><strong>TRUE</strong></em>, and if i do not move the cursor away, the onRelease slot will set the flag variable to <em><strong>FALSE</strong></em>.
+Until i click and at the same time move the cursor away(position changed), the <em><strong>onPositionChanged</strong></em> slot will send <em><strong>vp_window_id.startSystemMove()</strong></em> out to the system.</p>
+<h3 id="conclusion"><strong>conclusion</strong></h3>
+<p>actually higher level language is boring because of that they could not control the low layer system at some times.
+and personaly customize the titlebar of a window is such a heave job.</p>
+<h2 id="007-mousearea-mousex-y-vs-container"><strong>007. MouseArea.mouseX(y) VS ${Container_ID}.x(y)</strong></h2>
+<p>i have a sub module</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">SingletonForVolumeMixer</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Menu</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">bID_Private_contextualMenu</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">MenuItem</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">qsTr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;最小化&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">onTriggered</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 实现最小化逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">MenuItem</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">qsTr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;最大化&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">onTriggered</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 实现最大化逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">MenuItem</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">qsTr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;关闭&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">onTriggered</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 实现关闭逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>and when i try to instantiate this module as container of my main.qml
+error method:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#000">CustomizedMenu</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">rightkeyMenu</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">MouseArea</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">mouseX</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">y</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">MouseArea</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">mouseY</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>            
+</span></span><span style="display:flex;"><span>                <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">open</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>have a warning:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>qrc:/qt/qml/content/Title/xxx.qml:50:9: Unable to assign [undefined] to double
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/Title/xxx.qml:49:9: Unable to assign [undefined] to double
+</span></span></code></pre></div><p>correct method:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#000">CustomizedMenu</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">rightkeyMenu</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// x: MouseArea.mouseX
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#8f5902;font-style:italic">// y: MouseArea.mouseY
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">X</span>                
+</span></span><span style="display:flex;"><span>        <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">y</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">open</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>why-from GPT4o:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你遇到的问题主要与QML中的**属性绑定机制**以及**组件生命周期**有关。当你在`Menu`容器中直接尝试绑定 `x: mouseArea.mouseX` 和 `y: mouseArea.mouseY` 时，可能会遇到以下问题：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 1. **属性未初始化**
+</span></span><span style="display:flex;"><span>`mouseArea.mouseX` 和 `mouseArea.mouseY` 这类属性在`MouseArea`中表示相对坐标，但它们在某些情况下可能未初始化，特别是在组件刚刚加载时。这可能导致`Menu`组件在初始化时尝试访问这些属性，而它们尚未定义，导致出现`undefined`错误。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 2. **组件加载顺序**
+</span></span><span style="display:flex;"><span>QML中，属性的绑定通常在组件加载和初始化时执行。如果在`Menu`的定义中试图直接访问这些属性，而`MouseArea`还没有触发任何事件，属性值可能未被设置。因此，在菜单加载时，这些属性可能仍然是`undefined`，这会导致无法将`undefined`分配给`Menu`的`x`或`y`属性。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 3. **绑定的时机**
+</span></span><span style="display:flex;"><span>在 `Menu` 容器中直接绑定 `x: mouseArea.mouseX` 和 `y: mouseArea.mouseY` 是静态绑定，在QML的生命周期内，可能不会动态更新。只有当 `MouseArea` 触发点击事件时，`mouse.x` 和 `mouse.y` 才会有值，这意味着这些值只有在事件发生时才是有效的。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 为什么`mouse.x` 和 `mouse.y` 方式有效？
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>通过在 `MouseArea` 的 `onClicked` 处理器中动态设置 `Menu` 的 `x` 和 `y` 属性，你确保了在鼠标点击事件发生时，这些值是最新的、有效的。因为点击事件发生后，鼠标的坐标已经被正确捕获并可以使用，所以这种方式不会遇到属性未定义的问题。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 总结
+</span></span><span style="display:flex;"><span>直接在`Menu`容器中绑定鼠标坐标可能会遇到初始化顺序和属性绑定的时机问题。而在`MouseArea`的点击事件中动态设置`Menu`的坐标确保了这些坐标是在事件发生后获取的，因此是有效的。这是两种方法表现不同的主要原因。
+</span></span></code></pre></div><h2 id="008-属性property-vs-容器container">008: 属性property vs 容器container</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>属性（Property）：
+</span></span><span style="display:flex;"><span>    属性在 QML 中是一种定义对象或元素特征的方式。属性可以是简单的值（如 color、width、height），也可以是更复杂的对象（如 Item、Rectangle）。
+</span></span><span style="display:flex;"><span>    当属性持有复杂对象时，这些对象可以被视为容器，因为它们可以包含其他元素，并通过大括号 {} 来定义。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>容器（Container）：
+</span></span><span style="display:flex;"><span>    容器通常是指那些能够包含其他 QML 元素的对象。例如，Rectangle、Item、Column 都是典型的容器元素，因为它们可以在大括号 {} 内定义其他元素。
+</span></span></code></pre></div>
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2025
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.js"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

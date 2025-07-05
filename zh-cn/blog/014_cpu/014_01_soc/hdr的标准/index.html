@@ -1,0 +1,377 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>HDR的标准 | 嵌入式系统爱好者</title>
+<meta name="description" content="HDR（High Dynamic Range，高动态范围）是一种影像技术，用于提升图像的对比度和色彩范围，使得明亮部分更亮、暗部更暗，从而呈现出更丰富的细节和更接近人眼视觉体验的画面。HDR技术可以应用于视频、照片等多种领域，常见的HDR标准有多种类型，每种类型都有其特定的应用场景和技术特点。
+以下是几种常见的HDR类型：
+序号 HDR类型 简介 技术特点 应用场景 1 HDR10 最常见、最广泛支持的HDR格式之一，开放标准，无需支付许可费用。 - 色深：10-bit
+- 动态范围：最高1000尼特
+- 元数据：静态元数据，SMPTE ST 2086标准定义。 4K UHD Blu-ray、流媒体服务（Netflix、Amazon Prime Video）、支持HDR10的电视和显示器。 2 HDR10&#43; 在HDR10基础上发展，由三星、亚马逊和松下合作开发。 - 色深：10-bit
+- 动态范围：最高4000尼特
+- 元数据：动态元数据，场景或帧调整。 高端电视、流媒体服务等。 3 Dolby Vision 杜比实验室开发，高级HDR格式，需要支付许可费用。 - 色深：12-bit
+- 动态范围：最高10000尼特
+- 元数据：动态元数据，逐帧调整。 高端电视、4K UHD Blu-ray、流媒体服务（Netflix、Disney&#43;）等。 4 HLG BBC和NHK开发，主要用于直播电视。 - 色深：10-bit或12-bit
+- 动态范围：适合实时广播
+- 元数据：无，与传统SDR兼容。 广播电视、现场体育赛事等。 5 Advanced HDR by Technicolor Technicolor开发，旨在提供高质量视频内容。 包含SL-HDR1、SL-HDR2等技术，适用于不同应用场景。 广播、流媒体和电影制作。 1. HDR10 简介：HDR10是目前最常见、最广泛支持的HDR格式之一。它是一个开放的标准，不需要支付许可费用。 技术特点： 色深：10-bit（即每种颜色有1024级），支持超过10亿种颜色。 动态范围：支持最高1000尼特（nits）的亮度。 元数据：使用静态元数据，即整个视频内容只使用一组HDR信息，元数据通过SMPTE ST 2086标准定义。 应用：广泛应用于4K UHD Blu-ray、流媒体服务（如Netflix、Amazon Prime Video）和支持HDR10的电视和显示器。 2. HDR10&#43; 简介：HDR10&#43;是在HDR10基础上发展而来的格式，由三星、亚马逊和松下合作开发。 技术特点： 色深：10-bit。 动态范围：支持最高4000尼特的亮度。 元数据：使用动态元数据，可以根据场景或帧来调整HDR信息，从而提供更精确的亮度和对比度控制。 应用：主要应用于高端电视、流媒体服务等。 3. Dolby Vision 简介：Dolby Vision是由杜比实验室开发的一种高级HDR格式，具有出色的性能，但使用该格式需要支付许可费用。 技术特点： 色深：12-bit（即每种颜色有4096级），支持更丰富的颜色。 动态范围：支持最高10000尼特的亮度。 元数据：使用动态元数据，提供逐帧的HDR信息调整。 应用：广泛用于高端电视、4K UHD Blu-ray、流媒体服务（如Netflix、Disney&#43;）等。 4. HLG（Hybrid Log-Gamma） 简介：HLG是一种由BBC和NHK共同开发的HDR标准，主要用于直播电视。 技术特点： 色深：10-bit或12-bit。 动态范围：支持高亮度范围，适合实时广播。 元数据：不使用元数据，与传统的标准动态范围（SDR）兼容，适合过渡性应用。 应用：主要用于广播电视、现场体育赛事等。 5. Advanced HDR by Technicolor 简介：由Technicolor开发的HDR标准，旨在提供高质量的视频内容。 技术特点：包含多种技术，如SL-HDR1、SL-HDR2，分别适用于不同的应用场景和内容格式。 应用：主要用于广播、流媒体和电影制作。 总结 HDR10是当前最常见的HDR格式，具有良好的兼容性和广泛的应用范围。尽管HDR10使用的是静态元数据，但它提供的色彩和对比度增强已经能显著提升视觉体验。随着技术的发展，HDR10&#43;和Dolby Vision等动态元数据格式提供了更高的性能和更加精细的画质控制。">
+<meta property="og:url" content="http://localhost:1313/zh-cn/blog/014_cpu/014_01_soc/hdr%E7%9A%84%E6%A0%87%E5%87%86/">
+  <meta property="og:site_name" content="嵌入式系统爱好者">
+  <meta property="og:title" content="HDR的标准">
+  <meta property="og:description" content="HDR（High Dynamic Range，高动态范围）是一种影像技术，用于提升图像的对比度和色彩范围，使得明亮部分更亮、暗部更暗，从而呈现出更丰富的细节和更接近人眼视觉体验的画面。HDR技术可以应用于视频、照片等多种领域，常见的HDR标准有多种类型，每种类型都有其特定的应用场景和技术特点。
+以下是几种常见的HDR类型：
+序号 HDR类型 简介 技术特点 应用场景 1 HDR10 最常见、最广泛支持的HDR格式之一，开放标准，无需支付许可费用。 - 色深：10-bit
+- 动态范围：最高1000尼特
+- 元数据：静态元数据，SMPTE ST 2086标准定义。 4K UHD Blu-ray、流媒体服务（Netflix、Amazon Prime Video）、支持HDR10的电视和显示器。 2 HDR10&#43; 在HDR10基础上发展，由三星、亚马逊和松下合作开发。 - 色深：10-bit
+- 动态范围：最高4000尼特
+- 元数据：动态元数据，场景或帧调整。 高端电视、流媒体服务等。 3 Dolby Vision 杜比实验室开发，高级HDR格式，需要支付许可费用。 - 色深：12-bit
+- 动态范围：最高10000尼特
+- 元数据：动态元数据，逐帧调整。 高端电视、4K UHD Blu-ray、流媒体服务（Netflix、Disney&#43;）等。 4 HLG BBC和NHK开发，主要用于直播电视。 - 色深：10-bit或12-bit
+- 动态范围：适合实时广播
+- 元数据：无，与传统SDR兼容。 广播电视、现场体育赛事等。 5 Advanced HDR by Technicolor Technicolor开发，旨在提供高质量视频内容。 包含SL-HDR1、SL-HDR2等技术，适用于不同应用场景。 广播、流媒体和电影制作。 1. HDR10 简介：HDR10是目前最常见、最广泛支持的HDR格式之一。它是一个开放的标准，不需要支付许可费用。 技术特点： 色深：10-bit（即每种颜色有1024级），支持超过10亿种颜色。 动态范围：支持最高1000尼特（nits）的亮度。 元数据：使用静态元数据，即整个视频内容只使用一组HDR信息，元数据通过SMPTE ST 2086标准定义。 应用：广泛应用于4K UHD Blu-ray、流媒体服务（如Netflix、Amazon Prime Video）和支持HDR10的电视和显示器。 2. HDR10&#43; 简介：HDR10&#43;是在HDR10基础上发展而来的格式，由三星、亚马逊和松下合作开发。 技术特点： 色深：10-bit。 动态范围：支持最高4000尼特的亮度。 元数据：使用动态元数据，可以根据场景或帧来调整HDR信息，从而提供更精确的亮度和对比度控制。 应用：主要应用于高端电视、流媒体服务等。 3. Dolby Vision 简介：Dolby Vision是由杜比实验室开发的一种高级HDR格式，具有出色的性能，但使用该格式需要支付许可费用。 技术特点： 色深：12-bit（即每种颜色有4096级），支持更丰富的颜色。 动态范围：支持最高10000尼特的亮度。 元数据：使用动态元数据，提供逐帧的HDR信息调整。 应用：广泛用于高端电视、4K UHD Blu-ray、流媒体服务（如Netflix、Disney&#43;）等。 4. HLG（Hybrid Log-Gamma） 简介：HLG是一种由BBC和NHK共同开发的HDR标准，主要用于直播电视。 技术特点： 色深：10-bit或12-bit。 动态范围：支持高亮度范围，适合实时广播。 元数据：不使用元数据，与传统的标准动态范围（SDR）兼容，适合过渡性应用。 应用：主要用于广播电视、现场体育赛事等。 5. Advanced HDR by Technicolor 简介：由Technicolor开发的HDR标准，旨在提供高质量的视频内容。 技术特点：包含多种技术，如SL-HDR1、SL-HDR2，分别适用于不同的应用场景和内容格式。 应用：主要用于广播、流媒体和电影制作。 总结 HDR10是当前最常见的HDR格式，具有良好的兼容性和广泛的应用范围。尽管HDR10使用的是静态元数据，但它提供的色彩和对比度增强已经能显著提升视觉体验。随着技术的发展，HDR10&#43;和Dolby Vision等动态元数据格式提供了更高的性能和更加精细的画质控制。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="zh-cn">
+    <meta property="article:published_time" content="2024-08-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-08-30T00:00:00+00:00">
+
+  <meta itemprop="name" content="HDR的标准">
+  <meta itemprop="description" content="HDR（High Dynamic Range，高动态范围）是一种影像技术，用于提升图像的对比度和色彩范围，使得明亮部分更亮、暗部更暗，从而呈现出更丰富的细节和更接近人眼视觉体验的画面。HDR技术可以应用于视频、照片等多种领域，常见的HDR标准有多种类型，每种类型都有其特定的应用场景和技术特点。
+以下是几种常见的HDR类型：
+序号 HDR类型 简介 技术特点 应用场景 1 HDR10 最常见、最广泛支持的HDR格式之一，开放标准，无需支付许可费用。 - 色深：10-bit
+- 动态范围：最高1000尼特
+- 元数据：静态元数据，SMPTE ST 2086标准定义。 4K UHD Blu-ray、流媒体服务（Netflix、Amazon Prime Video）、支持HDR10的电视和显示器。 2 HDR10&#43; 在HDR10基础上发展，由三星、亚马逊和松下合作开发。 - 色深：10-bit
+- 动态范围：最高4000尼特
+- 元数据：动态元数据，场景或帧调整。 高端电视、流媒体服务等。 3 Dolby Vision 杜比实验室开发，高级HDR格式，需要支付许可费用。 - 色深：12-bit
+- 动态范围：最高10000尼特
+- 元数据：动态元数据，逐帧调整。 高端电视、4K UHD Blu-ray、流媒体服务（Netflix、Disney&#43;）等。 4 HLG BBC和NHK开发，主要用于直播电视。 - 色深：10-bit或12-bit
+- 动态范围：适合实时广播
+- 元数据：无，与传统SDR兼容。 广播电视、现场体育赛事等。 5 Advanced HDR by Technicolor Technicolor开发，旨在提供高质量视频内容。 包含SL-HDR1、SL-HDR2等技术，适用于不同应用场景。 广播、流媒体和电影制作。 1. HDR10 简介：HDR10是目前最常见、最广泛支持的HDR格式之一。它是一个开放的标准，不需要支付许可费用。 技术特点： 色深：10-bit（即每种颜色有1024级），支持超过10亿种颜色。 动态范围：支持最高1000尼特（nits）的亮度。 元数据：使用静态元数据，即整个视频内容只使用一组HDR信息，元数据通过SMPTE ST 2086标准定义。 应用：广泛应用于4K UHD Blu-ray、流媒体服务（如Netflix、Amazon Prime Video）和支持HDR10的电视和显示器。 2. HDR10&#43; 简介：HDR10&#43;是在HDR10基础上发展而来的格式，由三星、亚马逊和松下合作开发。 技术特点： 色深：10-bit。 动态范围：支持最高4000尼特的亮度。 元数据：使用动态元数据，可以根据场景或帧来调整HDR信息，从而提供更精确的亮度和对比度控制。 应用：主要应用于高端电视、流媒体服务等。 3. Dolby Vision 简介：Dolby Vision是由杜比实验室开发的一种高级HDR格式，具有出色的性能，但使用该格式需要支付许可费用。 技术特点： 色深：12-bit（即每种颜色有4096级），支持更丰富的颜色。 动态范围：支持最高10000尼特的亮度。 元数据：使用动态元数据，提供逐帧的HDR信息调整。 应用：广泛用于高端电视、4K UHD Blu-ray、流媒体服务（如Netflix、Disney&#43;）等。 4. HLG（Hybrid Log-Gamma） 简介：HLG是一种由BBC和NHK共同开发的HDR标准，主要用于直播电视。 技术特点： 色深：10-bit或12-bit。 动态范围：支持高亮度范围，适合实时广播。 元数据：不使用元数据，与传统的标准动态范围（SDR）兼容，适合过渡性应用。 应用：主要用于广播电视、现场体育赛事等。 5. Advanced HDR by Technicolor 简介：由Technicolor开发的HDR标准，旨在提供高质量的视频内容。 技术特点：包含多种技术，如SL-HDR1、SL-HDR2，分别适用于不同的应用场景和内容格式。 应用：主要用于广播、流媒体和电影制作。 总结 HDR10是当前最常见的HDR格式，具有良好的兼容性和广泛的应用范围。尽管HDR10使用的是静态元数据，但它提供的色彩和对比度增强已经能显著提升视觉体验。随着技术的发展，HDR10&#43;和Dolby Vision等动态元数据格式提供了更高的性能和更加精细的画质控制。">
+  <meta itemprop="datePublished" content="2024-08-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-08-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="120">
+  <meta itemprop="keywords" content="Blog,CPU,SOC">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HDR的标准">
+  <meta name="twitter:description" content="HDR（High Dynamic Range，高动态范围）是一种影像技术，用于提升图像的对比度和色彩范围，使得明亮部分更亮、暗部更暗，从而呈现出更丰富的细节和更接近人眼视觉体验的画面。HDR技术可以应用于视频、照片等多种领域，常见的HDR标准有多种类型，每种类型都有其特定的应用场景和技术特点。
+以下是几种常见的HDR类型：
+序号 HDR类型 简介 技术特点 应用场景 1 HDR10 最常见、最广泛支持的HDR格式之一，开放标准，无需支付许可费用。 - 色深：10-bit
+- 动态范围：最高1000尼特
+- 元数据：静态元数据，SMPTE ST 2086标准定义。 4K UHD Blu-ray、流媒体服务（Netflix、Amazon Prime Video）、支持HDR10的电视和显示器。 2 HDR10&#43; 在HDR10基础上发展，由三星、亚马逊和松下合作开发。 - 色深：10-bit
+- 动态范围：最高4000尼特
+- 元数据：动态元数据，场景或帧调整。 高端电视、流媒体服务等。 3 Dolby Vision 杜比实验室开发，高级HDR格式，需要支付许可费用。 - 色深：12-bit
+- 动态范围：最高10000尼特
+- 元数据：动态元数据，逐帧调整。 高端电视、4K UHD Blu-ray、流媒体服务（Netflix、Disney&#43;）等。 4 HLG BBC和NHK开发，主要用于直播电视。 - 色深：10-bit或12-bit
+- 动态范围：适合实时广播
+- 元数据：无，与传统SDR兼容。 广播电视、现场体育赛事等。 5 Advanced HDR by Technicolor Technicolor开发，旨在提供高质量视频内容。 包含SL-HDR1、SL-HDR2等技术，适用于不同应用场景。 广播、流媒体和电影制作。 1. HDR10 简介：HDR10是目前最常见、最广泛支持的HDR格式之一。它是一个开放的标准，不需要支付许可费用。 技术特点： 色深：10-bit（即每种颜色有1024级），支持超过10亿种颜色。 动态范围：支持最高1000尼特（nits）的亮度。 元数据：使用静态元数据，即整个视频内容只使用一组HDR信息，元数据通过SMPTE ST 2086标准定义。 应用：广泛应用于4K UHD Blu-ray、流媒体服务（如Netflix、Amazon Prime Video）和支持HDR10的电视和显示器。 2. HDR10&#43; 简介：HDR10&#43;是在HDR10基础上发展而来的格式，由三星、亚马逊和松下合作开发。 技术特点： 色深：10-bit。 动态范围：支持最高4000尼特的亮度。 元数据：使用动态元数据，可以根据场景或帧来调整HDR信息，从而提供更精确的亮度和对比度控制。 应用：主要应用于高端电视、流媒体服务等。 3. Dolby Vision 简介：Dolby Vision是由杜比实验室开发的一种高级HDR格式，具有出色的性能，但使用该格式需要支付许可费用。 技术特点： 色深：12-bit（即每种颜色有4096级），支持更丰富的颜色。 动态范围：支持最高10000尼特的亮度。 元数据：使用动态元数据，提供逐帧的HDR信息调整。 应用：广泛用于高端电视、4K UHD Blu-ray、流媒体服务（如Netflix、Disney&#43;）等。 4. HLG（Hybrid Log-Gamma） 简介：HLG是一种由BBC和NHK共同开发的HDR标准，主要用于直播电视。 技术特点： 色深：10-bit或12-bit。 动态范围：支持高亮度范围，适合实时广播。 元数据：不使用元数据，与传统的标准动态范围（SDR）兼容，适合过渡性应用。 应用：主要用于广播电视、现场体育赛事等。 5. Advanced HDR by Technicolor 简介：由Technicolor开发的HDR标准，旨在提供高质量的视频内容。 技术特点：包含多种技术，如SL-HDR1、SL-HDR2，分别适用于不同的应用场景和内容格式。 应用：主要用于广播、流媒体和电影制作。 总结 HDR10是当前最常见的HDR格式，具有良好的兼容性和广泛的应用范围。尽管HDR10使用的是静态元数据，但它提供的色彩和对比度增强已经能显著提升视觉体验。随着技术的发展，HDR10&#43;和Dolby Vision等动态元数据格式提供了更高的性能和更加精细的画质控制。">
+<link href="/scss/main.css" rel="stylesheet">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统爱好者</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/project/"><span>我的项目</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/zh-cn/news/"><span>News</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/zh-cn/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/about/"><span>About</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/about/"><span>درباره‌ی ما</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/docs/"><span>Docs</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/no/docs/"><span>Dokumentasjon</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/docs/"><span>مستندات</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/blog/"><span>Blog</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/blog/"><span>بلاگ</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/en/community/"><span>Community</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fa/community/"><span>انجمن</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/en/">English</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        <p>HDR（High Dynamic Range，高动态范围）是一种影像技术，用于提升图像的对比度和色彩范围，使得明亮部分更亮、暗部更暗，从而呈现出更丰富的细节和更接近人眼视觉体验的画面。HDR技术可以应用于视频、照片等多种领域，常见的HDR标准有多种类型，每种类型都有其特定的应用场景和技术特点。</p>
+<p>以下是几种常见的HDR类型：</p>
+<table>
+  <thead>
+      <tr>
+          <th>序号</th>
+          <th>HDR类型</th>
+          <th>简介</th>
+          <th>技术特点</th>
+          <th>应用场景</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>HDR10</td>
+          <td>最常见、最广泛支持的HDR格式之一，开放标准，无需支付许可费用。</td>
+          <td>- 色深：10-bit<br>- 动态范围：最高1000尼特<br>- 元数据：静态元数据，SMPTE ST 2086标准定义。</td>
+          <td>4K UHD Blu-ray、流媒体服务（Netflix、Amazon Prime Video）、支持HDR10的电视和显示器。</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>HDR10+</td>
+          <td>在HDR10基础上发展，由三星、亚马逊和松下合作开发。</td>
+          <td>- 色深：10-bit<br>- 动态范围：最高4000尼特<br>- 元数据：动态元数据，场景或帧调整。</td>
+          <td>高端电视、流媒体服务等。</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Dolby Vision</td>
+          <td>杜比实验室开发，高级HDR格式，需要支付许可费用。</td>
+          <td>- 色深：12-bit<br>- 动态范围：最高10000尼特<br>- 元数据：动态元数据，逐帧调整。</td>
+          <td>高端电视、4K UHD Blu-ray、流媒体服务（Netflix、Disney+）等。</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>HLG</td>
+          <td>BBC和NHK开发，主要用于直播电视。</td>
+          <td>- 色深：10-bit或12-bit<br>- 动态范围：适合实时广播<br>- 元数据：无，与传统SDR兼容。</td>
+          <td>广播电视、现场体育赛事等。</td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Advanced HDR by Technicolor</td>
+          <td>Technicolor开发，旨在提供高质量视频内容。</td>
+          <td>包含SL-HDR1、SL-HDR2等技术，适用于不同应用场景。</td>
+          <td>广播、流媒体和电影制作。</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="1-hdr10">1. <strong>HDR10</strong></h3>
+<ul>
+<li><strong>简介</strong>：HDR10是目前最常见、最广泛支持的HDR格式之一。它是一个开放的标准，不需要支付许可费用。</li>
+<li><strong>技术特点</strong>：
+<ul>
+<li><strong>色深</strong>：10-bit（即每种颜色有1024级），支持超过10亿种颜色。</li>
+<li><strong>动态范围</strong>：支持最高1000尼特（nits）的亮度。</li>
+<li><strong>元数据</strong>：使用静态元数据，即整个视频内容只使用一组HDR信息，元数据通过SMPTE ST 2086标准定义。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：广泛应用于4K UHD Blu-ray、流媒体服务（如Netflix、Amazon Prime Video）和支持HDR10的电视和显示器。</li>
+</ul>
+<h3 id="2-hdr10">2. <strong>HDR10+</strong></h3>
+<ul>
+<li><strong>简介</strong>：HDR10+是在HDR10基础上发展而来的格式，由三星、亚马逊和松下合作开发。</li>
+<li><strong>技术特点</strong>：
+<ul>
+<li><strong>色深</strong>：10-bit。</li>
+<li><strong>动态范围</strong>：支持最高4000尼特的亮度。</li>
+<li><strong>元数据</strong>：使用动态元数据，可以根据场景或帧来调整HDR信息，从而提供更精确的亮度和对比度控制。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：主要应用于高端电视、流媒体服务等。</li>
+</ul>
+<h3 id="3-dolby-vision">3. <strong>Dolby Vision</strong></h3>
+<ul>
+<li><strong>简介</strong>：Dolby Vision是由杜比实验室开发的一种高级HDR格式，具有出色的性能，但使用该格式需要支付许可费用。</li>
+<li><strong>技术特点</strong>：
+<ul>
+<li><strong>色深</strong>：12-bit（即每种颜色有4096级），支持更丰富的颜色。</li>
+<li><strong>动态范围</strong>：支持最高10000尼特的亮度。</li>
+<li><strong>元数据</strong>：使用动态元数据，提供逐帧的HDR信息调整。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：广泛用于高端电视、4K UHD Blu-ray、流媒体服务（如Netflix、Disney+）等。</li>
+</ul>
+<h3 id="4-hlg-hybrid-log-gamma">4. <strong>HLG（Hybrid Log-Gamma）</strong></h3>
+<ul>
+<li><strong>简介</strong>：HLG是一种由BBC和NHK共同开发的HDR标准，主要用于直播电视。</li>
+<li><strong>技术特点</strong>：
+<ul>
+<li><strong>色深</strong>：10-bit或12-bit。</li>
+<li><strong>动态范围</strong>：支持高亮度范围，适合实时广播。</li>
+<li><strong>元数据</strong>：不使用元数据，与传统的标准动态范围（SDR）兼容，适合过渡性应用。</li>
+</ul>
+</li>
+<li><strong>应用</strong>：主要用于广播电视、现场体育赛事等。</li>
+</ul>
+<h3 id="5-advanced-hdr-by-technicolor">5. <strong>Advanced HDR by Technicolor</strong></h3>
+<ul>
+<li><strong>简介</strong>：由Technicolor开发的HDR标准，旨在提供高质量的视频内容。</li>
+<li><strong>技术特点</strong>：包含多种技术，如SL-HDR1、SL-HDR2，分别适用于不同的应用场景和内容格式。</li>
+<li><strong>应用</strong>：主要用于广播、流媒体和电影制作。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>HDR10是当前最常见的HDR格式，具有良好的兼容性和广泛的应用范围。尽管HDR10使用的是静态元数据，但它提供的色彩和对比度增强已经能显著提升视觉体验。随着技术的发展，HDR10+和Dolby Vision等动态元数据格式提供了更高的性能和更加精细的画质控制。</p>
+
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2025
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.js"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

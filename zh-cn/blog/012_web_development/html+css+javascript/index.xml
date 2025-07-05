@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>012_001_Grp_HTML&#43;CSS&#43;JAVASCRIPT on 嵌入式系统爱好者</title>
+    <link>http://localhost:1313/zh-cn/blog/012_web_development/html&#43;css&#43;javascript/</link>
+    <description>Recent content in 012_001_Grp_HTML&#43;CSS&#43;JAVASCRIPT on 嵌入式系统爱好者</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/zh-cn/blog/012_web_development/html+css+javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>html tricks</title>
+      <link>http://localhost:1313/zh-cn/blog/012_web_development/html&#43;css&#43;javascript/html/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/zh-cn/blog/012_web_development/html&#43;css&#43;javascript/html/</guid>
+      <description>&lt;details&gt;&#xD;&#xA;    &lt;summary&gt;&lt;strong&gt;001. what is the unit of &#34;em&#34;?&lt;strong&gt;&lt;/summary&gt;&#xD;&#xA;&lt;div style=&#34;padding-left: 2em;&#34;&gt;&#xD;&#xA;&lt;p&gt;&lt;code&gt;em&lt;/code&gt; does not have its full-name.&#xA;it standed for the width of alphabet &amp;quot;M&amp;quot;&#xA;now it always stands for the unit of with of font.&lt;/p&gt;&#xA;&lt;/div&gt;&#xD;&#xA;&lt;/details&gt;</description>
+    </item>
+  </channel>
+</rss>
