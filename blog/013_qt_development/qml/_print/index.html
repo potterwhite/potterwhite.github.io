@@ -1,0 +1,1419 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="canonical" type="text/html" href="https://potterwhite.github.io/blog/013_qt_development/qml/">
+<link rel="alternate" type="application/rss&#43;xml" href="https://potterwhite.github.io/blog/013_qt_development/qml/index.xml">
+<meta name="robots" content="noindex, nofollow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>013_002_Grp_QML | 嵌入式系统爱好者</title>
+<meta name="description" content="首先，我是一名基督徒。
+一位丈夫。
+一位父亲。
+嵌入式系统、Linux/Docker/ERP/WASAPI/NodeJS/Socket.IO 的爱好者。">
+<meta property="og:url" content="https://potterwhite.github.io/blog/013_qt_development/qml/">
+  <meta property="og:site_name" content="嵌入式系统爱好者">
+  <meta property="og:title" content="013_002_Grp_QML">
+  <meta property="og:description" content="首先，我是一名基督徒。
+一位丈夫。
+一位父亲。
+嵌入式系统、Linux/Docker/ERP/WASAPI/NodeJS/Socket.IO 的爱好者。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="website">
+
+  <meta itemprop="name" content="013_002_Grp_QML">
+  <meta itemprop="description" content="首先，我是一名基督徒。
+一位丈夫。
+一位父亲。
+嵌入式系统、Linux/Docker/ERP/WASAPI/NodeJS/Socket.IO 的爱好者。">
+  <meta itemprop="datePublished" content="2024-09-06T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-09-06T00:00:00+00:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="013_002_Grp_QML">
+  <meta name="twitter:description" content="首先，我是一名基督徒。
+一位丈夫。
+一位父亲。
+嵌入式系统、Linux/Docker/ERP/WASAPI/NodeJS/Socket.IO 的爱好者。">
+<link rel="preload" href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" as="style" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<link href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" rel="stylesheet" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-section td-blog">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统爱好者</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/news/"><span>News</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/portfolio/"><span>项目</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/en/">English</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
+            
+
+
+
+
+<div class="td-content">
+<div class="pageinfo pageinfo-primary d-print-none">
+<p>
+这是本节的多页打印视图。
+<a href="#" onclick="print();return false;">点击此处打印</a>.
+</p><p>
+<a href="/blog/013_qt_development/qml/">返回本页常规视图</a>.
+</p>
+</div>
+
+
+
+<h1 class="title">013_002_Grp_QML</h1>
+
+
+
+
+
+    <ul>
+    
+  
+  
+  
+  
+
+  
+    
+    
+	
+
+    <li><a href="#pg-e5af19215d3827a953a9889366fcf185">QML downgrade from 6 to 5</a></li>
+
+
+
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-9efb5dc7a1b85e02cdbf88d9d17f7ef8">QML Poor Performance In different Qt SDK</a></li>
+
+
+
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-4c5d5f3d14b9544d1c72991e13b31cd5">QtQuick工程里的main函数解析</a></li>
+
+
+
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-ff55b258a9ddd7b3bc0daa01474d90d0">QML的Menu容器</a></li>
+
+
+
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-49d36b1405734a6bc5756f2bf5a35d44">qml notes</a></li>
+
+
+
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-f496d77e14cb6b42d6c47eb2588f6967">QML Options</a></li>
+
+
+
+    
+  
+    
+    
+	
+
+    <li><a href="#pg-6d64a40926b8626398b8b59604338f3a">QML工程里的content文件夹</a></li>
+
+
+
+    
+  
+
+    </ul>
+
+
+<div class="content">
+      
+</div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="">
+    <h1 id="pg-e5af19215d3827a953a9889366fcf185">QML downgrade from 6 to 5</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-09-06" class="text-body-secondary">2024年09月06日</time>
+        
+	</div>
+	<p>so many weird tricks that matter in Qt5 QML</p>
+<h3 id="1-the-keyword"><strong>1. the keyword &ldquo;Window&rdquo; is unrecongnized</strong></h3>
+<p>You must type this line in the top of your qml file</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span> <span style="color:#0000cf;font-weight:bold">2.3</span>
+</span></span></code></pre></div><p>or the keyword &ldquo;Window&rdquo; will be unrecongnized</p>
+<h3 id="2-all-imported-system-libs-will-have-their-versions"><strong>2. all imported system libs will have their versions</strong></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//this is wrong
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//this is correct
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span> <span style="color:#0000cf;font-weight:bold">2.3</span>
+</span></span></code></pre></div><h3 id="3-the-way-of-the-organization-of-qml-in-each-project"><strong>3. the way of the organization of qml in each project</strong></h3>
+<p>qt5 use <code>qmldir</code> way to organize every qml module.</p>
+<p>in qt6 qmldir is not created by coder
+it utlizes CMakelists.txt way to manage all qml files</p>
+<h3 id="4-qml-individual-module-utilizes-the-folder-name-as-its-module-name"><strong>4. qml individual module utilizes the folder name as its module name</strong></h3>
+<p>e.g.,
+module folder: folder_A
+folder content:
+a.qml
+b.qml
+qmldir
+the content of the qmldir:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">module</span> <span style="color:#000">moduleA</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">a</span> <span style="color:#0000cf;font-weight:bold">1.0</span> <span style="color:#000">a</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">b</span> <span style="color:#0000cf;font-weight:bold">1.0</span> <span style="color:#000">b</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span>
+</span></span></code></pre></div><p>now how to import in another certain c.qml file?
+the answer is</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">folder_A</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+</span></span></code></pre></div><p>OMG, in qt6 everything has been organized in sub CMakelists.txt</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a40000">###</span> <span style="color:#000">This</span> <span style="color:#000">file</span> <span style="color:#000">is</span> <span style="color:#000">automatically</span> <span style="color:#000">generated</span> <span style="color:#000">by</span> <span style="color:#000">Qt</span> <span style="color:#000">Design</span> <span style="color:#000">Studio</span><span style="color:#000;font-weight:bold">.</span>
+</span></span><span style="display:flex;"><span><span style="color:#a40000">###</span> <span style="color:#000">Do</span> <span style="color:#000">not</span> <span style="color:#000">change</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a40000">###########################################################################################</span>
+</span></span><span style="display:flex;"><span><span style="color:#a40000">#</span> <span style="color:#0000cf;font-weight:bold">9</span><span style="color:#000">th</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">set_source_files_properties</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">Exposes</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span> <span style="color:#000">PROPERTIES</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">QT_QML_SINGLETON_TYPE</span> <span style="color:#000">TRUE</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">qt6_add_qml_module</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModuleNamesssss</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">URI</span> <span style="color:#4e9a06">&#34;SingletonModuleName&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">VERSION</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">QML_FILES</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">SingletonFolder</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">a</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">qt_add_library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">content</span> <span style="color:#000">STATIC</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">qt6_add_qml_module</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">content</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">URI</span> <span style="color:#4e9a06">&#34;content&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">VERSION</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">RESOURCE_PREFIX</span> <span style="color:#4e9a06">&#34;/qt/qml&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">QML_FILES</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">main</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#000">RESOURCES</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">fonts</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">fonts</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">..</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">images</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">icons</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">g_icon</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">jpg</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">..</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">images</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">icons</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">h_svg</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">svg</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">..</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">images</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">icons</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">k_svg</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">svg</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p>now how to import my singleton module which created by myself?</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">SingletonModuleName</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+</span></span></code></pre></div><p>the URI is the key string
+so direct and simple without any confusion</p>
+<p>but qt5, the mechanism is the import will cause engine to search the target folder with that exact name as we write with import keyword.</p>
+<h3 id="5-all-qml-files-be-put-under-qrc-file-defaultly"><strong>5. all qml files be put under qrc file defaultly</strong></h3>
+<p>of course, you can choose not to manage them under qrc
+but this way is the default option</p>
+<h3 id="6-you-must-register-the-data-types-if-you-wanna-share-data-between-cpp-and-qml"><strong>6. you must register the data type(s) if you wanna share data between cpp and qml</strong></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span> <span style="color:#000">qRegisterMetaType</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">data_type_a</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;data_type_a&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><h3 id="--">**  **</h3>
+<h3 id="---1">**  **</h3>
+<h3 id="---2">**  **</h3>
+<h3 id="---3">**  **</h3>
+<h3 id="---4">**  **</h3>
+<h3 id="---5">**  **</h3>
+<h3 id="---6">**  **</h3>
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-9efb5dc7a1b85e02cdbf88d9d17f7ef8">QML Poor Performance In different Qt SDK</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-09-06" class="text-body-secondary">2024年09月06日</time>
+        
+	</div>
+	<!-- [poor_performance.mp4](/2024/September/qml_poor_performance_compare_5and6.mp4) -->
+<video controls="" width="800" height="500" muted="" loop="" autoplay="">
+    <source src="https://github.com/potterwhite/potterwhite.github.io/blob/hugo_docsy/2024/September/qml_poor_performance_compare_5and6_h264.mp4" type="video/mp4;">
+    <!-- <source src="https://github.com/potterwhite/potterwhite.github.io/blob/hugo_docsy/2024/September/qml_poor_performance_compare_5and6_h264.mp4" type="video/mp4; codecs=hevc"> -->
+    <!-- <source src="/2024/September/qml_poor_performance_compare_5and6.mp4" type="video/mp4"> -->  
+</video>
+<!-- <video controls="" width="800" height="500" muted="" loop="" autoplay="">
+    <source src="https://github.com/YogangSingh/YogangSingh.github.io/raw/main/MultiUSV_Trim_MP4.mp4" type="video/mp4">
+</video> -->
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-4c5d5f3d14b9544d1c72991e13b31cd5">QtQuick工程里的main函数解析</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-20" class="text-body-secondary">2024年08月20日</time>
+        
+	</div>
+	<p>当然！这是对 <code>main</code> 函数的详细解读，涵盖了各个部分的功能和目的。</p>
+<h2 id="代码逐行解释"><strong>代码逐行解释</strong></h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">argc</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">argv</span><span style="color:#000;font-weight:bold">[])</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">QGuiApplication</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">setAttribute</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">Qt</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">AA_UseSoftwareOpenGL</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>QGuiApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);</code></strong>：设置 Qt 应用程序的属性，强制使用软件渲染 OpenGL。这在没有硬件加速的环境中（例如某些虚拟机或嵌入式系统）非常有用，确保 OpenGL 渲染功能的兼容性。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#000">set_qt_environment</span><span style="color:#000;font-weight:bold">();</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>set_qt_environment()</code></strong>：这似乎是一个自定义函数，用于设置 Qt 环境的其他参数或配置。具体内容取决于你的实际实现。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#000">QGuiApplication</span> <span style="color:#000">GUI_app</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">argc</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">argv</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>QGuiApplication</code></strong>：创建 Qt 的 GUI 应用程序对象，处理与用户界面相关的任务。<code>argc</code> 和 <code>argv</code> 用于传递命令行参数。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// 文件路径
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">QString</span> <span style="color:#000">iconPath</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;://images/icons/app_icon.svg&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>iconPath</code></strong>：指定应用程序图标的路径。路径使用 Qt 的资源系统（<code>://</code> 表示 Qt 资源路径）。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// 检查文件是否存在
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">QFile</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">exists</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">iconPath</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 文件存在，设置图标
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000">glb_GUI_app</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">setWindowIcon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">QIcon</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">iconPath</span><span style="color:#000;font-weight:bold">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// qDebug() &lt;&lt; &#34;Icon found and set.&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// 文件不存在，处理错误
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000">qDebug</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;main(): Icon file not found:&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">iconPath</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span><span style="color:#4e9a06">&#34;currentDir=&#34;</span><span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">QDir</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">currentPath</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>QFile::exists(iconPath)</code></strong>：检查指定路径的图标文件是否存在。</li>
+<li><strong><code>glb_GUI_app.setWindowIcon(QIcon(iconPath))</code></strong>：如果图标文件存在，则设置应用程序的窗口图标。</li>
+<li><strong><code>qDebug()</code></strong>：用于调试输出，显示图标文件的存在状态和当前工作目录。如果图标文件不存在，会输出相关错误信息。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// ********************** qml **********************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">QQmlApplicationEngine</span> <span style="color:#000">engine</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// const QUrl url(u&#34;qrc:/qt/qml/Main/main.qml&#34;_qs);
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">QUrl</span> <span style="color:#000">url</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">u</span><span style="color:#4e9a06">&#34;qrc:/qt/qml/content/Entry.qml&#34;</span><span style="color:#000">_qs</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>QQmlApplicationEngine</code></strong>：创建 QML 引擎对象，用于加载和管理 QML 文件。</li>
+<li><strong><code>url</code></strong>：指定要加载的 QML 文件的路径。这里加载的是 <code>Entry.qml</code> 文件。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#000">ASCtl_Opts</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">class_opts</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">Class_Opts</span><span style="color:#000;font-weight:bold">();</span>    
+</span></span></code></pre></div><ul>
+<li><strong><code>Class_Opts</code></strong>：创建一个 C++ 自定义类的实例，这个对象将暴露给 QML 界面，以便在 QML 中访问和使用。</li>
+<li><strong><code>QObject::connect(button, )</code></strong>：注释掉了的代码行，可能是用于连接某个按钮的信号和槽。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#000">QObject</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">connect</span><span style="color:#000;font-weight:bold">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">engine</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">QQmlApplicationEngine</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">objectCreated</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">GUI_app</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">[</span><span style="color:#000">url</span><span style="color:#000;font-weight:bold">](</span><span style="color:#000">QObject</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">obj</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">QUrl</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">objUrl</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">obj</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">url</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">objUrl</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#000">QCoreApplication</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">exit</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">},</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">Qt</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">QueuedConnection</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>QObject::connect</code></strong>：连接信号和槽。这里连接的是 <code>QQmlApplicationEngine</code> 的 <code>objectCreated</code> 信号到一个 lambda 函数。</li>
+<li><strong><code>objectCreated</code></strong>：表示 QML 对象已经创建。</li>
+<li><strong>lambda 函数</strong>：检查创建的对象是否为空，并且 URL 是否与预期的 URL 匹配。如果对象为空且 URL 匹配，则应用程序退出，返回错误码 <code>-1</code>。</li>
+<li><strong><code>Qt::QueuedConnection</code></strong>：信号和槽的连接类型，表示槽函数将在接收线程的事件循环中执行。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#000">engine</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">addImportPath</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">QCoreApplication</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">applicationDirPath</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#4e9a06">&#34;/qml&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">engine</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">addImportPath</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;:/&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>addImportPath</code></strong>：添加 QML 模块的导入路径。第一个路径是应用程序的工作目录下的 <code>qml</code> 子目录，第二个路径是 Qt 的资源系统路径。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#000">engine</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">rootContext</span><span style="color:#000;font-weight:bold">()</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">setContextProperty</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;class_Opts&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">class_opts</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">engine</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">load</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">url</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>setContextProperty</code></strong>：将 C++ 对象 (<code>class_opts</code>) 设置为 QML 上下文属性，使 QML 可以访问这个对象。</li>
+<li><strong><code>engine.load(url)</code></strong>：加载指定的 QML 文件并显示其界面。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">engine</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">rootObjects</span><span style="color:#000;font-weight:bold">().</span><span style="color:#000">isEmpty</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>rootObjects()</code></strong>：获取 QML 引擎中加载的根对象。如果根对象为空，说明 QML 文件加载失败，程序返回 <code>-1</code> 退出。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">glb_GUI_app</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">exec</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li><strong><code>GUI_app.exec()</code></strong>：启动应用程序的事件循环。这个方法会阻塞，直到应用程序退出。它处理所有的用户输入、定时器事件等。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<ol>
+<li><strong>设置属性</strong>：设置 Qt 应用程序的属性来使用软件渲染 OpenGL。</li>
+<li><strong>设置环境</strong>：调用自定义函数来配置 Qt 环境。</li>
+<li><strong>创建应用程序对象</strong>：<code>QGuiApplication</code> 处理 GUI 相关任务。</li>
+<li><strong>设置图标</strong>：检查并设置应用程序窗口图标。</li>
+<li><strong>创建 QML 引擎</strong>：用于加载和管理 QML 文件。</li>
+<li><strong>创建和设置 C++ 对象</strong>：将 C++ 对象暴露给 QML。</li>
+<li><strong>连接信号和槽</strong>：确保 QML 文件正确加载。</li>
+<li><strong>设置导入路径</strong>：为 QML 引擎添加模块导入路径。</li>
+<li><strong>加载 QML 文件</strong>：实际加载并显示 QML 界面。</li>
+<li><strong>启动事件循环</strong>：进入事件循环，处理应用程序事件。</li>
+</ol>
+<p>这个 <code>main</code> 函数展示了如何在 Qt 中设置应用程序图标、加载 QML 界面，并将 C++ 对象暴露给 QML，同时确保应用程序在启动时能够正确处理潜在的错误。</p>
+<h2 id="暴露整个类对象给qml的意义何在"><strong>暴露整个类对象给QML的意义何在？</strong></h2>
+<p>暴露整个 C++ 类的对象给 QML 主要有以下几个目的和考虑，但这些目的在不同的场景下可能有不同的实现方式，因此也需要根据实际需求来选择是否采用 <code>Q_PROPERTY</code> 或其他方式。</p>
+<h3 id="1-访问复杂逻辑或功能">1. <strong>访问复杂逻辑或功能</strong>：</h3>
+<ul>
+<li>如果你有一个复杂的 C++ 类，这个类封装了一些业务逻辑、算法或功能（例如网络请求、数据处理、硬件交互等），你可以通过暴露整个对象给 QML，让 QML 层能够调用这个对象的方法。这些方法可能不只是简单的数据访问，还包括一些逻辑操作，比如计算、状态管理等。</li>
+<li>在这种情况下，QML 通过调用 C++ 对象的方法，可以利用 C++ 的强大功能，弥补 QML 本身的能力不足。例如，执行某些复杂的操作，然后将结果返回给 QML。</li>
+</ul>
+<h3 id="2-共享和管理状态">2. <strong>共享和管理状态</strong>：</h3>
+<ul>
+<li>如果你的 C++ 类管理了一些全局或共享状态（例如应用程序的配置、运行状态、数据缓存等），暴露这个对象给 QML 可以让 QML 访问和操作这些状态。在这种情况下，暴露整个对象可以简化在多个 QML 组件之间共享数据或状态的需求。</li>
+</ul>
+<h3 id="3-整合-c-和-qml-的开发">3. <strong>整合 C++ 和 QML 的开发</strong>：</h3>
+<ul>
+<li>在某些项目中，可能需要将 C++ 层的功能和 QML 层的 UI 进行紧密整合。暴露整个 C++ 类的对象可以减少接口设计的复杂性，使得 QML 可以直接利用 C++ 层的现有代码，不需要重复定义接口或桥接代码。</li>
+</ul>
+<h3 id="4-使用单例模式的好处">4. <strong>使用单例模式的好处</strong>：</h3>
+<ul>
+<li>如果你使用单例模式暴露 C++ 对象，那么这个对象在整个应用程序中只有一个实例。这在某些情况下很有用，比如你希望确保某些数据或状态在应用程序的所有部分中保持一致。这种方式常用于全局管理器类（如设置管理器、数据库连接管理器等），这些类的实例通常只有一个，且在应用程序的整个生命周期内都存在。</li>
+</ul>
+<h3 id="5-q_">5. <strong>Q_PROPERTY 的作用</strong>：</h3>
+<ul>
+<li>如果你仅仅暴露整个 C++ 对象而不使用 <code>Q_PROPERTY</code>，那么 QML 层可能无法直接访问对象的属性，尤其是私有或受保护的成员变量。<code>Q_PROPERTY</code> 的作用在于允许 QML 层将某些 C++ 属性作为 QML 属性来使用，使得这些属性可以直接在 QML 中绑定、显示，并在值变化时自动触发更新。</li>
+<li>另一方面，如果你不使用 <code>Q_PROPERTY</code>，但仍然希望 QML 能访问到某些公有数据，你可能需要手动定义 getter 和 setter 方法，然后在 QML 中通过调用这些方法来获取或设置数据。然而，这种方式无法实现自动数据同步，且代码更为冗长。</li>
+</ul>
+<h3 id="总结-1">总结：</h3>
+<p>暴露整个 C++ 对象给 QML 的意义在于允许 QML 层访问和调用这个对象所提供的功能和方法，而不仅仅是访问简单的数据。如果只是为了访问某个数据属性，<code>Q_PROPERTY</code> 是更好的选择，它不仅可以简化代码，还能实现数据的自动同步更新。</p>
+<p>如果你发现暴露整个类对象对于你的需求并不合适或不方便，那么你可以选择只暴露必要的功能和属性（例如通过 <code>Q_PROPERTY</code>），这样可以确保代码的清晰性和维护性。选择合适的方式取决于你的具体应用场景和需求。</p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-ff55b258a9ddd7b3bc0daa01474d90d0">QML的Menu容器</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-19" class="text-body-secondary">2024年08月19日</time>
+        
+	</div>
+	<h2 id="qml-中的"><strong>QML 中的 <code>Menu</code> 结构</strong></h2>
+<p>在 QML 中，<code>Menu</code> 是一个复杂的控件，它通常用于创建上下文菜单或主菜单。在 QML 中，像 <code>Menu</code> 这样的控件可以通过 <code>background</code> 和 <code>contentItem</code> 等属性来自定义其外观和行为。这些属性通常用于更改控件的默认布局和样式。</p>
+<h4 id="1-background">1. <strong><code>background</code> 属性</strong></h4>
+<ul>
+<li><code>background</code> 属性是一个 <code>Item</code> 或任何其他可以作为背景的元素。它定义了 <code>Menu</code> 背景的样式。通常，你会使用 <code>Rectangle</code> 或其他图形元素来定义背景的颜色、边框、圆角等。</li>
+<li><strong>位置</strong>: <code>background</code> 位于 <code>Menu</code> 的最底层，用于显示菜单的背景。它通常覆盖整个 <code>Menu</code> 的区域。</li>
+</ul>
+<h4 id="2-contentitem">2. <strong><code>contentItem</code> 属性</strong></h4>
+<ul>
+<li><code>contentItem</code> 是一个 <code>Item</code>，定义了 <code>Menu</code> 的主要内容。通过自定义 <code>contentItem</code>，你可以完全控制 <code>Menu</code> 中菜单项的布局方式和样式。</li>
+<li><strong>位置</strong>: <code>contentItem</code> 位于 <code>background</code> 之上，包含 <code>MenuItem</code> 和其他控件的布局。</li>
+</ul>
+<h3 id="menu-的基本结构">Menu 的基本结构</h3>
+<p>可以将 <code>Menu</code> 看作一个容器，包含以下几个关键区域：</p>
+<ol>
+<li>
+<p><strong><code>background</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>: 负责绘制菜单的背景颜色、边框、阴影等样式。</li>
+<li><strong>自定义</strong>: 可以使用任何 <code>Item</code> 来自定义背景（通常是 <code>Rectangle</code>）。</li>
+<li><strong>默认行为</strong>: 如果不指定 <code>background</code>，菜单将使用系统默认的背景样式。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>contentItem</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>: 负责容纳并布局菜单项（<code>MenuItem</code>），可以是 <code>Column</code>、<code>Row</code>、<code>Grid</code> 等布局容器。</li>
+<li><strong>自定义</strong>: 可以使用 <code>Column</code>、<code>Row</code>、<code>Grid</code> 等来控制 <code>MenuItem</code> 的排列方式。</li>
+<li><strong>默认行为</strong>: 如果不指定 <code>contentItem</code>，<code>Menu</code> 将使用系统默认的布局来排列 <code>MenuItem</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>MenuItem</code></strong>:</p>
+<ul>
+<li><strong>功能</strong>: 表示菜单中的各个选项，用户可以点击这些选项来触发相应的操作。</li>
+<li><strong>位置</strong>: <code>MenuItem</code> 通常放在 <code>contentItem</code> 中。</li>
+</ul>
+</li>
+</ol>
+<h3 id="menu-内置的容器和属性"><code>Menu</code> 内置的容器和属性</h3>
+<ol>
+<li>
+<p><strong><code>background</code></strong>: 定义菜单的背景，可以是 <code>Rectangle</code>、<code>Image</code> 或任何 <code>Item</code>。</p>
+<ul>
+<li><strong>位置</strong>: 背景在 <code>Menu</code> 的底层。</li>
+<li><strong>用途</strong>: 设定菜单的背景颜色、边框、圆角等视觉效果。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>contentItem</code></strong>: 定义菜单的内容区域，通常用 <code>Column</code> 来布局多个 <code>MenuItem</code>。</p>
+<ul>
+<li><strong>位置</strong>: <code>contentItem</code> 在 <code>background</code> 之上。</li>
+<li><strong>用途</strong>: 用于布局和显示菜单中的项（<code>MenuItem</code>）。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>MenuItem</code></strong>: 菜单项，可以是可点击的选项。</p>
+<ul>
+<li><strong>位置</strong>: <code>MenuItem</code> 放置在 <code>contentItem</code> 内。</li>
+<li><strong>用途</strong>: 用户点击后会触发相应的操作。</li>
+</ul>
+</li>
+</ol>
+<h3 id="图示化-menu-结构">图示化 <code>Menu</code> 结构</h3>
+<p>虽然我无法直接绘制图示，但可以描述如下：</p>
+<pre tabindex="0"><code>+--------------------------+
+|         background        |  &lt;- background: Rectangle
+|  +---------------------+  |
+|  |     contentItem      |  |  &lt;- contentItem: Column
+|  |  +---------------+   |  |
+|  |  |  MenuItem 1    |   |  |
+|  |  +---------------+   |  |  &lt;- MenuItem
+|  |  |  MenuItem 2    |   |  |
+|  |  +---------------+   |  |
+|  |  |  MenuItem 3    |   |  |
+|  |  +---------------+   |  |
+|  +---------------------+  |
++--------------------------+
+</code></pre><ul>
+<li><strong>背景区域</strong>（<code>background</code>）覆盖整个菜单，并且通常在 <code>contentItem</code> 之下。</li>
+<li><strong>内容区域</strong>（<code>contentItem</code>）包含菜单项，负责布局和排列 <code>MenuItem</code>。</li>
+</ul>
+<h3 id="自定义-menu-的用法">自定义 <code>Menu</code> 的用法</h3>
+<p>在自定义 <code>Menu</code> 时，你可以控制 <code>background</code> 的样式，比如设置颜色、圆角、边框等。同时，通过定义 <code>contentItem</code>，你可以完全控制菜单项的布局。例如，可以使用 <code>Column</code> 来垂直排列菜单项，也可以使用 <code>Row</code> 或 <code>Grid</code> 来创建不同的布局。</p>
+<h3 id="总结">总结</h3>
+<ul>
+<li><strong><code>background</code></strong>: 负责菜单的背景样式，通常用 <code>Rectangle</code> 作为背景。</li>
+<li><strong><code>contentItem</code></strong>: 负责菜单的内容布局，通常用 <code>Column</code> 来垂直排列菜单项。</li>
+<li><strong><code>MenuItem</code></strong>: 菜单中的选项，通常放在 <code>contentItem</code> 中。</li>
+</ul>
+<p>通过理解 <code>Menu</code> 的这些属性和结构，你可以更加灵活地自定义菜单的外观和行为，以符合你的应用需求。</p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-49d36b1405734a6bc5756f2bf5a35d44">qml notes</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-10" class="text-body-secondary">2024年08月10日</time>
+        
+	</div>
+	<h2 id="001-expose-propertiesproperty-alias-">001. **[Expose Properties]property alias **</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">property</span> <span style="color:#000">alias</span> <span style="color:#000">$</span><span style="color:#000;font-weight:bold">{</span><span style="color:#000">EXTERNAL_SHARED_ID</span><span style="color:#000;font-weight:bold">}</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">$</span><span style="color:#000;font-weight:bold">{</span><span style="color:#000">INNER_ID</span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}</p>
+<h2 id="002-qml的模块化">002. <strong>QML的模块化</strong></h2>
+<p>case：<strong>我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？</strong></p>
+<p><code>solutionA</code>:</p>
+<p>透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height；
+至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。</p>
+<p><code>solutionB</code>:
+用信号槽的方式
+这种方式是qt的原生自带的技术</p>
+<p><code>solutionC</code>:
+用property
+在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。</p>
+<h2 id="003-debug-qtguiimageio-libpng-warning-iccp-known-incorrect-srgb-profile">003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile</h2>
+<p><a href="https://bbs.archlinux.org/viewtopic.php?pid=1269845#p1269845">Post about the reason of this warning</a></p>
+<pre tabindex="0"><code>It&#39;s because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. 
+It&#39;s supposed to just be a warning, are you sure this is what&#39;s causing the build failure? 
+
+If so, you may need to replace the sRGB profile yourself or get upstream to do it.
+</code></pre><h2 id="004-取整怎么做">004. 取整怎么做？</h2>
+<p>在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>    Math.floor(value): 返回不大于 value 的最大整数，即向下取整。
+</span></span><span style="display:flex;"><span>    Math.ceil(value): 返回不小于 value 的最小整数，即向上取整。
+</span></span><span style="display:flex;"><span>    Math.round(value): 返回四舍五入后的整数。
+</span></span></code></pre></div><h2 id="005-要点">005. 要点</h2>
+<p>函数不能以大写字母开头</p>
+<h2 id="006-startsystemmove的逻辑"><strong>006. startSystemMove()的逻辑</strong></h2>
+<p><a href="https://doc.qt.io/qt-6/qwindow.html#startSystemMove">startSystemMove</a> is designed to send a system signal to the entrance of window moving model</p>
+<p>what gpt4o said:</p>
+<pre tabindex="0"><code>startSystemMove 是一个在某些框架或平台中使用的函数，通常用于启动窗口的移动操作。这个函数的具体实现和行为可能会因平台或框架的不同而有所差异。以下是一个典型的解释和行为描述，通常适用于 Windows 平台和基于 Qt 框架的环境：
+startSystemMove 函数的详细解析
+
+startSystemMove 通常是用来处理用户拖动窗口的情况。当用户按下鼠标左键并拖动窗口的非客户区（例如标题栏）时，系统会自动启动窗口的移动操作。startSystemMove 函数一般用于在自定义标题栏或无边框窗口中模拟这种行为。
+</code></pre><h3 id="problem"><strong>problem</strong></h3>
+<p>when i clicked left button of my mouse, the code will trigger <em><strong>vp_window_id.startSystemMove()</strong></em> for supporting window`s moving function.</p>
+<p>so i wrote it like below</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseLeftButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">vp_window_id</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">startSystemMove</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span><span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseRightButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;right&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>but now met the problem:
+when i clicked the left button of the mouse, and did not move the mouse (no position changed), the <em><strong>startSystemMove</strong></em> had been sent anyway. and now the <em><strong>titleMouseArea.pressedButtons</strong></em> always keep <em><strong>Qt.LeftButton</strong></em> actually equals <em><strong>1</strong></em>.Even i release the left button of my mouse quickly, the state did not change.
+so now when i clicked left button, nothing happened.
+when i clicked right button, illegal value of <em><strong>titleMouseArea.pressedButtons</strong></em> came with <em><strong>3</strong></em>, it is illegal actually like the pic below, it also means left button plus right button together.
+<img src="/2024/August/16/QtMouseButtons.png" alt="QtMouseButtons"></p>
+<h3 id="solution"><strong>solution</strong></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">MouseArea</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">titleMouseArea</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">fill</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">acceptedButtons</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">LeftButton</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">RightButton</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">preventStealing</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#000">pressAndHoldInterval</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#000">bool</span> <span style="color:#000">isDragging</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseLeftButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">isDragging</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span><span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">SingletonModule</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">IfOnlyMouseRightButtonPressed</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">)){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;right&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;\n&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPositionChanged</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;x=&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#4e9a06">&#34;y=&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">y</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">isDragging</span><span style="color:#000;font-weight:bold">){</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">vp_window_id</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">startSystemMove</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;position changed: left&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onReleased</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">isDragging</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;Button released. Current pressedButtons:&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">titleMouseArea</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">pressedButtons</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>the solution is a logic control that when i click left button, onPressed set the flag variable <em><strong>TRUE</strong></em>, and if i do not move the cursor away, the onRelease slot will set the flag variable to <em><strong>FALSE</strong></em>.
+Until i click and at the same time move the cursor away(position changed), the <em><strong>onPositionChanged</strong></em> slot will send <em><strong>vp_window_id.startSystemMove()</strong></em> out to the system.</p>
+<h3 id="conclusion"><strong>conclusion</strong></h3>
+<p>actually higher level language is boring because of that they could not control the low layer system at some times.
+and personaly customize the titlebar of a window is such a heave job.</p>
+<h2 id="007-mouseareamousexy-vs-container_"><strong>007. MouseArea.mouseX(y) VS ${Container_ID}.x(y)</strong></h2>
+<p>i have a sub module</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">SingletonForVolumeMixer</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Menu</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">bID_Private_contextualMenu</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">MenuItem</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">qsTr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;最小化&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">onTriggered</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 实现最小化逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">MenuItem</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">qsTr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;最大化&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">onTriggered</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 实现最大化逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">MenuItem</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">qsTr</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;关闭&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">onTriggered</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8f5902;font-style:italic">// 实现关闭逻辑
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>and when i try to instantiate this module as container of my main.qml
+error method:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#000">CustomizedMenu</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">rightkeyMenu</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">x</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">MouseArea</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">mouseX</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">y</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">MouseArea</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">mouseY</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>            
+</span></span><span style="display:flex;"><span>                <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">open</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>have a warning:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>qrc:/qt/qml/content/Title/xxx.qml:50:9: Unable to assign [undefined] to double
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/Title/xxx.qml:49:9: Unable to assign [undefined] to double
+</span></span></code></pre></div><p>correct method:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#000">CustomizedMenu</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">rightkeyMenu</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// x: MouseArea.mouseX
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#8f5902;font-style:italic">// y: MouseArea.mouseY
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">onPressed</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">x</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">X</span>                
+</span></span><span style="display:flex;"><span>        <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">y</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">mouse</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">y</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">rightkeyMenu</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">open</span><span style="color:#000;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>why-from GPT4o:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>你遇到的问题主要与QML中的**属性绑定机制**以及**组件生命周期**有关。当你在`Menu`容器中直接尝试绑定 `x: mouseArea.mouseX` 和 `y: mouseArea.mouseY` 时，可能会遇到以下问题：
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 1. **属性未初始化**
+</span></span><span style="display:flex;"><span>`mouseArea.mouseX` 和 `mouseArea.mouseY` 这类属性在`MouseArea`中表示相对坐标，但它们在某些情况下可能未初始化，特别是在组件刚刚加载时。这可能导致`Menu`组件在初始化时尝试访问这些属性，而它们尚未定义，导致出现`undefined`错误。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 2. **组件加载顺序**
+</span></span><span style="display:flex;"><span>QML中，属性的绑定通常在组件加载和初始化时执行。如果在`Menu`的定义中试图直接访问这些属性，而`MouseArea`还没有触发任何事件，属性值可能未被设置。因此，在菜单加载时，这些属性可能仍然是`undefined`，这会导致无法将`undefined`分配给`Menu`的`x`或`y`属性。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 3. **绑定的时机**
+</span></span><span style="display:flex;"><span>在 `Menu` 容器中直接绑定 `x: mouseArea.mouseX` 和 `y: mouseArea.mouseY` 是静态绑定，在QML的生命周期内，可能不会动态更新。只有当 `MouseArea` 触发点击事件时，`mouse.x` 和 `mouse.y` 才会有值，这意味着这些值只有在事件发生时才是有效的。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 为什么`mouse.x` 和 `mouse.y` 方式有效？
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>通过在 `MouseArea` 的 `onClicked` 处理器中动态设置 `Menu` 的 `x` 和 `y` 属性，你确保了在鼠标点击事件发生时，这些值是最新的、有效的。因为点击事件发生后，鼠标的坐标已经被正确捕获并可以使用，所以这种方式不会遇到属性未定义的问题。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>### 总结
+</span></span><span style="display:flex;"><span>直接在`Menu`容器中绑定鼠标坐标可能会遇到初始化顺序和属性绑定的时机问题。而在`MouseArea`的点击事件中动态设置`Menu`的坐标确保了这些坐标是在事件发生后获取的，因此是有效的。这是两种方法表现不同的主要原因。
+</span></span></code></pre></div><h2 id="008-属性property-vs-容器container">008: 属性property vs 容器container</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>属性（Property）：
+</span></span><span style="display:flex;"><span>    属性在 QML 中是一种定义对象或元素特征的方式。属性可以是简单的值（如 color、width、height），也可以是更复杂的对象（如 Item、Rectangle）。
+</span></span><span style="display:flex;"><span>    当属性持有复杂对象时，这些对象可以被视为容器，因为它们可以包含其他元素，并通过大括号 {} 来定义。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>容器（Container）：
+</span></span><span style="display:flex;"><span>    容器通常是指那些能够包含其他 QML 元素的对象。例如，Rectangle、Item、Column 都是典型的容器元素，因为它们可以在大括号 {} 内定义其他元素。
+</span></span></code></pre></div>
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-f496d77e14cb6b42d6c47eb2588f6967">QML Options</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-02" class="text-body-secondary">2024年08月02日</time>
+        
+	</div>
+	<p>理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：</p>
+<h1 id="顶层容器类型"><strong>顶层容器类型</strong></h1>
+<pre tabindex="0"><code>ApplicationWindow
+    用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。
+    导入模块：QtQuick.Controls
+
+Window
+    用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。
+    导入模块：QtQuick.Window
+
+Dialog
+    用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。
+    导入模块：QtQuick.Controls
+
+Popup
+    用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。
+    导入模块：QtQuick.Controls
+
+Item
+    用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。
+    导入模块：QtQuick
+
+Rectangle
+    用途：用于创建简单的矩形区域，常用于布局和装饰。
+    导入模块：QtQuick
+
+Application
+    用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。
+    导入模块：QtQuick
+</code></pre><p>示例代码</p>
+<p>以下是每个顶层容器的简单示例：</p>
+<h4 id="1-applicationwindow"><code>1. ApplicationWindow</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ApplicationWindow</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;ApplicationWindow Example&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="2-window"><code>2. Window</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Window</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Window Example&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="3-dialog"><code>3. Dialog</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Dialog</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">400</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">300</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Dialog Example&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">standardButtons</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">Dialog</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Ok</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">Dialog</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Cancel</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="4-popup"><code>4. Popup</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Controls</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Popup</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">200</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">Text</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">centerIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Popup Example&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="5-item"><code>5. Item</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;blue&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="6-rectangle"><code>6. Rectangle</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;lightgray&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">Text</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">centerIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Rectangle Example&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="7-application"><code>7. Application</code></h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">import</span> <span style="color:#000">QtQuick</span> <span style="color:#0000cf;font-weight:bold">6.2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Application</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">app</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;blue&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="顶层容器结构">顶层容器结构</h4>
+<p>顶层容器的结构通常如下：</p>
+<pre><code>Application 或 ApplicationWindow 或 Window 或 Dialog 或 Popup
+    子元素：Item, Rectangle, Text, Button, ListView 等各种 UI 元素
+</code></pre>
+<h4 id="示例">示例：</h4>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">ApplicationWindow</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">visible</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">800</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#0000cf;font-weight:bold">600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">title</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;App Structure Example&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">height</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">color</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;lightgray&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">Text</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">centerIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">text</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;Hello, World!&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>这些顶层容器类型及其结构可以根据具体需求选择和使用，从而满足不同类型的应用程序设计需求。</p>
+<h1 id="关键字property"><strong>关键字：Property</strong></h1>
+<p>让我们深入探讨一下 QML 中 <code>property</code> 的作用、外部访问的机制，以及如何决定属性是否暴露给外部。</p>
+<h3 id="1-qml-中的属性访问机制">1. <strong>QML 中的属性访问机制</strong></h3>
+<h4 id="内置属性如"><strong>内置属性（如 <code>height</code>、<code>width</code> 等）</strong></h4>
+<ul>
+<li>
+<p><strong>内置属性</strong>：QML 中的某些属性，如 <code>height</code>、<code>width</code>、<code>color</code> 等，是组件自带的内置属性，这些属性默认是对外暴露的。因此，父组件可以直接访问和设置这些属性。</p>
+</li>
+<li>
+<p><strong>访问方式</strong>：这些内置属性在定义组件时自动提供，可以直接通过组件的 <code>id</code> 在外部访问，例如：</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">height:</span> <span style="color:#0000cf;font-weight:bold">50</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#000">rect</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span>  <span style="color:#8f5902;font-style:italic">// 直接访问 rect 的 width 属性
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h3 id="2-property">2. <strong><code>property</code> 的作用</strong></h3>
+<h4 id="定义自定义属性"><strong>定义自定义属性</strong></h4>
+<ul>
+<li><strong>扩展属性</strong>：通过 <code>property</code>，你可以定义组件的自定义属性，这些属性不是组件的内置属性。<code>property</code> 使得这些自定义属性能够被外部访问和修改。例如，你可能会定义一个 <code>property</code> 来跟踪某个状态：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#204a87;font-weight:bold">myCustomHeight:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">Item</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#000">rect</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">myCustomHeight</span>  <span style="color:#8f5902;font-style:italic">// 访问自定义的 myCustomHeight 属性
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="绑定和初始值"><strong>绑定和初始值</strong></h4>
+<ul>
+<li><strong>属性绑定</strong>：<code>property</code> 可以与其他属性或表达式绑定，这使得属性之间能够自动更新。例如：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#204a87;font-weight:bold">myCustomHeight:</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">/</span> <span style="color:#0000cf;font-weight:bold">2</span>  <span style="color:#8f5902;font-style:italic">// myCustomHeight 随着 width 的变化而变化
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#0000cf;font-weight:bold">200</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h4 id="暴露内部状态"><strong>暴露内部状态</strong></h4>
+<ul>
+<li><strong>状态管理</strong>：你可以通过 <code>property</code> 把组件的内部状态暴露给外部，从而实现更好的封装和模块化设计。例如，定义一个 <code>property</code> 来暴露内部的计算结果：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">property</span> <span style="color:#000">real</span> <span style="color:#204a87;font-weight:bold">area:</span> <span style="color:#000">width</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">height</span>  <span style="color:#8f5902;font-style:italic">// 暴露矩形的面积
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><h3 id="3-内部变量与">3. <strong>内部变量与 <code>property</code> 的区别</strong></h3>
+<ul>
+<li>
+<p><strong>局部变量</strong>：如果你只需要在组件内部使用某个值或状态，通常不会使用 <code>property</code>，而是使用局部变量或 JavaScript 变量。局部变量不会暴露给外部，也不会通过 <code>id</code> 访问到。</p>
+<ul>
+<li><strong>局部变量示例</strong>：
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-qml" data-lang="qml"><span style="display:flex;"><span><span style="color:#000">Rectangle</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">id: rect</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">width:</span> <span style="color:#0000cf;font-weight:bold">100</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">height:</span> <span style="color:#0000cf;font-weight:bold">50</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">internalValue</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">200</span>  <span style="color:#8f5902;font-style:italic">// 只在这个组件内部可见的变量
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p><strong><code>property</code> 的作用</strong>：<code>property</code> 主要用于定义和管理组件的外部可见状态或配置。通过 <code>property</code>，你可以把组件的某些内部状态暴露出来，供父组件或外部组件访问。</p>
+</li>
+</ul>
+<h3 id="4-总结">4. <strong>总结：<code>property</code> 的功能与外部访问</strong></h3>
+<ul>
+<li>
+<p><strong>外部访问</strong>：内置属性（如 <code>height</code>、<code>width</code>）默认是暴露给外部的，而通过 <code>property</code> 定义的属性也会暴露给外部。没有 <code>property</code> 修饰的局部变量则不会被外部访问到。</p>
+</li>
+<li>
+<p><strong><code>property</code> 的用途</strong>：<code>property</code> 主要用于定义组件的自定义属性、管理属性绑定、或暴露内部状态给外部。<code>property</code> 还允许你为自定义属性设置初始值，并支持动态绑定。</p>
+</li>
+<li>
+<p><strong>局部变量 vs <code>property</code></strong>：如果你不希望某个状态或值被外部访问，且只需要在组件内部使用，那么应使用局部变量或 JavaScript 变量，而不是 <code>property</code>。<code>property</code> 用于那些需要外部访问和管理的属性。</p>
+</li>
+</ul>
+<p>通过理解这些概念，你可以更好地设计和组织 QML 代码，确保组件之间的低耦合性和良好的封装性。</p>
+<h2 id="003singleton-单例对象">003.<strong>Singleton 单例对象</strong></h2>
+<h3 id="使用场景"><strong>使用场景</strong></h3>
+<ol>
+<li>
+<p>可以是要在外部动态的设置某一个程序的属性，让整个程序的其他组件都因此做出改变，可以用singleton</p>
+<p><a href="https://juejin.cn/post/6959740008240513037">QML Styling 及 Singleton 使用方法浅谈 - 掘金</a></p>
+</li>
+<li>
+<p>希望精简，模块不要反复被创建</p>
+</li>
+</ol>
+<h3 id="必要步骤在相应的qml文件的顶行写pragma-singleton"><strong>【必要步骤】在相应的qml文件的顶行写pragma Singleton</strong></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">pragma</span> <span style="color:#000">Singleton</span>
+</span></span></code></pre></div><p><code>注意这条语句要写在import 语句之前</code></p>
+<h3 id="必要步骤需要在相应的cmakelisttxt里设置qt_"><strong>【必要步骤】需要在相应的CMakeList.txt里设置QT_QML_SINGLETON_TYPE 为TRUE</strong></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">set_source_files_properties</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">First_Color_Scheme</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span> <span style="color:#000">PROPERTIES</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">QT_QML_SINGLETON_TYPE</span> <span style="color:#000">TRUE</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>在哪一个CMakeList.txt呢？</p>
+<p>我的qml文件处在项目根目录下的一个叫content的文件夹中</p>
+<p>这个文件夹是专门存放所有qml文件的</p>
+<p>在content下有一个CMakeList.txt</p>
+<p>（不要放到项目根目录下的CMakeList.txt里面-因为放进去也没用）</p>
+</li>
+<li>
+<p>设置完会怎么样，请看build之后的目录下：</p>
+<p>build\6_5_3_MSVC2019_x64-Debug\qml\content\qmldir</p>
+<p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/0516fb73-40ac-4ee0-bc2c-1fbf9ce55b9b/Untitled.png" alt="Untitled"></p>
+</li>
+<li>
+<p>设置技巧</p>
+<p>本语句的位置不能低于qt6_add_qml_module（或qt_add_qml_module）</p>
+<p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/bf1470a6-0401-44a7-b7f5-350f9312960d/Untitled.png" alt="Untitled"></p>
+</li>
+</ul>
+<h3 id="必要步骤需要在相应的cmakelisttxt里创建单例模块singleton-module独立于其他qml模块"><strong>【必要步骤】需要在相应的CMakeList.txt里创建单例模块Singleton Module（独立于其他QML模块）</strong></h3>
+<ul>
+<li>CMakeLists.txt的相关代码</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">qt6_add_qml_module</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">singleton</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">URI</span> <span style="color:#4e9a06">&#34;singleton&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">VERSION</span> <span style="color:#0000cf;font-weight:bold">1.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">QML_FILES</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">Color</span><span style="color:#ce5c00;font-weight:bold">/</span><span style="color:#000">First_Color_Scheme</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">qml</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span>
+</span></span></code></pre></div><p><code>这里的URI很重要，最后我们要调用的地方，都需要import，而import后面的模块名称就是看URI的。</code></p>
+<h4 id="为什么一定要再这里创建单例模块呢"><strong>为什么一定要再这里创建单例模块呢？</strong></h4>
+<p>按照微软的文档：</p>
+<p><img src="/2024/August/10/singleton.png" alt="singleton.png"></p>
+<p>我们就是需要去把它做成一个模块的</p>
+<h3 id="必要步骤调用singleton-object单例对象的办法"><strong>【必要步骤】调用singleton object（单例对象）的办法</strong></h3>
+<ul>
+<li>
+<p>不能用的办法1：创建它</p>
+<ul>
+<li>
+<p>代码</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">Second_TitleBar</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">bID_Instance_Module_TitleBar</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">anchors</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">top</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">top</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">parent</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div></li>
+<li>
+<p>例如这种方法，就是去创建一个单例对象，这样会提示错误</p>
+<p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/7cf70678-01e2-4d1d-a8c7-462045ac5e56/Untitled.png" alt="Untitled"></p>
+</li>
+<li>
+<p>错误信息</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>11:00:01: Starting C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe...
+</span></span><span style="display:flex;"><span>DLL_PROCESS_ATTACH: The DLL has been attached to the process at 00007FF902D40000
+</span></span><span style="display:flex;"><span>QML debugging is enabled. Only use this in a safe environment.
+</span></span><span style="display:flex;"><span>Ext_CreateAudioControl called.
+</span></span><span style="display:flex;"><span>ASCtl_Impl constructor called.
+</span></span><span style="display:flex;"><span>QQmlApplicationEngine failed to load component
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/Main/main.qml:7:1: Type App unavailable
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/App.qml:54:1: Type VolumeMixer unavailable
+</span></span><span style="display:flex;"><span>qrc:/qt/qml/content/VolumeMixer.qml:20:5: Composite Singleton Type Second_TitleBar is not creatable.
+</span></span><span style="display:flex;"><span>DLL_PROCESS_DETACH: The DLL has been detached from the process at 00007FF902D40000
+</span></span><span style="display:flex;"><span>11:00:01: C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe exited with code -1
+</span></span></code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>可能可以用的办法：把某个要作为单例的qml封装成一个module</p>
+<p>具体是在content/CMakeList.txt下，用qt6_add_qml_module去新建一个模块</p>
+<p>然后去import这个模块，例如import titlebar 1.0 / import controlpanel 1.0这样</p>
+<p>不过这个办法我也没有尝试过。</p>
+</li>
+<li>
+<p>需要注意：调用时要加入<code>Component.onCompleted: {</code></p>
+<p>已经在多处都看见这种做法了</p>
+<p><a href="https://qt.0voice.com/?id=5269">QML中如何实现一个单例-QT开发中文网</a></p>
+<p>可能谈到调用就是异步的。</p>
+</li>
+</ul>
+<h3 id="相关的帖子"><strong>相关的帖子</strong></h3>
+<p><a href="https://doc.qt.io/qt-6/qml-singleton.html">Singletons in QML | Qt QML 6.7.2</a></p>
+<p><a href="https://forum.qt.io/topic/129738/singleton-qml-failed-to-load-as-module/2">Singleton QML failed to load as module</a></p>
+<p><a href="http://imaginativethinking.ca/make-qml-component-singleton/">How to make a QML Component a Singleton?</a></p>
+<p><a href="https://blog.csdn.net/HyEISN/article/details/130600566">Qt 创建 单例/Singleton qml 文件_pragma singleton-CSDN博客</a></p>
+<h2 id="004-qml中的signal--slot">004. QML中的signal &amp; slot</h2>
+<p>要点：</p>
+<ul>
+<li>1.信号要在本qml文件中的<code>顶层容器</code>中进行定义
+就算触发信号的位置是在本qml文件中嵌套的component里面，也都要在顶层容器中进行定义</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">rectangle</span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">signal</span> <span style="color:#000">Sig_Name_XXX</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><ul>
+<li>2.信号的使用必须加圆括号()，可以不必加分号；，否则会发不出去</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">signal</span> <span style="color:#000">Sig_Name_XXX</span><span style="color:#000;font-weight:bold">()</span>
+</span></span></code></pre></div><ul>
+<li>3.信号的传递必须一层一层的传上去（若你是一层一层的封装好模块的话）
+因为信号的接受者只能识别被它创建的那一个对象里面信号</li>
+</ul>
+<h2 id="container-image">container: Image</h2>
+<p>Property:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#000">sourceSize</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">width</span><span style="color:#ce5c00;font-weight:bold">:</span> 
+</span></span><span style="display:flex;"><span><span style="color:#000">sourceSize</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">height</span><span style="color:#ce5c00;font-weight:bold">:</span> 
+</span></span></code></pre></div><p>this property was used for recapture the source and made a new image internally.
+if image.width &amp; image.height are illegal value(e.g,. 0), the sourceSize will have the original size of this picture.</p>
+<h2 id="005-enum-qtwindowtype--flags-qtwindowflags"><strong>005. enum Qt::WindowType &amp; flags Qt::WindowFlags</strong></h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#8f5902;font-style:italic">// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">//设置无框的窗口
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">flags</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">FramelessWindowHint</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
+</span></span></span></code></pre></div><p><a href="https://doc.qt.io/qt-6/qt.html#WindowType-enum">enum Qt::WindowType
+flags Qt::WindowFlags</a></p>
+<p>它的逻辑是首先判断是什么窗口类型，可选项有</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cxx" data-lang="cxx"><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">1.</span> <span style="color:#000">Widget</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">2.</span> <span style="color:#000">Window</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">3.</span> <span style="color:#000">Dialog</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">4.</span> <span style="color:#000">Sheet</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">5.</span> <span style="color:#000">Drawer</span> <span style="color:#8f5902;font-style:italic">//outdated
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#0000cf;font-weight:bold">6.</span> <span style="color:#000">Popup</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">7.</span> <span style="color:#000">Tool</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">8.</span> <span style="color:#000">ToolTip</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">9.</span> <span style="color:#000">SplashScreen</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">10.</span> <span style="color:#000">SubWindow</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">11.</span> <span style="color:#000">ForeignWindow</span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">12.</span> <span style="color:#000">CoverWindow</span>
+</span></span></code></pre></div><p>所以这12种是所有的<code>窗口类型</code></p>
+<p>选择完我要的窗口Window，之后，我就可以进一步选择<code>窗口标志</code></p>
+<pre tabindex="0"><code>FramelessWindowHint
+CustomizeWindowHint
+</code></pre><p>当然flag可是不止这两种，但是目前我就主要用到了这两种，所以其他的以后再补充啦哈哈</p>
+<p>第一种就是无边框的窗体</p>
+<p>第二种就是自定义的窗体</p>
+<p>第二种接下来还有许多options是配合它出现的，也就是说，CustomizeWindowHint只是一个开关</p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+
+  
+
+<div class="td-content" style="page-break-before: always">
+    <h1 id="pg-6d64a40926b8626398b8b59604338f3a">QML工程里的content文件夹</h1>
+	
+	<div class="td-byline mb-4">
+		
+        
+		<time datetime="2024-08-02" class="text-body-secondary">2024年08月02日</time>
+        
+	</div>
+	<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>content文件夹里面管理着qml的模块，这样的模块可以有多个。 我这里的content文件夹，名字本身可以是其他的名字。有没有什么字符限制，这个暂时还不知道。</p>
+<h2 id="入口"><strong>入口</strong></h2>
+<p>在根目录下的main.qml</p>
+<p>/* This file is generated and only relevant for integrating the project into a Qt 6 and cmake based
+C++ project. */</p>
+<p>import QtQuick
+import content</p>
+<p>App {</p>
+<p>}</p>
+<h2 id="content-结构"><strong>content 结构</strong></h2>
+<p>根目录下有一个CMakeList.txt</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">### This file is automatically generated by Qt Design Studio.
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">### Do not change
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87">qt_add_library</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">content</span> <span style="color:#4e9a06">STATIC</span><span style="color:#000;font-weight:bold">)</span><span style="color:#a40000">
+</span></span></span><span style="display:flex;"><span><span style="color:#a40000"></span><span style="color:#204a87">qt6_add_qml_module</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">content</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">URI</span> <span style="color:#4e9a06">&#34;content&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">VERSION</span> <span style="color:#4e9a06">1.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">RESOURCE_PREFIX</span> <span style="color:#4e9a06">&#34;/qt/qml&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">QML_FILES</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">App.qml</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">Screen01.ui.qml</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">RESOURCES</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">fonts/fonts.txt</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">QML_FILES</span> <span style="color:#4e9a06">volume_mixer/a.qml</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">QML_FILES</span> <span style="color:#4e9a06">volume_mixer/b.qml</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">QML_FILES</span> <span style="color:#4e9a06">volume_mixer/c.qml</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">QML_FILES</span> <span style="color:#4e9a06">volume_mixer/d.qml</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">)</span><span style="color:#a40000">
+</span></span></span></code></pre></div><h2 id="references"><strong>References</strong></h2>
+<p><a href="https://doc.qt.io/qt-6/qtqml-writing-a-module.html">1. 介绍QML的Extra_Module</a></p>
+
+</div>
+
+
+
+
+
+    
+	
+  
+
+
+
+          </main>
+        </div>
+      </div>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2025
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js" integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin="anonymous"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>
