@@ -1,0 +1,243 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>考勤分析器：一个由规则驱动的HR效率工具 | 嵌入式系统爱好者</title>
+<meta name="description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
+<meta property="og:url" content="https://potterwhite.github.io/portfolio/attendance-analyzer-cn/">
+  <meta property="og:site_name" content="嵌入式系统爱好者">
+  <meta property="og:title" content="考勤分析器：一个由规则驱动的HR效率工具">
+  <meta property="og:description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="portfolio">
+    <meta property="article:published_time" content="2025-07-10T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-10T00:00:00+00:00">
+
+  <meta itemprop="name" content="考勤分析器：一个由规则驱动的HR效率工具">
+  <meta itemprop="description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
+  <meta itemprop="datePublished" content="2025-07-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="50">
+  <meta itemprop="keywords" content="Portfolio,Employer">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="考勤分析器：一个由规则驱动的HR效率工具">
+  <meta name="twitter:description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
+<link rel="preload" href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" as="style" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<link href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" rel="stylesheet" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name">嵌入式系统爱好者</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/portfolio/"><span>我的项目</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/news/"><span>News</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/blog/"><span>博客文章</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/en/">English</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.1c973e871a1be4f5b640c99b359c2a4f.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="25"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        <h2 id="项目概述">项目概述</h2>
+<p>考勤分析器是一个为企业内部开发的效率工具，旨在解决复杂且耗时的员工考勤数据分析任务。它能够将原始的Excel导出数据，通过一个高度灵活、由规则驱动的引擎，转化为清晰、可执行的分析报告，极大地提升了HR部门的工作效率。</p>
+<hr>
+<h3 id="功能演示">功能演示</h3>
+<p>以下是一个简短的视频，演示了本应用的核心工作流程：从上传文件到查看多层级的分析报告。</p>
+<video width="100%" controls autoplay loop muted playsinline>
+  <source src="/2025/jul/2025-07-10_17-10-42.mp4" type="video/mp4">
+  您的浏览器不支持 HTML5 视频标签。
+</video>
+<br>
+<hr>
+<h2 id="核心功能与技术栈">核心功能与技术栈</h2>
+<ul>
+<li><strong>规则驱动引擎</strong>: 所有的分析逻辑都由一个简单的 <code>rules.toml</code> 文件控制，使得适应政策变化无需修改代码。</li>
+<li><strong>全面的分析指标</strong>: 精确计算出勤天数、各类加班时长、迟到、早退，并独立追踪缺卡与缺勤。</li>
+<li><strong>双视图报告系统</strong>: 可同时生成用于通用布告的“公开版报告”和用于深入审计的“详细版报告”。</li>
+<li><strong>技术栈</strong>: <strong>Python</strong> (后端逻辑), <strong>Pandas</strong> (数据处理), <strong>Streamlit</strong> (Web界面), <strong>TOML</strong> (配置管理)。</li>
+</ul>
+<h2 id="核心算法设计-v1-6">核心算法设计 (V1.6)</h2>
+<p>作为本项目的设计者，我定义了一套严谨的考勤分析算法，它是整个工具的“大脑”。这套算法的核心思想是客观、公平地量化考勤事件，其主要规则如下：</p>
+<h4 id="1-工作单元状态判定">1. 工作单元状态判定</h4>
+<p>每个工作单元（半天）会被精确判定为以下三种状态之一：</p>
+<ul>
+<li><strong>有效出勤</strong>: 上下班均有有效打卡。</li>
+<li><strong>缺勤</strong>: 上下班均缺卡。</li>
+<li><strong>异常</strong>: 其他任何情况（如单次缺卡）。</li>
+</ul>
+<h4 id="2-有效出勤-优先原则">2. “有效出勤”优先原则</h4>
+<p>所有关于迟到、早退和自愿加班的计算，都<strong>只在“有效出勤”的单元内进行</strong>，确保了数据的严谨性。</p>
+<h4 id="3-严重迟到处理">3. 严重迟到处理</h4>
+<p>当迟到超过设定的阈值时，该工作单元从“实际打卡时间”到“应下班时间”的整个时间段，将被计算为加班时间。</p>
+<h4 id="4-灵活的加班计算">4. 灵活的加班计算</h4>
+<p>总加班时长由两部分构成：“自愿加班”（下午下班后，超过延迟门槛的时间）和“因严重迟到产生的加班”。</p>
+<h2 id="项目背后的故事">项目背后的故事</h2>
+<p>本项目是现代AI辅助开发模式的一次成功实践。约95%的代码是在与大语言模型（LLM）的协作下生成的。在此过程中，我的角色从传统的“编码者”转变为项目的**“架构师、导演和品控负责人”**。</p>
+<p>这种人机协作的伙伴关系，将原本预估需要1-2周的开发周期，显著缩短到了几天之内，展示了一种快速、高质量软件创造的新范式。</p>
+<hr>
+<p><em>本项目为公司内部资产，其源代码不对外公开。</em></p>
+
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Stack Overflow" aria-label="Stack Overflow">
+    <a target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2025
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js" integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin="anonymous"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

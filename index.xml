@@ -6,8 +6,15 @@
     <description>Recent content in 欢迎光临 on 嵌入式系统爱好者</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 10 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Jul 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>考勤分析器：一个由规则驱动的HR效率工具</title>
+      <link>https://potterwhite.github.io/portfolio/attendance-analyzer-cn/</link>
+      <pubDate>Thu, 10 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/portfolio/attendance-analyzer-cn/</guid>
+      <description>&lt;h2 id=&#34;项目概述&#34;&gt;项目概述&lt;/h2&gt;&#xA;&lt;p&gt;考勤分析器是一个为企业内部开发的效率工具，旨在解决复杂且耗时的员工考勤数据分析任务。它能够将原始的Excel导出数据，通过一个高度灵活、由规则驱动的引擎，转化为清晰、可执行的分析报告，极大地提升了HR部门的工作效率。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;功能演示&#34;&gt;功能演示&lt;/h3&gt;&#xA;&lt;p&gt;以下是一个简短的视频，演示了本应用的核心工作流程：从上传文件到查看多层级的分析报告。&lt;/p&gt;&#xA;&lt;video width=&#34;100%&#34; controls autoplay loop muted playsinline&gt;&#xA;  &lt;source src=&#34;https://potterwhite.github.io/2025/jul/2025-07-10_17-10-42.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;  您的浏览器不支持 HTML5 视频标签。&#xA;&lt;/video&gt;&#xA;&lt;br&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;核心功能与技术栈&#34;&gt;核心功能与技术栈&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;规则驱动引擎&lt;/strong&gt;: 所有的分析逻辑都由一个简单的 &lt;code&gt;rules.toml&lt;/code&gt; 文件控制，使得适应政策变化无需修改代码。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;全面的分析指标&lt;/strong&gt;: 精确计算出勤天数、各类加班时长、迟到、早退，并独立追踪缺卡与缺勤。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;双视图报告系统&lt;/strong&gt;: 可同时生成用于通用布告的“公开版报告”和用于深入审计的“详细版报告”。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;技术栈&lt;/strong&gt;: &lt;strong&gt;Python&lt;/strong&gt; (后端逻辑), &lt;strong&gt;Pandas&lt;/strong&gt; (数据处理), &lt;strong&gt;Streamlit&lt;/strong&gt; (Web界面), &lt;strong&gt;TOML&lt;/strong&gt; (配置管理)。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;核心算法设计-v1-6&#34;&gt;核心算法设计 (V1.6)&lt;/h2&gt;&#xA;&lt;p&gt;作为本项目的设计者，我定义了一套严谨的考勤分析算法，它是整个工具的“大脑”。这套算法的核心思想是客观、公平地量化考勤事件，其主要规则如下：&lt;/p&gt;&#xA;&lt;h4 id=&#34;1-工作单元状态判定&#34;&gt;1. 工作单元状态判定&lt;/h4&gt;&#xA;&lt;p&gt;每个工作单元（半天）会被精确判定为以下三种状态之一：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;有效出勤&lt;/strong&gt;: 上下班均有有效打卡。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;缺勤&lt;/strong&gt;: 上下班均缺卡。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;异常&lt;/strong&gt;: 其他任何情况（如单次缺卡）。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h4 id=&#34;2-有效出勤-优先原则&#34;&gt;2. “有效出勤”优先原则&lt;/h4&gt;&#xA;&lt;p&gt;所有关于迟到、早退和自愿加班的计算，都&lt;strong&gt;只在“有效出勤”的单元内进行&lt;/strong&gt;，确保了数据的严谨性。&lt;/p&gt;&#xA;&lt;h4 id=&#34;3-严重迟到处理&#34;&gt;3. 严重迟到处理&lt;/h4&gt;&#xA;&lt;p&gt;当迟到超过设定的阈值时，该工作单元从“实际打卡时间”到“应下班时间”的整个时间段，将被计算为加班时间。&lt;/p&gt;&#xA;&lt;h4 id=&#34;4-灵活的加班计算&#34;&gt;4. 灵活的加班计算&lt;/h4&gt;&#xA;&lt;p&gt;总加班时长由两部分构成：“自愿加班”（下午下班后，超过延迟门槛的时间）和“因严重迟到产生的加班”。&lt;/p&gt;&#xA;&lt;h2 id=&#34;项目背后的故事&#34;&gt;项目背后的故事&lt;/h2&gt;&#xA;&lt;p&gt;本项目是现代AI辅助开发模式的一次成功实践。约95%的代码是在与大语言模型（LLM）的协作下生成的。在此过程中，我的角色从传统的“编码者”转变为项目的**“架构师、导演和品控负责人”**。&lt;/p&gt;&#xA;&lt;p&gt;这种人机协作的伙伴关系，将原本预估需要1-2周的开发周期，显著缩短到了几天之内，展示了一种快速、高质量软件创造的新范式。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;em&gt;本项目为公司内部资产，其源代码不对外公开。&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>IMMNotificationClient Callback Problem</title>
       <link>https://potterwhite.github.io/blog/2024/10/10/immnotificationclient-callback-problem/</link>
@@ -308,13 +315,6 @@
       <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
       <guid>https://potterwhite.github.io/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/</guid>
       <description>&lt;h3 id=&#34;堕胎&#34;&gt;堕胎&lt;/h3&gt;&#xA;&lt;p&gt;&lt;strong&gt;堕胎的定义&lt;/strong&gt;&#xA;堕胎，这个词，在所所在的中国大陆的社会层面上，我个人认为的一般性理解是：在孩子尚未出母腹，终止孩子的生命。&lt;/p&gt;&#xA;&lt;h3 id=&#34;被挤占的空间&#34;&gt;被挤占的空间&lt;/h3&gt;&#xA;&lt;p&gt;孩子的成形，就已经开始挤占大人的空间。&#xA;母亲最开始可能有的妊娠反应，呕吐，食欲不振&#xA;父亲为了照顾状态时时变化中的母亲，需要不断把注意力分散到母亲和孩子身上。&lt;/p&gt;&#xA;&lt;p&gt;中期，可能会有身材的改变，体力的改变，衣服变得无法适用，需要全新的。体力也不如之前好，大着肚子要做家务和工作都是困难重重。&#xA;父亲将需要在这段时期，带着对母亲的心疼，走过相对感情上不用受到太多冲击的时期。因为前期和晚期都是巨大的变化，父亲需要接受小家伙的被发现以及小家伙的诞生。&#xA;说“当父亲不就是这样吗？”那是父亲完全能够应付当下的状况，若是当下状况已经不容易，那么父亲还要面对家庭开支方面的考量，增加工作时间和强度等。&lt;/p&gt;&#xA;&lt;p&gt;后期，母亲辗转难眠，手脚可能肿胀甚至变形。&#xA;父亲也需要随时准备好照顾母亲的身体和心理需要。&lt;/p&gt;&#xA;&lt;p&gt;出生后，更是不得了，叽叽呱呱的，喝奶、换尿布、防止跌落、扶着走路、早起不睡、晚上也不甘心入睡、入睡一半醒来哭闹喝奶去客厅转转&#xA;空间没被挤占吗？那不可能的。&#xA;我的同事每天轻轻松松，想去哪里就去哪里，随时考虑人生的其他大计划（换城市、出国、升学、考公等）&lt;/p&gt;&#xA;&lt;h3 id=&#34;不乐意的礼物&#34;&gt;不乐意的礼物&lt;/h3&gt;&#xA;&lt;p&gt;被挤占空间这回事，很可能是神给大人成长的必经之路。&#xA;大人已经很习惯于“我就是牛马，绝不让资本家继续奴役我的孩子，所以我不生了，也不结婚，一分钱都别想赚”&#xA;其实，这是不认识神的思考。&lt;/p&gt;&#xA;&lt;p&gt;孩子的一生受到父母的干预其实是越来越少的，就算到结婚生子还干预的，也都陷入巨大的家庭冲突和婚姻矛盾里。&#xA;孩子的一生需要学习去荣耀神。&#xA;当牛马，也不代表这个所谓的“资本家”在决定孩子的人生。&lt;/p&gt;&#xA;&lt;p&gt;为何父母如此担心孩子当牛马，因为父母自己就挣脱不出来，并且父母认为自己的孩子同样挣脱不出来。&#xA;正是这种对未来的无力感，见证了父母对神是不认识的。&lt;/p&gt;&#xA;&lt;p&gt;多少个王朝的更替，多少强势君王的兴起和没落，但神的掌权却超越时间。&#xA;神带领在埃及做牛马的以色列人离开埃及&lt;/p&gt;&#xA;&lt;p&gt;未完&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>我的项目</title>
-      <link>https://potterwhite.github.io/portfolio/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/portfolio/</guid>
-      <description></description>
     </item>
   </channel>
 </rss>
