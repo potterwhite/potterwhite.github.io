@@ -143,5 +143,17 @@
     <loc>https://potterwhite.github.io/en/community/</loc>
   </url><url>
     <loc>https://potterwhite.github.io/en/search/</loc>
+  </url><url>
+    <loc>https://potterwhite.github.io/en/portfolio/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://potterwhite.github.io/portfolio/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://potterwhite.github.io/en/portfolio/"
+                />
   </url>
 </urlset>

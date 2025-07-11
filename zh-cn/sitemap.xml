@@ -340,6 +340,16 @@
                 href="https://potterwhite.github.io/tags/"
                 />
   </url><url>
-    <loc>https://potterwhite.github.io/project/</loc>
+    <loc>https://potterwhite.github.io/portfolio/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://potterwhite.github.io/en/portfolio/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://potterwhite.github.io/portfolio/"
+                />
   </url>
 </urlset>
