@@ -134,7 +134,7 @@
     aria-label="Search this site…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.8164a46626a78f51610b6f5877ea3e76.json"
+    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="25"
   >
@@ -149,22 +149,22 @@
 <p>The Attendance Analyzer is an <strong>in-house efficiency tool</strong> developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.</p>
 <hr>
 <h3 id="demo">Demo</h3>
-<p>Below is a short video demonstrating the application's core workflow, from uploading a file to viewing the multi-layered analysis reports.</p>
+<p>Below is a short video demonstrating the application&rsquo;s core workflow, from uploading a file to viewing the multi-layered analysis reports.</p>
 <video width="100%" controls autoplay loop muted playsinline>
   <source src="/2025/jul/2025-07-10_17-10-42.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 <br>
 <hr>
-<h2 id="core-features-tech-stack">Core Features &amp; Tech Stack</h2>
+<h2 id="core-features--tech-stack">Core Features &amp; Tech Stack</h2>
 <ul>
 <li><strong>Rule-Driven Engine</strong>: All analysis logic is controlled by a simple <code>rules.toml</code> file, allowing for easy adaptation to policy changes without modifying the source code.</li>
 <li><strong>Comprehensive Metrics</strong>: Accurately calculates attended days, various types of overtime, lateness, early departures, and independently tracks missing punches and absent days.</li>
-<li><strong>Dual-View Reporting</strong>: Generates both a high-level &quot;Public Report&quot; for general announcements and a &quot;Detailed Report&quot; for in-depth audits.</li>
+<li><strong>Dual-View Reporting</strong>: Generates both a high-level &ldquo;Public Report&rdquo; for general announcements and a &ldquo;Detailed Report&rdquo; for in-depth audits.</li>
 <li><strong>Tech Stack</strong>: <strong>Python</strong> (backend logic), <strong>Pandas</strong> (data manipulation), <strong>Streamlit</strong> (web interface), <strong>TOML</strong> (configuration).</li>
 </ul>
-<h2 id="core-algorithm-design-v1-6">Core Algorithm Design (V1.6)</h2>
-<p>As the project's architect, I designed a rigorous attendance analysis algorithm that serves as the &quot;brain&quot; of the tool. The core principle of this algorithm is to quantify attendance events objectively and fairly, based on the following key rules:</p>
+<h2 id="core-algorithm-design-v16">Core Algorithm Design (V1.6)</h2>
+<p>As the project&rsquo;s architect, I designed a rigorous attendance analysis algorithm that serves as the &ldquo;brain&rdquo; of the tool. The core principle of this algorithm is to quantify attendance events objectively and fairly, based on the following key rules:</p>
 <h4 id="1-work-unit-state-determination">1. Work Unit State Determination</h4>
 <p>Each work unit (half-day) is precisely classified into one of three states:</p>
 <ul>
@@ -172,14 +172,14 @@
 <li><strong>Absent Unit</strong>: Both on-duty and off-duty punches are missing.</li>
 <li><strong>Abnormal Unit</strong>: Any other combination (e.g., a single missing punch).</li>
 </ul>
-<h4 id="2-attended-unit-first-principle">2. &quot;Attended Unit First&quot; Principle</h4>
-<p>All advanced calculations for lateness, early quits, and voluntary overtime are performed <strong>only within &quot;Attended Units&quot;</strong>, ensuring data integrity.</p>
+<h4 id="2-attended-unit-first-principle">2. &ldquo;Attended Unit First&rdquo; Principle</h4>
+<p>All advanced calculations for lateness, early quits, and voluntary overtime are performed <strong>only within &ldquo;Attended Units&rdquo;</strong>, ensuring data integrity.</p>
 <h4 id="3-severe-lateness-handling">3. Severe Lateness Handling</h4>
 <p>When lateness exceeds a defined threshold, the entire duration of that work unit, from the actual punch-in time to the scheduled punch-out time, is calculated as overtime.</p>
 <h4 id="4-flexible-overtime-calculation">4. Flexible Overtime Calculation</h4>
-<p>Total overtime is composed of two parts: &quot;Voluntary Overtime&quot; (time worked after the afternoon shift, beyond a delay threshold) and &quot;Overtime from Severe Lateness&quot;.</p>
+<p>Total overtime is composed of two parts: &ldquo;Voluntary Overtime&rdquo; (time worked after the afternoon shift, beyond a delay threshold) and &ldquo;Overtime from Severe Lateness&rdquo;.</p>
 <h2 id="the-story-behind-the-project">The Story Behind The Project</h2>
-<p>This project is a successful case study in modern, AI-assisted development. Approximately 95% of the code was generated in collaboration with a Large Language Model (LLM). Throughout this process, my role evolved from a traditional &quot;coder&quot; to that of the project's <strong>Architect, Director, and Quality Assurance Lead</strong>.</p>
+<p>This project is a successful case study in modern, AI-assisted development. Approximately 95% of the code was generated in collaboration with a Large Language Model (LLM). Throughout this process, my role evolved from a traditional &ldquo;coder&rdquo; to that of the project&rsquo;s <strong>Architect, Director, and Quality Assurance Lead</strong>.</p>
 <p>This human-AI partnership significantly reduced the development lifecycle from an estimated 1-2 weeks to just a few days, demonstrating a new paradigm for rapid, high-quality software creation.</p>
 <hr>
 <p><em>This project was developed as an internal corporate asset, and its source code is not publicly available.</em></p>

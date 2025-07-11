@@ -137,7 +137,7 @@
     aria-label="站内搜索…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.8164a46626a78f51610b6f5877ea3e76.json"
+    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
     data-offline-search-base-href="/"
     data-offline-search-max-results="25"
   >
@@ -166,7 +166,7 @@
 <li><strong>双视图报告系统</strong>: 可同时生成用于通用布告的“公开版报告”和用于深入审计的“详细版报告”。</li>
 <li><strong>技术栈</strong>: <strong>Python</strong> (后端逻辑), <strong>Pandas</strong> (数据处理), <strong>Streamlit</strong> (Web界面), <strong>TOML</strong> (配置管理)。</li>
 </ul>
-<h2 id="核心算法设计-v1-6">核心算法设计 (V1.6)</h2>
+<h2 id="核心算法设计-v16">核心算法设计 (V1.6)</h2>
 <p>作为本项目的设计者，我定义了一套严谨的考勤分析算法，它是整个工具的“大脑”。这套算法的核心思想是客观、公平地量化考勤事件，其主要规则如下：</p>
 <h4 id="1-工作单元状态判定">1. 工作单元状态判定</h4>
 <p>每个工作单元（半天）会被精确判定为以下三种状态之一：</p>
@@ -175,7 +175,7 @@
 <li><strong>缺勤</strong>: 上下班均缺卡。</li>
 <li><strong>异常</strong>: 其他任何情况（如单次缺卡）。</li>
 </ul>
-<h4 id="2-有效出勤-优先原则">2. “有效出勤”优先原则</h4>
+<h4 id="2-有效出勤优先原则">2. “有效出勤”优先原则</h4>
 <p>所有关于迟到、早退和自愿加班的计算，都<strong>只在“有效出勤”的单元内进行</strong>，确保了数据的严谨性。</p>
 <h4 id="3-严重迟到处理">3. 严重迟到处理</h4>
 <p>当迟到超过设定的阈值时，该工作单元从“实际打卡时间”到“应下班时间”的整个时间段，将被计算为加班时间。</p>

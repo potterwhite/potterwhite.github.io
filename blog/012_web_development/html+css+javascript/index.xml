@@ -13,7 +13,7 @@
       <link>https://potterwhite.github.io/blog/2024/07/18/html-tricks/</link>
       <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
       <guid>https://potterwhite.github.io/blog/2024/07/18/html-tricks/</guid>
-      <description>&lt;details&gt;&#xD;&#xA;    &lt;summary&gt;&lt;strong&gt;001. what is the unit of &#34;em&#34;?&lt;strong&gt;&lt;/summary&gt;&#xD;&#xA;&lt;div style=&#34;padding-left: 2em;&#34;&gt;&#xD;&#xA;&lt;p&gt;&lt;code&gt;em&lt;/code&gt; does not have its full-name.&#xA;it standed for the width of alphabet &amp;quot;M&amp;quot;&#xA;now it always stands for the unit of with of font.&lt;/p&gt;&#xA;&lt;/div&gt;&#xD;&#xA;&lt;/details&gt;</description>
+      <description>&lt;details&gt;&#xD;&#xA;    &lt;summary&gt;&lt;strong&gt;001. what is the unit of &#34;em&#34;?&lt;strong&gt;&lt;/summary&gt;&#xD;&#xA;&lt;div style=&#34;padding-left: 2em;&#34;&gt;&#xD;&#xA;&lt;p&gt;&lt;code&gt;em&lt;/code&gt; does not have its full-name.&#xA;it standed for the width of alphabet &amp;ldquo;M&amp;rdquo;&#xA;now it always stands for the unit of with of font.&lt;/p&gt;&#xA;&lt;/div&gt;&#xD;&#xA;&lt;/details&gt;</description>
     </item>
   </channel>
 </rss>
