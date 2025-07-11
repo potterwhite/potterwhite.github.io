@@ -50,6 +50,74 @@
     <loc>https://potterwhite.github.io/en/blog/releases/</loc>
     <lastmod>2018-01-04T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://potterwhite.github.io/en/portfolio/attendance-analyzer-en/</loc>
+    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://potterwhite.github.io/en/categories/</loc>
+    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://potterwhite.github.io/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://potterwhite.github.io/en/categories/"
+                />
+  </url><url>
+    <loc>https://potterwhite.github.io/en/categories/employer/</loc>
+    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://potterwhite.github.io/categories/employer/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://potterwhite.github.io/en/categories/employer/"
+                />
+  </url><url>
+    <loc>https://potterwhite.github.io/en/</loc>
+    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://potterwhite.github.io/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://potterwhite.github.io/en/"
+                />
+  </url><url>
+    <loc>https://potterwhite.github.io/en/categories/portfolio/</loc>
+    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://potterwhite.github.io/categories/portfolio/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://potterwhite.github.io/en/categories/portfolio/"
+                />
+  </url><url>
+    <loc>https://potterwhite.github.io/en/portfolio/</loc>
+    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://potterwhite.github.io/portfolio/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://potterwhite.github.io/en/portfolio/"
+                />
+  </url><url>
     <loc>https://potterwhite.github.io/en/blog/</loc>
     <lastmod>2024-06-10T10:48:32+08:00</lastmod>
     <xhtml:link
@@ -63,19 +131,6 @@
                 href="https://potterwhite.github.io/en/blog/"
                 />
   </url><url>
-    <loc>https://potterwhite.github.io/en/</loc>
-    <lastmod>2024-06-10T10:48:32+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://potterwhite.github.io/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://potterwhite.github.io/en/"
-                />
-  </url><url>
     <loc>https://potterwhite.github.io/en/blog/2018/10/06/easy-documentation-with-docsy/</loc>
     <lastmod>2018-10-06T00:00:00+00:00</lastmod>
   </url><url>
@@ -87,19 +142,6 @@
   </url><url>
     <loc>https://potterwhite.github.io/en/docs/</loc>
     <lastmod>2017-01-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://potterwhite.github.io/en/categories/</loc>
-    <lastmod>2017-01-05T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://potterwhite.github.io/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://potterwhite.github.io/en/categories/"
-                />
   </url><url>
     <loc>https://potterwhite.github.io/en/tags/docs/</loc>
     <lastmod>2017-01-05T00:00:00+00:00</lastmod>
@@ -143,17 +185,5 @@
     <loc>https://potterwhite.github.io/en/search/</loc>
   </url><url>
     <loc>https://potterwhite.github.io/en/about/</loc>
-  </url><url>
-    <loc>https://potterwhite.github.io/en/portfolio/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://potterwhite.github.io/portfolio/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://potterwhite.github.io/en/portfolio/"
-                />
   </url>
 </urlset>

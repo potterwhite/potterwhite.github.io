@@ -6,7 +6,7 @@
     <description>Recent content in Goldydocs on Enthusiast of Embedded Systems</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Jul 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://potterwhite.github.io/en/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Overview</title>
@@ -86,6 +86,13 @@
       <description>&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;&#xA;&lt;p&gt;These basic sample guidelines assume that your Docsy site is deployed using Netlify and your files are stored in GitHub. You can use the guidelines &amp;quot;as is&amp;quot; or adapt them with your own instructions: for example, other deployment options, information about your doc project&#39;s file structure, project-specific review guidelines, versioning guidelines, or any other information your users might find useful when updating your site. &lt;a href=&#34;https://github.com/kubeflow/website/blob/master/README.md&#34;&gt;Kubeflow&lt;/a&gt; has a great example.&lt;/p&gt;&#xA;&lt;p&gt;Don&#39;t forget to link to your own doc repo rather than our example site! Also make sure users can find these guidelines from your doc repo README: either add them there and link to them from this page, add them here and link to them from the README, or include them in both locations.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Attendance Analyzer: A Rule-Driven HR Efficiency Tool</title>
+      <link>https://potterwhite.github.io/en/portfolio/attendance-analyzer-en/</link>
+      <pubDate>Thu, 10 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/en/portfolio/attendance-analyzer-en/</guid>
+      <description>&lt;h2 id=&#34;project-overview&#34;&gt;Project Overview&lt;/h2&gt;&#xA;&lt;p&gt;The Attendance Analyzer is an &lt;strong&gt;in-house efficiency tool&lt;/strong&gt; developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;demo&#34;&gt;Demo&lt;/h3&gt;&#xA;&lt;p&gt;Below is a short video demonstrating the application&#39;s core workflow, from uploading a file to viewing the multi-layered analysis reports.&lt;/p&gt;&#xA;&lt;video width=&#34;100%&#34; controls autoplay loop muted playsinline&gt;&#xA;  &lt;source src=&#34;https://potterwhite.github.io/2025/jul/2025-07-10_17-10-42.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;  Your browser does not support the video tag.&#xA;&lt;/video&gt;&#xA;&lt;br&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;core-features-tech-stack&#34;&gt;Core Features &amp;amp; Tech Stack&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rule-Driven Engine&lt;/strong&gt;: All analysis logic is controlled by a simple &lt;code&gt;rules.toml&lt;/code&gt; file, allowing for easy adaptation to policy changes without modifying the source code.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Comprehensive Metrics&lt;/strong&gt;: Accurately calculates attended days, various types of overtime, lateness, early departures, and independently tracks missing punches and absent days.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Dual-View Reporting&lt;/strong&gt;: Generates both a high-level &amp;quot;Public Report&amp;quot; for general announcements and a &amp;quot;Detailed Report&amp;quot; for in-depth audits.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Tech Stack&lt;/strong&gt;: &lt;strong&gt;Python&lt;/strong&gt; (backend logic), &lt;strong&gt;Pandas&lt;/strong&gt; (data manipulation), &lt;strong&gt;Streamlit&lt;/strong&gt; (web interface), &lt;strong&gt;TOML&lt;/strong&gt; (configuration).&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;core-algorithm-design-v1-6&#34;&gt;Core Algorithm Design (V1.6)&lt;/h2&gt;&#xA;&lt;p&gt;As the project&#39;s architect, I designed a rigorous attendance analysis algorithm that serves as the &amp;quot;brain&amp;quot; of the tool. The core principle of this algorithm is to quantify attendance events objectively and fairly, based on the following key rules:&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Easy documentation with Docsy</title>
       <link>https://potterwhite.github.io/en/blog/2018/10/06/easy-documentation-with-docsy/</link>
       <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
@@ -133,13 +140,6 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://potterwhite.github.io/en/about/</guid>
       <description>&lt;link rel=&#34;preload&#34; as=&#34;image&#34; href=&#34;https://potterwhite.github.io/en/about/featured-background_hu_f17a5c2a73b3f388.jpg&#34; media=&#34;(max-width: 1200px)&#34;&gt;&#xA;&lt;link rel=&#34;preload&#34; as=&#34;image&#34; href=&#34;https://potterwhite.github.io/en/about/featured-background_hu_d9e50e78593ab95e.jpg&#34; media=&#34;(min-width: 1200px)&#34;&gt;&#xA;&lt;style&gt;&#xA;#td-cover-block-0 {&#xA;  background-image: url(/en/about/featured-background_hu_f17a5c2a73b3f388.jpg);&#xA;}&#xA;@media only screen and (min-width: 1200px) {&#xA;  #td-cover-block-0 {&#xA;    background-image: url(/en/about/featured-background_hu_d9e50e78593ab95e.jpg);&#xA;  }&#xA;}&#xA;&lt;/style&gt;&#xA;&lt;section id=&#34;td-cover-block-0&#34; class=&#34;row td-cover-block td-cover-block--height-auto js-td-cover td-overlay td-overlay--dark -bg-dark&#34;&gt;&#xA;  &lt;div class=&#34;col-12&#34;&gt;&#xA;    &lt;div class=&#34;container td-overlay__inner&#34;&gt;&#xA;      &lt;div class=&#34;text-center&#34;&gt;&#xA;        &lt;h1 class=&#34;display-1 mt-0 mt-md-5 pb-4&#34;&gt;About Goldydocs&lt;/h1&gt;&#xA;        &#xA;        &lt;div class=&#34;pt-3 lead&#34;&gt;&#xA;          &#xA;              A sample site using the Docsy Hugo theme.&#xA;{.mt-5}&#xA;          &#xA;        &lt;/div&gt;&#xA;      &lt;/div&gt;&#xA;    &lt;/div&gt;&#xA;  &lt;/div&gt;&#xA;  &#xA;&lt;/section&gt;&#xA;&#xA;&lt;div&gt;&lt;a id=&#34;td-block-1&#34; class=&#34;td-offset-anchor&#34;&gt;&lt;/a&gt;&lt;/div&gt;&#xA;&lt;section class=&#34;row td-box td-box--1 position-relative td-box--height-auto&#34;&gt;&#xA;&lt;div class=&#34;col-12&#34;&gt;&#xA;&lt;div class=&#34;container text-center td-arrow-down&#34;&gt;&#xA;&lt;div class=&#34;h4 mb-0&#34;&gt;&#xA;&lt;p&gt;Goldydocs is a sample site using the &lt;a href=&#34;https://github.com/google/docsy&#34;&gt;Docsy&lt;/a&gt;&#xA;Hugo theme that shows what it can do and provides you with a template site&#xA;structure. It’s designed for you to clone and edit as much as you like. See the&#xA;different sections of the documentation and site for more ideas.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Portfolio</title>
-      <link>https://potterwhite.github.io/en/portfolio/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/portfolio/</guid>
-      <description></description>
     </item>
   </channel>
 </rss>
