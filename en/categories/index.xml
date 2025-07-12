@@ -1,39 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Enthusiast of Embedded Systems</title>
-    <link>https://potterwhite.github.io/en/categories/</link>
-    <description>Recent content in Categories on Enthusiast of Embedded Systems</description>
+    <title>Categories on </title>
+    <link>http://localhost:1313/en/categories/</link>
+    <description>Recent content in Categories on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 10 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/en/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Employer</title>
-      <link>https://potterwhite.github.io/en/categories/employer/</link>
-      <pubDate>Thu, 10 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/categories/employer/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Portfolio</title>
-      <link>https://potterwhite.github.io/en/categories/portfolio/</link>
-      <pubDate>Thu, 10 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/categories/portfolio/</guid>
-      <description></description>
-    </item>
+    <lastBuildDate>Thu, 05 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/en/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Examples</title>
-      <link>https://potterwhite.github.io/en/categories/examples/</link>
+      <link>http://localhost:1313/en/categories/examples/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/categories/examples/</guid>
+      <guid>http://localhost:1313/en/categories/examples/</guid>
       <description></description>
     </item>
     <item>
       <title>Placeholders</title>
-      <link>https://potterwhite.github.io/en/categories/placeholders/</link>
+      <link>http://localhost:1313/en/categories/placeholders/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/categories/placeholders/</guid>
+      <guid>http://localhost:1313/en/categories/placeholders/</guid>
       <description></description>
     </item>
   </channel>

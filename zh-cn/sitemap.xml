@@ -2,384 +2,392 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://potterwhite.github.io/blog/000_collection/</loc>
+    <loc>http://localhost:1313/blog/000_collection/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://potterwhite.github.io/en/"
+                href="http://localhost:1313/en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://potterwhite.github.io/"
+                href="http://localhost:1313/"
                 />
   </url><url>
-    <loc>https://potterwhite.github.io/blog/002_hugodocsy/</loc>
+    <loc>http://localhost:1313/blog/002_hugodocsy/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/003_erp/</loc>
+    <loc>http://localhost:1313/blog/003_erp/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/003_erp/003_001_erpnext/</loc>
+    <loc>http://localhost:1313/blog/003_erp/003_001_erpnext/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/004_ai/</loc>
+    <loc>http://localhost:1313/blog/004_ai/</loc>
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/004_ai/text-to-image/</loc>
+    <loc>http://localhost:1313/blog/004_ai/text-to-image/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/004_ai/esp32_llm/</loc>
+    <loc>http://localhost:1313/blog/004_ai/esp32_llm/</loc>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/005_tools/</loc>
+    <loc>http://localhost:1313/blog/005_tools/</loc>
     <lastmod>2024-08-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/005_tools/005_001_vscode/</loc>
+    <loc>http://localhost:1313/blog/005_tools/005_001_vscode/</loc>
     <lastmod>2024-07-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/005_tools/005_002_mermaid/</loc>
+    <loc>http://localhost:1313/blog/005_tools/005_002_mermaid/</loc>
     <lastmod>2024-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/005_tools/005_003_markdown/</loc>
+    <loc>http://localhost:1313/blog/005_tools/005_003_markdown/</loc>
     <lastmod>2024-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/006_devops/</loc>
+    <loc>http://localhost:1313/blog/006_devops/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/006_devops/006_001_ubuntu/</loc>
+    <loc>http://localhost:1313/blog/006_devops/006_001_ubuntu/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/006_devops/006_002_docker/</loc>
+    <loc>http://localhost:1313/blog/006_devops/006_002_docker/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/007_quantum/</loc>
+    <loc>http://localhost:1313/blog/007_quantum/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/008_compiler_linker/</loc>
+    <loc>http://localhost:1313/blog/008_compiler_linker/</loc>
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/010_linux_development/</loc>
+    <loc>http://localhost:1313/blog/010_linux_development/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/011_windows_development/</loc>
+    <loc>http://localhost:1313/blog/011_windows_development/</loc>
     <lastmod>2024-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/012_web_development/</loc>
+    <loc>http://localhost:1313/blog/012_web_development/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/012_web_development/html&#43;css&#43;javascript/</loc>
+    <loc>http://localhost:1313/blog/012_web_development/html&#43;css&#43;javascript/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/013_qt_development/</loc>
+    <loc>http://localhost:1313/blog/013_qt_development/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/013_qt_development/qt6/</loc>
+    <loc>http://localhost:1313/blog/013_qt_development/qt6/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/013_qt_development/qml/</loc>
+    <loc>http://localhost:1313/blog/013_qt_development/qml/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/014_cpu/</loc>
+    <loc>http://localhost:1313/blog/014_cpu/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/014_cpu/014_01_soc/</loc>
+    <loc>http://localhost:1313/blog/014_cpu/014_01_soc/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/</loc>
-    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://potterwhite.github.io/en/categories/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://potterwhite.github.io/categories/"
-                />
-  </url><url>
-    <loc>https://potterwhite.github.io/categories/employer/</loc>
-    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://potterwhite.github.io/en/categories/employer/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://potterwhite.github.io/categories/employer/"
-                />
-  </url><url>
-    <loc>https://potterwhite.github.io/categories/portfolio/</loc>
-    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://potterwhite.github.io/en/categories/portfolio/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://potterwhite.github.io/categories/portfolio/"
-                />
-  </url><url>
-    <loc>https://potterwhite.github.io/portfolio/attendance-analyzer-cn/</loc>
-    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://potterwhite.github.io/portfolio/</loc>
-    <lastmod>2025-07-10T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://potterwhite.github.io/en/portfolio/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://potterwhite.github.io/portfolio/"
-                />
-  </url><url>
-    <loc>https://potterwhite.github.io/categories/blog/</loc>
+    <loc>http://localhost:1313/categories/blog/</loc>
     <lastmod>2024-10-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/10/10/immnotificationclient-callback-problem/</loc>
-    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://potterwhite.github.io/categories/windows/</loc>
-    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://potterwhite.github.io/blog/</loc>
+    <loc>http://localhost:1313/categories/</loc>
     <lastmod>2024-10-10T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://potterwhite.github.io/en/blog/"
+                href="http://localhost:1313/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://potterwhite.github.io/blog/"
+                href="http://localhost:1313/categories/"
                 />
   </url><url>
-    <loc>https://potterwhite.github.io/categories/qml/</loc>
+    <loc>http://localhost:1313/blog/2024/10/10/immnotificationclient-callback-problem/</loc>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/windows/</loc>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/blog/</loc>
+    <lastmod>2024-10-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/blog/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/blog/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/categories/qml/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/09/06/qml-downgrade-from-6-to-5/</loc>
+    <loc>http://localhost:1313/blog/2024/09/06/qml-downgrade-from-6-to-5/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/09/06/qml-poor-performance-in-different-qt-sdk/</loc>
+    <loc>http://localhost:1313/blog/2024/09/06/qml-poor-performance-in-different-qt-sdk/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/qt-development/</loc>
+    <loc>http://localhost:1313/categories/qt-development/</loc>
     <lastmod>2024-09-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/news/aug/</loc>
+    <loc>http://localhost:1313/news/aug/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/30/chroma-subsampling%E6%98%AF%E4%BB%80%E4%B9%88/</loc>
+    <loc>http://localhost:1313/blog/2024/08/30/chroma-subsampling%E6%98%AF%E4%BB%80%E4%B9%88/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/cpu/</loc>
+    <loc>http://localhost:1313/categories/cpu/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/docsy/</loc>
+    <loc>http://localhost:1313/categories/docsy/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</loc>
+    <loc>http://localhost:1313/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/</loc>
+    <loc>http://localhost:1313/blog/2024/08/30/hdr%E7%9A%84%E6%A0%87%E5%87%86/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/news/</loc>
+    <loc>http://localhost:1313/categories/news/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/news/</loc>
+    <loc>http://localhost:1313/categories/soc/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/soc/</loc>
+    <loc>http://localhost:1313/news/</loc>
     <lastmod>2024-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90/</loc>
+    <loc>http://localhost:1313/blog/2024/08/29/%E9%9F%B3%E8%A7%86%E9%A2%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E6%B5%81%E5%88%86%E6%9E%90/</loc>
     <lastmod>2024-08-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/</loc>
+    <loc>http://localhost:1313/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/</loc>
     <lastmod>2024-08-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/19/q_property/</loc>
+    <loc>http://localhost:1313/blog/2024/08/19/q_property/</loc>
     <lastmod>2024-08-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/19/qml%E7%9A%84menu%E5%AE%B9%E5%99%A8/</loc>
+    <loc>http://localhost:1313/blog/2024/08/19/qml%E7%9A%84menu%E5%AE%B9%E5%99%A8/</loc>
     <lastmod>2024-08-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/qt/</loc>
+    <loc>http://localhost:1313/categories/qt/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/15/qt-deployment/</loc>
+    <loc>http://localhost:1313/blog/2024/08/15/qt-deployment/</loc>
     <lastmod>2024-08-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/microblog/</loc>
+    <loc>http://localhost:1313/categories/microblog/</loc>
     <lastmod>2024-08-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</loc>
+    <loc>http://localhost:1313/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</loc>
     <lastmod>2024-08-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/12/time-zone-map/</loc>
+    <loc>http://localhost:1313/blog/2024/08/12/time-zone-map/</loc>
     <lastmod>2024-08-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/tools/</loc>
+    <loc>http://localhost:1313/categories/tools/</loc>
     <lastmod>2024-08-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/10/qml-notes/</loc>
+    <loc>http://localhost:1313/blog/2024/08/10/qml-notes/</loc>
     <lastmod>2024-08-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/02/celebrity-quotes/</loc>
+    <loc>http://localhost:1313/blog/2024/08/02/celebrity-quotes/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/collection/</loc>
+    <loc>http://localhost:1313/categories/collection/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/02/qml-options/</loc>
+    <loc>http://localhost:1313/blog/2024/08/02/qml-options/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/02/qml%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84content%E6%96%87%E4%BB%B6%E5%A4%B9/</loc>
+    <loc>http://localhost:1313/blog/2024/08/02/qml%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84content%E6%96%87%E4%BB%B6%E5%A4%B9/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/02/reading-list/</loc>
+    <loc>http://localhost:1313/blog/2024/08/02/reading-list/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/theology/</loc>
+    <loc>http://localhost:1313/categories/theology/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/</loc>
+    <loc>http://localhost:1313/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</loc>
+    <loc>http://localhost:1313/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</loc>
     <lastmod>2024-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/ai/</loc>
+    <loc>http://localhost:1313/categories/ai/</loc>
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/01/chatgpt/</loc>
+    <loc>http://localhost:1313/blog/2024/08/01/chatgpt/</loc>
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</loc>
+    <loc>http://localhost:1313/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</loc>
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/quantum/</loc>
+    <loc>http://localhost:1313/categories/quantum/</loc>
     <lastmod>2024-08-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/31/asio/</loc>
+    <loc>http://localhost:1313/blog/2024/07/31/asio/</loc>
     <lastmod>2024-07-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/</loc>
+    <loc>http://localhost:1313/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/</loc>
     <lastmod>2024-07-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/devops/</loc>
+    <loc>http://localhost:1313/categories/devops/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</loc>
+    <loc>http://localhost:1313/blog/2024/07/19/devops-definition/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/19/grub-setting/</loc>
+    <loc>http://localhost:1313/blog/2024/07/19/grub-setting/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/19/quantum/</loc>
+    <loc>http://localhost:1313/blog/2024/07/19/quantum/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/ubuntu-ops/</loc>
+    <loc>http://localhost:1313/categories/ubuntu-ops/</loc>
     <lastmod>2024-07-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/cmake/</loc>
+    <loc>http://localhost:1313/categories/cmake/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/18/cmake-key-points-in-qt6/</loc>
+    <loc>http://localhost:1313/blog/2024/07/18/cmake-key-points-in-qt6/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/18/docsys-interesting-tricks/</loc>
+    <loc>http://localhost:1313/blog/2024/07/18/docsys-interesting-tricks/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/html/</loc>
+    <loc>http://localhost:1313/categories/html/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/18/html-tricks/</loc>
+    <loc>http://localhost:1313/blog/2024/07/18/html-tricks/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/qt6/</loc>
+    <loc>http://localhost:1313/categories/qt6/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/web-development/</loc>
+    <loc>http://localhost:1313/categories/web-development/</loc>
     <lastmod>2024-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/markdown/</loc>
+    <loc>http://localhost:1313/categories/markdown/</loc>
     <lastmod>2024-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
+    <loc>http://localhost:1313/blog/2024/07/17/markdown%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
     <lastmod>2024-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/mermaid/</loc>
+    <loc>http://localhost:1313/categories/mermaid/</loc>
     <lastmod>2024-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
+    <loc>http://localhost:1313/blog/2024/07/17/mermaid%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
     <lastmod>2024-07-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/vscode/</loc>
+    <loc>http://localhost:1313/categories/vscode/</loc>
     <lastmod>2024-07-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/12/vscode%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
+    <loc>http://localhost:1313/blog/2024/07/12/vscode%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</loc>
     <lastmod>2024-07-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/</loc>
+    <loc>http://localhost:1313/blog/2024/07/11/%E5%A3%B0%E5%8D%A1%E9%A1%B9%E7%9B%AE/</loc>
     <lastmod>2024-07-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/docker/</loc>
+    <loc>http://localhost:1313/categories/docker/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://localhost:1313/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/erp/</loc>
+    <loc>http://localhost:1313/categories/erp/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/categories/erpnext/</loc>
+    <loc>http://localhost:1313/categories/erpnext/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/</loc>
+    <loc>http://localhost:1313/blog/2024/07/10/%E4%B8%8Eerpnext%E7%9A%84%E5%88%9D%E6%AC%A1%E8%A7%81%E9%9D%A2/</loc>
     <lastmod>2024-07-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/06/14/kernel_test/</loc>
+    <loc>http://localhost:1313/blog/2024/06/14/kernel_test/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</loc>
+    <loc>http://localhost:1313/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/</loc>
+    <loc>http://localhost:1313/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/</loc>
     <lastmod>2024-06-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</loc>
+    <loc>http://localhost:1313/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/06/10/roe-v.-wade/</loc>
+    <loc>http://localhost:1313/blog/2024/06/10/roe-v.-wade/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/</loc>
+    <loc>http://localhost:1313/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/</loc>
     <lastmod>2024-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://potterwhite.github.io/tags/</loc>
+    <loc>http://localhost:1313/project_types/data-automation/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://potterwhite.github.io/en/tags/"
+                href="http://localhost:1313/en/project_types/data-automation/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="https://potterwhite.github.io/tags/"
+                href="http://localhost:1313/project_types/data-automation/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/project_types/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/project_types/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/project_types/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/project_types/python/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/project_types/python/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/project_types/python/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/tags/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/portfolio/attendace_analyzer/</loc>
+  </url><url>
+    <loc>http://localhost:1313/portfolio/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/en/portfolio/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="http://localhost:1313/portfolio/"
                 />
   </url>
 </urlset>

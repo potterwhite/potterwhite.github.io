@@ -1,9 +1,9 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -20,7 +20,7 @@
 <title>QtQuick工程里的main函数解析 | 嵌入式系统爱好者</title>
 <meta name="description" content="当然！这是对 main 函数的详细解读，涵盖了各个部分的功能和目的。
 代码逐行解释 int main(int argc, char *argv[]) { QGuiApplication::setAttribute(Qt::AA_UseSoftwareOpenGL); QGuiApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);：设置 Qt 应用程序的属性，强制使用软件渲染 OpenGL。这在没有硬件加速的环境中（例如某些虚拟机或嵌入式系统）非常有用，确保 OpenGL 渲染功能的兼容性。 set_qt_environment(); set_qt_environment()：这似乎是一个自定义函数，用于设置 Qt 环境的其他参数或配置。具体内容取决于你的实际实现。 QGuiApplication GUI_app(argc, argv); QGuiApplication：创建 Qt 的 GUI 应用程序对象，处理与用户界面相关的任务。argc 和 argv 用于传递命令行参数。 // 文件路径 QString iconPath = &#34;://images/icons/app_icon.svg&#34;; iconPath：指定应用程序图标的路径。路径使用 Qt 的资源系统（:// 表示 Qt 资源路径）。 // 检查文件是否存在 if (QFile::exists(iconPath)) { // 文件存在，设置图标 glb_GUI_app.setWindowIcon(QIcon(iconPath)); // qDebug() &lt;&lt; &#34;Icon found and set.&#34;; } else { // 文件不存在，处理错误 qDebug() &lt;&lt; &#34;main(): Icon file not found:&#34; &lt;&lt; iconPath &lt;&lt;&#34;currentDir=&#34;&lt;&lt; QDir::currentPath(); } QFile::exists(iconPath)：检查指定路径的图标文件是否存在。 glb_GUI_app.setWindowIcon(QIcon(iconPath))：如果图标文件存在，则设置应用程序的窗口图标。 qDebug()：用于调试输出，显示图标文件的存在状态和当前工作目录。如果图标文件不存在，会输出相关错误信息。 // ********************** qml ********************************************** QQmlApplicationEngine engine; // const QUrl url(u&#34;qrc:/qt/qml/Main/main.qml&#34;_qs); const QUrl url(u&#34;qrc:/qt/qml/content/Entry.qml&#34;_qs); QQmlApplicationEngine：创建 QML 引擎对象，用于加载和管理 QML 文件。 url：指定要加载的 QML 文件的路径。这里加载的是 Entry.qml 文件。 ASCtl_Opts *class_opts = new Class_Opts(); Class_Opts：创建一个 C&#43;&#43; 自定义类的实例，这个对象将暴露给 QML 界面，以便在 QML 中访问和使用。 QObject::connect(button, )：注释掉了的代码行，可能是用于连接某个按钮的信号和槽。 QObject::connect( &amp;engine, &amp;QQmlApplicationEngine::objectCreated, &amp;GUI_app, [url](QObject *obj, const QUrl &amp;objUrl) { if (!obj &amp;&amp; url == objUrl) QCoreApplication::exit(-1); }, Qt::QueuedConnection); QObject::connect：连接信号和槽。这里连接的是 QQmlApplicationEngine 的 objectCreated 信号到一个 lambda 函数。 objectCreated：表示 QML 对象已经创建。 lambda 函数：检查创建的对象是否为空，并且 URL 是否与预期的 URL 匹配。如果对象为空且 URL 匹配，则应用程序退出，返回错误码 -1。 Qt::QueuedConnection：信号和槽的连接类型，表示槽函数将在接收线程的事件循环中执行。 engine.addImportPath(QCoreApplication::applicationDirPath() &#43; &#34;/qml&#34;); engine.addImportPath(&#34;:/&#34;); addImportPath：添加 QML 模块的导入路径。第一个路径是应用程序的工作目录下的 qml 子目录，第二个路径是 Qt 的资源系统路径。 engine.rootContext()-&gt;setContextProperty(&#34;class_Opts&#34;, class_opts); engine.load(url); setContextProperty：将 C&#43;&#43; 对象 (class_opts) 设置为 QML 上下文属性，使 QML 可以访问这个对象。 engine.load(url)：加载指定的 QML 文件并显示其界面。 if (engine.rootObjects().isEmpty()) { return -1; } rootObjects()：获取 QML 引擎中加载的根对象。如果根对象为空，说明 QML 文件加载失败，程序返回 -1 退出。 return glb_GUI_app.exec(); } GUI_app.exec()：启动应用程序的事件循环。这个方法会阻塞，直到应用程序退出。它处理所有的用户输入、定时器事件等。 总结 设置属性：设置 Qt 应用程序的属性来使用软件渲染 OpenGL。 设置环境：调用自定义函数来配置 Qt 环境。 创建应用程序对象：QGuiApplication 处理 GUI 相关任务。 设置图标：检查并设置应用程序窗口图标。 创建 QML 引擎：用于加载和管理 QML 文件。 创建和设置 C&#43;&#43; 对象：将 C&#43;&#43; 对象暴露给 QML。 连接信号和槽：确保 QML 文件正确加载。 设置导入路径：为 QML 引擎添加模块导入路径。 加载 QML 文件：实际加载并显示 QML 界面。 启动事件循环：进入事件循环，处理应用程序事件。 这个 main 函数展示了如何在 Qt 中设置应用程序图标、加载 QML 界面，并将 C&#43;&#43; 对象暴露给 QML，同时确保应用程序在启动时能够正确处理潜在的错误。">
-<meta property="og:url" content="https://potterwhite.github.io/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/">
+<meta property="og:url" content="http://localhost:1313/blog/2024/08/20/qtquick%E5%B7%A5%E7%A8%8B%E9%87%8C%E7%9A%84main%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90/">
   <meta property="og:site_name" content="嵌入式系统爱好者">
   <meta property="og:title" content="QtQuick工程里的main函数解析">
   <meta property="og:description" content="当然！这是对 main 函数的详细解读，涵盖了各个部分的功能和目的。
@@ -42,8 +42,7 @@
   <meta name="twitter:title" content="QtQuick工程里的main函数解析">
   <meta name="twitter:description" content="当然！这是对 main 函数的详细解读，涵盖了各个部分的功能和目的。
 代码逐行解释 int main(int argc, char *argv[]) { QGuiApplication::setAttribute(Qt::AA_UseSoftwareOpenGL); QGuiApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);：设置 Qt 应用程序的属性，强制使用软件渲染 OpenGL。这在没有硬件加速的环境中（例如某些虚拟机或嵌入式系统）非常有用，确保 OpenGL 渲染功能的兼容性。 set_qt_environment(); set_qt_environment()：这似乎是一个自定义函数，用于设置 Qt 环境的其他参数或配置。具体内容取决于你的实际实现。 QGuiApplication GUI_app(argc, argv); QGuiApplication：创建 Qt 的 GUI 应用程序对象，处理与用户界面相关的任务。argc 和 argv 用于传递命令行参数。 // 文件路径 QString iconPath = &#34;://images/icons/app_icon.svg&#34;; iconPath：指定应用程序图标的路径。路径使用 Qt 的资源系统（:// 表示 Qt 资源路径）。 // 检查文件是否存在 if (QFile::exists(iconPath)) { // 文件存在，设置图标 glb_GUI_app.setWindowIcon(QIcon(iconPath)); // qDebug() &lt;&lt; &#34;Icon found and set.&#34;; } else { // 文件不存在，处理错误 qDebug() &lt;&lt; &#34;main(): Icon file not found:&#34; &lt;&lt; iconPath &lt;&lt;&#34;currentDir=&#34;&lt;&lt; QDir::currentPath(); } QFile::exists(iconPath)：检查指定路径的图标文件是否存在。 glb_GUI_app.setWindowIcon(QIcon(iconPath))：如果图标文件存在，则设置应用程序的窗口图标。 qDebug()：用于调试输出，显示图标文件的存在状态和当前工作目录。如果图标文件不存在，会输出相关错误信息。 // ********************** qml ********************************************** QQmlApplicationEngine engine; // const QUrl url(u&#34;qrc:/qt/qml/Main/main.qml&#34;_qs); const QUrl url(u&#34;qrc:/qt/qml/content/Entry.qml&#34;_qs); QQmlApplicationEngine：创建 QML 引擎对象，用于加载和管理 QML 文件。 url：指定要加载的 QML 文件的路径。这里加载的是 Entry.qml 文件。 ASCtl_Opts *class_opts = new Class_Opts(); Class_Opts：创建一个 C&#43;&#43; 自定义类的实例，这个对象将暴露给 QML 界面，以便在 QML 中访问和使用。 QObject::connect(button, )：注释掉了的代码行，可能是用于连接某个按钮的信号和槽。 QObject::connect( &amp;engine, &amp;QQmlApplicationEngine::objectCreated, &amp;GUI_app, [url](QObject *obj, const QUrl &amp;objUrl) { if (!obj &amp;&amp; url == objUrl) QCoreApplication::exit(-1); }, Qt::QueuedConnection); QObject::connect：连接信号和槽。这里连接的是 QQmlApplicationEngine 的 objectCreated 信号到一个 lambda 函数。 objectCreated：表示 QML 对象已经创建。 lambda 函数：检查创建的对象是否为空，并且 URL 是否与预期的 URL 匹配。如果对象为空且 URL 匹配，则应用程序退出，返回错误码 -1。 Qt::QueuedConnection：信号和槽的连接类型，表示槽函数将在接收线程的事件循环中执行。 engine.addImportPath(QCoreApplication::applicationDirPath() &#43; &#34;/qml&#34;); engine.addImportPath(&#34;:/&#34;); addImportPath：添加 QML 模块的导入路径。第一个路径是应用程序的工作目录下的 qml 子目录，第二个路径是 Qt 的资源系统路径。 engine.rootContext()-&gt;setContextProperty(&#34;class_Opts&#34;, class_opts); engine.load(url); setContextProperty：将 C&#43;&#43; 对象 (class_opts) 设置为 QML 上下文属性，使 QML 可以访问这个对象。 engine.load(url)：加载指定的 QML 文件并显示其界面。 if (engine.rootObjects().isEmpty()) { return -1; } rootObjects()：获取 QML 引擎中加载的根对象。如果根对象为空，说明 QML 文件加载失败，程序返回 -1 退出。 return glb_GUI_app.exec(); } GUI_app.exec()：启动应用程序的事件循环。这个方法会阻塞，直到应用程序退出。它处理所有的用户输入、定时器事件等。 总结 设置属性：设置 Qt 应用程序的属性来使用软件渲染 OpenGL。 设置环境：调用自定义函数来配置 Qt 环境。 创建应用程序对象：QGuiApplication 处理 GUI 相关任务。 设置图标：检查并设置应用程序窗口图标。 创建 QML 引擎：用于加载和管理 QML 文件。 创建和设置 C&#43;&#43; 对象：将 C&#43;&#43; 对象暴露给 QML。 连接信号和槽：确保 QML 文件正确加载。 设置导入路径：为 QML 引擎添加模块导入路径。 加载 QML 文件：实际加载并显示 QML 界面。 启动事件循环：进入事件循环，处理应用程序事件。 这个 main 函数展示了如何在 Qt 中设置应用程序图标、加载 QML 界面，并将 C&#43;&#43; 对象暴露给 QML，同时确保应用程序在启动时能够正确处理潜在的错误。">
-<link rel="preload" href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" as="style" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
-<link href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" rel="stylesheet" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -63,10 +62,13 @@
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/news/"><span>News</span></a>
+        <a class="nav-link" href="/about/"><span>关于</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="/blog/"><span>博客文章</span></a>
+        <a class="nav-link" href="/blog/"><span>博客</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/docs/"><span>文档</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/portfolio/"><span>项目</span></a>
@@ -141,9 +143,9 @@
     aria-label="站内搜索…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
+    data-offline-search-index-json-src="/offline-search-index.json"
     data-offline-search-base-href="/"
-    data-offline-search-max-results="25"
+    data-offline-search-max-results="10"
   >
 </div>
   </div>
@@ -165,9 +167,9 @@
     aria-label="站内搜索…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
+    data-offline-search-index-json-src="/offline-search-index.json"
     data-offline-search-base-href="/"
-    data-offline-search-max-results="25"
+    data-offline-search-max-results="10"
   >
 </div>
     <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
@@ -436,35 +438,33 @@
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">44</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/collection/" data-taxonomy-term="collection"><span class="taxonomy-label">Collection</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/employer/" data-taxonomy-term="employer"><span class="taxonomy-label">Employer</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/markdown/" data-taxonomy-term="markdown"><span class="taxonomy-label">Markdown</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/microblog/" data-taxonomy-term="microblog"><span class="taxonomy-label">Microblog</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/news/" data-taxonomy-term="news"><span class="taxonomy-label">News</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/portfolio/" data-taxonomy-term="portfolio"><span class="taxonomy-label">Portfolio</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span><span class="taxonomy-count">7</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">8</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/soc/" data-taxonomy-term="soc"><span class="taxonomy-label">SOC</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/ubuntu-ops/" data-taxonomy-term="ubuntu-ops"><span class="taxonomy-label">Ubuntu Ops</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">44</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/collection/" data-taxonomy-term="collection"><span class="taxonomy-label">Collection</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/markdown/" data-taxonomy-term="markdown"><span class="taxonomy-label">Markdown</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/microblog/" data-taxonomy-term="microblog"><span class="taxonomy-label">Microblog</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/news/" data-taxonomy-term="news"><span class="taxonomy-label">News</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span><span class="taxonomy-count">7</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/soc/" data-taxonomy-term="soc"><span class="taxonomy-label">SOC</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/ubuntu-ops/" data-taxonomy-term="ubuntu-ops"><span class="taxonomy-label">Ubuntu Ops</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">3</span></a></li>
         </ul>
     </div>
   
@@ -497,9 +497,9 @@
 		<div class="taxonomy taxonomy-terms-article taxo-categories">
   <h5 class="taxonomy-title">Categories:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
-    <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span></a></li>
-    <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span></a></li>
     </ul>
 </div>
 
@@ -687,14 +687,14 @@
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
     2024&ndash;2025
-    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
       </div>
     </div>
   </div>
 </footer>
 
     </div>
-    <script src="/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js" integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

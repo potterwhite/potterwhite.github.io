@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Enthusiast of Embedded Systems</title>
-    <link>https://potterwhite.github.io/en/tags/</link>
-    <description>Recent content in Tags on Enthusiast of Embedded Systems</description>
+    <title>Tags on </title>
+    <link>http://localhost:1313/en/tags/</link>
+    <description>Recent content in Tags on </description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Thu, 05 Jan 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/en/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docs</title>
-      <link>https://potterwhite.github.io/en/tags/docs/</link>
+      <link>http://localhost:1313/en/tags/docs/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/tags/docs/</guid>
+      <guid>http://localhost:1313/en/tags/docs/</guid>
       <description></description>
     </item>
     <item>
       <title>Sample</title>
-      <link>https://potterwhite.github.io/en/tags/sample/</link>
+      <link>http://localhost:1313/en/tags/sample/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/tags/sample/</guid>
+      <guid>http://localhost:1313/en/tags/sample/</guid>
       <description></description>
     </item>
     <item>
       <title>Test</title>
-      <link>https://potterwhite.github.io/en/tags/test/</link>
+      <link>http://localhost:1313/en/tags/test/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/tags/test/</guid>
+      <guid>http://localhost:1313/en/tags/test/</guid>
       <description></description>
     </item>
   </channel>
