@@ -1,9 +1,9 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -22,7 +22,7 @@
 顶层容器类型 $$ApplicationWindow用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。导入模块：QtQuick.ControlsWindow用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。导入模块：QtQuick.WindowDialog用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。导入模块：QtQuick.ControlsPopup用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。导入模块：QtQuick.ControlsItem用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。导入模块：QtQuickRectangle用途：用于创建简单的矩形区域，常用于布局和装饰。导入模块：QtQuickApplication用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。导入模块：QtQuick$$示例代码
 以下是每个顶层容器的简单示例：
 1. ApplicationWindow import QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Window import QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialog import QtQuick 6.2 import QtQuick.Controls 6.2 Dialog { visible: true width: 400 height: 300 title: &#34;Dialog Example&#34; standardButtons: Dialog.Ok | Dialog.Cancel } 4. Popup import QtQuick 6.2 import QtQuick.Controls 6.2 Popup { visible: true width: 200 height: 100 Text { anchors.centerIn: parent text: &#34;Popup Example&#34; } } 5. Item import QtQuick 6.2 Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } 6. Rectangle import QtQuick 6.2 Rectangle { width: 800 height: 600 color: &#34;lightgray&#34; Text { anchors.centerIn: parent text: &#34;Rectangle Example&#34; } } 7. Application import QtQuick 6.2 Application { id: app Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } } 顶层容器结构 顶层容器的结构通常如下：">
-<meta property="og:url" content="https://potterwhite.github.io/blog/2024/08/02/qml-options/">
+<meta property="og:url" content="http://localhost:1313/blog/2024/08/02/qml-options/">
   <meta property="og:site_name" content="嵌入式系统爱好者">
   <meta property="og:title" content="QML Options">
   <meta property="og:description" content="理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：
@@ -50,8 +50,7 @@
 顶层容器类型 $$ApplicationWindow用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。导入模块：QtQuick.ControlsWindow用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。导入模块：QtQuick.WindowDialog用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。导入模块：QtQuick.ControlsPopup用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。导入模块：QtQuick.ControlsItem用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。导入模块：QtQuickRectangle用途：用于创建简单的矩形区域，常用于布局和装饰。导入模块：QtQuickApplication用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。导入模块：QtQuick$$示例代码
 以下是每个顶层容器的简单示例：
 1. ApplicationWindow import QtQuick 6.2 import QtQuick.Controls 6.2 ApplicationWindow { visible: true width: 800 height: 600 title: &#34;ApplicationWindow Example&#34; } 2. Window import QtQuick 6.2 import QtQuick.Window 6.2 Window { visible: true width: 800 height: 600 title: &#34;Window Example&#34; } 3. Dialog import QtQuick 6.2 import QtQuick.Controls 6.2 Dialog { visible: true width: 400 height: 300 title: &#34;Dialog Example&#34; standardButtons: Dialog.Ok | Dialog.Cancel } 4. Popup import QtQuick 6.2 import QtQuick.Controls 6.2 Popup { visible: true width: 200 height: 100 Text { anchors.centerIn: parent text: &#34;Popup Example&#34; } } 5. Item import QtQuick 6.2 Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } 6. Rectangle import QtQuick 6.2 Rectangle { width: 800 height: 600 color: &#34;lightgray&#34; Text { anchors.centerIn: parent text: &#34;Rectangle Example&#34; } } 7. Application import QtQuick 6.2 Application { id: app Item { width: 800 height: 600 Rectangle { width: 100 height: 100 color: &#34;blue&#34; } } } 顶层容器结构 顶层容器的结构通常如下：">
-<link rel="preload" href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" as="style" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
-<link href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" rel="stylesheet" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -71,10 +70,13 @@
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/news/"><span>News</span></a>
+        <a class="nav-link" href="/about/"><span>关于</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="/blog/"><span>博客文章</span></a>
+        <a class="nav-link" href="/blog/"><span>博客</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/docs/"><span>文档</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/portfolio/"><span>项目</span></a>
@@ -149,9 +151,9 @@
     aria-label="站内搜索…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
+    data-offline-search-index-json-src="/offline-search-index.json"
     data-offline-search-base-href="/"
-    data-offline-search-max-results="25"
+    data-offline-search-max-results="10"
   >
 </div>
   </div>
@@ -173,9 +175,9 @@
     aria-label="站内搜索…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
+    data-offline-search-index-json-src="/offline-search-index.json"
     data-offline-search-base-href="/"
-    data-offline-search-max-results="25"
+    data-offline-search-max-results="10"
   >
 </div>
     <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type="button" data-bs-toggle="collapse" data-bs-target="#td-section-nav" aria-controls="td-section-nav" aria-expanded="false" aria-label="Toggle section navigation">
@@ -458,35 +460,33 @@
             <div class="taxonomy taxonomy-terms-cloud taxo-categories">
       <h5 class="taxonomy-title">Categories</h5>
       <ul class="taxonomy-terms">
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">44</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/collection/" data-taxonomy-term="collection"><span class="taxonomy-label">Collection</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">5</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/employer/" data-taxonomy-term="employer"><span class="taxonomy-label">Employer</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/markdown/" data-taxonomy-term="markdown"><span class="taxonomy-label">Markdown</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/microblog/" data-taxonomy-term="microblog"><span class="taxonomy-label">Microblog</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/news/" data-taxonomy-term="news"><span class="taxonomy-label">News</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/portfolio/" data-taxonomy-term="portfolio"><span class="taxonomy-label">Portfolio</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span><span class="taxonomy-count">7</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">8</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/soc/" data-taxonomy-term="soc"><span class="taxonomy-label">SOC</span><span class="taxonomy-count">3</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">4</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/ubuntu-ops/" data-taxonomy-term="ubuntu-ops"><span class="taxonomy-label">Ubuntu Ops</span><span class="taxonomy-count">2</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
-        <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span><span class="taxonomy-count">44</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/cmake/" data-taxonomy-term="cmake"><span class="taxonomy-label">CMake</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/collection/" data-taxonomy-term="collection"><span class="taxonomy-label">Collection</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/cpu/" data-taxonomy-term="cpu"><span class="taxonomy-label">CPU</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">5</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/docsy/" data-taxonomy-term="docsy"><span class="taxonomy-label">Docsy</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erp/" data-taxonomy-term="erp"><span class="taxonomy-label">ERP</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/erpnext/" data-taxonomy-term="erpnext"><span class="taxonomy-label">ERPNext</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/html/" data-taxonomy-term="html"><span class="taxonomy-label">HTML</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/markdown/" data-taxonomy-term="markdown"><span class="taxonomy-label">Markdown</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/mermaid/" data-taxonomy-term="mermaid"><span class="taxonomy-label">Mermaid</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/microblog/" data-taxonomy-term="microblog"><span class="taxonomy-label">Microblog</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/news/" data-taxonomy-term="news"><span class="taxonomy-label">News</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span><span class="taxonomy-count">7</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt/" data-taxonomy-term="qt"><span class="taxonomy-label">Qt</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span><span class="taxonomy-count">8</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt6/" data-taxonomy-term="qt6"><span class="taxonomy-label">Qt6</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/quantum/" data-taxonomy-term="quantum"><span class="taxonomy-label">Quantum</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/soc/" data-taxonomy-term="soc"><span class="taxonomy-label">SOC</span><span class="taxonomy-count">3</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/theology/" data-taxonomy-term="theology"><span class="taxonomy-label">Theology</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span><span class="taxonomy-count">4</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/ubuntu-ops/" data-taxonomy-term="ubuntu-ops"><span class="taxonomy-label">Ubuntu Ops</span><span class="taxonomy-count">2</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/vscode/" data-taxonomy-term="vscode"><span class="taxonomy-label">VSCode</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span><span class="taxonomy-count">1</span></a></li>
+        <li><a class="taxonomy-term" href="http://localhost:1313/categories/windows/" data-taxonomy-term="windows"><span class="taxonomy-label">Windows</span><span class="taxonomy-count">3</span></a></li>
         </ul>
     </div>
   
@@ -519,9 +519,9 @@
 		<div class="taxonomy taxonomy-terms-article taxo-categories">
   <h5 class="taxonomy-title">Categories:</h5>
   <ul class="taxonomy-terms">
-    <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
-    <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span></a></li>
-    <li><a class="taxonomy-term" href="https://potterwhite.github.io/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/blog/" data-taxonomy-term="blog"><span class="taxonomy-label">Blog</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/qt-development/" data-taxonomy-term="qt-development"><span class="taxonomy-label">Qt Development</span></a></li>
+    <li><a class="taxonomy-term" href="http://localhost:1313/categories/qml/" data-taxonomy-term="qml"><span class="taxonomy-label">QML</span></a></li>
     </ul>
 </div>
 
@@ -753,7 +753,7 @@ Application
 <ol>
 <li>
 <p>可以是要在外部动态的设置某一个程序的属性，让整个程序的其他组件都因此做出改变，可以用singleton</p>
-<p><a href="https://juejin.cn/post/6959740008240513037">QML Styling 及 Singleton 使用方法浅谈 - 掘金</a></p>
+<p><a href="https://juejin.cn/post/6959740008240513037" target="_blank" rel="noopener">QML Styling 及 Singleton 使用方法浅谈 - 掘金</a></p>
 </li>
 <li>
 <p>希望精简，模块不要反复被创建</p>
@@ -842,15 +842,15 @@ Application
 <li>
 <p>需要注意：调用时要加入<code>Component.onCompleted: {</code></p>
 <p>已经在多处都看见这种做法了</p>
-<p><a href="https://qt.0voice.com/?id=5269">QML中如何实现一个单例-QT开发中文网</a></p>
+<p><a href="https://qt.0voice.com/?id=5269" target="_blank" rel="noopener">QML中如何实现一个单例-QT开发中文网</a></p>
 <p>可能谈到调用就是异步的。</p>
 </li>
 </ul>
 <h3 id="相关的帖子"><strong>相关的帖子</strong></h3>
-<p><a href="https://doc.qt.io/qt-6/qml-singleton.html">Singletons in QML | Qt QML 6.7.2</a></p>
-<p><a href="https://forum.qt.io/topic/129738/singleton-qml-failed-to-load-as-module/2">Singleton QML failed to load as module</a></p>
-<p><a href="http://imaginativethinking.ca/make-qml-component-singleton/">How to make a QML Component a Singleton?</a></p>
-<p><a href="https://blog.csdn.net/HyEISN/article/details/130600566">Qt 创建 单例/Singleton qml 文件_pragma singleton-CSDN博客</a></p>
+<p><a href="https://doc.qt.io/qt-6/qml-singleton.html" target="_blank" rel="noopener">Singletons in QML | Qt QML 6.7.2</a></p>
+<p><a href="https://forum.qt.io/topic/129738/singleton-qml-failed-to-load-as-module/2" target="_blank" rel="noopener">Singleton QML failed to load as module</a></p>
+<p><a href="http://imaginativethinking.ca/make-qml-component-singleton/" target="_blank" rel="noopener">How to make a QML Component a Singleton?</a></p>
+<p><a href="https://blog.csdn.net/HyEISN/article/details/130600566" target="_blank" rel="noopener">Qt 创建 单例/Singleton qml 文件_pragma singleton-CSDN博客</a></p>
 <h2 id="004-qml中的signal--slot">004. QML中的signal &amp; slot</h2>
 <p>要点：</p>
 <ul>
@@ -884,7 +884,7 @@ if image.width &amp; image.height are illegal value(e.g,. 0), the sourceSize wil
 </span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">//设置无框的窗口
 </span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">flags</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Window</span> <span style="color:#ce5c00;font-weight:bold">|</span> <span style="color:#000">Qt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">FramelessWindowHint</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint
-</span></span></span></code></pre></div><p><a href="https://doc.qt.io/qt-6/qt.html#WindowType-enum">enum Qt::WindowType
+</span></span></span></code></pre></div><p><a href="https://doc.qt.io/qt-6/qt.html#WindowType-enum" target="_blank" rel="noopener">enum Qt::WindowType
 flags Qt::WindowFlags</a></p>
 <p>它的逻辑是首先判断是什么窗口类型，可选项有</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cxx" data-lang="cxx"><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">1.</span> <span style="color:#000">Widget</span>
@@ -963,7 +963,7 @@ CustomizeWindowHint$$</div><p>当然flag可是不止这两种，但是目前我�
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
     2024&ndash;2025
-    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
       </div>
     </div>
   </div>
@@ -971,16 +971,16 @@ CustomizeWindowHint$$</div><p>当然flag可是不止这两种，但是目前我�
 
     </div>
     
-      <link rel="stylesheet" href="/css/katex.min.css" integrity="sha512-fn414&#43;8Ct7Q3RJpEyj&#43;sYuwe05y4MStoCgD&#43;isYLrclbBjtpRja4RAhW9/Xowsyeaw77WBF5smVsfh6XVYxwlg==" crossorigin="anonymous">
+      <link rel="stylesheet" href="/css/katex.css" integrity="sha512-G&#43;oCKKieQtUzWNhprOMa35XKURS9yhyKtbm9/m0OOUykuK3/U6dKkqJIxGOoQh/T3MibO5FL8xd2QNhZd/wILA==" crossorigin="anonymous">
     
-      <script defer src="/js/katex.min.js" integrity="sha512-yt1Fwa8fRL2vGW3JsQTx2uspBD8NxZFV/&#43;IoR1EKBDkKC3qFlADUIKYmIE9/xd2wfBkxHeHGayXhnCVZ0&#43;EmqA==" crossorigin="anonymous" ></script>
+      <script defer src="/js/katex.js" integrity="sha512-WTufh9t&#43;K&#43;EFkEnso/VDkXWdyfw3x8Z7YoAX42Ec76nwKKkWT/2F57jYrEYwLYMj2hRm9i3W5LAxxd5Z1r6szg==" crossorigin="anonymous" ></script>
     
-      <script defer src="/js/mhchem.min.js" integrity="sha512-Cl4bz7Rt9ppgcBOQa4z96q3UqAzHgBzNDm66u2&#43;lDe0ZJQu0Fgz&#43;6jO57E&#43;IZqzlhGzfNBY&#43;&#43;pg7Ue&#43;iopaLrg==" crossorigin="anonymous" ></script>
+      <script defer src="/js/mhchem.js" integrity="sha512-VqgbnCOxfd22h/EoEuK6W8DhX3hATOAogWFE/eE4XVBVNg5uaWIocSccsU8FNeYDNpfcIKWy6xz3woYgsWdPxA==" crossorigin="anonymous" ></script>
     
-      <script defer src="/js/auto-render.min.js" integrity="sha512-6bKDPShiPRjAcdeO8T6cedaVEi0pavPbzue/G/ZRiwVlurWZOSZ/vI9fr2lhk8IPXK7z51AZac&#43;zBvZzgDJzDQ==" crossorigin="anonymous"
+      <script defer src="/js/auto-render.js" integrity="sha512-4bQtxbbsOaDcbu2OFUKZhKrd0X9F2cyGnIt84nVL3K1XpzeiZBzyEepWhMAb3ZUDylETFkLzgZoV8ZpTLIncow==" crossorigin="anonymous"
 onload='renderMathInElement(document.body, null);'>
 </script>
-    <script src="/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js" integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 

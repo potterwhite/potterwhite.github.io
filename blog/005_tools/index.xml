@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>005_Grp_Tools on 嵌入式系统爱好者</title>
-    <link>https://potterwhite.github.io/blog/005_tools/</link>
+    <link>http://localhost:1313/blog/005_tools/</link>
     <description>Recent content in 005_Grp_Tools on 嵌入式系统爱好者</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 12 Aug 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/blog/005_tools/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/blog/005_tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Time Zone Map</title>
-      <link>https://potterwhite.github.io/blog/2024/08/12/time-zone-map/</link>
+      <link>http://localhost:1313/blog/2024/08/12/time-zone-map/</link>
       <pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/blog/2024/08/12/time-zone-map/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2024/August/12/TimeZoneOfTheWorld.svg&#34; alt=&#34;TimeZoneMap&#34;&gt;&lt;/p&gt;</description>
+      <guid>http://localhost:1313/blog/2024/08/12/time-zone-map/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2024/August/12/TimeZoneOfTheWorld.svg&#34; alt=&#34;TimeZoneMap&#34;&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -1,9 +1,10 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<link rel="alternate" type="application/rss&#43;xml" href="http://localhost:1313/project_types/data-automation/index.xml">
+<meta name="robots" content="noindex, nofollow">
 
 
 <link rel="shortcut icon" href="/favicons/favicon.ico" >
@@ -17,29 +18,37 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>考勤分析器：一个由规则驱动的HR效率工具 | 嵌入式系统爱好者</title>
-<meta name="description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
-<meta property="og:url" content="https://potterwhite.github.io/portfolio/attendance-analyzer-cn/">
+<title>Data Automation | 嵌入式系统爱好者</title>
+<meta name="description" content="我是一名基督徒。
+一位妇人的丈夫。
+三个孩子的父亲。
+嵌入式Linux工程师
+Docker/ERP/WASAPI/NodeJS/Socket.IO开发者">
+<meta property="og:url" content="http://localhost:1313/project_types/data-automation/">
   <meta property="og:site_name" content="嵌入式系统爱好者">
-  <meta property="og:title" content="考勤分析器：一个由规则驱动的HR效率工具">
-  <meta property="og:description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
+  <meta property="og:title" content="Data Automation">
+  <meta property="og:description" content="我是一名基督徒。
+一位妇人的丈夫。
+三个孩子的父亲。
+嵌入式Linux工程师
+Docker/ERP/WASAPI/NodeJS/Socket.IO开发者">
   <meta property="og:locale" content="zh_cn">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="portfolio">
-    <meta property="article:published_time" content="2025-07-10T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-07-10T00:00:00+00:00">
+  <meta property="og:type" content="website">
 
-  <meta itemprop="name" content="考勤分析器：一个由规则驱动的HR效率工具">
-  <meta itemprop="description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
-  <meta itemprop="datePublished" content="2025-07-10T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-07-10T00:00:00+00:00">
-  <meta itemprop="wordCount" content="50">
-  <meta itemprop="keywords" content="Portfolio,Employer">
+  <meta itemprop="name" content="Data Automation">
+  <meta itemprop="description" content="我是一名基督徒。
+一位妇人的丈夫。
+三个孩子的父亲。
+嵌入式Linux工程师
+Docker/ERP/WASAPI/NodeJS/Socket.IO开发者">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="考勤分析器：一个由规则驱动的HR效率工具">
-  <meta name="twitter:description" content="一个基于 Python, Pandas, 和 Streamlit 构建的，用于自动化考勤数据分析的内部工具。">
-<link rel="preload" href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" as="style" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
-<link href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" rel="stylesheet" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+  <meta name="twitter:title" content="Data Automation">
+  <meta name="twitter:description" content="我是一名基督徒。
+一位妇人的丈夫。
+三个孩子的父亲。
+嵌入式Linux工程师
+Docker/ERP/WASAPI/NodeJS/Socket.IO开发者">
+<link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -51,7 +60,7 @@
 <link rel="stylesheet" href="/css/prism.css"/>
 
   </head>
-  <body class="td-page">
+  <body class="td-term">
     <header>
       <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
 <div class="container-fluid flex-column flex-md-row">
@@ -59,19 +68,22 @@
   <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/news/"><span>News</span></a>
+        <a class="nav-link" href="/about/"><span>关于</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/blog/"><span>博客文章</span></a>
+        <a class="nav-link" href="/blog/"><span>博客</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="/portfolio/"><span>项目</span></a>
+        <a class="nav-link" href="/docs/"><span>文档</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/portfolio/"><span>项目</span></a>
       </li>
       <li class="nav-item dropdown d-none d-lg-block">
         <div class="dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/en/">English</a></li>
+    <li><a class="dropdown-item" href="/en/project_types/data-automation/">English</a></li>
     </ul>
 </div></li>
       <li class="td-light-dark-menu nav-item dropdown">
@@ -137,9 +149,9 @@
     aria-label="站内搜索…"
     autocomplete="off"
     
-    data-offline-search-index-json-src="/offline-search-index.dfc343a70e990a922a3281ba8b2c2edb.json"
+    data-offline-search-index-json-src="/offline-search-index.json"
     data-offline-search-base-href="/"
-    data-offline-search-max-results="25"
+    data-offline-search-max-results="10"
   >
 </div>
   </div>
@@ -148,45 +160,35 @@
     </header>
     <div class="container-fluid td-default td-outer">
       <main role="main" class="td-main">
-        <h2 id="项目概述">项目概述</h2>
-<p>考勤分析器是一个为企业内部开发的效率工具，旨在解决复杂且耗时的员工考勤数据分析任务。它能够将原始的Excel导出数据，通过一个高度灵活、由规则驱动的引擎，转化为清晰、可执行的分析报告，极大地提升了HR部门的工作效率。</p>
-<hr>
-<h3 id="功能演示">功能演示</h3>
-<p>以下是一个简短的视频，演示了本应用的核心工作流程：从上传文件到查看多层级的分析报告。</p>
-<video width="100%" controls autoplay loop muted playsinline>
-  <source src="/2025/jul/2025-07-10_17-10-42.mp4" type="video/mp4">
-  您的浏览器不支持 HTML5 视频标签。
-</video>
-<br>
-<hr>
-<h2 id="核心功能与技术栈">核心功能与技术栈</h2>
-<ul>
-<li><strong>规则驱动引擎</strong>: 所有的分析逻辑都由一个简单的 <code>rules.toml</code> 文件控制，使得适应政策变化无需修改代码。</li>
-<li><strong>全面的分析指标</strong>: 精确计算出勤天数、各类加班时长、迟到、早退，并独立追踪缺卡与缺勤。</li>
-<li><strong>双视图报告系统</strong>: 可同时生成用于通用布告的“公开版报告”和用于深入审计的“详细版报告”。</li>
-<li><strong>技术栈</strong>: <strong>Python</strong> (后端逻辑), <strong>Pandas</strong> (数据处理), <strong>Streamlit</strong> (Web界面), <strong>TOML</strong> (配置管理)。</li>
-</ul>
-<h2 id="核心算法设计-v16">核心算法设计 (V1.6)</h2>
-<p>作为本项目的设计者，我定义了一套严谨的考勤分析算法，它是整个工具的“大脑”。这套算法的核心思想是客观、公平地量化考勤事件，其主要规则如下：</p>
-<h4 id="1-工作单元状态判定">1. 工作单元状态判定</h4>
-<p>每个工作单元（半天）会被精确判定为以下三种状态之一：</p>
-<ul>
-<li><strong>有效出勤</strong>: 上下班均有有效打卡。</li>
-<li><strong>缺勤</strong>: 上下班均缺卡。</li>
-<li><strong>异常</strong>: 其他任何情况（如单次缺卡）。</li>
-</ul>
-<h4 id="2-有效出勤优先原则">2. “有效出勤”优先原则</h4>
-<p>所有关于迟到、早退和自愿加班的计算，都<strong>只在“有效出勤”的单元内进行</strong>，确保了数据的严谨性。</p>
-<h4 id="3-严重迟到处理">3. 严重迟到处理</h4>
-<p>当迟到超过设定的阈值时，该工作单元从“实际打卡时间”到“应下班时间”的整个时间段，将被计算为加班时间。</p>
-<h4 id="4-灵活的加班计算">4. 灵活的加班计算</h4>
-<p>总加班时长由两部分构成：“自愿加班”（下午下班后，超过延迟门槛的时间）和“因严重迟到产生的加班”。</p>
-<h2 id="项目背后的故事">项目背后的故事</h2>
-<p>本项目是现代AI辅助开发模式的一次成功实践。约95%的代码是在与大语言模型（LLM）的协作下生成的。在此过程中，我的角色从传统的“编码者”转变为项目的**“架构师、导演和品控负责人”**。</p>
-<p>这种人机协作的伙伴关系，将原本预估需要1-2周的开发周期，显著缩短到了几天之内，展示了一种快速、高质量软件创造的新范式。</p>
-<hr>
-<p><em>本项目为公司内部资产，其源代码不对外公开。</em></p>
-
+        <div class="td-content">
+  <main class="taxonomy-taxonomy-page">
+    <h1>Project type: <span>Data Automation</span></h1>
+    <div>
+      
+    </div>
+    <div>
+      
+        
+        <article class="card article-teaser article-type-portfolio">
+          <h3><a href="/portfolio/attendace_analyzer/">考勤分析器：一个规则驱动的HR效率工具</a></h3>
+          <nav class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="/portfolio/">项目</a></li>
+  <li class="breadcrumb-item">
+    考勤分析器：一个规则驱动的HR效率工具</li>
+  </ol>
+</nav><p>一个使用 Python, Pandas, 和 Streamlit 构建的内部工具，用于自动化考勤数据分析，将手动处理时间减少90%以上。</p>
+          <header class="article-meta">
+            
+  <p class="reading-time"><i class="fa-solid fa-clock" aria-hidden="true"></i>&nbsp; 少于1分钟 &nbsp;</p>
+</header>
+        </article>
+      
+    </div>
+    <a href="http://localhost:1313/project_types/" class="all-taxonomy-terms">所有 Project types</a>
+  </main>
+</div>
       </main>
       <footer class="td-footer row d-print-none">
   <div class="container-fluid">
@@ -228,14 +230,14 @@
       </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
         <span class="td-footer__copyright">&copy;
     2024&ndash;2025
-    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
       </div>
     </div>
   </div>
 </footer>
 
     </div>
-    <script src="/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js" integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
 <script src='/js/prism.js'></script>
 <script src='/js/tabpane-persist.js'></script>
 
