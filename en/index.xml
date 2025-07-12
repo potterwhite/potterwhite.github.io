@@ -99,45 +99,24 @@ Fetch and scale an image in the upcoming Hugo 0.43.
 &lt;/div>
 
 &lt;p>Text can be &lt;strong>bold&lt;/strong>, &lt;em>italic&lt;/em>, or &lt;del>strikethrough&lt;/del>. &lt;a href="https://gohugo.io" target="_blank" rel="noopener">Links&lt;/a> should be blue with no underlines (unless hovered over).&lt;/p>
-&lt;p>There should be whitespace between paragraphs. Vape migas chillwave sriracha poutine try-hard distillery. Tattooed shabby chic small batch, pabst art party heirloom letterpress air plant pop-up. Sustainable chia skateboard art party banjo cardigan normcore affogato vexillologist quinoa meggings man bun master cleanse shoreditch readymade. Yuccie prism four dollar toast tbh cardigan iPhone, tumblr listicle live-edge VHS. Pug lyft normcore hot chicken biodiesel, actually keffiyeh thundercats photo booth pour-over twee fam food truck microdosing banh mi. Vice activated charcoal raclette unicorn live-edge post-ironic. Heirloom vexillologist coloring book, beard deep v letterpress echo park humblebrag tilde.&lt;/p></description></item><item><title>About Goldydocs</title><link>https://potterwhite.github.io/en/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/about/</guid><description>&lt;link rel="preload" as="image" href="https://potterwhite.github.io/en/about/featured-background_hu_f17a5c2a73b3f388.jpg" media="(max-width: 1200px)">
-&lt;link rel="preload" as="image" href="https://potterwhite.github.io/en/about/featured-background_hu_d9e50e78593ab95e.jpg" media="(min-width: 1200px)">
-&lt;style>
-#td-cover-block-0 {
- background-image: url(/en/about/featured-background_hu_f17a5c2a73b3f388.jpg);
-}
-@media only screen and (min-width: 1200px) {
- #td-cover-block-0 {
- background-image: url(/en/about/featured-background_hu_d9e50e78593ab95e.jpg);
- }
-}
-&lt;/style>
-&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-auto js-td-cover td-overlay td-overlay--dark -bg-dark">
- &lt;div class="col-12">
- &lt;div class="container td-overlay__inner">
- &lt;div class="text-center">
- &lt;h1 class="display-1 mt-0 mt-md-5 pb-4">About Goldydocs&lt;/h1>
- 
- &lt;div class="pt-3 lead">
- 
- &lt;p class="mt-5">A sample site using the Docsy Hugo theme.&lt;/p>
-
- 
+&lt;p>There should be whitespace between paragraphs. Vape migas chillwave sriracha poutine try-hard distillery. Tattooed shabby chic small batch, pabst art party heirloom letterpress air plant pop-up. Sustainable chia skateboard art party banjo cardigan normcore affogato vexillologist quinoa meggings man bun master cleanse shoreditch readymade. Yuccie prism four dollar toast tbh cardigan iPhone, tumblr listicle live-edge VHS. Pug lyft normcore hot chicken biodiesel, actually keffiyeh thundercats photo booth pour-over twee fam food truck microdosing banh mi. Vice activated charcoal raclette unicorn live-edge post-ironic. Heirloom vexillologist coloring book, beard deep v letterpress echo park humblebrag tilde.&lt;/p></description></item><item><title>About Me</title><link>https://potterwhite.github.io/en/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
+&lt;div class="container text-center pt-5 pb-4">
+ &lt;h1 class="display-3">A Developer's Journey&lt;/h1>
+ &lt;p class="display-5 text-muted">Bridging Technology, Theology, and Family&lt;/p>
+ &lt;div class="mt-4 mb-4">
+ &lt;!-- &lt;a class="btn btn-lg btn-primary" href="#technical-expertise">Explore My Skills&lt;/a> -->
  &lt;/div>
- &lt;/div>
- &lt;/div>
- &lt;/div>
- 
-&lt;/section>
-
-&lt;div>&lt;a id="td-block-1" class="td-offset-anchor">&lt;/a>&lt;/div>
-&lt;section class="row td-box td-box--1 position-relative td-box--height-auto">
+&lt;/div>
+&lt;hr> &lt;!-- This adds a clean separator line -->
+&lt;!-- END: Replacement -->
+&lt;div>&lt;a id="td-block-0" class="td-offset-anchor">&lt;/a>&lt;/div>
+&lt;section class="row td-box td-box--white position-relative td-box--height-auto">
 &lt;div class="col-12">
 &lt;div class="container text-center td-arrow-down">
 &lt;div class="h4 mb-0">
-&lt;p>Goldydocs is a sample site using the &lt;a href="https://github.com/google/docsy" target="_blank" rel="noopener">Docsy&lt;/a>
-Hugo theme that shows what it can do and provides you with a template site
-structure. It’s designed for you to clone and edit as much as you like. See the
-different sections of the documentation and site for more ideas.&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;h2 id="project-overview">Project Overview&lt;/h2>
+&lt;div class="text-center">
+I am an Embedded Systems Engineer, passionate about building stable and elegant technical solutions. My life's journey has led me through professional training in both &lt;strong>Computer Science (Bachelor of Engineering)&lt;/strong> and &lt;strong>Theology (Master of Divinity)&lt;/strong>.
+&lt;p>This dual background has shaped my unique perspective on problem-solving: I strive to tackle complex challenges with technical excellence, clear communication, and a strong sense of purpose. As a Christian, a husband, and a father of three, the LORD my God and my family are the cornerstone of all my work.&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;h2 id="project-overview">Project Overview&lt;/h2>
 &lt;p>The Attendance Analyzer is an &lt;strong>in-house efficiency tool&lt;/strong> developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p>
 &lt;hr>
 &lt;h3 id="demo">Demo&lt;/h3>
