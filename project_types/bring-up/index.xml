@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bring Up on 嵌入式系统爱好者</title><link>https://potterwhite.github.io/project_types/bring-up/</link><description>Recent content in Bring Up on 嵌入式系统爱好者</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/bring-up/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台千兆以太网控制器Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年7月&lt;/li>
+&lt;/ul>
+&lt;h1 id="项目概述-project-overview">&lt;strong>项目概述 (Project Overview)&lt;/strong>&lt;/h1>
+&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+在一个基于Rockchip RK3568 SoC的定制化产品开发项目中，我负责对板载的千兆以太网接口（GMAC1, &lt;code>ethernet@fe010000&lt;/code>）进行初次的功能Bring-up。在初始BSP配置下，该网络接口未能被内核正确初始化，日志显示&lt;code>Cannot attach to PHY&lt;/code>和&lt;code>Failed to reset the dma&lt;/code>等错误。&lt;/p>
+&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+作为项目的BSP工程师，我负责诊断并解决此底层软硬件集成问题。我的主要工作包括：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>执行了端到端的系统性排查&lt;/strong>，覆盖了从物理电路到内核驱动的全链路。&lt;/li>
+&lt;li>&lt;strong>精确定位了问题根源&lt;/strong>，将其归因于设备树（DTS）中关于GMAC1的时钟树、引脚功能（pinctrl）配置与硬件设计不匹配。&lt;/li>
+&lt;li>&lt;strong>主导并实施了设备树的修正方案&lt;/strong>，成功使能网络接口并确保其稳定运行。&lt;/li>
+&lt;li>&lt;strong>通过&lt;code>iperf&lt;/code>进行了性能验证&lt;/strong>，确认网络吞-吐量达到千兆以太网的设计标准。&lt;/li>
+&lt;li>&lt;strong>将调试过程沉淀为一套标准作业程序 (SOP)&lt;/strong>，用于指导未来类似外设的Bring-up工作。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h1 id="我的方法论嵌入式外设bring-up标准作业程序-sop">&lt;strong>我的方法论：嵌入式外设Bring-up标准作业程序 (SOP)&lt;/strong>&lt;/h1>
+&lt;p>我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。&lt;/p>
+&lt;h3 id="第一部分标准化移植流程-standard-porting-workflow">&lt;strong>第一部分：标准化移植流程 (Standard Porting Workflow)&lt;/strong>&lt;/h3>
+&lt;p>此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。&lt;/p>
+&lt;h3 id="第二部分异常诊断清单-troubleshooting-checklist">&lt;strong>第二部分：异常诊断清单 (Troubleshooting Checklist)&lt;/strong>&lt;/h3>
+&lt;p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。&lt;/p>
+&lt;h3 id="sop流程图">SOP流程图&lt;/h3>
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/work-flow.svg" alt="work flow" style="height: 2000px; max-width: 100%;">
+&lt;pre class="mermaid">graph TD
+ %% === 定义与样式 ===
+ classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab;
+ classDef dark_debug fill:#4b3e58,color:white,stroke:#b8a3d3;
+ classDef dark_decision fill:#27ae60,color:white,stroke:#88d1a1;
+ classDef dark_result_ok fill:#16a085,color:white,stroke:#72d6c1;
+ classDef dark_result_fail fill:#c0392b,color:white,stroke:#e69a93;
+
+ %% === 主流程 (左侧) ===
+ subgraph &amp;#34;标准化移植流程 (Standard Porting Workflow)&amp;#34;
+ direction TB
+ S[&amp;lt;b&amp;gt;开始&amp;lt;/b&amp;gt;]:::dark_main
+ A[&amp;lt;b&amp;gt;1. 硬件接口确认&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;GMAC0或GMAC1]:::dark_main
+ B[&amp;lt;b&amp;gt;2. 时钟模式分析&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;25MHz与125MHz两种时钟的流向]:::dark_main
+ C[&amp;lt;b&amp;gt;3. 设备树DTS适配&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;从瑞芯微的ModeConfig手册里节选正确dts配置]:::dark_main
+ D[&amp;lt;b&amp;gt;5. 编译与验证&amp;lt;/b&amp;gt;]:::dark_main
+
+ S --&amp;gt; A --&amp;gt; B --&amp;gt; C --&amp;gt; D
+ end
+
+ %% === 决策点 (中央) ===
+ F{&amp;#34;&amp;lt;div style=&amp;#39;text-align:center&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-question-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;验证&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;网络是否正常工作?&amp;lt;/div&amp;gt;&amp;#34;}:::dark_decision
+ D --&amp;gt; F
+
+ %% === 诊断流程 (右侧) ===
+ subgraph &amp;#34;异常诊断锦囊 (Troubleshooting Checklist)&amp;#34;
+ direction TB
+ G[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bolt&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;物理层健康检查 (L1)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 电源 (Power Rails)&amp;lt;br&amp;gt;- 复位信号 (Reset Signal)&amp;lt;br&amp;gt;- 参考时钟 (Reference Clock)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+ H[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bullseye&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;控制通路验证 (L2)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- U-Boot &amp;#39;mii read&amp;#39;&amp;lt;br&amp;gt;- Kernel &amp;#39;sysfs&amp;#39; &amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+ I[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-cogs&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;关键逻辑审查 (Logic Review)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 硬件模式 (Strapping Pins)&amp;lt;br&amp;gt;- 时钟流向 (Clock Direction)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+
+ G --&amp;gt; H --&amp;gt; I
+ end
+
+ %% === 成功/失败出口 ===
+ SUCCESS[&amp;lt;b&amp;gt;&amp;lt;i class=&amp;#39;fa fa-check-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; 成功&amp;lt;/b&amp;gt;]:::dark_result_ok
+ FAILURE[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-undo&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;修正并迭代&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;根据诊断结果&amp;lt;br&amp;gt;返回&amp;lt;b&amp;gt;阶段3或4&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;重新适配DTS&amp;lt;/div&amp;gt;&amp;#34;]:::dark_result_fail
+
+ %% === 流程连接 ===
+ F -- &amp;#34;是 (Yes)&amp;#34; --&amp;gt; SUCCESS
+ F -- &amp;#34;否 (No)&amp;#34; --&amp;gt; G
+ I --&amp;gt; FAILURE
+ FAILURE -.-&amp;gt; C &amp;amp; D&lt;/pre>
+&lt;hr>
+&lt;h1 id="项目成果与验证-results--verification">&lt;strong>项目成果与验证 (Results &amp;amp; Verification)&lt;/strong>&lt;/h1>
+&lt;p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，&lt;code>dma reset&lt;/code>错误消失，网络接口成功初始化。&lt;/p></description></item></channel></rss>
