@@ -1,14 +1,196 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-cn class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><link rel="shortcut icon" href=/favicons/favicon.ico><link rel=apple-touch-icon href=/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/favicons/android-192x192.png sizes=192x192><title>RK3568平台千兆以太网控制器Bring-up与验证 | 嵌入式系统爱好者</title>
-<meta name=description content="基于YT8521SC的千兆以太网调试"><meta property="og:url" content="https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/"><meta property="og:site_name" content="嵌入式系统爱好者"><meta property="og:title" content="RK3568平台千兆以太网控制器Bring-up与验证"><meta property="og:description" content="基于YT8521SC的千兆以太网调试"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="portfolio"><meta property="article:published_time" content="2025-07-25T00:00:00+00:00"><meta property="article:modified_time" content="2025-07-25T00:00:00+00:00"><meta property="og:image" content="https://potterwhite.github.io/2025/yt8521sc-crop.png"><meta itemprop=name content="RK3568平台千兆以太网控制器Bring-up与验证"><meta itemprop=description content="基于YT8521SC的千兆以太网调试"><meta itemprop=datePublished content="2025-07-25T00:00:00+00:00"><meta itemprop=dateModified content="2025-07-25T00:00:00+00:00"><meta itemprop=wordCount content="299"><meta itemprop=image content="https://potterwhite.github.io/2025/yt8521sc-crop.png"><meta itemprop=keywords content="Rockchip,Bring Up,GMAC,Buildroot,BSP,RK3568,Device Tree"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://potterwhite.github.io/2025/yt8521sc-crop.png"><meta name=twitter:title content="RK3568平台千兆以太网控制器Bring-up与验证"><meta name=twitter:description content="基于YT8521SC的千兆以太网调试"><link rel=preload href=/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css as=style integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL+WaPQgGLk4h9V8+KY/Q=" crossorigin=anonymous><link href=/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css rel=stylesheet integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL+WaPQgGLk4h9V8+KY/Q=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script><script defer src=https://unpkg.com/lunr@2.3.9/lunr.min.js integrity=sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli crossorigin=anonymous></script><link rel=stylesheet href=/css/prism.css></head><body class=td-page><header><nav class="td-navbar js-navbar-scroll" data-bs-theme=dark><div class="container-fluid flex-column flex-md-row"><a class=navbar-brand href=/><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class=navbar-brand__name>嵌入式系统爱好者</span></a><div class="td-navbar-nav-scroll ms-md-auto" id=main_navbar><ul class=navbar-nav><li class=nav-item><a class=nav-link href=/about/><span>关于</span></a></li><li class=nav-item><a class=nav-link href=/blog/><span>博客</span></a></li><li class=nav-item><a class=nav-link href=/portfolio/><span>我的作品</span></a></li><li class=nav-item><a class=nav-link href=/news/><span>新闻</span></a></li><li class="nav-item dropdown d-none d-lg-block"><div class=dropdown><a class="nav-link dropdown-toggle" href=# role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false>简体中文</a><ul class=dropdown-menu><li><a class=dropdown-item href=/en/portfolio/bringup_gmac_rk3568_yt8521sc/>English</a></li></ul></div></li><li class="td-light-dark-menu nav-item dropdown"><svg class="d-none"><symbol id="check2" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5.0 010 .708l-7 7a.5.5.0 01-.708.0l-3.5-3.5a.5.5.0 11.708-.708L6.5 10.293l6.646-6.647a.5.5.0 01.708.0z"/></symbol><symbol id="circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 108 1v14zm0 1A8 8 0 118 0a8 8 0 010 16z"/></symbol><symbol id="moon-stars-fill" viewBox="0 0 16 16"><path d="M6 .278a.768.768.0 01.08.858 7.208 7.208.0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527.0 1.04-.055 1.533-.16a.787.787.0 01.81.316.733.733.0 01-.031.893A8.349 8.349.0 018.344 16C3.734 16 0 12.286.0 7.71.0 4.266 2.114 1.312 5.124.06A.752.752.0 016 .278z"/><path d="M10.794 3.148a.217.217.0 01.412.0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217.0 010 .412l-1.162.387A1.734 1.734.0 0011.593 7.69l-.387 1.162a.217.217.0 01-.412.0l-.387-1.162A1.734 1.734.0 009.31 6.593l-1.162-.387a.217.217.0 010-.412l1.162-.387a1.734 1.734.0 001.097-1.097l.387-1.162zM13.863.099a.145.145.0 01.274.0l.258.774c.115.346.386.617.732.732l.774.258a.145.145.0 010 .274l-.774.258a1.156 1.156.0 00-.732.732l-.258.774a.145.145.0 01-.274.0l-.258-.774a1.156 1.156.0 00-.732-.732l-.774-.258a.145.145.0 010-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></symbol><symbol id="sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 0zm0 13a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 13zm8-5a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2a.5.5.0 01.5.5zM3 8a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2A.5.5.0 013 8zm10.657-5.657a.5.5.0 010 .707l-1.414 1.415a.5.5.0 11-.707-.708l1.414-1.414a.5.5.0 01.707.0zm-9.193 9.193a.5.5.0 010 .707L3.05 13.657a.5.5.0 01-.707-.707l1.414-1.414a.5.5.0 01.707.0zm9.193 2.121a.5.5.0 01-.707.0l-1.414-1.414a.5.5.0 01.707-.707l1.414 1.414a.5.5.0 010 .707zM4.464 4.465a.5.5.0 01-.707.0L2.343 3.05a.5.5.0 11.707-.707l1.414 1.414a.5.5.0 010 .708z"/></symbol></svg>
-<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id=bd-theme type=button aria-expanded=false data-bs-toggle=dropdown data-bs-display=static aria-label="Toggle theme (auto)"><svg class="bi my-1 theme-icon-active"><use href="#circle-half"/></svg></button><ul class="dropdown-menu dropdown-menu-end" aria-labelledby=bd-theme-text><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=light aria-pressed=false>
-<svg class="bi me-2 opacity-50"><use href="#sun-fill"/></svg>
-Light<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=dark aria-pressed=false>
-<svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"/></svg>
-Dark<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center active" data-bs-theme-value=auto aria-pressed=true>
-<svg class="bi me-2 opacity-50"><use href="#circle-half"/></svg>
-Auto<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li></ul></li></ul></div><div class="d-none d-lg-block"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder=站内搜索… aria-label=站内搜索… autocomplete=off data-offline-search-index-json-src=/offline-search-index.68976a77d8069886de9c813df3fb4952.json data-offline-search-base-href=/ data-offline-search-max-results=10></div></div></div></nav></header><div class="container-fluid td-default td-outer"><main role=main class=td-main><div class=td-content><main class=td-page-main><div class=td-page-header><h1 class=td-page-title>RK3568平台千兆以太网控制器Bring-up与验证</h1><p class=td-page-meta-lead>基于YT8521SC的千兆以太网调试</p></div><div class=td-page-content><ul><li><strong>作者:</strong> Potter White</li><li><strong>日期:</strong> 2025年7月</li></ul><h1 id=项目概述-project-overview><strong>项目概述 (Project Overview)</strong></h1><p><strong>背景 (Situation):</strong>
-在一个基于Rockchip RK3568 SoC的定制化产品开发项目中，我负责对板载的千兆以太网接口（GMAC1, <code>ethernet@fe010000</code>）进行初次的功能Bring-up。在初始BSP配置下，该网络接口未能被内核正确初始化，日志显示<code>Cannot attach to PHY</code>和<code>Failed to reset the dma</code>等错误。</p><p><strong>我的职责与贡献 (My Role & Contributions):</strong>
-作为项目的BSP工程师，我负责诊断并解决此底层软硬件集成问题。我的主要工作包括：</p><ul><li><strong>执行了端到端的系统性排查</strong>，覆盖了从物理电路到内核驱动的全链路。</li><li><strong>精确定位了问题根源</strong>，将其归因于设备树（DTS）中关于GMAC1的时钟树、引脚功能（pinctrl）配置与硬件设计不匹配。</li><li><strong>主导并实施了设备树的修正方案</strong>，成功使能网络接口并确保其稳定运行。</li><li><strong>通过<code>iperf</code>进行了性能验证</strong>，确认网络吞-吐量达到千兆以太网的设计标准。</li><li><strong>将调试过程沉淀为一套标准作业程序 (SOP)</strong>，用于指导未来类似外设的Bring-up工作。</li></ul><hr><h1 id=我的方法论嵌入式外设bring-up标准作业程序-sop><strong>我的方法论：嵌入式外设Bring-up标准作业程序 (SOP)</strong></h1><p>我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。</p><h3 id=第一部分标准化移植流程-standard-porting-workflow><strong>第一部分：标准化移植流程 (Standard Porting Workflow)</strong></h3><p>此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。</p><ul><li>感兴趣可以看我的日志: <a href=/blog/2025/07/25/gmac-bring-up-work-flow>GMAC Bring Up Work Flow</a></li></ul><h3 id=第二部分异常诊断清单-troubleshooting-checklist><strong>第二部分：异常诊断清单 (Troubleshooting Checklist)</strong></h3><p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。</p><ul><li>感兴趣可以看我的日志: <a href=/blog/2025/07/25/gmac-bring-up-debug-strategies>GMAC Bring-Up Debug Strategies</a></li></ul><h3 id=sop流程图>SOP流程图</h3><img src=/2025/gmac-rk3568-bring-up/work-flow.svg alt="work flow" style=height:1500px;max-width:100%><pre class=mermaid>  info</pre><pre class=mermaid>graph TD
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>RK3568平台千兆以太网控制器Bring-up与验证 | </title>
+<meta name="description" content="基于YT8521SC的千兆以太网调试">
+<meta property="og:url" content="https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/">
+  <meta property="og:title" content="RK3568平台千兆以太网控制器Bring-up与验证">
+  <meta property="og:description" content="基于YT8521SC的千兆以太网调试">
+  <meta property="og:locale" content="zh_cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="portfolio">
+    <meta property="article:published_time" content="2025-07-25T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-25T00:00:00+00:00">
+    <meta property="og:image" content="https://potterwhite.github.io/2025/yt8521sc-crop.png">
+
+  <meta itemprop="name" content="RK3568平台千兆以太网控制器Bring-up与验证">
+  <meta itemprop="description" content="基于YT8521SC的千兆以太网调试">
+  <meta itemprop="datePublished" content="2025-07-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="299">
+  <meta itemprop="image" content="https://potterwhite.github.io/2025/yt8521sc-crop.png">
+  <meta itemprop="keywords" content="Rockchip,Bring Up,GMAC,Buildroot,BSP,RK3568,Device Tree">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://potterwhite.github.io/2025/yt8521sc-crop.png">
+  <meta name="twitter:title" content="RK3568平台千兆以太网控制器Bring-up与验证">
+  <meta name="twitter:description" content="基于YT8521SC的千兆以太网调试">
+<link rel="preload" href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" as="style" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<link href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" rel="stylesheet" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"></script>
+<script defer
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+  </head>
+  <body class="td-page">
+    <header>
+      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name"></span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/about/"><span>关于</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/blog/"><span>博客</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/portfolio/"><span>我的作品</span></a>
+      </li>
+      <li class="nav-item dropdown d-none d-lg-block">
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="/en/portfolio/bringup_gmac_rk3568_yt8521sc/">English</a></li>
+    </ul>
+</div></li>
+      <li class="td-light-dark-menu nav-item dropdown">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check2" viewBox="0 0 16 16">
+    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+  </symbol>
+  <symbol id="circle-half" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+  </symbol>
+  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+  </symbol>
+  <symbol id="sun-fill" viewBox="0 0 16 16">
+    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+  </symbol>
+</svg>
+
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
+        id="bd-theme"
+        type="button"
+        aria-expanded="false"
+        data-bs-toggle="dropdown"
+        data-bs-display="static"
+        aria-label="Toggle theme (auto)">
+  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
+      Light
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
+      Dark
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+  <li>
+    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
+      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
+      Auto
+      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
+    </button>
+  </li>
+</ul>
+
+      </li>
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search td-search--offline">
+  <div class="td-search__icon"></div>
+  <input
+    type="search"
+    class="td-search__input form-control"
+    placeholder="站内搜索…"
+    aria-label="站内搜索…"
+    autocomplete="off"
+    
+    data-offline-search-index-json-src="/offline-search-index.ce2d1b0f8608f8a602699e57202ea1d8.json"
+    data-offline-search-base-href="/"
+    data-offline-search-max-results="10"
+  >
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        
+<div class="td-content">
+  <main class="td-page-main">
+    <div class="td-page-header">
+      <h1 class="td-page-title">RK3568平台千兆以太网控制器Bring-up与验证</h1>
+      <p class="td-page-meta-lead">基于YT8521SC的千兆以太网调试</p>
+    </div>
+    <div class="td-page-content">
+      <ul>
+<li><strong>作者:</strong> Potter White</li>
+<li><strong>日期:</strong> 2025年7月</li>
+</ul>
+<h1 id="项目概述-project-overview"><strong>项目概述 (Project Overview)</strong></h1>
+<p><strong>背景 (Situation):</strong>
+在一个基于Rockchip RK3568 SoC的定制化产品开发项目中，我负责对板载的千兆以太网接口（GMAC1, <code>ethernet@fe010000</code>）进行初次的功能Bring-up。在初始BSP配置下，该网络接口未能被内核正确初始化，日志显示<code>Cannot attach to PHY</code>和<code>Failed to reset the dma</code>等错误。</p>
+<p><strong>我的职责与贡献 (My Role &amp; Contributions):</strong>
+作为项目的BSP工程师，我负责诊断并解决此底层软硬件集成问题。我的主要工作包括：</p>
+<ul>
+<li><strong>执行了端到端的系统性排查</strong>，覆盖了从物理电路到内核驱动的全链路。</li>
+<li><strong>精确定位了问题根源</strong>，将其归因于设备树（DTS）中关于GMAC1的时钟树、引脚功能（pinctrl）配置与硬件设计不匹配。</li>
+<li><strong>主导并实施了设备树的修正方案</strong>，成功使能网络接口并确保其稳定运行。</li>
+<li><strong>通过<code>iperf</code>进行了性能验证</strong>，确认网络吞-吐量达到千兆以太网的设计标准。</li>
+<li><strong>将调试过程沉淀为一套标准作业程序 (SOP)</strong>，用于指导未来类似外设的Bring-up工作。</li>
+</ul>
+<hr>
+<h1 id="我的方法论嵌入式外设bring-up标准作业程序-sop"><strong>我的方法论：嵌入式外设Bring-up标准作业程序 (SOP)</strong></h1>
+<p>我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。</p>
+<h3 id="第一部分标准化移植流程-standard-porting-workflow"><strong>第一部分：标准化移植流程 (Standard Porting Workflow)</strong></h3>
+<p>此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。</p>
+<ul>
+<li>感兴趣可以看我的日志: <a href="/blog/2025/07/25/gmac-bring-up-work-flow">GMAC Bring Up Work Flow</a></li>
+</ul>
+<h3 id="第二部分异常诊断清单-troubleshooting-checklist"><strong>第二部分：异常诊断清单 (Troubleshooting Checklist)</strong></h3>
+<p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。</p>
+<ul>
+<li>感兴趣可以看我的日志: <a href="/blog/2025/07/25/gmac-bring-up-debug-strategies">GMAC Bring-Up Debug Strategies</a></li>
+</ul>
+<h3 id="sop流程图">SOP流程图</h3>
+<img src="/2025/gmac-rk3568-bring-up/work-flow.svg" alt="work flow" style="height: 1500px; max-width: 100%;">
+<pre class="mermaid">  info</pre>
+<pre class="mermaid">graph TD
     %% === 定义与样式 ===
     classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab;
     classDef dark_debug fill:#4b3e58,color:white,stroke:#b8a3d3;
@@ -50,9 +232,99 @@ Auto<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li></ul
     F -- &#34;是 (Yes)&#34; --&gt; SUCCESS
     F -- &#34;否 (No)&#34; --&gt; G
     I --&gt; FAILURE
-    FAILURE -.-&gt; C &amp; D</pre><hr><h1 id=项目成果与验证-results--verification><strong>项目成果与验证 (Results & Verification)</strong></h1><p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，<code>dma reset</code>错误消失，网络接口成功初始化。</p><p>为了验证功能的完整性和性能，我使用<code>iperf</code>工具进行了全面的网络吞吐量测试。测试结果表明，网络接口性能表现出色，完全达到了设计预期。</p><h2 id=tcp-吞吐量测试-rk3568---pc><strong>TCP 吞吐量测试 (RK3568 &lt;-> PC)</strong></h2><ul><li><p><strong>上行 (RK3568 -> PC):</strong> <code>928 Mbits/sec</code>
-<img src=/2025/gmac-rk3568-bring-up/test-first-arm-rx.png alt=图1：TCP吞吐量测试结果-ARM收></p></li><li><p><strong>下行 (PC -> RK3568):</strong> <code>941 Mbits/sec</code>
-<img src=/2025/gmac-rk3568-bring-up/test-first-arm-tx.png alt=图2：TCP吞吐量测试结果-ARM发></p></li></ul><p><strong>结论:</strong> TCP吞吐量已达到千兆以太网的理论上限，证明数据通路高效且稳定。</p><h2 id=udp-压力测试-rk3568---pc-1gbps><strong>UDP 压力测试 (RK3568 &lt;-> PC, @1Gbps)</strong></h2><ul><li><strong>下行丢包率:</strong> <code>0.023%</code>
-<img src=/2025/gmac-rk3568-bring-up/test-second-arm-loss.png alt=图3：UCP丢包率测试结果-ARM端></li></ul><p><strong>结论:</strong> 在极限带宽压力下，丢包率极低，表明系统处理网络数据包的能力非常稳健。</p><hr><h1 id=技术栈与工具-tech-stack--tools><strong>技术栈与工具 (Tech Stack & Tools)</strong></h1><ul><li><strong>硬件平台:</strong> Rockchip RK3568 SoC, YT8251SC 千兆以太网PHY芯片</li><li><strong>软件环境:</strong> Linux Kernel 5.10, U-Boot, Buildroot</li><li><strong>核心技术:</strong> Embedded Linux BSP, Device Tree (DTS), Kernel Drivers (stmmac), MDIO/RGMII Protocols</li><li><strong>调试工具:</strong><ul><li><strong>硬件:</strong> 示波器, 万用表, 串口</li><li><strong>软件:</strong> <code>dmesg</code>, <code>printk</code>, <code>sysfs</code> , <code>iperf</code>, <code>mii-tool</code></li></ul></li></ul><hr></div></main></div></main><footer class="td-footer row d-print-none"><div class=container-fluid><div class="row mx-md-2"><div class="td-footer__left col-6 col-sm-4 order-sm-1"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title=X aria-label=X><a target=_blank rel=noopener href=https://x.com/potter_whi3340 aria-label=X><i class="fab fa-twitter"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title="Stack Overflow" aria-label="Stack Overflow"><a target=_blank rel=noopener href=https://example.org/stack aria-label="Stack Overflow"><i class="fab fa-stack-overflow"></i></a></li></ul></div><div class="td-footer__right col-6 col-sm-4 order-sm-3"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title=GitHub aria-label=GitHub><a target=_blank rel=noopener href=https://github.com/potterwhite aria-label=GitHub><i class="fab fa-github"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title=Slack aria-label=Slack><a target=_blank rel=noopener href=https://example.org/slack aria-label=Slack><i class="fab fa-slack"></i></a></li></ul></div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2"><span class=td-footer__copyright>&copy;
-2024&ndash;2025
-<span class=td-footer__authors>Potter White | <a href=https://creativecommons.org/licenses/by/4.0 target=_blank rel=noopener>CC BY 4.0</a> |</span></span><span class=td-footer__all_rights_reserved>保留所有权利</span><span class=ms-2><a href=https://policies.google.com/privacy target=_blank rel=noopener>隐私政策</a></span></div></div></div></footer></div><script src=/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin=anonymous></script><script src=/js/prism.js></script><script src=/js/tabpane-persist.js></script></body></html>
+    FAILURE -.-&gt; C &amp; D</pre>
+<hr>
+<h1 id="项目成果与验证-results--verification"><strong>项目成果与验证 (Results &amp; Verification)</strong></h1>
+<p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，<code>dma reset</code>错误消失，网络接口成功初始化。</p>
+<p>为了验证功能的完整性和性能，我使用<code>iperf</code>工具进行了全面的网络吞吐量测试。测试结果表明，网络接口性能表现出色，完全达到了设计预期。</p>
+<h2 id="tcp-吞吐量测试-rk3568---pc"><strong>TCP 吞吐量测试 (RK3568 &lt;-&gt; PC)</strong></h2>
+<ul>
+<li>
+<p><strong>上行 (RK3568 -&gt; PC):</strong> <code>941 Mbits/sec</code>
+<img src="/2025/gmac-rk3568-bring-up/test-first-arm-tx.png" alt=""></p>
+</li>
+<li>
+<p><strong>下行 (PC -&gt; RK3568):</strong> <code>928 Mbits/sec</code>
+<img src="/2025/gmac-rk3568-bring-up/test-first-arm-rx.png" alt=""></p>
+</li>
+</ul>
+<p><strong>结论:</strong> TCP吞吐量已达到千兆以太网的理论上限，证明数据通路高效且稳定。</p>
+<h2 id="udp-压力测试-rk3568---pc-1gbps"><strong>UDP 压力测试 (RK3568 &lt;-&gt; PC, @1Gbps)</strong></h2>
+<ul>
+<li><strong>下行丢包率:</strong> <code>0.023%</code>
+<img src="/2025/gmac-rk3568-bring-up/test-second-arm-loss.png" alt="图3：UCP丢包率测试结果-ARM端"></li>
+</ul>
+<p><strong>结论:</strong> 在极限带宽压力下，丢包率极低，表明系统处理网络数据包的能力非常稳健。</p>
+<hr>
+<h1 id="技术栈与工具-tech-stack--tools"><strong>技术栈与工具 (Tech Stack &amp; Tools)</strong></h1>
+<ul>
+<li><strong>硬件平台:</strong> Rockchip RK3568 SoC, YT8251SC 千兆以太网PHY芯片</li>
+<li><strong>软件环境:</strong> Linux Kernel 5.10, U-Boot, Buildroot</li>
+<li><strong>核心技术:</strong> Embedded Linux BSP, Device Tree (DTS), Kernel Drivers (stmmac), MDIO/RGMII Protocols</li>
+<li><strong>调试工具:</strong>
+<ul>
+<li><strong>硬件:</strong> 示波器, 万用表, 串口</li>
+<li><strong>软件:</strong> <code>dmesg</code>, <code>printk</code>, <code>sysfs</code> , <code>iperf</code>, <code>mii-tool</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+
+    </div>
+  </main>
+</div>
+
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
+    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Hugging Face" aria-label="Hugging Face">
+    <a target="_blank" rel="noopener" href="https://huggingface.co/PotterWhite" aria-label="Hugging Face">
+      <i class="fab fa-hugging-face"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        <ul class="td-footer__links-list">
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
+    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
+    <a target="_blank" rel="noopener" href="https://zadoktec.slack.com" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+</ul>
+
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024&ndash;2025
+    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js" integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin="anonymous"></script>
+<script src='/js/prism.js'></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>

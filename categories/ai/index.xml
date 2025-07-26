@@ -1,28 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on 嵌入式系统爱好者</title><link>https://potterwhite.github.io/categories/ai/</link><description>Recent content in AI on 嵌入式系统爱好者</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 01 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>ChatGPT</title><link>https://potterwhite.github.io/blog/2024/08/01/chatgpt/</link><pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/01/chatgpt/</guid><description>&lt;h2 id="plus用户的权益">&lt;a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus#h_d78bb59065" target="_blank" rel="noopener">&lt;strong>Plus用户的权益&lt;/strong>（&lt;em>2024年5月13号以后&lt;/em>）&lt;/a>&lt;/h2>
-&lt;div style="padding-left: 2em;">
-&lt;p>这里说的是plus，3小时80条&lt;/p>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>Type&lt;/th>
- &lt;th>Free&lt;/th>
- &lt;th>Plus&lt;/th>
- &lt;th>Team&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>[GPT-4o]Msg_limit&lt;/td>
- &lt;td>16条/3小时&lt;/td>
- &lt;td>80条/3小时&lt;/td>
- &lt;td>160条/3小时&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>[GPT-4] Msg_limit&lt;/td>
- &lt;td>8条/3小时&lt;/td>
- &lt;td>40条/3小时&lt;/td>
- &lt;td>80条/3小时&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;/div></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI on </title>
+    <link>https://potterwhite.github.io/categories/ai/</link>
+    <description>Recent content in AI on </description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 01 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://potterwhite.github.io/categories/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ChatGPT</title>
+      <link>https://potterwhite.github.io/blog/2024/08/01/chatgpt/</link>
+      <pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/blog/2024/08/01/chatgpt/</guid>
+      <description>&lt;h2 id=&#34;plus用户的权益&#34;&gt;&lt;a href=&#34;https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus#h_d78bb59065&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;strong&gt;Plus用户的权益&lt;/strong&gt;（&lt;em&gt;2024年5月13号以后&lt;/em&gt;）&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;div style=&#34;padding-left: 2em;&#34;&gt;&#xA;&lt;p&gt;这里说的是plus，3小时80条&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;Type&lt;/th&gt;&#xA;          &lt;th&gt;Free&lt;/th&gt;&#xA;          &lt;th&gt;Plus&lt;/th&gt;&#xA;          &lt;th&gt;Team&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;[GPT-4o]Msg_limit&lt;/td&gt;&#xA;          &lt;td&gt;16条/3小时&lt;/td&gt;&#xA;          &lt;td&gt;80条/3小时&lt;/td&gt;&#xA;          &lt;td&gt;160条/3小时&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;[GPT-4] Msg_limit&lt;/td&gt;&#xA;          &lt;td&gt;8条/3小时&lt;/td&gt;&#xA;          &lt;td&gt;40条/3小时&lt;/td&gt;&#xA;          &lt;td&gt;80条/3小时&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;/div&gt;</description>
+    </item>
+  </channel>
+</rss>
