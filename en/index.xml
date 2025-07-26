@@ -67,13 +67,65 @@ or elsewhere? Link to your examples here.&lt;/p></description></item><item><titl
 &lt;p>Text can be &lt;strong>bold&lt;/strong>, &lt;em>italic&lt;/em>, or &lt;del>strikethrough&lt;/del>. &lt;a href="https://gohugo.io" target="_blank" rel="noopener">Links&lt;/a> should be blue with no underlines (unless hovered over).&lt;/p>
 &lt;p>There should be whitespace between paragraphs. Vape migas chillwave sriracha poutine try-hard distillery. Tattooed shabby chic small batch, pabst art party heirloom letterpress air plant pop-up. Sustainable chia skateboard art party banjo cardigan normcore affogato vexillologist quinoa meggings man bun master cleanse shoreditch readymade. Yuccie prism four dollar toast tbh cardigan iPhone, tumblr listicle live-edge VHS. Pug lyft normcore hot chicken biodiesel, actually keffiyeh thundercats photo booth pour-over twee fam food truck microdosing banh mi. Vice activated charcoal raclette unicorn live-edge post-ironic. Heirloom vexillologist coloring book, beard deep v letterpress echo park humblebrag tilde.&lt;/p></description></item><item><title>Contribution Guidelines</title><link>https://potterwhite.github.io/en/docs/contribution-guidelines/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/docs/contribution-guidelines/</guid><description>&lt;div class="pageinfo pageinfo-primary">
 &lt;p>These basic sample guidelines assume that your Docsy site is deployed using Netlify and your files are stored in GitHub. You can use the guidelines &amp;ldquo;as is&amp;rdquo; or adapt them with your own instructions: for example, other deployment options, information about your doc project&amp;rsquo;s file structure, project-specific review guidelines, versioning guidelines, or any other information your users might find useful when updating your site. &lt;a href="https://github.com/kubeflow/website/blob/master/README.md" target="_blank" rel="noopener">Kubeflow&lt;/a> has a great example.&lt;/p>
-&lt;p>Don&amp;rsquo;t forget to link to your own doc repo rather than our example site! Also make sure users can find these guidelines from your doc repo README: either add them there and link to them from this page, add them here and link to them from the README, or include them in both locations.&lt;/p></description></item><item><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title><link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
+&lt;p>Don&amp;rsquo;t forget to link to your own doc repo rather than our example site! Also make sure users can find these guidelines from your doc repo README: either add them there and link to them from this page, add them here and link to them from the README, or include them in both locations.&lt;/p></description></item><item><title>GMAC Bring Up Work Flow</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</guid><description>&lt;h2 id="1-identifying-the-gmac-from-the-schematic">1. Identifying the GMAC from the Schematic&lt;/h2>
+&lt;ul>
+&lt;li>From the default DTS provided by the SDK, it can be seen that there are two GMACs, gmac0 and gmac1.&lt;/li>
+&lt;/ul>
+&lt;h3 id="11-first-check-the-schematic-from-the-hardware-engineer-search-for-gmac-and-see-if-gmac1-or-gmac0-is-used">1.1 First, check the schematic from the hardware engineer, search for GMAC, and see if gmac1 or gmac0 is used.&lt;/h3>
+&lt;p>To determine this, one must look at the pins used in the schematic and compare them with the configuration of the gmac nodes in the DTS.&lt;/p></description></item><item><title>GMAC Bring-Up Debug Strategies</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid><description>&lt;p>The most important are these three parts, none can be missing.&lt;/p>
+&lt;h2 id="a-power">&lt;strong>a. Power&lt;/strong>&lt;/h2>
+&lt;h3 id="schematic-diagram">&lt;strong>Schematic Diagram&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png" alt="">&lt;/p>
+&lt;h3 id="description">&lt;strong>Description&lt;/strong>&lt;/h3>
+&lt;p>The power supply must be present first, and it must be normal.
+The definition of &amp;ldquo;normal&amp;rdquo; is in the datasheet.
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png" alt="">&lt;/p>
+&lt;h3 id="category-1-avddl-and-dvddl">&lt;strong>Category 1: AVDDL and DVDDL&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Requires around 1.2V&lt;/li>
+&lt;li>The voltage requirement for R209 and R210 is around 1.2V&lt;/li>
+&lt;/ul>
+&lt;h3 id="category-2-dvdd33-vdd33-and-avdd33">&lt;strong>Category 2: DVDD33, VDD33, and AVDD33&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Requires around 3.3V&lt;/li>
+&lt;/ul>
+&lt;h3 id="category-3-">&lt;strong>Category 3: [Special][Caution] DVDD_RGMII&lt;/strong>&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	Note: When CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> 00, the I/O pad power is supplied from
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	the external 3.3V power connected to DVDD_RGMII pin. Otherwise,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	it is supplied from the internal LDO.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>Test Method
+&lt;ul>
+&lt;li>By testing pins 36 and 37 of the PHY
+After testing, it was found that both are at a low level.&lt;/li>
+&lt;li>Testing R212
+After testing with a multimeter, it was found that both ends are at 3.3V.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="b-crystal-clock">&lt;strong>b. Crystal (Clock)&lt;/strong>&lt;/h2>
+&lt;h3 id="1-xtal_">&lt;strong>1. XTAL_I (Input pin related to the crystal)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>This pin is grounded, so there is nothing.&lt;/li>
+&lt;li>This is pin 47 of the PHY.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-xtal_">&lt;strong>2. XTAL_O (Output pin related to the crystal)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>25MHz is measured from here.&lt;/li>
+&lt;li>How to test?
+&lt;ul>
+&lt;li>Directly test pin 46 of the YT8521SC.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>These two must come first, as they determine if the crystal is present.&lt;/p></description></item><item><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title><link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
 &lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
 &lt;/ul>
 &lt;h1 id="project-overview">&lt;strong>Project Overview&lt;/strong>&lt;/h1>
 &lt;p>&lt;strong>Situation:&lt;/strong>
-In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code>ethernet@fe010000&lt;/code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code>Cannot attach to PHY&lt;/code> and &lt;code>Failed to reset the dma&lt;/code>.&lt;/p>
+In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code>ethernet@fe010000&lt;/code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code>Cannot attach to PHY&lt;/code> and &lt;code>Failed to reset the dma&lt;/code>.&lt;/p>
 &lt;p>&lt;strong>My Role &amp;amp; Contributions:&lt;/strong>
 As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p></description></item><item><title>Easy documentation with Docsy</title><link>https://potterwhite.github.io/en/blog/2018/10/06/easy-documentation-with-docsy/</link><pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2018/10/06/easy-documentation-with-docsy/</guid><description>&lt;p>&lt;strong>This is a typical blog post that includes images.&lt;/strong>&lt;/p>
 &lt;p>The front matter specifies the date of the blog post, its title, a short description that will be displayed on the blog landing page, and its author.&lt;/p>
