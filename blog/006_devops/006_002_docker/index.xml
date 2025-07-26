@@ -1,19 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>6.2 Docker Ops on </title>
-    <link>https://potterwhite.github.io/blog/006_devops/006_002_docker/</link>
-    <description>Recent content in 6.2 Docker Ops on </description>
-    <generator>Hugo</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Wed, 10 Jul 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/blog/006_devops/006_002_docker/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Docker使用</title>
-      <link>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</guid>
-      <description>&lt;!-- ---&#xA;title: &#34;Docker使用&#34;&#xA;date: 2024-07-17&#xA;description: &#34;&#34;&#xA;categories:&#xA;  - blog&#xA;  - DevOps&#xA;  - Docker&#xA;noindex: true&#xA;--- --&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>6.2 Docker Ops on</title><link>https://potterwhite.github.io/blog/006_devops/006_002_docker/</link><description>Recent content in 6.2 Docker Ops on</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 10 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/blog/006_devops/006_002_docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker使用</title><link>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</link><pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</guid><description>&lt;!-- ---
+title: "Docker使用"
+date: 2024-07-17
+description: ""
+categories:
+ - blog
+ - DevOps
+ - Docker
+noindex: true
+--- --></description></item></channel></rss>

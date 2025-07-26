@@ -1,26 +1,133 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>我的项目 on </title>
-    <link>https://potterwhite.github.io/portfolio/</link>
-    <description>Recent content in 我的项目 on </description>
-    <generator>Hugo</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/portfolio/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>RK3568平台千兆以太网控制器Bring-up与验证</title>
-      <link>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</guid>
-      <description>&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;作者:&lt;/strong&gt; Potter White&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;日期:&lt;/strong&gt; 2025年7月&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;项目概述-project-overview&#34;&gt;&lt;strong&gt;项目概述 (Project Overview)&lt;/strong&gt;&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;背景 (Situation):&lt;/strong&gt;&#xA;在一个基于Rockchip RK3568 SoC的定制化产品开发项目中，我负责对板载的千兆以太网接口（GMAC1, &lt;code&gt;ethernet@fe010000&lt;/code&gt;）进行初次的功能Bring-up。在初始BSP配置下，该网络接口未能被内核正确初始化，日志显示&lt;code&gt;Cannot attach to PHY&lt;/code&gt;和&lt;code&gt;Failed to reset the dma&lt;/code&gt;等错误。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong&gt;&#xA;作为项目的BSP工程师，我负责诊断并解决此底层软硬件集成问题。我的主要工作包括：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;执行了端到端的系统性排查&lt;/strong&gt;，覆盖了从物理电路到内核驱动的全链路。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;精确定位了问题根源&lt;/strong&gt;，将其归因于设备树（DTS）中关于GMAC1的时钟树、引脚功能（pinctrl）配置与硬件设计不匹配。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;主导并实施了设备树的修正方案&lt;/strong&gt;，成功使能网络接口并确保其稳定运行。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;通过&lt;code&gt;iperf&lt;/code&gt;进行了性能验证&lt;/strong&gt;，确认网络吞-吐量达到千兆以太网的设计标准。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;将调试过程沉淀为一套标准作业程序 (SOP)&lt;/strong&gt;，用于指导未来类似外设的Bring-up工作。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h1 id=&#34;我的方法论嵌入式外设bring-up标准作业程序-sop&#34;&gt;&lt;strong&gt;我的方法论：嵌入式外设Bring-up标准作业程序 (SOP)&lt;/strong&gt;&lt;/h1&gt;&#xA;&lt;p&gt;我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。&lt;/p&gt;&#xA;&lt;h3 id=&#34;第一部分标准化移植流程-standard-porting-workflow&#34;&gt;&lt;strong&gt;第一部分：标准化移植流程 (Standard Porting Workflow)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;感兴趣可以看我的日志: &lt;a href=&#34;https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow&#34;&gt;GMAC Bring Up Work Flow&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;第二部分异常诊断清单-troubleshooting-checklist&#34;&gt;&lt;strong&gt;第二部分：异常诊断清单 (Troubleshooting Checklist)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;感兴趣可以看我的日志: &lt;a href=&#34;https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies&#34;&gt;GMAC Bring-Up Debug Strategies&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;sop流程图&#34;&gt;SOP流程图&lt;/h3&gt;&#xA;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/work-flow.svg&#34; alt=&#34;work flow&#34; style=&#34;height: 1500px; max-width: 100%;&#34;&gt;&#xA;&lt;pre class=&#34;mermaid&#34;&gt;  info&lt;/pre&gt;&#xA;&lt;pre class=&#34;mermaid&#34;&gt;graph TD&#xA;    %% === 定义与样式 ===&#xA;    classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab;&#xA;    classDef dark_debug fill:#4b3e58,color:white,stroke:#b8a3d3;&#xA;    classDef dark_decision fill:#27ae60,color:white,stroke:#88d1a1;&#xA;    classDef dark_result_ok fill:#16a085,color:white,stroke:#72d6c1;&#xA;    classDef dark_result_fail fill:#c0392b,color:white,stroke:#e69a93;&#xA;&#xA;    %% === 主流程 (左侧) ===&#xA;    subgraph &amp;#34;标准化移植流程 (Standard Porting Workflow)&amp;#34;&#xA;        direction TB&#xA;        S[&amp;lt;b&amp;gt;开始&amp;lt;/b&amp;gt;]:::dark_main&#xA;        A[&amp;lt;b&amp;gt;1. 硬件接口确认&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;GMAC0或GMAC1]:::dark_main&#xA;        B[&amp;lt;b&amp;gt;2. 时钟模式分析&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;25MHz与125MHz两种时钟的流向]:::dark_main&#xA;        C[&amp;lt;b&amp;gt;3. 设备树DTS适配&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;从瑞芯微的ModeConfig手册里节选正确dts配置]:::dark_main&#xA;        D[&amp;lt;b&amp;gt;5. 编译与验证&amp;lt;/b&amp;gt;]:::dark_main&#xA;&#xA;        S --&amp;gt; A --&amp;gt; B --&amp;gt; C --&amp;gt; D&#xA;    end&#xA;&#xA;    %% === 决策点 (中央) ===&#xA;    F{&amp;#34;&amp;lt;div style=&amp;#39;text-align:center&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-question-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;验证&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;网络是否正常工作?&amp;lt;/div&amp;gt;&amp;#34;}:::dark_decision&#xA;    D --&amp;gt; F&#xA;&#xA;    %% === 诊断流程 (右侧) ===&#xA;    subgraph &amp;#34;异常诊断锦囊 (Troubleshooting Checklist)&amp;#34;&#xA;        direction TB&#xA;        G[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bolt&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;物理层健康检查 (L1)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 电源 (Power Rails)&amp;lt;br&amp;gt;- 复位信号 (Reset Signal)&amp;lt;br&amp;gt;- 参考时钟 (Reference Clock)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug&#xA;        H[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bullseye&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;控制通路验证 (L2)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- U-Boot &amp;#39;mii read&amp;#39;&amp;lt;br&amp;gt;- Kernel &amp;#39;sysfs&amp;#39; &amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug&#xA;        I[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-cogs&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;关键逻辑审查 (Logic Review)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 硬件模式 (Strapping Pins)&amp;lt;br&amp;gt;- 时钟流向 (Clock Direction)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug&#xA;&#xA;        G --&amp;gt; H --&amp;gt; I&#xA;    end&#xA;&#xA;    %% === 成功/失败出口 ===&#xA;    SUCCESS[&amp;lt;b&amp;gt;&amp;lt;i class=&amp;#39;fa fa-check-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; 成功&amp;lt;/b&amp;gt;]:::dark_result_ok&#xA;    FAILURE[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-undo&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;修正并迭代&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;根据诊断结果&amp;lt;br&amp;gt;返回&amp;lt;b&amp;gt;阶段3或4&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;重新适配DTS&amp;lt;/div&amp;gt;&amp;#34;]:::dark_result_fail&#xA;&#xA;    %% === 流程连接 ===&#xA;    F -- &amp;#34;是 (Yes)&amp;#34; --&amp;gt; SUCCESS&#xA;    F -- &amp;#34;否 (No)&amp;#34; --&amp;gt; G&#xA;    I --&amp;gt; FAILURE&#xA;    FAILURE -.-&amp;gt; C &amp;amp; D&lt;/pre&gt;&#xA;&lt;hr&gt;&#xA;&lt;h1 id=&#34;项目成果与验证-results--verification&#34;&gt;&lt;strong&gt;项目成果与验证 (Results &amp;amp; Verification)&lt;/strong&gt;&lt;/h1&gt;&#xA;&lt;p&gt;遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，&lt;code&gt;dma reset&lt;/code&gt;错误消失，网络接口成功初始化。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>考勤分析器：一个规则驱动的HR效率工具</title>
-      <link>https://potterwhite.github.io/portfolio/attendace_analyzer/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/portfolio/attendace_analyzer/</guid>
-      <description>&lt;h2 id=&#34;项目概述&#34;&gt;项目概述&lt;/h2&gt;&#xA;&lt;p&gt;考勤分析器是一个为企业内部开发的效率工具，旨在解决复杂且耗时的员工考勤数据分析任务。该应用通过一个高度灵活、由规则驱动的引擎，将原始的Excel导出数据转化为清晰、可执行的分析报告，极大地提升了HR部门的工作流程效率。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;功能演示&#34;&gt;功能演示&lt;/h3&gt;&#xA;&lt;p&gt;以下是一个简短的视频，演示了本应用的核心工作流程。&lt;/p&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;  &#xA;    &#xA;  &#xA;&#xA;  &#xA;&#xA;  &#xA;&#xA;&#xA;&lt;figure &gt;&#xA;    &#xA;        &#xA;&#xA;        &#xA;        &#xA;&#xA;        &lt;div class=&#34;video-wrapper&#34; style=&#34;margin: auto; max-width: 800px;&#34;&gt;&#xA;            &lt;video controls autoplay loop muted playsinline&#xA;                   style=&#34;width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);&#34;&gt;&#xA;                &lt;source src=&#34;https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;                Your browser does not support the video tag.&#xA;            &lt;/video&gt;&#xA;        &lt;/div&gt;&#xA;    &#xA;&#xA;    &#xA;        &lt;figcaption style=&#34;text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);&#34;&gt;应用核心工作流程演示&lt;/figcaption&gt;&#xA;    &#xA;&lt;/figure&gt;&#xA;&lt;br&gt;&#xD;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;核心功能与技术栈&#34;&gt;核心功能与技术栈&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;规则驱动引擎&lt;/strong&gt;：所有逻辑由一个 &lt;code&gt;rules.toml&lt;/code&gt; 文件控制。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;全面指标计算&lt;/strong&gt;：计算出勤天数、加班、迟到等。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;双视图报告&lt;/strong&gt;：生成“公开”和“详细”两种报告。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;技术栈&lt;/strong&gt;：&lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;Pandas&lt;/strong&gt;, &lt;strong&gt;Streamlit&lt;/strong&gt;, &lt;strong&gt;TOML&lt;/strong&gt;。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;核心算法设计-v16&#34;&gt;核心算法设计 (V1.6)&lt;/h2&gt;&#xA;&lt;p&gt;作为本项目的架构师，我基于“出勤”、“缺勤”、“异常”三态单元模型和“出勤单元优先”原则，设计了一套严谨的分析算法。&lt;/p&gt;&#xA;&lt;h2 id=&#34;项目背后的故事&#34;&gt;项目背后的故事&lt;/h2&gt;&#xA;&lt;p&gt;本项目是一个AI辅助开发的案例研究。我的角色从编码员演变为&lt;strong&gt;架构师、总监和质量保证负责人&lt;/strong&gt;。这种人机协作的伙伴关系将开发周期从数周缩短至数天。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;em&gt;本项目为公司内部资产，其源代码不予公开。&lt;/em&gt;&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我的项目 on</title><link>https://potterwhite.github.io/portfolio/</link><description>Recent content in 我的项目 on</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/portfolio/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台千兆以太网控制器Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年7月&lt;/li>
+&lt;/ul>
+&lt;h1 id="项目概述-project-overview">&lt;strong>项目概述 (Project Overview)&lt;/strong>&lt;/h1>
+&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+在一个基于Rockchip RK3568 SoC的定制化产品开发项目中，我负责对板载的千兆以太网接口（GMAC1, &lt;code>ethernet@fe010000&lt;/code>）进行初次的功能Bring-up。在初始BSP配置下，该网络接口未能被内核正确初始化，日志显示&lt;code>Cannot attach to PHY&lt;/code>和&lt;code>Failed to reset the dma&lt;/code>等错误。&lt;/p>
+&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+作为项目的BSP工程师，我负责诊断并解决此底层软硬件集成问题。我的主要工作包括：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>执行了端到端的系统性排查&lt;/strong>，覆盖了从物理电路到内核驱动的全链路。&lt;/li>
+&lt;li>&lt;strong>精确定位了问题根源&lt;/strong>，将其归因于设备树（DTS）中关于GMAC1的时钟树、引脚功能（pinctrl）配置与硬件设计不匹配。&lt;/li>
+&lt;li>&lt;strong>主导并实施了设备树的修正方案&lt;/strong>，成功使能网络接口并确保其稳定运行。&lt;/li>
+&lt;li>&lt;strong>通过&lt;code>iperf&lt;/code>进行了性能验证&lt;/strong>，确认网络吞-吐量达到千兆以太网的设计标准。&lt;/li>
+&lt;li>&lt;strong>将调试过程沉淀为一套标准作业程序 (SOP)&lt;/strong>，用于指导未来类似外设的Bring-up工作。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h1 id="我的方法论嵌入式外设bring-up标准作业程序-sop">&lt;strong>我的方法论：嵌入式外设Bring-up标准作业程序 (SOP)&lt;/strong>&lt;/h1>
+&lt;p>我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。&lt;/p>
+&lt;h3 id="第一部分标准化移植流程-standard-porting-workflow">&lt;strong>第一部分：标准化移植流程 (Standard Porting Workflow)&lt;/strong>&lt;/h3>
+&lt;p>此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。&lt;/p>
+&lt;ul>
+&lt;li>感兴趣可以看我的日志: &lt;a href="https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow">GMAC Bring Up Work Flow&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="第二部分异常诊断清单-troubleshooting-checklist">&lt;strong>第二部分：异常诊断清单 (Troubleshooting Checklist)&lt;/strong>&lt;/h3>
+&lt;p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。&lt;/p>
+&lt;ul>
+&lt;li>感兴趣可以看我的日志: &lt;a href="https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies">GMAC Bring-Up Debug Strategies&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="sop流程图">SOP流程图&lt;/h3>
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/work-flow.svg" alt="work flow" style="height: 1500px; max-width: 100%;">
+&lt;pre class="mermaid"> info&lt;/pre>
+&lt;pre class="mermaid">graph TD
+ %% === 定义与样式 ===
+ classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab;
+ classDef dark_debug fill:#4b3e58,color:white,stroke:#b8a3d3;
+ classDef dark_decision fill:#27ae60,color:white,stroke:#88d1a1;
+ classDef dark_result_ok fill:#16a085,color:white,stroke:#72d6c1;
+ classDef dark_result_fail fill:#c0392b,color:white,stroke:#e69a93;
+
+ %% === 主流程 (左侧) ===
+ subgraph &amp;#34;标准化移植流程 (Standard Porting Workflow)&amp;#34;
+ direction TB
+ S[&amp;lt;b&amp;gt;开始&amp;lt;/b&amp;gt;]:::dark_main
+ A[&amp;lt;b&amp;gt;1. 硬件接口确认&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;GMAC0或GMAC1]:::dark_main
+ B[&amp;lt;b&amp;gt;2. 时钟模式分析&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;25MHz与125MHz两种时钟的流向]:::dark_main
+ C[&amp;lt;b&amp;gt;3. 设备树DTS适配&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;从瑞芯微的ModeConfig手册里节选正确dts配置]:::dark_main
+ D[&amp;lt;b&amp;gt;5. 编译与验证&amp;lt;/b&amp;gt;]:::dark_main
+
+ S --&amp;gt; A --&amp;gt; B --&amp;gt; C --&amp;gt; D
+ end
+
+ %% === 决策点 (中央) ===
+ F{&amp;#34;&amp;lt;div style=&amp;#39;text-align:center&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-question-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;验证&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;网络是否正常工作?&amp;lt;/div&amp;gt;&amp;#34;}:::dark_decision
+ D --&amp;gt; F
+
+ %% === 诊断流程 (右侧) ===
+ subgraph &amp;#34;异常诊断锦囊 (Troubleshooting Checklist)&amp;#34;
+ direction TB
+ G[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bolt&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;物理层健康检查 (L1)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 电源 (Power Rails)&amp;lt;br&amp;gt;- 复位信号 (Reset Signal)&amp;lt;br&amp;gt;- 参考时钟 (Reference Clock)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+ H[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bullseye&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;控制通路验证 (L2)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- U-Boot &amp;#39;mii read&amp;#39;&amp;lt;br&amp;gt;- Kernel &amp;#39;sysfs&amp;#39; &amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+ I[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-cogs&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;关键逻辑审查 (Logic Review)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 硬件模式 (Strapping Pins)&amp;lt;br&amp;gt;- 时钟流向 (Clock Direction)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+
+ G --&amp;gt; H --&amp;gt; I
+ end
+
+ %% === 成功/失败出口 ===
+ SUCCESS[&amp;lt;b&amp;gt;&amp;lt;i class=&amp;#39;fa fa-check-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; 成功&amp;lt;/b&amp;gt;]:::dark_result_ok
+ FAILURE[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-undo&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;修正并迭代&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;根据诊断结果&amp;lt;br&amp;gt;返回&amp;lt;b&amp;gt;阶段3或4&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;重新适配DTS&amp;lt;/div&amp;gt;&amp;#34;]:::dark_result_fail
+
+ %% === 流程连接 ===
+ F -- &amp;#34;是 (Yes)&amp;#34; --&amp;gt; SUCCESS
+ F -- &amp;#34;否 (No)&amp;#34; --&amp;gt; G
+ I --&amp;gt; FAILURE
+ FAILURE -.-&amp;gt; C &amp;amp; D&lt;/pre>
+&lt;hr>
+&lt;h1 id="项目成果与验证-results--verification">&lt;strong>项目成果与验证 (Results &amp;amp; Verification)&lt;/strong>&lt;/h1>
+&lt;p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，&lt;code>dma reset&lt;/code>错误消失，网络接口成功初始化。&lt;/p></description></item><item><title>考勤分析器：一个规则驱动的HR效率工具</title><link>https://potterwhite.github.io/portfolio/attendace_analyzer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/attendace_analyzer/</guid><description>&lt;h2 id="项目概述">项目概述&lt;/h2>
+&lt;p>考勤分析器是一个为企业内部开发的效率工具，旨在解决复杂且耗时的员工考勤数据分析任务。该应用通过一个高度灵活、由规则驱动的引擎，将原始的Excel导出数据转化为清晰、可执行的分析报告，极大地提升了HR部门的工作流程效率。&lt;/p>
+&lt;hr>
+&lt;h3 id="功能演示">功能演示&lt;/h3>
+&lt;p>以下是一个简短的视频，演示了本应用的核心工作流程。&lt;/p>
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+&lt;figure >
+ 
+ 
+
+ 
+ 
+
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;video controls autoplay loop muted playsinline
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+ &lt;source src="https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4" type="video/mp4">
+ Your browser does not support the video tag.
+ &lt;/video>
+ &lt;/div>
+ 
+
+ 
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">应用核心工作流程演示&lt;/figcaption>
+ 
+&lt;/figure>
+&lt;br>
+&lt;hr>
+&lt;h2 id="核心功能与技术栈">核心功能与技术栈&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>规则驱动引擎&lt;/strong>：所有逻辑由一个 &lt;code>rules.toml&lt;/code> 文件控制。&lt;/li>
+&lt;li>&lt;strong>全面指标计算&lt;/strong>：计算出勤天数、加班、迟到等。&lt;/li>
+&lt;li>&lt;strong>双视图报告&lt;/strong>：生成“公开”和“详细”两种报告。&lt;/li>
+&lt;li>&lt;strong>技术栈&lt;/strong>：&lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>。&lt;/li>
+&lt;/ul>
+&lt;h2 id="核心算法设计-v16">核心算法设计 (V1.6)&lt;/h2>
+&lt;p>作为本项目的架构师，我基于“出勤”、“缺勤”、“异常”三态单元模型和“出勤单元优先”原则，设计了一套严谨的分析算法。&lt;/p>
+&lt;h2 id="项目背后的故事">项目背后的故事&lt;/h2>
+&lt;p>本项目是一个AI辅助开发的案例研究。我的角色从编码员演变为&lt;strong>架构师、总监和质量保证负责人&lt;/strong>。这种人机协作的伙伴关系将开发周期从数周缩短至数天。&lt;/p>
+&lt;hr>
+&lt;p>&lt;em>本项目为公司内部资产，其源代码不予公开。&lt;/em>&lt;/p></description></item></channel></rss>

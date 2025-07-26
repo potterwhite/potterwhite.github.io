@@ -1,26 +1,79 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Linux on </title>
-    <link>https://potterwhite.github.io/categories/linux/</link>
-    <description>Recent content in Linux on </description>
-    <generator>Hugo</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>GMAC Bring Up Work Flow</title>
-      <link>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow/</guid>
-      <description>&lt;h2 id=&#34;1-从原理图判断是哪一个gmac&#34;&gt;1. 从原理图判断是哪一个GMAC&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;从sdk提供的默认dts里就能够发现, gmac有两个, gmac0和gmac1.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;11-此刻去找硬件工程师给的原理图搜索一下gmac-看看他用的是gmac1还是gmac0&#34;&gt;1.1 &lt;strong&gt;此刻去找硬件工程师给的原理图,搜索一下gmac, 看看他用的是gmac1还是gmac0&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;具体如何确定,还得看原理图里使用的引脚, 跟dts里的哪一个gmac node的配置比较相似.&lt;/p&gt;&#xA;&lt;p&gt;具体文件是在kernel/arch/arm64/boot/dts/rockchip/rk3568-pinctrl.dtsi.&lt;/p&gt;&#xA;&lt;p&gt;在制作bsp(上一流程)的时候,就有分层了,这份dtsi属于最底下的chip-level.&#xA;这份文件里定义了gmac1的具体子节点, 每一个子节点对应的pins是哪些,例如&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/dts-gmac1m1_miim.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;具体到gmac1的时候,又分成m0和m1,我所截取的图片就是m1的部分.为何知道要用m1呢?&#xA;可以参考原理图的cpu部分:&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/rk3568-gmac-pins-top-view.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;我特别截取的就是这次使用到的gmac模块, 硬件同事在每一个引脚名字的后面都加了M1, 也在提醒我们,这次用到的就是GMAC1的M1.&lt;/p&gt;&#xA;&lt;h3 id=&#34;12-其实为什么硬件这边能够和dts对应上呢&#34;&gt;1.2 &lt;strong&gt;其实,为什么硬件这边能够和dts对应上呢?&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;应该是硬件同事在画图的时候,就是直接参考了Chip Manufacture给的用法. 分成GMAC1和GMAC0, GMAC1又分成M0和M1. 我盲猜, 如果我们硬是要修改, 用一个hybrid version的GMAC2, 也不是完全不可能, 但是dts这边就得完全重新做.一个一个引脚自己写好,就像kernel/arch/arm64/boot/dts/rockchip/rk3568-pinctrl.dtsi所作的那样.&lt;/p&gt;&#xA;&lt;h3 id=&#34;13-总结一下&#34;&gt;1.3 &lt;strong&gt;总结一下:&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;看原理图的symbols, 只是一个tips, 并不能最终确定.&#xA;确定的方式是对比dts中chip-level的dts include中的pins configs. 它们必须是对应的才行.&lt;/p&gt;&#xA;&lt;h2 id=&#34;2-从原理图判断是时钟模式-25m和125m分别是谁给的如何给的&#34;&gt;2. 从原理图判断是时钟模式, 25M和125M分别是谁给的,如何给的&lt;/h2&gt;&#xA;&lt;h3 id=&#34;21-先看原理图的phy部分&#34;&gt;&lt;strong&gt;2.1 先看原理图的PHY部分&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-clock-related-three-pins.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;这里能看见它是XTAL_I接地了, XTAL_O和CLKOUT还不知道接到哪里去&lt;/p&gt;&#xA;&lt;h3 id=&#34;22-看phy的datasheet&#34;&gt;&lt;strong&gt;2.2 看PHY的DataSheet&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-clock-pins-in-datasheet.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h4 id=&#34;221-先看no44&#34;&gt;2.2.1 先看No.44&lt;/h4&gt;&#xA;&lt;p&gt;这里特别写, CLKOUT是output类型的, 而且如果不需要输出时钟给MAC的话,这个pin需要float.&lt;/p&gt;&#xA;&lt;p&gt;而此处并没有float, 因此刚才原理图上一定是输出到MAC提供125MHZ时钟了.&lt;/p&gt;&#xA;&lt;h4 id=&#34;222-再看no45&#34;&gt;2.2.2 再看No.45&lt;/h4&gt;&#xA;&lt;p&gt;这里介绍, 如果XTAL_O有外部时钟提供25MHZ, 那XTAL_I就要保持接地.&#xA;所以从原理图里XTAL_I接地来看, 应该是外部有25MHZ提供给PHY了.&lt;/p&gt;&#xA;&lt;p&gt;因此,更进一步去跟进到底接入了什么引脚, 就可以了.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>GMAC Bring-Up Debug Strategies</title>
-      <link>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid>
-      <description>&lt;p&gt;最重要的就是这三个部分,缺一不可&lt;/p&gt;&#xA;&lt;h2 id=&#34;a-电源&#34;&gt;&lt;strong&gt;a. 电源&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;h3 id=&#34;电路图&#34;&gt;&lt;strong&gt;电路图&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;说明&#34;&gt;&lt;strong&gt;说明&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;电源得先有,而且正常&#xA;&amp;ldquo;正常&amp;quot;的定义在手册里&#xA;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;第一类-avddl和dvddl&#34;&gt;&lt;strong&gt;第一类: AVDDL和DVDDL&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;要求1.2V左右&lt;/li&gt;&#xA;&lt;li&gt;R209和R210的电压要求是1.2V左右&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;第二类-dvdd33和vdd33和avdd33&#34;&gt;&lt;strong&gt;第二类: DVDD33和VDD33和AVDD33&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;要求3.3V左右&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;第三类-&#34;&gt;&lt;strong&gt;第三类: [特殊][小心]DVDD_RGMII&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;1:0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;Note: When CFG_LDO&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;1:0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 00, the I/O pad power is supplied from&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;the external 3.3V power connected to DVDD_RGMII pin. Otherwise,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;it is supplied from the internal LDO.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;&#xA;&lt;li&gt;测试方法&#xA;&lt;ul&gt;&#xA;&lt;li&gt;透过测试PHY的36和37脚&#xA;测试后发现, 都是低电平&lt;/li&gt;&#xA;&lt;li&gt;测试R212&#xA;万用表测试后发现, 两端都是3.3V&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;b-晶振时钟&#34;&gt;&lt;strong&gt;b. 晶振(时钟)&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-xtal_&#34;&gt;&lt;strong&gt;1. XTAL_I(跟晶振有关的Input脚)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;这跟脚接地了,所以没有东西&lt;/li&gt;&#xA;&lt;li&gt;这是PHY的47脚&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;2-xtal_&#34;&gt;&lt;strong&gt;2. XTAL_O(跟晶振有关系的Output脚)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;25MHZ从这里测出来&lt;/li&gt;&#xA;&lt;li&gt;怎么测试呢?&#xA;&lt;ul&gt;&#xA;&lt;li&gt;直接测试YT8521SC的46脚&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;这两个得先来, 这两个关乎晶振有没有&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on</title><link>https://potterwhite.github.io/categories/linux/</link><description>Recent content in Linux on</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>GMAC Bring Up Work Flow</title><link>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow/</guid><description>&lt;h2 id="1-从原理图判断是哪一个gmac">1. 从原理图判断是哪一个GMAC&lt;/h2>
+&lt;ul>
+&lt;li>从sdk提供的默认dts里就能够发现, gmac有两个, gmac0和gmac1.&lt;/li>
+&lt;/ul>
+&lt;h3 id="11-此刻去找硬件工程师给的原理图搜索一下gmac-看看他用的是gmac1还是gmac0">1.1 &lt;strong>此刻去找硬件工程师给的原理图,搜索一下gmac, 看看他用的是gmac1还是gmac0&lt;/strong>&lt;/h3>
+&lt;p>具体如何确定,还得看原理图里使用的引脚, 跟dts里的哪一个gmac node的配置比较相似.&lt;/p>
+&lt;p>具体文件是在kernel/arch/arm64/boot/dts/rockchip/rk3568-pinctrl.dtsi.&lt;/p>
+&lt;p>在制作bsp(上一流程)的时候,就有分层了,这份dtsi属于最底下的chip-level.
+这份文件里定义了gmac1的具体子节点, 每一个子节点对应的pins是哪些,例如&lt;/p>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/dts-gmac1m1_miim.png" alt="">&lt;/p>
+&lt;p>具体到gmac1的时候,又分成m0和m1,我所截取的图片就是m1的部分.为何知道要用m1呢?
+可以参考原理图的cpu部分:&lt;/p>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/rk3568-gmac-pins-top-view.png" alt="">&lt;/p>
+&lt;p>我特别截取的就是这次使用到的gmac模块, 硬件同事在每一个引脚名字的后面都加了M1, 也在提醒我们,这次用到的就是GMAC1的M1.&lt;/p>
+&lt;h3 id="12-其实为什么硬件这边能够和dts对应上呢">1.2 &lt;strong>其实,为什么硬件这边能够和dts对应上呢?&lt;/strong>&lt;/h3>
+&lt;p>应该是硬件同事在画图的时候,就是直接参考了Chip Manufacture给的用法. 分成GMAC1和GMAC0, GMAC1又分成M0和M1. 我盲猜, 如果我们硬是要修改, 用一个hybrid version的GMAC2, 也不是完全不可能, 但是dts这边就得完全重新做.一个一个引脚自己写好,就像kernel/arch/arm64/boot/dts/rockchip/rk3568-pinctrl.dtsi所作的那样.&lt;/p>
+&lt;h3 id="13-总结一下">1.3 &lt;strong>总结一下:&lt;/strong>&lt;/h3>
+&lt;p>看原理图的symbols, 只是一个tips, 并不能最终确定.
+确定的方式是对比dts中chip-level的dts include中的pins configs. 它们必须是对应的才行.&lt;/p>
+&lt;h2 id="2-从原理图判断是时钟模式-25m和125m分别是谁给的如何给的">2. 从原理图判断是时钟模式, 25M和125M分别是谁给的,如何给的&lt;/h2>
+&lt;h3 id="21-先看原理图的phy部分">&lt;strong>2.1 先看原理图的PHY部分&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-clock-related-three-pins.png" alt="">&lt;/p>
+&lt;p>这里能看见它是XTAL_I接地了, XTAL_O和CLKOUT还不知道接到哪里去&lt;/p>
+&lt;h3 id="22-看phy的datasheet">&lt;strong>2.2 看PHY的DataSheet&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-clock-pins-in-datasheet.png" alt="">&lt;/p>
+&lt;h4 id="221-先看no44">2.2.1 先看No.44&lt;/h4>
+&lt;p>这里特别写, CLKOUT是output类型的, 而且如果不需要输出时钟给MAC的话,这个pin需要float.&lt;/p>
+&lt;p>而此处并没有float, 因此刚才原理图上一定是输出到MAC提供125MHZ时钟了.&lt;/p>
+&lt;h4 id="222-再看no45">2.2.2 再看No.45&lt;/h4>
+&lt;p>这里介绍, 如果XTAL_O有外部时钟提供25MHZ, 那XTAL_I就要保持接地.
+所以从原理图里XTAL_I接地来看, 应该是外部有25MHZ提供给PHY了.&lt;/p>
+&lt;p>因此,更进一步去跟进到底接入了什么引脚, 就可以了.&lt;/p></description></item><item><title>GMAC Bring-Up Debug Strategies</title><link>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid><description>&lt;p>最重要的就是这三个部分,缺一不可&lt;/p>
+&lt;h2 id="a-电源">&lt;strong>a. 电源&lt;/strong>&lt;/h2>
+&lt;h3 id="电路图">&lt;strong>电路图&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png" alt="">&lt;/p>
+&lt;h3 id="说明">&lt;strong>说明&lt;/strong>&lt;/h3>
+&lt;p>电源得先有,而且正常
+&amp;ldquo;正常&amp;quot;的定义在手册里
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png" alt="">&lt;/p>
+&lt;h3 id="第一类-avddl和dvddl">&lt;strong>第一类: AVDDL和DVDDL&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>要求1.2V左右&lt;/li>
+&lt;li>R209和R210的电压要求是1.2V左右&lt;/li>
+&lt;/ul>
+&lt;h3 id="第二类-dvdd33和vdd33和avdd33">&lt;strong>第二类: DVDD33和VDD33和AVDD33&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>要求3.3V左右&lt;/li>
+&lt;/ul>
+&lt;h3 id="第三类-">&lt;strong>第三类: [特殊][小心]DVDD_RGMII&lt;/strong>&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	Note: When CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> 00, the I/O pad power is supplied from
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	the external 3.3V power connected to DVDD_RGMII pin. Otherwise,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	it is supplied from the internal LDO.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>测试方法
+&lt;ul>
+&lt;li>透过测试PHY的36和37脚
+测试后发现, 都是低电平&lt;/li>
+&lt;li>测试R212
+万用表测试后发现, 两端都是3.3V&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="b-晶振时钟">&lt;strong>b. 晶振(时钟)&lt;/strong>&lt;/h2>
+&lt;h3 id="1-xtal_">&lt;strong>1. XTAL_I(跟晶振有关的Input脚)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>这跟脚接地了,所以没有东西&lt;/li>
+&lt;li>这是PHY的47脚&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-xtal_">&lt;strong>2. XTAL_O(跟晶振有关系的Output脚)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>25MHZ从这里测出来&lt;/li>
+&lt;li>怎么测试呢?
+&lt;ul>
+&lt;li>直接测试YT8521SC的46脚&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>这两个得先来, 这两个关乎晶振有没有&lt;/p></description></item></channel></rss>

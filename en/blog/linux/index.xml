@@ -1,26 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Linux on </title>
-    <link>https://potterwhite.github.io/en/blog/linux/</link>
-    <description>Recent content in Linux on </description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/en/blog/linux/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>GMAC Bring Up Work Flow</title>
-      <link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</guid>
-      <description>&lt;h2 id=&#34;1-identifying-the-gmac-from-the-schematic&#34;&gt;1. Identifying the GMAC from the Schematic&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;From the default DTS provided by the SDK, it can be seen that there are two GMACs, gmac0 and gmac1.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;11-first-check-the-schematic-from-the-hardware-engineer-search-for-gmac-and-see-if-gmac1-or-gmac0-is-used&#34;&gt;1.1 First, check the schematic from the hardware engineer, search for GMAC, and see if gmac1 or gmac0 is used.&lt;/h3&gt;&#xA;&lt;p&gt;To determine this, one must look at the pins used in the schematic and compare them with the configuration of the gmac nodes in the DTS.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>GMAC Bring-Up Debug Strategies</title>
-      <link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid>
-      <description>&lt;p&gt;The most important are these three parts, none can be missing.&lt;/p&gt;&#xA;&lt;h2 id=&#34;a-power&#34;&gt;&lt;strong&gt;a. Power&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;h3 id=&#34;schematic-diagram&#34;&gt;&lt;strong&gt;Schematic Diagram&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;description&#34;&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;The power supply must be present first, and it must be normal.&#xA;The definition of &amp;ldquo;normal&amp;rdquo; is in the datasheet.&#xA;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;category-1-avddl-and-dvddl&#34;&gt;&lt;strong&gt;Category 1: AVDDL and DVDDL&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Requires around 1.2V&lt;/li&gt;&#xA;&lt;li&gt;The voltage requirement for R209 and R210 is around 1.2V&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;category-2-dvdd33-vdd33-and-avdd33&#34;&gt;&lt;strong&gt;Category 2: DVDD33, VDD33, and AVDD33&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Requires around 3.3V&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;category-3-&#34;&gt;&lt;strong&gt;Category 3: [Special][Caution] DVDD_RGMII&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;1:0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;Note: When CFG_LDO&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;1:0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 00, the I/O pad power is supplied from&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;the external 3.3V power connected to DVDD_RGMII pin. Otherwise,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;it is supplied from the internal LDO.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;&#xA;&lt;li&gt;Test Method&#xA;&lt;ul&gt;&#xA;&lt;li&gt;By testing pins 36 and 37 of the PHY&#xA;After testing, it was found that both are at a low level.&lt;/li&gt;&#xA;&lt;li&gt;Testing R212&#xA;After testing with a multimeter, it was found that both ends are at 3.3V.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;b-crystal-clock&#34;&gt;&lt;strong&gt;b. Crystal (Clock)&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-xtal_&#34;&gt;&lt;strong&gt;1. XTAL_I (Input pin related to the crystal)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;This pin is grounded, so there is nothing.&lt;/li&gt;&#xA;&lt;li&gt;This is pin 47 of the PHY.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;2-xtal_&#34;&gt;&lt;strong&gt;2. XTAL_O (Output pin related to the crystal)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;25MHz is measured from here.&lt;/li&gt;&#xA;&lt;li&gt;How to test?&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Directly test pin 46 of the YT8521SC.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;These two must come first, as they determine if the crystal is present.&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on</title><link>https://potterwhite.github.io/en/blog/linux/</link><description>Recent content in Linux on</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/blog/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>GMAC Bring Up Work Flow</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</guid><description>&lt;h2 id="1-identifying-the-gmac-from-the-schematic">1. Identifying the GMAC from the Schematic&lt;/h2>
+&lt;ul>
+&lt;li>From the default DTS provided by the SDK, it can be seen that there are two GMACs, gmac0 and gmac1.&lt;/li>
+&lt;/ul>
+&lt;h3 id="11-first-check-the-schematic-from-the-hardware-engineer-search-for-gmac-and-see-if-gmac1-or-gmac0-is-used">1.1 First, check the schematic from the hardware engineer, search for GMAC, and see if gmac1 or gmac0 is used.&lt;/h3>
+&lt;p>To determine this, one must look at the pins used in the schematic and compare them with the configuration of the gmac nodes in the DTS.&lt;/p></description></item><item><title>GMAC Bring-Up Debug Strategies</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid><description>&lt;p>The most important are these three parts, none can be missing.&lt;/p>
+&lt;h2 id="a-power">&lt;strong>a. Power&lt;/strong>&lt;/h2>
+&lt;h3 id="schematic-diagram">&lt;strong>Schematic Diagram&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png" alt="">&lt;/p>
+&lt;h3 id="description">&lt;strong>Description&lt;/strong>&lt;/h3>
+&lt;p>The power supply must be present first, and it must be normal.
+The definition of &amp;ldquo;normal&amp;rdquo; is in the datasheet.
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png" alt="">&lt;/p>
+&lt;h3 id="category-1-avddl-and-dvddl">&lt;strong>Category 1: AVDDL and DVDDL&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Requires around 1.2V&lt;/li>
+&lt;li>The voltage requirement for R209 and R210 is around 1.2V&lt;/li>
+&lt;/ul>
+&lt;h3 id="category-2-dvdd33-vdd33-and-avdd33">&lt;strong>Category 2: DVDD33, VDD33, and AVDD33&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Requires around 3.3V&lt;/li>
+&lt;/ul>
+&lt;h3 id="category-3-">&lt;strong>Category 3: [Special][Caution] DVDD_RGMII&lt;/strong>&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	Note: When CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> 00, the I/O pad power is supplied from
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	the external 3.3V power connected to DVDD_RGMII pin. Otherwise,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	it is supplied from the internal LDO.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>Test Method
+&lt;ul>
+&lt;li>By testing pins 36 and 37 of the PHY
+After testing, it was found that both are at a low level.&lt;/li>
+&lt;li>Testing R212
+After testing with a multimeter, it was found that both ends are at 3.3V.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="b-crystal-clock">&lt;strong>b. Crystal (Clock)&lt;/strong>&lt;/h2>
+&lt;h3 id="1-xtal_">&lt;strong>1. XTAL_I (Input pin related to the crystal)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>This pin is grounded, so there is nothing.&lt;/li>
+&lt;li>This is pin 47 of the PHY.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-xtal_">&lt;strong>2. XTAL_O (Output pin related to the crystal)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>25MHz is measured from here.&lt;/li>
+&lt;li>How to test?
+&lt;ul>
+&lt;li>Directly test pin 46 of the YT8521SC.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>These two must come first, as they determine if the crystal is present.&lt;/p></description></item></channel></rss>
