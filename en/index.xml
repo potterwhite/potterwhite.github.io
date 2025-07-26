@@ -1,54 +1,160 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Welcome on </title>
-    <link>https://potterwhite.github.io/en/</link>
-    <description>Recent content in Welcome on </description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://potterwhite.github.io/en/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>GMAC Bring Up Work Flow</title>
-      <link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</guid>
-      <description>&lt;h2 id=&#34;1-identifying-the-gmac-from-the-schematic&#34;&gt;1. Identifying the GMAC from the Schematic&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;From the default DTS provided by the SDK, it can be seen that there are two GMACs, gmac0 and gmac1.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;11-first-check-the-schematic-from-the-hardware-engineer-search-for-gmac-and-see-if-gmac1-or-gmac0-is-used&#34;&gt;1.1 First, check the schematic from the hardware engineer, search for GMAC, and see if gmac1 or gmac0 is used.&lt;/h3&gt;&#xA;&lt;p&gt;To determine this, one must look at the pins used in the schematic and compare them with the configuration of the gmac nodes in the DTS.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>GMAC Bring-Up Debug Strategies</title>
-      <link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid>
-      <description>&lt;p&gt;The most important are these three parts, none can be missing.&lt;/p&gt;&#xA;&lt;h2 id=&#34;a-power&#34;&gt;&lt;strong&gt;a. Power&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;h3 id=&#34;schematic-diagram&#34;&gt;&lt;strong&gt;Schematic Diagram&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;description&#34;&gt;&lt;strong&gt;Description&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;p&gt;The power supply must be present first, and it must be normal.&#xA;The definition of &amp;ldquo;normal&amp;rdquo; is in the datasheet.&#xA;&lt;img src=&#34;https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;category-1-avddl-and-dvddl&#34;&gt;&lt;strong&gt;Category 1: AVDDL and DVDDL&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Requires around 1.2V&lt;/li&gt;&#xA;&lt;li&gt;The voltage requirement for R209 and R210 is around 1.2V&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;category-2-dvdd33-vdd33-and-avdd33&#34;&gt;&lt;strong&gt;Category 2: DVDD33, VDD33, and AVDD33&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Requires around 3.3V&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;category-3-&#34;&gt;&lt;strong&gt;Category 3: [Special][Caution] DVDD_RGMII&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;1:0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;Note: When CFG_LDO&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;1:0&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; 00, the I/O pad power is supplied from&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;the external 3.3V power connected to DVDD_RGMII pin. Otherwise,&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#x9;it is supplied from the internal LDO.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;&#xA;&lt;li&gt;Test Method&#xA;&lt;ul&gt;&#xA;&lt;li&gt;By testing pins 36 and 37 of the PHY&#xA;After testing, it was found that both are at a low level.&lt;/li&gt;&#xA;&lt;li&gt;Testing R212&#xA;After testing with a multimeter, it was found that both ends are at 3.3V.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;b-crystal-clock&#34;&gt;&lt;strong&gt;b. Crystal (Clock)&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-xtal_&#34;&gt;&lt;strong&gt;1. XTAL_I (Input pin related to the crystal)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;This pin is grounded, so there is nothing.&lt;/li&gt;&#xA;&lt;li&gt;This is pin 47 of the PHY.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;2-xtal_&#34;&gt;&lt;strong&gt;2. XTAL_O (Output pin related to the crystal)&lt;/strong&gt;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;25MHz is measured from here.&lt;/li&gt;&#xA;&lt;li&gt;How to test?&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Directly test pin 46 of the YT8521SC.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;These two must come first, as they determine if the crystal is present.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title>
-      <link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link>
-      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid>
-      <description>&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Author:&lt;/strong&gt; Potter White&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; July 2025&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;project-overview&#34;&gt;&lt;strong&gt;Project Overview&lt;/strong&gt;&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Situation:&lt;/strong&gt;&#xA;In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code&gt;ethernet@fe010000&lt;/code&gt;). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code&gt;Cannot attach to PHY&lt;/code&gt; and &lt;code&gt;Failed to reset the dma&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;My Role &amp;amp; Contributions:&lt;/strong&gt;&#xA;As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>About Me</title>
-      <link>https://potterwhite.github.io/en/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/about/</guid>
-      <description>&lt;!-- START: Replace the &#39;blocks/cover&#39; shortcode with this --&gt;&#xA;&lt;div class=&#34;container text-center pt-5 pb-4&#34;&gt;&#xA;    &lt;h1 class=&#34;display-3&#34;&gt;A Developer&#39;s Journey&lt;/h1&gt;&#xA;    &lt;p class=&#34;display-5 text-muted&#34;&gt;Bridging Technology, Theology, and Family&lt;/p&gt;&#xA;    &lt;div class=&#34;mt-4 mb-4&#34;&gt;&#xA;        &lt;!-- &lt;a class=&#34;btn btn-lg btn-primary&#34; href=&#34;#technical-expertise&#34;&gt;Explore My Skills&lt;/a&gt; --&gt;&#xA;    &lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;hr&gt; &lt;!-- This adds a clean separator line --&gt;&#xA;&lt;!-- END: Replacement --&gt;&#xA;&lt;div&gt;&lt;a id=&#34;td-block-0&#34; class=&#34;td-offset-anchor&#34;&gt;&lt;/a&gt;&lt;/div&gt;&#xA;&lt;section class=&#34;row td-box td-box--white position-relative td-box--height-auto&#34;&gt;&#xA;&lt;div class=&#34;col-12&#34;&gt;&#xA;&lt;div class=&#34;container text-center td-arrow-down&#34;&gt;&#xA;&lt;div class=&#34;h4 mb-0&#34;&gt;&#xA;&lt;div class=&#34;text-center&#34;&gt;&#xA;I am an Embedded Systems Engineer, passionate about building stable and elegant technical solutions. My life&#39;s journey has led me through professional training in both &lt;strong&gt;Computer Science (Bachelor of Engineering)&lt;/strong&gt; and &lt;strong&gt;Theology (Master of Divinity)&lt;/strong&gt;.&#xA;&lt;p&gt;This dual background has shaped my unique perspective on problem-solving: I strive to tackle complex challenges with technical excellence, clear communication, and a strong sense of purpose. As a Christian, a husband, and a father of three, the LORD my God and my family are the cornerstone of all my work.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Attendance Analyzer</title>
-      <link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid>
-      <description>&lt;h2 id=&#34;project-overview&#34;&gt;Project Overview&lt;/h2&gt;&#xA;&lt;p&gt;The Attendance Analyzer is an &lt;strong&gt;in-house efficiency tool&lt;/strong&gt; developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;demo&#34;&gt;Demo&lt;/h3&gt;&#xA;&lt;p&gt;Below is a short video demonstrating the application&amp;rsquo;s core workflow.&lt;/p&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;  &#xA;    &#xA;  &#xA;&#xA;  &#xA;&#xA;  &#xA;&#xA;&#xA;&lt;figure &gt;&#xA;    &#xA;        &#xA;&#xA;        &#xA;        &#xA;&#xA;        &lt;div class=&#34;video-wrapper&#34; style=&#34;margin: auto; max-width: 800px;&#34;&gt;&#xA;            &lt;video controls autoplay loop muted playsinline&#xA;                   style=&#34;width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);&#34;&gt;&#xA;                &lt;source src=&#34;https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;                Your browser does not support the video tag.&#xA;            &lt;/video&gt;&#xA;        &lt;/div&gt;&#xA;    &#xA;&#xA;    &#xA;        &lt;figcaption style=&#34;text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);&#34;&gt;Application Core Workflow Demo&lt;/figcaption&gt;&#xA;    &#xA;&lt;/figure&gt;&#xA;&lt;br&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;core-features--tech-stack&#34;&gt;Core Features &amp;amp; Tech Stack&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rule-Driven Engine&lt;/strong&gt;: All logic is controlled by a &lt;code&gt;rules.toml&lt;/code&gt; file.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Comprehensive Metrics&lt;/strong&gt;: Calculates attended days, overtime, lateness, etc.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Dual-View Reporting&lt;/strong&gt;: Generates both &amp;ldquo;Public&amp;rdquo; and &amp;ldquo;Detailed&amp;rdquo; reports.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Tech Stack&lt;/strong&gt;: &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;Pandas&lt;/strong&gt;, &lt;strong&gt;Streamlit&lt;/strong&gt;, &lt;strong&gt;TOML&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;core-algorithm-design-v16&#34;&gt;Core Algorithm Design (V1.6)&lt;/h2&gt;&#xA;&lt;p&gt;As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Goldydocs</title>
-      <link>https://potterwhite.github.io/en/backupcopy_index/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://potterwhite.github.io/en/backupcopy_index/</guid>
-      <description>&lt;section id=&#34;td-cover-block-0&#34; class=&#34;row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark&#34;&gt;&#xA;  &lt;div class=&#34;col-12&#34;&gt;&#xA;    &lt;div class=&#34;container td-overlay__inner&#34;&gt;&#xA;      &lt;div class=&#34;text-center&#34;&gt;&#xA;        &lt;h1 class=&#34;display-1 mt-0 mt-md-5 pb-4&#34;&gt;Welcome to Goldydocs: A Docsy Example Project!&lt;/h1&gt;&#xA;        &#xA;        &lt;div class=&#34;pt-3 lead&#34;&gt;&#xA;          &#xA;              &lt;a class=&#34;btn btn-lg btn-primary me-3 mb-4&#34; href=&#34;https://potterwhite.github.io/docs/&#34;&gt;&#xA;  Learn More &lt;i class=&#34;fas fa-arrow-alt-circle-right ms-2&#34;&gt;&lt;/i&gt;&#xA;&lt;/a&gt;&#xA;&lt;a class=&#34;btn btn-lg btn-secondary me-3 mb-4&#34; href=&#34;https://github.com/google/docsy-example&#34;&gt;&#xA;  Download &lt;i class=&#34;fab fa-github ms-2 &#34;&gt;&lt;/i&gt;&#xA;&lt;/a&gt;&#xA;&lt;p class=&#34;lead mt-5&#34;&gt;Porridge temperature assessment &amp;mdash; in the cloud!&lt;/p&gt;&#xA;&lt;p&gt;&lt;a class=&#34;btn btn-link text-info&#34; href=&#34;#td-block-1&#34; aria-label=&#34;Read more&#34;&gt;&lt;i class=&#34;fa-solid fa-circle-chevron-down&#34; style=&#34;font-size: 400%&#34;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;&#xA;          &#xA;        &lt;/div&gt;&#xA;      &lt;/div&gt;&#xA;    &lt;/div&gt;&#xA;  &lt;/div&gt;&#xA;  &#xA;&lt;/section&gt;&#xA;&#xA;&lt;div&gt;&lt;a id=&#34;td-block-1&#34; class=&#34;td-offset-anchor&#34;&gt;&lt;/a&gt;&lt;/div&gt;&#xA;&lt;section class=&#34;row td-box td-box--primary position-relative td-box--height-auto&#34;&gt;&#xA;&lt;div class=&#34;col-12&#34;&gt;&#xA;&lt;div class=&#34;container text-center td-arrow-down&#34;&gt;&#xA;&lt;div class=&#34;h4 mb-0&#34;&gt;&#xA;&lt;p&gt;Goldydocs provides a single web UI providing visibility into porridge&#xA;temperature, chair size, and bed softness metrics! You can even find out who&amp;rsquo;s&#xA;been eating &lt;strong&gt;your&lt;/strong&gt; porridge.&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Welcome on</title><link>https://potterwhite.github.io/en/</link><description>Recent content in Welcome on</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>GMAC Bring Up Work Flow</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</guid><description>&lt;h2 id="1-identifying-the-gmac-from-the-schematic">1. Identifying the GMAC from the Schematic&lt;/h2>
+&lt;ul>
+&lt;li>From the default DTS provided by the SDK, it can be seen that there are two GMACs, gmac0 and gmac1.&lt;/li>
+&lt;/ul>
+&lt;h3 id="11-first-check-the-schematic-from-the-hardware-engineer-search-for-gmac-and-see-if-gmac1-or-gmac0-is-used">1.1 First, check the schematic from the hardware engineer, search for GMAC, and see if gmac1 or gmac0 is used.&lt;/h3>
+&lt;p>To determine this, one must look at the pins used in the schematic and compare them with the configuration of the gmac nodes in the DTS.&lt;/p></description></item><item><title>GMAC Bring-Up Debug Strategies</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid><description>&lt;p>The most important are these three parts, none can be missing.&lt;/p>
+&lt;h2 id="a-power">&lt;strong>a. Power&lt;/strong>&lt;/h2>
+&lt;h3 id="schematic-diagram">&lt;strong>Schematic Diagram&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png" alt="">&lt;/p>
+&lt;h3 id="description">&lt;strong>Description&lt;/strong>&lt;/h3>
+&lt;p>The power supply must be present first, and it must be normal.
+The definition of &amp;ldquo;normal&amp;rdquo; is in the datasheet.
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png" alt="">&lt;/p>
+&lt;h3 id="category-1-avddl-and-dvddl">&lt;strong>Category 1: AVDDL and DVDDL&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Requires around 1.2V&lt;/li>
+&lt;li>The voltage requirement for R209 and R210 is around 1.2V&lt;/li>
+&lt;/ul>
+&lt;h3 id="category-2-dvdd33-vdd33-and-avdd33">&lt;strong>Category 2: DVDD33, VDD33, and AVDD33&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Requires around 3.3V&lt;/li>
+&lt;/ul>
+&lt;h3 id="category-3-">&lt;strong>Category 3: [Special][Caution] DVDD_RGMII&lt;/strong>&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	Note: When CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> 00, the I/O pad power is supplied from
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	the external 3.3V power connected to DVDD_RGMII pin. Otherwise,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	it is supplied from the internal LDO.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>Test Method
+&lt;ul>
+&lt;li>By testing pins 36 and 37 of the PHY
+After testing, it was found that both are at a low level.&lt;/li>
+&lt;li>Testing R212
+After testing with a multimeter, it was found that both ends are at 3.3V.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="b-crystal-clock">&lt;strong>b. Crystal (Clock)&lt;/strong>&lt;/h2>
+&lt;h3 id="1-xtal_">&lt;strong>1. XTAL_I (Input pin related to the crystal)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>This pin is grounded, so there is nothing.&lt;/li>
+&lt;li>This is pin 47 of the PHY.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-xtal_">&lt;strong>2. XTAL_O (Output pin related to the crystal)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>25MHz is measured from here.&lt;/li>
+&lt;li>How to test?
+&lt;ul>
+&lt;li>Directly test pin 46 of the YT8521SC.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>These two must come first, as they determine if the crystal is present.&lt;/p></description></item><item><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title><link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
+&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
+&lt;/ul>
+&lt;h1 id="project-overview">&lt;strong>Project Overview&lt;/strong>&lt;/h1>
+&lt;p>&lt;strong>Situation:&lt;/strong>
+In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code>ethernet@fe010000&lt;/code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code>Cannot attach to PHY&lt;/code> and &lt;code>Failed to reset the dma&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>My Role &amp;amp; Contributions:&lt;/strong>
+As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p></description></item><item><title>About Me</title><link>https://potterwhite.github.io/en/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
+&lt;div class="container text-center pt-5 pb-4">
+ &lt;h1 class="display-3">A Developer's Journey&lt;/h1>
+ &lt;p class="display-5 text-muted">Bridging Technology, Theology, and Family&lt;/p>
+ &lt;div class="mt-4 mb-4">
+ &lt;!-- &lt;a class="btn btn-lg btn-primary" href="#technical-expertise">Explore My Skills&lt;/a> -->
+ &lt;/div>
+&lt;/div>
+&lt;hr> &lt;!-- This adds a clean separator line -->
+&lt;!-- END: Replacement -->
+&lt;div>&lt;a id="td-block-0" class="td-offset-anchor">&lt;/a>&lt;/div>
+&lt;section class="row td-box td-box--white position-relative td-box--height-auto">
+&lt;div class="col-12">
+&lt;div class="container text-center td-arrow-down">
+&lt;div class="h4 mb-0">
+&lt;div class="text-center">
+I am an Embedded Systems Engineer, passionate about building stable and elegant technical solutions. My life's journey has led me through professional training in both &lt;strong>Computer Science (Bachelor of Engineering)&lt;/strong> and &lt;strong>Theology (Master of Divinity)&lt;/strong>.
+&lt;p>This dual background has shaped my unique perspective on problem-solving: I strive to tackle complex challenges with technical excellence, clear communication, and a strong sense of purpose. As a Christian, a husband, and a father of three, the LORD my God and my family are the cornerstone of all my work.&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;h2 id="project-overview">Project Overview&lt;/h2>
+&lt;p>The Attendance Analyzer is an &lt;strong>in-house efficiency tool&lt;/strong> developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p>
+&lt;hr>
+&lt;h3 id="demo">Demo&lt;/h3>
+&lt;p>Below is a short video demonstrating the application&amp;rsquo;s core workflow.&lt;/p>
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+&lt;figure >
+ 
+ 
+
+ 
+ 
+
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;video controls autoplay loop muted playsinline
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+ &lt;source src="https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4" type="video/mp4">
+ Your browser does not support the video tag.
+ &lt;/video>
+ &lt;/div>
+ 
+
+ 
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">Application Core Workflow Demo&lt;/figcaption>
+ 
+&lt;/figure>
+&lt;br>
+&lt;hr>
+&lt;h2 id="core-features--tech-stack">Core Features &amp;amp; Tech Stack&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Rule-Driven Engine&lt;/strong>: All logic is controlled by a &lt;code>rules.toml&lt;/code> file.&lt;/li>
+&lt;li>&lt;strong>Comprehensive Metrics&lt;/strong>: Calculates attended days, overtime, lateness, etc.&lt;/li>
+&lt;li>&lt;strong>Dual-View Reporting&lt;/strong>: Generates both &amp;ldquo;Public&amp;rdquo; and &amp;ldquo;Detailed&amp;rdquo; reports.&lt;/li>
+&lt;li>&lt;strong>Tech Stack&lt;/strong>: &lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;h2 id="core-algorithm-design-v16">Core Algorithm Design (V1.6)&lt;/h2>
+&lt;p>As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p></description></item><item><title>Goldydocs</title><link>https://potterwhite.github.io/en/backupcopy_index/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/backupcopy_index/</guid><description>&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
+ &lt;div class="col-12">
+ &lt;div class="container td-overlay__inner">
+ &lt;div class="text-center">
+ &lt;h1 class="display-1 mt-0 mt-md-5 pb-4">Welcome to Goldydocs: A Docsy Example Project!&lt;/h1>
+ 
+ &lt;div class="pt-3 lead">
+ 
+ &lt;a class="btn btn-lg btn-primary me-3 mb-4" href="https://potterwhite.github.io/docs/">
+ Learn More &lt;i class="fas fa-arrow-alt-circle-right ms-2">&lt;/i>
+&lt;/a>
+&lt;a class="btn btn-lg btn-secondary me-3 mb-4" href="https://github.com/google/docsy-example">
+ Download &lt;i class="fab fa-github ms-2 ">&lt;/i>
+&lt;/a>
+&lt;p class="lead mt-5">Porridge temperature assessment &amp;mdash; in the cloud!&lt;/p>
+&lt;p>&lt;a class="btn btn-link text-info" href="#td-block-1" aria-label="Read more">&lt;i class="fa-solid fa-circle-chevron-down" style="font-size: 400%">&lt;/i>&lt;/a>&lt;/p>
+ 
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ 
+&lt;/section>
+
+&lt;div>&lt;a id="td-block-1" class="td-offset-anchor">&lt;/a>&lt;/div>
+&lt;section class="row td-box td-box--primary position-relative td-box--height-auto">
+&lt;div class="col-12">
+&lt;div class="container text-center td-arrow-down">
+&lt;div class="h4 mb-0">
+&lt;p>Goldydocs provides a single web UI providing visibility into porridge
+temperature, chair size, and bed softness metrics! You can even find out who&amp;rsquo;s
+been eating &lt;strong>your&lt;/strong> porridge.&lt;/p></description></item></channel></rss>

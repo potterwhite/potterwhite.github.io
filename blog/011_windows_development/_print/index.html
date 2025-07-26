@@ -1,390 +1,27 @@
-<!doctype html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-cn" class="no-js">
-  <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="canonical" type="text/html" href="https://potterwhite.github.io/blog/011_windows_development/">
-<link rel="alternate" type="application/rss&#43;xml" href="https://potterwhite.github.io/blog/011_windows_development/index.xml">
-<meta name="robots" content="noindex, nofollow">
-
-
-<link rel="shortcut icon" href="/favicons/favicon.ico" >
-<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
-<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
-<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
-<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
-<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
-<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
-<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
-<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
-
-<title>011_Grp_Windows | </title>
-<meta name="description" content="">
-<meta property="og:url" content="https://potterwhite.github.io/blog/011_windows_development/">
-  <meta property="og:title" content="011_Grp_Windows">
-  <meta property="og:locale" content="zh_cn">
-  <meta property="og:type" content="website">
-
-  <meta itemprop="name" content="011_Grp_Windows">
-  <meta itemprop="datePublished" content="2024-10-10T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-10-10T00:00:00+00:00">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="011_Grp_Windows">
-<link rel="preload" href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" as="style" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
-<link href="/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css" rel="stylesheet" integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL&#43;WaPQgGLk4h9V8&#43;KY/Q=" crossorigin="anonymous">
-<script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-  crossorigin="anonymous"></script>
-<script defer
-  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
-  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
-  crossorigin="anonymous"></script>
-<link rel="stylesheet" href="/css/prism.css"/>
-
-  </head>
-  <body class="td-section td-blog">
-    <header>
-      <nav class="td-navbar js-navbar-scroll" data-bs-theme="dark">
-<div class="container-fluid flex-column flex-md-row">
-  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class="navbar-brand__name"></span></a>
-  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/about/"><span>关于</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/blog/"><span>博客</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/portfolio/"><span>我的作品</span></a>
-      </li>
-      <li class="nav-item dropdown d-none d-lg-block">
-        <div class="dropdown">
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">简体中文</a>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/en/">English</a></li>
-    </ul>
-</div></li>
-      <li class="td-light-dark-menu nav-item dropdown">
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-  <symbol id="check2" viewBox="0 0 16 16">
-    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-  </symbol>
-  <symbol id="circle-half" viewBox="0 0 16 16">
-    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
-  </symbol>
-  <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
-  </symbol>
-  <symbol id="sun-fill" viewBox="0 0 16 16">
-    <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-  </symbol>
-</svg>
-
-<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center"
-        id="bd-theme"
-        type="button"
-        aria-expanded="false"
-        data-bs-toggle="dropdown"
-        data-bs-display="static"
-        aria-label="Toggle theme (auto)">
-  <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg>
-</button>
-<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-      <svg class="bi me-2 opacity-50"><use href="#sun-fill"></use></svg>
-      Light
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-      <svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"></use></svg>
-      Dark
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-  <li>
-    <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-      <svg class="bi me-2 opacity-50"><use href="#circle-half"></use></svg>
-      Auto
-      <svg class="bi ms-auto d-none"><use href="#check2"></use></svg>
-    </button>
-  </li>
-</ul>
-
-      </li>
-      </ul>
-  </div>
-  <div class="d-none d-lg-block">
-    <div class="td-search td-search--offline">
-  <div class="td-search__icon"></div>
-  <input
-    type="search"
-    class="td-search__input form-control"
-    placeholder="站内搜索…"
-    aria-label="站内搜索…"
-    autocomplete="off"
-    
-    data-offline-search-index-json-src="/offline-search-index.ce2d1b0f8608f8a602699e57202ea1d8.json"
-    data-offline-search-base-href="/"
-    data-offline-search-max-results="10"
-  >
-</div>
-  </div>
-</div>
-</nav>
-    </header>
-    <div class="container-fluid td-outer">
-      <div class="td-main">
-        <div class="row flex-xl-nowrap">
-          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
-          </div>
-          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
-          </div>
-          <main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role="main">
-            
-
-
-
-
-<div class="td-content">
-<div class="pageinfo pageinfo-primary d-print-none">
-<p>
-这是本节的多页打印视图。
-<a href="#" onclick="print();return false;">点击此处打印</a>.
-</p><p>
-<a href="/blog/011_windows_development/">返回本页常规视图</a>.
-</p>
-</div>
-
-
-
-<h1 class="title">011_Grp_Windows</h1>
-
-
-
-
-
-    <ul>
-    
-  
-  
-  
-  
-
-  
-    
-    
-	
-
-    <li><a href="#pg-0fc815991af709e0d45b6ac0f2e0a676">IMMNotificationClient Callback Problem</a></li>
-
-
-
-    
-  
-    
-    
-	
-
-    <li><a href="#pg-4b40b8f3a9fde137d7b53e3793fc482c">ASIO</a></li>
-
-
-
-    
-  
-    
-    
-	
-
-    <li><a href="#pg-5637ca4afd986b1e0d9ae4793487f985">声卡项目</a></li>
-
-
-
-    
-  
-
-    </ul>
-
-
-<div class="content">
-      
-</div>
-</div>
-
-
-  
-  
-  
-  
-
-  
-  
-
-  
-    
-    
-	
-    
-
-
-  
-
-<div class="td-content" style="">
-    <h1 id="pg-0fc815991af709e0d45b6ac0f2e0a676">IMMNotificationClient Callback Problem</h1>
-	
-	<div class="td-byline mb-4">
-		
-        
-		<time datetime="2024-10-10" class="text-body-secondary">2024年10月10日</time>
-        
-	</div>
-	<!-- <iframe src="/2024/October/IMNotificationClient_Callback.svg" width="1900" height="5000" style="border:none; overflow:scroll; background: #333333;"></iframe> -->
-<p><a href="https://mermaid.live/edit#pako:eNqVVm1T2lgU_ivZfHTQIYhgcdoZi6i03fq225ltcDIBAmQbEhZuutaXGbS-gFCx6jpWq67bWt3uFnWcWsUXfsxyE_jkX9iTBFlEd9mSGYbce85znjz3nCeMkD7Jz5EOMiBIP_tCbBQR33V4RAI-MdkbjLKREKFsTJbiv-KZc-WX_fYBJxKYngiKeUQP0q77tLuJcEY5FnFEmIm0y35eckoiikoCcZdwDSHG2KzeuDxbw4k1fJrrbn-EDybU1Um8d1I82BrUQLXa94nGxnuEk3YDdoyJuMUYYkUfB4AoxMcuz9Kl9TdKfFxJzOPXKzizUprJFPLr-NMKPl_EyVe9OurB6U1gpw7cAcCAzAduMP7mLiHKghBB0TYCJ94ry59qKCore3j-g8FeKz-7WcHu0LBHH48SXdT1pR9GCRftftJUW63xniaPW-QRM8AhxiX6eyVeRMxjCfEB3sciXhIZJysIXtb3TNdsHe-kcHoZOIEGxeyFep4txVfVzW2N39pGcf-lcUyF45yhhCHCNbX0gBjjeg5VBQnFKnUHEIvkmDPEikHO_1d8oqFBOdxVJjPqxAmllcu_KRx_vAmF9w9AFKBUOJ7rfVTMrxW30kCqkN_SSE1t48w7QGhoqOjk0s-gkwZBivkNZW4bQnHmC15IKzvnl2er__SYw-Ed4IO3E-yMSmEoSgBUdUKdx6qQ6NRJdNFPoA-Y7yN-6NCrBLcYkNqUZArP7hbnvuDM8tVGDB4IuCrjexWYLop2CwIXZAWCG-JReZ0T_cYMtdOVMyutHCnZz4N62X-bKC3l9j2DrYVWPyXxxZS69Wfh9KiQS8H3oJHWZdFDuunqPZx5rS5tXp4lChcp_GFCO8T4ofI2p2QW4GAuz5Ll5G49101reirv4srnFE7sX4N36xEP9AjoMnVpF3oDT6dr-o6oL7-G9kBHe0hXH1zdjiRutl7xtz-U5A70Wxn3oY5bF6nG3_5HvGF1HuSiaMMVqkzJcITS-ob6e844_3KbU1d-MEzdXNY8wUJ7JfAcFI4wUSSCufV9yyG2x_sj50MOBy8-l55xsBKSqhjcdpWRcWYCNIFRXa1iZyK-ItcCuXUnzmTI998fA68Z8PrgUfpkTub84HoiPBmY2ldAWDUIpr2_i9C0MhF8rAzD-duqDMpSMahq2QxrgjdDcW9czeXV3RTOJvHUrm5Mh6WlrLL4qnD-FryucLKpnWP2pTI7W3HOsuMn48a7pcZIlfRMaSEB6ZrZ6lwN78PvJ9X56UJuWrfQ6o4YpmhwhlqPqN_4WlP30H2IKE_1xUd1bs8oQ9RKW56EHj2pl67vn4b5wiSBWeD9yXJ-r57fR9ejBo5dGUXDF8oAfTpAP_1TB-eVg0TxYhHP5NTZI5AP3tfghxUj1aL79eintMuQRyRNZJiLhlneD39NRrQYD4lCXJjzkA746ecCrCwgD-kRxyCUlZE08EL0kQ4UlTkTGZXkYIh0BFghBneybu4dPAvTHq6sRljxqSSFr1LglnSMkEOkw9baZG9pvUO12m0Wi9lubjaRL0hHI2WzN1ntVpvdbKXMVIvN0jJmIod1BKqp2XqHslFWq91sMTe32i1jfwO60Sce" target="_blank" rel="noopener"><img src="https://mermaid.ink/img/pako:eNqVVm1T2lgU_ivZfHTQIYhgcdoZi6i03fq225ltcDIBAmQbEhZuutaXGbS-gFCx6jpWq67bWt3uFnWcWsUXfsxyE_jkX9iTBFlEd9mSGYbce85znjz3nCeMkD7Jz5EOMiBIP_tCbBQR33V4RAI-MdkbjLKREKFsTJbiv-KZc-WX_fYBJxKYngiKeUQP0q77tLuJcEY5FnFEmIm0y35eckoiikoCcZdwDSHG2KzeuDxbw4k1fJrrbn-EDybU1Um8d1I82BrUQLXa94nGxnuEk3YDdoyJuMUYYkUfB4AoxMcuz9Kl9TdKfFxJzOPXKzizUprJFPLr-NMKPl_EyVe9OurB6U1gpw7cAcCAzAduMP7mLiHKghBB0TYCJ94ry59qKCore3j-g8FeKz-7WcHu0LBHH48SXdT1pR9GCRftftJUW63xniaPW-QRM8AhxiX6eyVeRMxjCfEB3sciXhIZJysIXtb3TNdsHe-kcHoZOIEGxeyFep4txVfVzW2N39pGcf-lcUyF45yhhCHCNbX0gBjjeg5VBQnFKnUHEIvkmDPEikHO_1d8oqFBOdxVJjPqxAmllcu_KRx_vAmF9w9AFKBUOJ7rfVTMrxW30kCqkN_SSE1t48w7QGhoqOjk0s-gkwZBivkNZW4bQnHmC15IKzvnl2er__SYw-Ed4IO3E-yMSmEoSgBUdUKdx6qQ6NRJdNFPoA-Y7yN-6NCrBLcYkNqUZArP7hbnvuDM8tVGDB4IuCrjexWYLop2CwIXZAWCG-JReZ0T_cYMtdOVMyutHCnZz4N62X-bKC3l9j2DrYVWPyXxxZS69Wfh9KiQS8H3oJHWZdFDuunqPZx5rS5tXp4lChcp_GFCO8T4ofI2p2QW4GAuz5Ll5G49101reirv4srnFE7sX4N36xEP9AjoMnVpF3oDT6dr-o6oL7-G9kBHe0hXH1zdjiRutl7xtz-U5A70Wxn3oY5bF6nG3_5HvGF1HuSiaMMVqkzJcITS-ob6e844_3KbU1d-MEzdXNY8wUJ7JfAcFI4wUSSCufV9yyG2x_sj50MOBy8-l55xsBKSqhjcdpWRcWYCNIFRXa1iZyK-ItcCuXUnzmTI998fA68Z8PrgUfpkTub84HoiPBmY2ldAWDUIpr2_i9C0MhF8rAzD-duqDMpSMahq2QxrgjdDcW9czeXV3RTOJvHUrm5Mh6WlrLL4qnD-FryucLKpnWP2pTI7W3HOsuMn48a7pcZIlfRMaSEB6ZrZ6lwN78PvJ9X56UJuWrfQ6o4YpmhwhlqPqN_4WlP30H2IKE_1xUd1bs8oQ9RKW56EHj2pl67vn4b5wiSBWeD9yXJ-r57fR9ejBo5dGUXDF8oAfTpAP_1TB-eVg0TxYhHP5NTZI5AP3tfghxUj1aL79eintMuQRyRNZJiLhlneD39NRrQYD4lCXJjzkA746ecCrCwgD-kRxyCUlZE08EL0kQ4UlTkTGZXkYIh0BFghBneybu4dPAvTHq6sRljxqSSFr1LglnSMkEOkw9baZG9pvUO12m0Wi9lubjaRL0hHI2WzN1ntVpvdbKXMVIvN0jJmIod1BKqp2XqHslFWq91sMTe32i1jfwO60Sce?type=png" alt=""></a></p>
-
-</div>
-
-
-
-
-
-    
-	
-  
-    
-    
-	
-    
-
-
-  
-
-<div class="td-content" style="page-break-before: always">
-    <h1 id="pg-4b40b8f3a9fde137d7b53e3793fc482c">ASIO</h1>
-	
-	<div class="td-byline mb-4">
-		
-        
-		<time datetime="2024-07-31" class="text-body-secondary">2024年07月31日</time>
-        
-	</div>
-	<h2 id="a-introduction"><strong>A. Introduction</strong></h2>
-<p>其实张佩的文章已经写得很详细了，但是如果没有任何概念的时候，还是会被众多的经典概念绕晕。 所以我的方法是：先去steinberg的forum去看一些英文原版的介绍， 然后去下载asio 的sdk下来看文档，看代码，跑代码 下载cubase下来，验证asio驱动。</p>
-<h2 id="b-concepts"><strong>B. Concepts</strong></h2>
-<h3 id="a-structure-各层的结构">a. Structure 各层的结构</h3>
-<h4 id="1应用程序">1.应用程序</h4>
-<p>（cubase、dorico、nuendo、wavelab等都是被明确指出需要ASIO driver的）</p>
-<h4 id="2操作系统-用户空间-windows">2.操作系统-用户空间-windows</h4>
-<p>windows驱动</p>
-<p>Steinberg built-in ASIO Driver（win10 x64 &amp; win11 only）</p>
-<p>早期是Generic Low Latency ASIO Driver</p>
-<p>第三方的ASIO4ALL- from Michael Tippach</p>
-<h4 id="3操作系统-内核空间-windows">3.操作系统-内核空间-windows</h4>
-<h4 id="4硬件层">4.硬件层</h4>
-<p>ASIO是需要声卡硬件支持的 其实关于这一点，暂时还没有确定的答案，硬件上做什么样特殊的处理吗？ 但是走到操作系统的内核空间层，windows内核需要为ASIO这样一个第三方的公司定制一些特殊的模块，就像Linux那样，驱动目录下有各个不同厂商单独的文件夹。 从理论上来看，当然是可能的。但是好像还没有看到ASIO有任何这方面的资料。 如果在内核空间，所有的驱动模块都是通用的，即与AC97、Realtek等声卡所调用的驱动模块是完全一致的，那么ASIO就并不需要硬件支持了。 用另一个方式来说，ASIO的特殊之处是在用户空间的驱动里，不论是WDM还是其他windows的库，ASIO推出一套标准，用不同的方法去调用内核空间给用户空间的API。 它只是在用不同的方式或逻辑调用相同的内核API，与内核通信而已。</p>
-<h2 id="c-asio-sdk"><strong>C. ASIO SDK</strong></h2>
-<h3 id="a-asio-api试图提供的性能from-asio-sdk-23">a. ASIO API试图提供的性能(From ASIO SDK 2.3)</h3>
-<h4 id="1high-data-throughput"><code>1.High data throughput</code></h4>
-<pre tabindex="0"><code>PCI 
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-cn class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=canonical type=text/html href=https://potterwhite.github.io/blog/011_windows_development/><link rel=alternate type=application/rss+xml href=https://potterwhite.github.io/blog/011_windows_development/index.xml><meta name=robots content="noindex, nofollow"><link rel="shortcut icon" href=/favicons/favicon.ico><link rel=apple-touch-icon href=/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/favicons/android-192x192.png sizes=192x192><title>011_Grp_Windows | </title><meta name=description content><meta property="og:url" content="https://potterwhite.github.io/blog/011_windows_development/"><meta property="og:title" content="011_Grp_Windows"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="011_Grp_Windows"><meta itemprop=datePublished content="2024-10-10T00:00:00+00:00"><meta itemprop=dateModified content="2024-10-10T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="011_Grp_Windows"><link rel=preload href=/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css as=style integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL+WaPQgGLk4h9V8+KY/Q=" crossorigin=anonymous><link href=/scss/main.min.8d9fc392f483ddcfc12deab0c7339579a28bf9668f42018b93887d57cf8a63f4.css rel=stylesheet integrity="sha256-jZ/DkvSD3c/BLeqwxzOVeaKL+WaPQgGLk4h9V8+KY/Q=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script><script defer src=https://unpkg.com/lunr@2.3.9/lunr.min.js integrity=sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli crossorigin=anonymous></script><link rel=stylesheet href=/css/prism.css></head><body class="td-section td-blog"><header><nav class="td-navbar js-navbar-scroll" data-bs-theme=dark><div class="container-fluid flex-column flex-md-row"><a class=navbar-brand href=/><span class="navbar-brand__logo navbar-logo"><svg width="30" height="1" viewBox="0 0 100 100"><rect width="100%" height="100%" fill="none"/><text x="50%" y="50%" font-family="Times New Roman" font-weight="bold" font-size="80" text-anchor="middle" fill="#fff" dy=".35em">J</text></svg></span><span class=navbar-brand__name></span></a><div class="td-navbar-nav-scroll ms-md-auto" id=main_navbar><ul class=navbar-nav><li class=nav-item><a class=nav-link href=/about/><span>关于</span></a></li><li class=nav-item><a class=nav-link href=/blog/><span>博客</span></a></li><li class=nav-item><a class=nav-link href=/portfolio/><span>我的作品</span></a></li><li class="nav-item dropdown d-none d-lg-block"><div class=dropdown><a class="nav-link dropdown-toggle" href=# role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false>简体中文</a><ul class=dropdown-menu><li><a class=dropdown-item href=/en/>English</a></li></ul></div></li><li class="td-light-dark-menu nav-item dropdown"><svg class="d-none"><symbol id="check2" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5.0 010 .708l-7 7a.5.5.0 01-.708.0l-3.5-3.5a.5.5.0 11.708-.708L6.5 10.293l6.646-6.647a.5.5.0 01.708.0z"/></symbol><symbol id="circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 108 1v14zm0 1A8 8 0 118 0a8 8 0 010 16z"/></symbol><symbol id="moon-stars-fill" viewBox="0 0 16 16"><path d="M6 .278a.768.768.0 01.08.858 7.208 7.208.0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527.0 1.04-.055 1.533-.16a.787.787.0 01.81.316.733.733.0 01-.031.893A8.349 8.349.0 018.344 16C3.734 16 0 12.286.0 7.71.0 4.266 2.114 1.312 5.124.06A.752.752.0 016 .278z"/><path d="M10.794 3.148a.217.217.0 01.412.0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217.0 010 .412l-1.162.387A1.734 1.734.0 0011.593 7.69l-.387 1.162a.217.217.0 01-.412.0l-.387-1.162A1.734 1.734.0 009.31 6.593l-1.162-.387a.217.217.0 010-.412l1.162-.387a1.734 1.734.0 001.097-1.097l.387-1.162zM13.863.099a.145.145.0 01.274.0l.258.774c.115.346.386.617.732.732l.774.258a.145.145.0 010 .274l-.774.258a1.156 1.156.0 00-.732.732l-.258.774a.145.145.0 01-.274.0l-.258-.774a1.156 1.156.0 00-.732-.732l-.774-.258a.145.145.0 010-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></symbol><symbol id="sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 0zm0 13a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 13zm8-5a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2a.5.5.0 01.5.5zM3 8a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2A.5.5.0 013 8zm10.657-5.657a.5.5.0 010 .707l-1.414 1.415a.5.5.0 11-.707-.708l1.414-1.414a.5.5.0 01.707.0zm-9.193 9.193a.5.5.0 010 .707L3.05 13.657a.5.5.0 01-.707-.707l1.414-1.414a.5.5.0 01.707.0zm9.193 2.121a.5.5.0 01-.707.0l-1.414-1.414a.5.5.0 01.707-.707l1.414 1.414a.5.5.0 010 .707zM4.464 4.465a.5.5.0 01-.707.0L2.343 3.05a.5.5.0 11.707-.707l1.414 1.414a.5.5.0 010 .708z"/></symbol></svg>
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id=bd-theme type=button aria-expanded=false data-bs-toggle=dropdown data-bs-display=static aria-label="Toggle theme (auto)"><svg class="bi my-1 theme-icon-active"><use href="#circle-half"/></svg></button><ul class="dropdown-menu dropdown-menu-end" aria-labelledby=bd-theme-text><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=light aria-pressed=false>
+<svg class="bi me-2 opacity-50"><use href="#sun-fill"/></svg>
+Light<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=dark aria-pressed=false>
+<svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"/></svg>
+Dark<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center active" data-bs-theme-value=auto aria-pressed=true>
+<svg class="bi me-2 opacity-50"><use href="#circle-half"/></svg>
+Auto<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li></ul></li></ul></div><div class="d-none d-lg-block"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder=站内搜索… aria-label=站内搜索… autocomplete=off data-offline-search-index-json-src=/offline-search-index.ce2d1b0f8608f8a602699e57202ea1d8.json data-offline-search-base-href=/ data-offline-search-max-results=10></div></div></div></nav></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none"></div><div class="d-none d-xl-block col-xl-2 td-toc d-print-none"></div><main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role=main><div class=td-content><div class="pageinfo pageinfo-primary d-print-none"><p>这是本节的多页打印视图。
+<a href=# onclick="return print(),!1">点击此处打印</a>.</p><p><a href=/blog/011_windows_development/>返回本页常规视图</a>.</p></div><h1 class=title>011_Grp_Windows</h1><ul><li><a href=#pg-0fc815991af709e0d45b6ac0f2e0a676>IMMNotificationClient Callback Problem</a></li><li><a href=#pg-4b40b8f3a9fde137d7b53e3793fc482c>ASIO</a></li><li><a href=#pg-5637ca4afd986b1e0d9ae4793487f985>声卡项目</a></li></ul><div class=content></div></div><div class=td-content><h1 id=pg-0fc815991af709e0d45b6ac0f2e0a676>IMMNotificationClient Callback Problem</h1><div class="td-byline mb-4"><time datetime=2024-10-10 class=text-body-secondary>2024年10月10日</time></div><p><a href=https://mermaid.live/edit#pako:eNqVVm1T2lgU_ivZfHTQIYhgcdoZi6i03fq225ltcDIBAmQbEhZuutaXGbS-gFCx6jpWq67bWt3uFnWcWsUXfsxyE_jkX9iTBFlEd9mSGYbce85znjz3nCeMkD7Jz5EOMiBIP_tCbBQR33V4RAI-MdkbjLKREKFsTJbiv-KZc-WX_fYBJxKYngiKeUQP0q77tLuJcEY5FnFEmIm0y35eckoiikoCcZdwDSHG2KzeuDxbw4k1fJrrbn-EDybU1Um8d1I82BrUQLXa94nGxnuEk3YDdoyJuMUYYkUfB4AoxMcuz9Kl9TdKfFxJzOPXKzizUprJFPLr-NMKPl_EyVe9OurB6U1gpw7cAcCAzAduMP7mLiHKghBB0TYCJ94ry59qKCore3j-g8FeKz-7WcHu0LBHH48SXdT1pR9GCRftftJUW63xniaPW-QRM8AhxiX6eyVeRMxjCfEB3sciXhIZJysIXtb3TNdsHe-kcHoZOIEGxeyFep4txVfVzW2N39pGcf-lcUyF45yhhCHCNbX0gBjjeg5VBQnFKnUHEIvkmDPEikHO_1d8oqFBOdxVJjPqxAmllcu_KRx_vAmF9w9AFKBUOJ7rfVTMrxW30kCqkN_SSE1t48w7QGhoqOjk0s-gkwZBivkNZW4bQnHmC15IKzvnl2er__SYw-Ed4IO3E-yMSmEoSgBUdUKdx6qQ6NRJdNFPoA-Y7yN-6NCrBLcYkNqUZArP7hbnvuDM8tVGDB4IuCrjexWYLop2CwIXZAWCG-JReZ0T_cYMtdOVMyutHCnZz4N62X-bKC3l9j2DrYVWPyXxxZS69Wfh9KiQS8H3oJHWZdFDuunqPZx5rS5tXp4lChcp_GFCO8T4ofI2p2QW4GAuz5Ll5G49101reirv4srnFE7sX4N36xEP9AjoMnVpF3oDT6dr-o6oL7-G9kBHe0hXH1zdjiRutl7xtz-U5A70Wxn3oY5bF6nG3_5HvGF1HuSiaMMVqkzJcITS-ob6e844_3KbU1d-MEzdXNY8wUJ7JfAcFI4wUSSCufV9yyG2x_sj50MOBy8-l55xsBKSqhjcdpWRcWYCNIFRXa1iZyK-ItcCuXUnzmTI998fA68Z8PrgUfpkTub84HoiPBmY2ldAWDUIpr2_i9C0MhF8rAzD-duqDMpSMahq2QxrgjdDcW9czeXV3RTOJvHUrm5Mh6WlrLL4qnD-FryucLKpnWP2pTI7W3HOsuMn48a7pcZIlfRMaSEB6ZrZ6lwN78PvJ9X56UJuWrfQ6o4YpmhwhlqPqN_4WlP30H2IKE_1xUd1bs8oQ9RKW56EHj2pl67vn4b5wiSBWeD9yXJ-r57fR9ejBo5dGUXDF8oAfTpAP_1TB-eVg0TxYhHP5NTZI5AP3tfghxUj1aL79eintMuQRyRNZJiLhlneD39NRrQYD4lCXJjzkA746ecCrCwgD-kRxyCUlZE08EL0kQ4UlTkTGZXkYIh0BFghBneybu4dPAvTHq6sRljxqSSFr1LglnSMkEOkw9baZG9pvUO12m0Wi9lubjaRL0hHI2WzN1ntVpvdbKXMVIvN0jJmIod1BKqp2XqHslFWq91sMTe32i1jfwO60Sce target=_blank rel=noopener><img src="https://mermaid.ink/img/pako:eNqVVm1T2lgU_ivZfHTQIYhgcdoZi6i03fq225ltcDIBAmQbEhZuutaXGbS-gFCx6jpWq67bWt3uFnWcWsUXfsxyE_jkX9iTBFlEd9mSGYbce85znjz3nCeMkD7Jz5EOMiBIP_tCbBQR33V4RAI-MdkbjLKREKFsTJbiv-KZc-WX_fYBJxKYngiKeUQP0q77tLuJcEY5FnFEmIm0y35eckoiikoCcZdwDSHG2KzeuDxbw4k1fJrrbn-EDybU1Um8d1I82BrUQLXa94nGxnuEk3YDdoyJuMUYYkUfB4AoxMcuz9Kl9TdKfFxJzOPXKzizUprJFPLr-NMKPl_EyVe9OurB6U1gpw7cAcCAzAduMP7mLiHKghBB0TYCJ94ry59qKCore3j-g8FeKz-7WcHu0LBHH48SXdT1pR9GCRftftJUW63xniaPW-QRM8AhxiX6eyVeRMxjCfEB3sciXhIZJysIXtb3TNdsHe-kcHoZOIEGxeyFep4txVfVzW2N39pGcf-lcUyF45yhhCHCNbX0gBjjeg5VBQnFKnUHEIvkmDPEikHO_1d8oqFBOdxVJjPqxAmllcu_KRx_vAmF9w9AFKBUOJ7rfVTMrxW30kCqkN_SSE1t48w7QGhoqOjk0s-gkwZBivkNZW4bQnHmC15IKzvnl2er__SYw-Ed4IO3E-yMSmEoSgBUdUKdx6qQ6NRJdNFPoA-Y7yN-6NCrBLcYkNqUZArP7hbnvuDM8tVGDB4IuCrjexWYLop2CwIXZAWCG-JReZ0T_cYMtdOVMyutHCnZz4N62X-bKC3l9j2DrYVWPyXxxZS69Wfh9KiQS8H3oJHWZdFDuunqPZx5rS5tXp4lChcp_GFCO8T4ofI2p2QW4GAuz5Ll5G49101reirv4srnFE7sX4N36xEP9AjoMnVpF3oDT6dr-o6oL7-G9kBHe0hXH1zdjiRutl7xtz-U5A70Wxn3oY5bF6nG3_5HvGF1HuSiaMMVqkzJcITS-ob6e844_3KbU1d-MEzdXNY8wUJ7JfAcFI4wUSSCufV9yyG2x_sj50MOBy8-l55xsBKSqhjcdpWRcWYCNIFRXa1iZyK-ItcCuXUnzmTI998fA68Z8PrgUfpkTub84HoiPBmY2ldAWDUIpr2_i9C0MhF8rAzD-duqDMpSMahq2QxrgjdDcW9czeXV3RTOJvHUrm5Mh6WlrLL4qnD-FryucLKpnWP2pTI7W3HOsuMn48a7pcZIlfRMaSEB6ZrZ6lwN78PvJ9X56UJuWrfQ6o4YpmhwhlqPqN_4WlP30H2IKE_1xUd1bs8oQ9RKW56EHj2pl67vn4b5wiSBWeD9yXJ-r57fR9ejBo5dGUXDF8oAfTpAP_1TB-eVg0TxYhHP5NTZI5AP3tfghxUj1aL79eintMuQRyRNZJiLhlneD39NRrQYD4lCXJjzkA746ecCrCwgD-kRxyCUlZE08EL0kQ4UlTkTGZXkYIh0BFghBneybu4dPAvTHq6sRljxqSSFr1LglnSMkEOkw9baZG9pvUO12m0Wi9lubjaRL0hHI2WzN1ntVpvdbKXMVIvN0jJmIod1BKqp2XqHslFWq91sMTe32i1jfwO60Sce?type=png" alt></a></p></div><div class=td-content style=page-break-before:always><h1 id=pg-4b40b8f3a9fde137d7b53e3793fc482c>ASIO</h1><div class="td-byline mb-4"><time datetime=2024-07-31 class=text-body-secondary>2024年07月31日</time></div><h2 id=a-introduction><strong>A. Introduction</strong></h2><p>其实张佩的文章已经写得很详细了，但是如果没有任何概念的时候，还是会被众多的经典概念绕晕。 所以我的方法是：先去steinberg的forum去看一些英文原版的介绍， 然后去下载asio 的sdk下来看文档，看代码，跑代码 下载cubase下来，验证asio驱动。</p><h2 id=b-concepts><strong>B. Concepts</strong></h2><h3 id=a-structure-各层的结构>a. Structure 各层的结构</h3><h4 id=1应用程序>1.应用程序</h4><p>（cubase、dorico、nuendo、wavelab等都是被明确指出需要ASIO driver的）</p><h4 id=2操作系统-用户空间-windows>2.操作系统-用户空间-windows</h4><p>windows驱动</p><p>Steinberg built-in ASIO Driver（win10 x64 & win11 only）</p><p>早期是Generic Low Latency ASIO Driver</p><p>第三方的ASIO4ALL- from Michael Tippach</p><h4 id=3操作系统-内核空间-windows>3.操作系统-内核空间-windows</h4><h4 id=4硬件层>4.硬件层</h4><p>ASIO是需要声卡硬件支持的 其实关于这一点，暂时还没有确定的答案，硬件上做什么样特殊的处理吗？ 但是走到操作系统的内核空间层，windows内核需要为ASIO这样一个第三方的公司定制一些特殊的模块，就像Linux那样，驱动目录下有各个不同厂商单独的文件夹。 从理论上来看，当然是可能的。但是好像还没有看到ASIO有任何这方面的资料。 如果在内核空间，所有的驱动模块都是通用的，即与AC97、Realtek等声卡所调用的驱动模块是完全一致的，那么ASIO就并不需要硬件支持了。 用另一个方式来说，ASIO的特殊之处是在用户空间的驱动里，不论是WDM还是其他windows的库，ASIO推出一套标准，用不同的方法去调用内核空间给用户空间的API。 它只是在用不同的方式或逻辑调用相同的内核API，与内核通信而已。</p><h2 id=c-asio-sdk><strong>C. ASIO SDK</strong></h2><h3 id=a-asio-api试图提供的性能from-asio-sdk-23>a. ASIO API试图提供的性能(From ASIO SDK 2.3)</h3><h4 id=1high-data-throughput><code>1.High data throughput</code></h4><pre tabindex=0><code>PCI 
 
 firewire
-</code></pre><h4 id="2synchronization"><code>2.synchronization</code></h4>
-<h4 id="3low-latency"><code>3.low latency</code></h4>
-<h4 id="4extensibility-on-the-audio-hardware"><code>4.extensibility on the audio hardware </code></h4>
-<h4 id="5no-limitation-on-the-number-of-io-channels"><code>5.no limitation on the number of i/o channels </code></h4>
-<h4 id="6no-limitation-on-the-sample-rate"><code>6.no limitation on the sample rate</code></h4>
-<pre tabindex="0"><code>32khz
+</code></pre><h4 id=2synchronization><code>2.synchronization</code></h4><h4 id=3low-latency><code>3.low latency</code></h4><h4 id=4extensibility-on-the-audio-hardware><code>4.extensibility on the audio hardware</code></h4><h4 id=5no-limitation-on-the-number-of-io-channels><code>5.no limitation on the number of i/o channels</code></h4><h4 id=6no-limitation-on-the-sample-rate><code>6.no limitation on the sample rate</code></h4><pre tabindex=0><code>32khz
 
 96khz
 
 higher
-</code></pre><h4 id="7no-limitation-on-sample-format"><code>7.no limitation on sample format</code></h4>
-<pre tabindex="0"><code>16
+</code></pre><h4 id=7no-limitation-on-sample-format><code>7.no limitation on sample format</code></h4><pre tabindex=0><code>16
 
 24
 
 32 bit
 
 32/64 bit floating point formats
-</code></pre><h2 id="d-conclusion"><strong>D. Conclusion</strong></h2>
-<p>今天一天，到下午四点的时候，终于用cubase试验了自己修改过的asio driver。</p>
-<p>虽然看起来很简单，但是其实是要仔细的去看asio sdk 2.3的整个包里面的文档。</p>
-<p>市面上对于asio驱动、支持asio声卡、asio 硬件等概念的介绍并没有特别有针对性的。</p>
-<p>asio应该理解为一种协议，cubase这类的软件都只识别这种协议的音频设备。</p>
-<p>它并没有太神奇的地方，就是在软件层面的一种封装罢了。</p>
-<h2 id="e-appendix"><strong>E. Appendix</strong></h2>
-<p><a href="https://zhuanlan.zhihu.com/p/518363836" target="_blank" rel="noopener">01. [***]在逃技术百晓声-ASIO、WDM和MME驱动的区别(一个比较简练的介绍)</a></p>
-<p><a href="https://potterwhite.github.io/blog/2024/07/31/asio/info@steinberg.de" target="_blank" rel="noopener">02. [**]Steinberg Email:info@steinberg.de</a></p>
-<p><a href="https://forums.steinberg.net/c/developer/103/none?_gl=1*107pk2r*_gcl_au*MjI0MDkyMTc2LjE3MjE5ODY2MDQ." target="_blank" rel="noopener">03. [***]Steinberg Forum</a></p>
-<p><a href="https://debug.fanzheng.org/post/use-cubase-without-independent-sound-card.html" target="_blank" rel="noopener">04. [**]无独立声卡玩转Cubase</a></p>
-<p><a href="https://blog.csdn.net/blog_index/article/details/2537080?spm=1001.2014.3001.5502" target="_blank" rel="noopener">05. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南</a></p>
-<p><a href="https://blog.csdn.net/blog_index/article/details/5411694?spm=1001.2014.3001.5502" target="_blank" rel="noopener">06. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南 2.0</a></p>
-<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/17863730844946-Steinberg-built-in-ASIO-Driver-information-download" target="_blank" rel="noopener">07. Steinberg built-in ASIO Driver: information &amp; download</a></p>
-<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/206111444-Audio-card-latency" target="_blank" rel="noopener">08. Audio card latency</a></p>
-<p><a href="https://www.buckhorn.com.cn/index.php/support-zh/tech-doc-zh/43-asio-infrastructure-zh" target="_blank" rel="noopener">09. 跳羚科技 - Buckhorn之音频asio驱动开发</a></p>
-<p><a href="http://www.cymount.com/news/shownews.php?id=66" target="_blank" rel="noopener">10. 什么是 ASIO 声卡驱动？</a></p>
-<p><a href="http://www.cymount.com/news/shownews.php?id=80" target="_blank" rel="noopener">11. WASAPI介绍</a></p>
-
-</div>
-
-
-
-
-
-    
-	
-  
-    
-    
-	
-    
-
-
-  
-
-<div class="td-content" style="page-break-before: always">
-    <h1 id="pg-5637ca4afd986b1e0d9ae4793487f985">声卡项目</h1>
-	
-	<div class="td-byline mb-4">
-		
-        
-		<time datetime="2024-07-11" class="text-body-secondary">2024年07月11日</time>
-        
-	</div>
-	<!-- <script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
-</script> -->
-<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
-<h1 id="一介绍">一、介绍</h1>
-<p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p>
-<h1 id="二主要的函数">二、主要的函数</h1>
-<details>
-    <summary>流程图1 _EnumerateAudioEndpoints</summary>
-<!-- ![_EnumerateAudioEndpoints](/2024/July/11/soundcard_flow_1.svg) -->
-<p>this is the first operation of our process</br>
-A. and it start with CoCreateInstance() to create object of <code>IMMDeviceEnumerator</code></br>
-B. then if success, use <code>IMMDeviceEnumerator.EnumAudioEndpoint()</code> to enumerate all endpoints(actually include all input &amp; output devices, but API can choose i or o or both devices) in this machine.</br>
-C. if there exist endpoint, to check the number of endpoints with <code>IMMDeviceCollection.GetCount()</code>.</br>
-D. use for loop to enum every endpoint, retrieve its data with <code>IMMDeviceCollection.Item()</code></br>
-E. finally, if retrieving process runs smoothly and there is data who came with Item() operation, push it into endpoint global data pool.</br></p>
-<!-- <object type="image/svg+xml" data="/2024/July/17/flowchart_of_EnumerateEndpoint.svg" style="width: 100%; height: 1000%;">
-    Your browser does not support SVG
-</object> -->
-<iframe src="/2024/July/17/flow_no_zoom.svg" width="900" height="2000" style="border:none; overflow:scroll; background: #333333;">
-</iframe>
-<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
-</details>
-<details>
-    <summary> 001. 创建com的对象 CoCreateInstance </summary>
-<div style="padding-left: 2em;">
-</br>
-<pre tabindex="0"><code>_Check_return_
+</code></pre><h2 id=d-conclusion><strong>D. Conclusion</strong></h2><p>今天一天，到下午四点的时候，终于用cubase试验了自己修改过的asio driver。</p><p>虽然看起来很简单，但是其实是要仔细的去看asio sdk 2.3的整个包里面的文档。</p><p>市面上对于asio驱动、支持asio声卡、asio 硬件等概念的介绍并没有特别有针对性的。</p><p>asio应该理解为一种协议，cubase这类的软件都只识别这种协议的音频设备。</p><p>它并没有太神奇的地方，就是在软件层面的一种封装罢了。</p><h2 id=e-appendix><strong>E. Appendix</strong></h2><p><a href=https://zhuanlan.zhihu.com/p/518363836 target=_blank rel=noopener>01. [***]在逃技术百晓声-ASIO、WDM和MME驱动的区别(一个比较简练的介绍)</a></p><p><a href=https://potterwhite.github.io/blog/2024/07/31/asio/info@steinberg.de target=_blank rel=noopener>02. [**]Steinberg Email:info@steinberg.de</a></p><p><a href="https://forums.steinberg.net/c/developer/103/none?_gl=1*107pk2r*_gcl_au*MjI0MDkyMTc2LjE3MjE5ODY2MDQ." target=_blank rel=noopener>03. [***]Steinberg Forum</a></p><p><a href=https://debug.fanzheng.org/post/use-cubase-without-independent-sound-card.html target=_blank rel=noopener>04. [**]无独立声卡玩转Cubase</a></p><p><a href="https://blog.csdn.net/blog_index/article/details/2537080?spm=1001.2014.3001.5502" target=_blank rel=noopener>05. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南</a></p><p><a href="https://blog.csdn.net/blog_index/article/details/5411694?spm=1001.2014.3001.5502" target=_blank rel=noopener>06. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南 2.0</a></p><p><a href=https://helpcenter.steinberg.de/hc/en-us/articles/17863730844946-Steinberg-built-in-ASIO-Driver-information-download target=_blank rel=noopener>07. Steinberg built-in ASIO Driver: information & download</a></p><p><a href=https://helpcenter.steinberg.de/hc/en-us/articles/206111444-Audio-card-latency target=_blank rel=noopener>08. Audio card latency</a></p><p><a href=https://www.buckhorn.com.cn/index.php/support-zh/tech-doc-zh/43-asio-infrastructure-zh target=_blank rel=noopener>09. 跳羚科技 - Buckhorn之音频asio驱动开发</a></p><p><a href="http://www.cymount.com/news/shownews.php?id=66" target=_blank rel=noopener>10. 什么是 ASIO 声卡驱动？</a></p><p><a href="http://www.cymount.com/news/shownews.php?id=80" target=_blank rel=noopener>11. WASAPI介绍</a></p></div><div class=td-content style=page-break-before:always><h1 id=pg-5637ca4afd986b1e0d9ae4793487f985>声卡项目</h1><div class="td-byline mb-4"><time datetime=2024-07-11 class=text-body-secondary>2024年07月11日</time></div><h1 id=一介绍>一、介绍</h1><p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p><h1 id=二主要的函数>二、主要的函数</h1><details><summary>流程图1 _EnumerateAudioEndpoints</summary><p>this is the first operation of our process</br>A. and it start with CoCreateInstance() to create object of <code>IMMDeviceEnumerator</code></br>B. then if success, use <code>IMMDeviceEnumerator.EnumAudioEndpoint()</code> to enumerate all endpoints(actually include all input & output devices, but API can choose i or o or both devices) in this machine.</br>C. if there exist endpoint, to check the number of endpoints with <code>IMMDeviceCollection.GetCount()</code>.</br>D. use for loop to enum every endpoint, retrieve its data with <code>IMMDeviceCollection.Item()</code></br>E. finally, if retrieving process runs smoothly and there is data who came with Item() operation, push it into endpoint global data pool.</br></p><iframe src=/2024/July/17/flow_no_zoom.svg width=900 height=2000 style=border:none;overflow:scroll;background:#333></iframe></details><details><summary>001. 创建com的对象 CoCreateInstance</summary><div style=padding-left:2em></br><pre tabindex=0><code>_Check_return_
 WINOLEAPI
 CoCreateInstance(
     _In_ REFCLSID rclsid,
@@ -393,229 +30,87 @@ CoCreateInstance(
     _In_ REFIID riid,
     _COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID  FAR * ppv
 );
-</code></pre></br>
-<h3 id="refrence"><strong>Refrence</strong></h3>
-<p><a href="https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance" target="_blank" rel="noopener">1. CoCreateInstance MS Learning</a></br>
-<a href="https://developer.aliyun.com/article/48371" target="_blank" rel="noopener">2. COM basic tutorial</a></br></p>
-</br>
-<h3 id="introduce"><strong>Introduce</strong></h3>
-<p><strong>CoCreateInstance</strong> is used for instance of object creating in local machine.
+</code></pre></br><h3 id=refrence><strong>Refrence</strong></h3><p><a href=https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance target=_blank rel=noopener>1. CoCreateInstance MS Learning</a></br><a href=https://developer.aliyun.com/article/48371 target=_blank rel=noopener>2. COM basic tutorial</a></br></p></br><h3 id=introduce><strong>Introduce</strong></h3><p><strong>CoCreateInstance</strong> is used for instance of object creating in local machine.
 <strong>CoCreateInstanceEx</strong> is used for instance of object creating in REMOTE machine.
 <strong>CoGetClassObject</strong> is used for MULTI instances of object creating in local machine.
 CoCreateInstance encapsulates the CoGetClassObject in the low-level.
-CoCreateInstance connects the object with the ID.
-</br></br></p>
-<h3 id="requirement"><strong>Requirement</strong></h3>
-<table>
-  <thead>
-      <tr>
-          <th>Type</th>
-          <th>Name</th>
-          <th>Usage</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Library</td>
-          <td>Ole32.lib</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>Dynamic Link Library</td>
-          <td>Ole32.dll</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>Header file</td>
-          <td>combaseapi.h</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>&hellip;\Windows Kits\10\Include\10.0.22621.0\shared\guiddef.h</td>
-          <td>REFCLSID &amp; IID definition</td>
-      </tr>
-      <tr>
-          <td></td>
-          <td>&hellip;\Windows Kits\10\Include\10.0.22621.0\um\mmdeviceapi.h</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>Minimum System Version</td>
-          <td>Windows 2000 and above</td>
-          <td></td>
-      </tr>
-  </tbody>
-</table>
-<p></br></br></p>
-<h3 id="parameters"><strong>Parameters</strong></h3>
-<p><span style="background-color: gray;">(1/5)[in] rclsid</span></br>
-</br></p>
-<div style="padding-left: 2em;">
-The CLSID associated with the data and code that will be used to create the object.</br>
-<p>REFCLSID:</br>
-REF=Reference</br>
-CLS=Class</br>
-ID=Identifier</br>
-REFCLSID rclsid：是 const CLSID&amp; 的别名，表示对 CLSID 的引用。这样传递参数时，不需要复制整个 CLSID 对象，只需要传递它的引用，从而提高效率。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/*mmdeviceapi.h
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> * here is the definition of MMDevice Enumerator
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> * we are using &#34;__uuidof(MMDeviceEnumerator)&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#ifdef __cplusplus
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">class</span> <span style="color:#000">DECLSPEC_UUID</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;BCDE0395-E52F-467C-8E3D-C4579291692E&#34;</span><span style="color:#000;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#000">MMDeviceEnumerator</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#endif
-</span></span></span></code></pre></div><details>
-    <summary>UUID为什么有中间的“-”连字符</summary>
-    UUID（Universally Unique Identifier）或 GUID（Globally Unique Identifier）中使用连字符（`-`）是为了增加可读性和标准化。虽然连字符没有任何技术上的必要性，但它们有助于分隔和识别 UUID 的不同部分。
-<h3 id="uuid-格式">UUID 格式</h3>
-<p>一个标准的 UUID 格式为 8-4-4-4-12，即总共 32 个十六进制字符分为五个部分，每个部分用连字符分隔。这种格式定义在 RFC 4122 中。</p>
-<p>例如：</p>
-<pre tabindex="0"><code>BCDE0395-E52F-467C-8E3D-C4579291692E
-</code></pre><h3 id="格式的分隔意义">格式的分隔意义</h3>
-<ol>
-<li><strong>时间戳部分（8个字符）</strong>：UUID 的前 8 个字符通常表示时间戳的高位部分。</li>
-<li><strong>时间戳的中间部分（4个字符）</strong>：接下来的 4 个字符表示时间戳的中间部分。</li>
-<li><strong>时间戳的低位部分和版本号（4个字符）</strong>：接下来的 4 个字符表示时间戳的低位部分和版本号。</li>
-<li><strong>时钟序列（4个字符）</strong>：接下来的 4 个字符表示时钟序列。</li>
-<li><strong>节点（12个字符）</strong>：最后的 12 个字符表示节点信息（通常是基于网络地址）。</li>
-</ol>
-<p>这种分隔方式有助于解析和理解 UUID 的不同部分，并确保它们的唯一性。</p>
-<h3 id="使用连字符的好处">使用连字符的好处</h3>
-<ol>
-<li><strong>可读性</strong>：连字符使得 UUID 更加可读，更容易分辨和检查。</li>
-<li><strong>标准化</strong>：按照 RFC 4122 标准定义的格式，有助于在不同系统和平台之间保持一致性。</li>
-<li><strong>解析和验证</strong>：连字符分隔使得解析和验证 UUID 更加简单和明确。</li>
-</ol>
-<h3 id="无连字符表示">无连字符表示</h3>
-<p>在一些情况下，可以去掉连字符并连续地写下所有字符。例如：</p>
-<pre tabindex="0"><code>BCDE0395E52F467C8E3DC4579291692E
-</code></pre><p>这种形式在某些编程语言和库中也是支持的，但为了确保一致性和标准化，通常还是建议使用带有连字符的格式。</p>
-<h3 id="总结">总结</h3>
-<ul>
-<li><strong>连字符的作用</strong>：主要是增加可读性和标准化。</li>
-<li><strong>UUID 格式</strong>：8-4-4-4-12 的格式有助于分隔和识别不同的部分。</li>
-<li><strong>使用连字符的好处</strong>：使得 UUID 更加可读、标准化，便于解析和验证。</li>
-</ul>
-<p>尽管技术上可以省略连字符，但使用标准格式带来的可读性和一致性优势使得它成为惯用的做法。</p>
-</details>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> * guiddef.h
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#define REFCLSID const IID &amp;
-</span></span></span></code></pre></div></div>
-</br>
-<p><span style="background-color: gray;">(2/5)[in] pUnkOuter</span></br>
-</br></p>
-<div style="padding-left: 2em;">
-If NULL, indicates that the object is not being created as part of an aggregate.</br>
-If non-NULL, pointer to the aggregate object's IUnknown interface (the controlling IUnknown).</br>
-<details>
-    <summary>关于Aggregate，更详尽的解释-FromGpt4o</summary>
-    在 `CoCreateInstance` 函数中，第二个参数 `pUnkOuter` 是一个指向 `IUnknown` 接口的指针，通常用于支持 COM 对象的聚合。聚合是 COM 中的一种技术，允许一个对象（外部对象）包含另一个对象（内部对象），并使内部对象的接口看起来像是外部对象的一部分。
-<h3 id="参数详细解释">参数详细解释</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#000">HRESULT</span> <span style="color:#000">CoCreateInstance</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000">REFCLSID</span> <span style="color:#000">rclsid</span><span style="color:#000;font-weight:bold">,</span>     <span style="color:#ce5c00;font-weight:bold">//</span> <span style="color:#000">Class</span> <span style="color:#000">identifier</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">CLSID</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000">of</span> <span style="color:#000">the</span> <span style="color:#000">object</span> <span style="color:#000">to</span> <span style="color:#000">be</span> <span style="color:#000">created</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000">LPUNKNOWN</span> <span style="color:#000">pUnkOuter</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// Pointer to controlling IUnknown (for aggregation)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#000">DWORD</span> <span style="color:#000">dwClsContext</span><span style="color:#000;font-weight:bold">,</span>  <span style="color:#8f5902;font-style:italic">// Context in which the code that manages the newly created object will run
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#000">REFIID</span> <span style="color:#000">riid</span><span style="color:#000;font-weight:bold">,</span>         <span style="color:#8f5902;font-style:italic">// Interface identifier (IID) of the interface to be used to communicate with the object
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#000">LPVOID</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">ppv</span>          <span style="color:#8f5902;font-style:italic">// Address of pointer variable that receives the interface pointer requested in riid
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">);</span>
-</span></span></code></pre></div><h3 id="punkouter-参数"><code>pUnkOuter</code> 参数</h3>
-<ul>
-<li><strong><code>pUnkOuter</code></strong>：指向控制未知接口（<code>IUnknown</code>）的指针。如果不使用聚合，则传递 <code>NULL</code>。在聚合的情况下，<code>pUnkOuter</code> 应该是外部对象的 <code>IUnknown</code> 指针。</li>
-</ul>
-<h3 id="聚合aggregation">聚合（Aggregation）</h3>
-<p>聚合是一种将一个对象嵌入到另一个对象中的机制，使得内部对象的接口对外部对象的客户端透明。聚合在以下情况下有用：</p>
-<ol>
-<li><strong>对象组合</strong>：允许组合对象共享一个公共的 <code>IUnknown</code> 接口，从而表现为一个单一对象。</li>
-<li><strong>对象封装</strong>：允许一个对象封装另一个对象，并公开其接口，而不暴露内部实现细节。</li>
-</ol>
-<h3 id="聚合的使用">聚合的使用</h3>
-<p>当你使用聚合时，外部对象将包含内部对象，并通过内部对象的接口来实现外部对象的部分功能。在这种情况下，<code>CoCreateInstance</code> 的第二个参数 <code>pUnkOuter</code> 将指向外部对象的 <code>IUnknown</code> 接口，以便内部对象可以调用外部对象的接口。</p>
-<p>如果你不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>，表示不进行聚合。</p>
-<h3 id="示例代码">示例代码</h3>
-<h4 id="不使用聚合">不使用聚合</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#000">IMMDeviceEnumerator</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">deviceEnumerator</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000">HRESULT</span> <span style="color:#000">hr</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">CoCreateInstance</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">__uuidof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">MMDeviceEnumerator</span><span style="color:#000;font-weight:bold">),</span>  <span style="color:#8f5902;font-style:italic">// CLSID
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">,</span>                          <span style="color:#8f5902;font-style:italic">// pUnkOuter (no aggregation)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">CLSCTX_ALL</span><span style="color:#000;font-weight:bold">,</span>                    <span style="color:#8f5902;font-style:italic">// Context
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">__uuidof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">IMMDeviceEnumerator</span><span style="color:#000;font-weight:bold">),</span> <span style="color:#8f5902;font-style:italic">// IID
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">void</span><span style="color:#ce5c00;font-weight:bold">**</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">deviceEnumerator</span>      <span style="color:#8f5902;font-style:italic">// Interface pointer
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">);</span>
-</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为 <code>NULL</code>，表示不使用聚合。</p>
-<h4 id="使用聚合">使用聚合</h4>
-<p>假设你有一个类 <code>COuter</code>，它希望包含一个内部对象 <code>CInner</code>：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">COuter</span> <span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">public</span> <span style="color:#000">IUnknown</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">public</span><span style="color:#ce5c00;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// Implement IUnknown methods
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">HRESULT</span> <span style="color:#000">QueryInterface</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">REFIID</span> <span style="color:#000">riid</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">void</span><span style="color:#ce5c00;font-weight:bold">**</span> <span style="color:#000">ppv</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">riid</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000">IID_IUnknown</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">ppv</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">static_cast</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">IUnknown</span><span style="color:#ce5c00;font-weight:bold">*&gt;</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">this</span><span style="color:#000;font-weight:bold">);</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#000">AddRef</span><span style="color:#000;font-weight:bold">();</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">S_OK</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#8f5902;font-style:italic">// Handle other interfaces
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">E_NOINTERFACE</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">ULONG</span> <span style="color:#000">AddRef</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">InterlockedIncrement</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">m_refCount</span><span style="color:#000;font-weight:bold">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">ULONG</span> <span style="color:#000">Release</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000">ULONG</span> <span style="color:#000">count</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">InterlockedDecrement</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">m_refCount</span><span style="color:#000;font-weight:bold">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">count</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">delete</span> <span style="color:#204a87;font-weight:bold">this</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">count</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">private</span><span style="color:#ce5c00;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">ULONG</span> <span style="color:#000">m_refCount</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">};</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">// Create an instance of COuter and aggregate CInner
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000">COuter</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">pOuter</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">COuter</span><span style="color:#000;font-weight:bold">();</span>
-</span></span><span style="display:flex;"><span><span style="color:#000">IUnknown</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">pUnkOuter</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">static_cast</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">IUnknown</span><span style="color:#ce5c00;font-weight:bold">*&gt;</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pOuter</span><span style="color:#000;font-weight:bold">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#000">CInner</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">pInner</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87">NULL</span><span style="color:#000;font-weight:bold">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#000">HRESULT</span> <span style="color:#000">hr</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">CoCreateInstance</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#000">CLSID_CInner</span><span style="color:#000;font-weight:bold">,</span>         <span style="color:#8f5902;font-style:italic">// CLSID of the inner object
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">pUnkOuter</span><span style="color:#000;font-weight:bold">,</span>            <span style="color:#8f5902;font-style:italic">// pUnkOuter (aggregation)
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">CLSCTX_INPROC_SERVER</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// Context
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">IID_IUnknown</span><span style="color:#000;font-weight:bold">,</span>         <span style="color:#8f5902;font-style:italic">// IID of the interface
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">void</span><span style="color:#ce5c00;font-weight:bold">**</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">pInner</span>       <span style="color:#8f5902;font-style:italic">// Interface pointer
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">);</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">SUCCEEDED</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">hr</span><span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">// Use pInner
-</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">}</span>
-</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为外部对象的 <code>IUnknown</code> 指针，以便内部对象可以进行聚合。</p>
-<h3 id="总结-1">总结</h3>
-<ul>
-<li><strong><code>pUnkOuter</code></strong> 是一个指向 <code>IUnknown</code> 接口的指针，用于支持聚合。</li>
-<li><strong>聚合</strong> 允许一个对象包含另一个对象，并使内部对象的接口对外部对象的客户端透明。</li>
-<li>如果不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>。</li>
-</ul>
-<p>通过理解 <code>pUnkOuter</code> 参数的用途和聚合的概念，可以更好地理解和使用 COM 编程模型中的聚合特性。</p>
-</details>
-</div>
-</br>
-<p><span style="background-color: gray;">(3/5)[in] dwClsContext</span></br></p>
-<div style="padding-left: 2em;">
-Context in which the code that manages the newly created object will run.</br>
-The values are taken from the enumeration CLSCTX.</br>
-<p><code>dwClsContext</code>:</br>
- <code>dw</code>=double world;(microsoft<code>s naming style)&lt;/br&gt; &amp;emsp;</code>Cls<code>=Class; (Class of COM object)&lt;/br&gt; &amp;emsp;</code>Context` means the environment which the object running</br></p>
-<pre class="c">
+CoCreateInstance connects the object with the ID.</br></br></p><h3 id=requirement><strong>Requirement</strong></h3><table><thead><tr><th>Type</th><th>Name</th><th>Usage</th></tr></thead><tbody><tr><td>Library</td><td>Ole32.lib</td><td></td></tr><tr><td>Dynamic Link Library</td><td>Ole32.dll</td><td></td></tr><tr><td>Header file</td><td>combaseapi.h</td><td></td></tr><tr><td></td><td>&mldr;\Windows Kits\10\Include\10.0.22621.0\shared\guiddef.h</td><td>REFCLSID & IID definition</td></tr><tr><td></td><td>&mldr;\Windows Kits\10\Include\10.0.22621.0\um\mmdeviceapi.h</td><td></td></tr><tr><td></td><td></td><td></td></tr><tr><td>Minimum System Version</td><td>Windows 2000 and above</td><td></td></tr></tbody></table><p></br></br></p><h3 id=parameters><strong>Parameters</strong></h3><p><span style=background-color:gray>(1/5)[in] rclsid</span></br></br></p><div style=padding-left:2em>The CLSID associated with the data and code that will be used to create the object.</br><p>REFCLSID:</br>REF=Reference</br>CLS=Class</br>ID=Identifier</br>REFCLSID rclsid：是 const CLSID& 的别名，表示对 CLSID 的引用。这样传递参数时，不需要复制整个 CLSID 对象，只需要传递它的引用，从而提高效率。</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#8f5902;font-style:italic>/*mmdeviceapi.h
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic> * here is the definition of MMDevice Enumerator
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic> * we are using &#34;__uuidof(MMDeviceEnumerator)&#34;
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic> */</span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic>#ifdef __cplusplus
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span><span style=color:#000>class</span> <span style=color:#000>DECLSPEC_UUID</span><span style=color:#000;font-weight:700>(</span><span style=color:#4e9a06>&#34;BCDE0395-E52F-467C-8E3D-C4579291692E&#34;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span><span style=color:#000>MMDeviceEnumerator</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic>#endif
+</span></span></span></code></pre></div><details><summary>UUID为什么有中间的“-”连字符</summary>UUID（Universally Unique Identifier）或 GUID（Globally Unique Identifier）中使用连字符（`-`）是为了增加可读性和标准化。虽然连字符没有任何技术上的必要性，但它们有助于分隔和识别 UUID 的不同部分。<h3 id=uuid-格式>UUID 格式</h3><p>一个标准的 UUID 格式为 8-4-4-4-12，即总共 32 个十六进制字符分为五个部分，每个部分用连字符分隔。这种格式定义在 RFC 4122 中。</p><p>例如：</p><pre tabindex=0><code>BCDE0395-E52F-467C-8E3D-C4579291692E
+</code></pre><h3 id=格式的分隔意义>格式的分隔意义</h3><ol><li><strong>时间戳部分（8个字符）</strong>：UUID 的前 8 个字符通常表示时间戳的高位部分。</li><li><strong>时间戳的中间部分（4个字符）</strong>：接下来的 4 个字符表示时间戳的中间部分。</li><li><strong>时间戳的低位部分和版本号（4个字符）</strong>：接下来的 4 个字符表示时间戳的低位部分和版本号。</li><li><strong>时钟序列（4个字符）</strong>：接下来的 4 个字符表示时钟序列。</li><li><strong>节点（12个字符）</strong>：最后的 12 个字符表示节点信息（通常是基于网络地址）。</li></ol><p>这种分隔方式有助于解析和理解 UUID 的不同部分，并确保它们的唯一性。</p><h3 id=使用连字符的好处>使用连字符的好处</h3><ol><li><strong>可读性</strong>：连字符使得 UUID 更加可读，更容易分辨和检查。</li><li><strong>标准化</strong>：按照 RFC 4122 标准定义的格式，有助于在不同系统和平台之间保持一致性。</li><li><strong>解析和验证</strong>：连字符分隔使得解析和验证 UUID 更加简单和明确。</li></ol><h3 id=无连字符表示>无连字符表示</h3><p>在一些情况下，可以去掉连字符并连续地写下所有字符。例如：</p><pre tabindex=0><code>BCDE0395E52F467C8E3DC4579291692E
+</code></pre><p>这种形式在某些编程语言和库中也是支持的，但为了确保一致性和标准化，通常还是建议使用带有连字符的格式。</p><h3 id=总结>总结</h3><ul><li><strong>连字符的作用</strong>：主要是增加可读性和标准化。</li><li><strong>UUID 格式</strong>：8-4-4-4-12 的格式有助于分隔和识别不同的部分。</li><li><strong>使用连字符的好处</strong>：使得 UUID 更加可读、标准化，便于解析和验证。</li></ul><p>尽管技术上可以省略连字符，但使用标准格式带来的可读性和一致性优势使得它成为惯用的做法。</p></details><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#8f5902;font-style:italic>/*
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic> * guiddef.h
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic> */</span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic>#define REFCLSID const IID &amp;
+</span></span></span></code></pre></div></div></br><p><span style=background-color:gray>(2/5)[in] pUnkOuter</span></br></br></p><div style=padding-left:2em>If NULL, indicates that the object is not being created as part of an aggregate.</br>If non-NULL, pointer to the aggregate object's IUnknown interface (the controlling IUnknown).</br><details><summary>关于Aggregate，更详尽的解释-FromGpt4o</summary>在 `CoCreateInstance` 函数中，第二个参数 `pUnkOuter` 是一个指向 `IUnknown` 接口的指针，通常用于支持 COM 对象的聚合。聚合是 COM 中的一种技术，允许一个对象（外部对象）包含另一个对象（内部对象），并使内部对象的接口看起来像是外部对象的一部分。<h3 id=参数详细解释>参数详细解释</h3><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#000>HRESULT</span> <span style=color:#000>CoCreateInstance</span><span style=color:#000;font-weight:700>(</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>REFCLSID</span> <span style=color:#000>rclsid</span><span style=color:#000;font-weight:700>,</span>     <span style=color:#ce5c00;font-weight:700>//</span> <span style=color:#000>Class</span> <span style=color:#000>identifier</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>CLSID</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000>of</span> <span style=color:#000>the</span> <span style=color:#000>object</span> <span style=color:#000>to</span> <span style=color:#000>be</span> <span style=color:#000>created</span>
+</span></span><span style=display:flex><span>  <span style=color:#000>LPUNKNOWN</span> <span style=color:#000>pUnkOuter</span><span style=color:#000;font-weight:700>,</span> <span style=color:#8f5902;font-style:italic>// Pointer to controlling IUnknown (for aggregation)
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>  <span style=color:#000>DWORD</span> <span style=color:#000>dwClsContext</span><span style=color:#000;font-weight:700>,</span>  <span style=color:#8f5902;font-style:italic>// Context in which the code that manages the newly created object will run
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>  <span style=color:#000>REFIID</span> <span style=color:#000>riid</span><span style=color:#000;font-weight:700>,</span>         <span style=color:#8f5902;font-style:italic>// Interface identifier (IID) of the interface to be used to communicate with the object
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>  <span style=color:#000>LPVOID</span> <span style=color:#ce5c00;font-weight:700>*</span><span style=color:#000>ppv</span>          <span style=color:#8f5902;font-style:italic>// Address of pointer variable that receives the interface pointer requested in riid
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span><span style=color:#000;font-weight:700>);</span>
+</span></span></code></pre></div><h3 id=punkouter-参数><code>pUnkOuter</code> 参数</h3><ul><li><strong><code>pUnkOuter</code></strong>：指向控制未知接口（<code>IUnknown</code>）的指针。如果不使用聚合，则传递 <code>NULL</code>。在聚合的情况下，<code>pUnkOuter</code> 应该是外部对象的 <code>IUnknown</code> 指针。</li></ul><h3 id=聚合aggregation>聚合（Aggregation）</h3><p>聚合是一种将一个对象嵌入到另一个对象中的机制，使得内部对象的接口对外部对象的客户端透明。聚合在以下情况下有用：</p><ol><li><strong>对象组合</strong>：允许组合对象共享一个公共的 <code>IUnknown</code> 接口，从而表现为一个单一对象。</li><li><strong>对象封装</strong>：允许一个对象封装另一个对象，并公开其接口，而不暴露内部实现细节。</li></ol><h3 id=聚合的使用>聚合的使用</h3><p>当你使用聚合时，外部对象将包含内部对象，并通过内部对象的接口来实现外部对象的部分功能。在这种情况下，<code>CoCreateInstance</code> 的第二个参数 <code>pUnkOuter</code> 将指向外部对象的 <code>IUnknown</code> 接口，以便内部对象可以调用外部对象的接口。</p><p>如果你不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>，表示不进行聚合。</p><h3 id=示例代码>示例代码</h3><h4 id=不使用聚合>不使用聚合</h4><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#000>IMMDeviceEnumerator</span><span style=color:#ce5c00;font-weight:700>*</span> <span style=color:#000>deviceEnumerator</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87>NULL</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span><span style=color:#000>HRESULT</span> <span style=color:#000>hr</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>CoCreateInstance</span><span style=color:#000;font-weight:700>(</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>__uuidof</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>MMDeviceEnumerator</span><span style=color:#000;font-weight:700>),</span>  <span style=color:#8f5902;font-style:italic>// CLSID
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#204a87>NULL</span><span style=color:#000;font-weight:700>,</span>                          <span style=color:#8f5902;font-style:italic>// pUnkOuter (no aggregation)
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000>CLSCTX_ALL</span><span style=color:#000;font-weight:700>,</span>                    <span style=color:#8f5902;font-style:italic>// Context
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000>__uuidof</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>IMMDeviceEnumerator</span><span style=color:#000;font-weight:700>),</span> <span style=color:#8f5902;font-style:italic>// IID
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000;font-weight:700>(</span><span style=color:#204a87;font-weight:700>void</span><span style=color:#ce5c00;font-weight:700>**</span><span style=color:#000;font-weight:700>)</span><span style=color:#ce5c00;font-weight:700>&amp;</span><span style=color:#000>deviceEnumerator</span>      <span style=color:#8f5902;font-style:italic>// Interface pointer
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span><span style=color:#000;font-weight:700>);</span>
+</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为 <code>NULL</code>，表示不使用聚合。</p><h4 id=使用聚合>使用聚合</h4><p>假设你有一个类 <code>COuter</code>，它希望包含一个内部对象 <code>CInner</code>：</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#204a87;font-weight:700>class</span> <span style=color:#000>COuter</span> <span style=color:#ce5c00;font-weight:700>:</span> <span style=color:#204a87;font-weight:700>public</span> <span style=color:#000>IUnknown</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>public</span><span style=color:#ce5c00;font-weight:700>:</span>
+</span></span><span style=display:flex><span>    <span style=color:#8f5902;font-style:italic>// Implement IUnknown methods
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000>HRESULT</span> <span style=color:#000>QueryInterface</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>REFIID</span> <span style=color:#000>riid</span><span style=color:#000;font-weight:700>,</span> <span style=color:#204a87;font-weight:700>void</span><span style=color:#ce5c00;font-weight:700>**</span> <span style=color:#000>ppv</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>riid</span> <span style=color:#ce5c00;font-weight:700>==</span> <span style=color:#000>IID_IUnknown</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#ce5c00;font-weight:700>*</span><span style=color:#000>ppv</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>static_cast</span><span style=color:#ce5c00;font-weight:700>&lt;</span><span style=color:#000>IUnknown</span><span style=color:#ce5c00;font-weight:700>*&gt;</span><span style=color:#000;font-weight:700>(</span><span style=color:#204a87;font-weight:700>this</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#000>AddRef</span><span style=color:#000;font-weight:700>();</span>
+</span></span><span style=display:flex><span>            <span style=color:#204a87;font-weight:700>return</span> <span style=color:#000>S_OK</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#8f5902;font-style:italic>// Handle other interfaces
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>        <span style=color:#204a87;font-weight:700>return</span> <span style=color:#000>E_NOINTERFACE</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#000>ULONG</span> <span style=color:#000>AddRef</span><span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#204a87;font-weight:700>return</span> <span style=color:#000>InterlockedIncrement</span><span style=color:#000;font-weight:700>(</span><span style=color:#ce5c00;font-weight:700>&amp;</span><span style=color:#000>m_refCount</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#000>ULONG</span> <span style=color:#000>Release</span><span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#000>ULONG</span> <span style=color:#000>count</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>InterlockedDecrement</span><span style=color:#000;font-weight:700>(</span><span style=color:#ce5c00;font-weight:700>&amp;</span><span style=color:#000>m_refCount</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>count</span> <span style=color:#ce5c00;font-weight:700>==</span> <span style=color:#0000cf;font-weight:700>0</span><span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#204a87;font-weight:700>delete</span> <span style=color:#204a87;font-weight:700>this</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#204a87;font-weight:700>return</span> <span style=color:#000>count</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>private</span><span style=color:#ce5c00;font-weight:700>:</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>ULONG</span> <span style=color:#000>m_refCount</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic>// Create an instance of COuter and aggregate CInner
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span><span style=color:#000>COuter</span><span style=color:#ce5c00;font-weight:700>*</span> <span style=color:#000>pOuter</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>new</span> <span style=color:#000>COuter</span><span style=color:#000;font-weight:700>();</span>
+</span></span><span style=display:flex><span><span style=color:#000>IUnknown</span><span style=color:#ce5c00;font-weight:700>*</span> <span style=color:#000>pUnkOuter</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>static_cast</span><span style=color:#ce5c00;font-weight:700>&lt;</span><span style=color:#000>IUnknown</span><span style=color:#ce5c00;font-weight:700>*&gt;</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>pOuter</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span><span style=color:#000>CInner</span><span style=color:#ce5c00;font-weight:700>*</span> <span style=color:#000>pInner</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87>NULL</span><span style=color:#000;font-weight:700>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000>HRESULT</span> <span style=color:#000>hr</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>CoCreateInstance</span><span style=color:#000;font-weight:700>(</span>
+</span></span><span style=display:flex><span>    <span style=color:#000>CLSID_CInner</span><span style=color:#000;font-weight:700>,</span>         <span style=color:#8f5902;font-style:italic>// CLSID of the inner object
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000>pUnkOuter</span><span style=color:#000;font-weight:700>,</span>            <span style=color:#8f5902;font-style:italic>// pUnkOuter (aggregation)
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000>CLSCTX_INPROC_SERVER</span><span style=color:#000;font-weight:700>,</span> <span style=color:#8f5902;font-style:italic>// Context
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000>IID_IUnknown</span><span style=color:#000;font-weight:700>,</span>         <span style=color:#8f5902;font-style:italic>// IID of the interface
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span>    <span style=color:#000;font-weight:700>(</span><span style=color:#204a87;font-weight:700>void</span><span style=color:#ce5c00;font-weight:700>**</span><span style=color:#000;font-weight:700>)</span><span style=color:#ce5c00;font-weight:700>&amp;</span><span style=color:#000>pInner</span>       <span style=color:#8f5902;font-style:italic>// Interface pointer
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#204a87;font-weight:700>if</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>SUCCEEDED</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>hr</span><span style=color:#000;font-weight:700>))</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#8f5902;font-style:italic>// Use pInner
+</span></span></span><span style=display:flex><span><span style=color:#8f5902;font-style:italic></span><span style=color:#000;font-weight:700>}</span>
+</span></span></code></pre></div><p>在这个例子中，<code>pUnkOuter</code> 被设置为外部对象的 <code>IUnknown</code> 指针，以便内部对象可以进行聚合。</p><h3 id=总结-1>总结</h3><ul><li><strong><code>pUnkOuter</code></strong> 是一个指向 <code>IUnknown</code> 接口的指针，用于支持聚合。</li><li><strong>聚合</strong> 允许一个对象包含另一个对象，并使内部对象的接口对外部对象的客户端透明。</li><li>如果不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>。</li></ul><p>通过理解 <code>pUnkOuter</code> 参数的用途和聚合的概念，可以更好地理解和使用 COM 编程模型中的聚合特性。</p></details></div></br><p><span style=background-color:gray>(3/5)[in] dwClsContext</span></br></p><div style=padding-left:2em>Context in which the code that manages the newly created object will run.</br>The values are taken from the enumeration CLSCTX.</br><p><code>dwClsContext</code>:</br> <code>dw</code>=double world;(microsoft<code>s naming style)&lt;/br>
+&amp;emsp;</code>Cls<code>=Class; (Class of COM object)&lt;/br>
+&amp;emsp;</code>Context` means the environment which the object running</br></p><pre class=c>
     <code>
 #...\Windows Kits\10\Include\10.0.22621.0\um\combaseapi.h
 
@@ -624,9 +119,7 @@ The values are taken from the enumeration CLSCTX.</br>
                                 CLSCTX_LOCAL_SERVER| \
                                 CLSCTX_REMOTE_SERVER)
     </code>
-</pre>
-<p>and these macros are found in</p>
-<pre class="c">
+</pre><p>and these macros are found in</p><pre class=c>
     <code>
 #...\Windows Kits\10\Include\10.0.22621.0\shared\WTypesbase.h
 typedef
@@ -663,139 +156,42 @@ enum tagCLSCTX
 } 	CLSCTX;
 
     </code>
-</pre>
-</div>
-</br>
-<p><span style="background-color: gray;">(4/5)[in] riid</span></br>
-</br></p>
-<div style="padding-left: 2em;">
-A reference to the identifier of the interface to be used to communicate with the object.</br>
-</br>
-<p><em>In</em> REFIID riid</br>
-<code>REFIID riid</code>：</br>
-是 const IID&amp; 的别名，表示对 IID 的引用。它的作用与 REFCLSID 类似。</br></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#define REFIID const IID &amp;
-</span></span></span></code></pre></div></div>
-</br>
-<p><span style="background-color: gray;">(5/5)[out] ppv</span></br>
-</br></p>
-<div style="padding-left: 2em;">
-Address of pointer variable that receives the interface pointer requested in riid.</br>
-Upon successful return, *ppv contains the requested interface pointer.</br>
-Upon failure, *ppv contains NULL.</br>
-</div>
-</br>
-<p><code>ppv</code>: Pointer to Pointer to Void</p>
-</details>
-</div>
-<h2 id="002-immdeviceactivate"><strong>002. IMMDevice::Activate</strong></h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#000">HRESULT</span> <span style="color:#000">Activate</span><span style="color:#000;font-weight:bold">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[</span><span style="color:#000">in</span><span style="color:#000;font-weight:bold">]</span>  <span style="color:#000">REFIID</span>      <span style="color:#000">iid</span><span style="color:#000;font-weight:bold">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[</span><span style="color:#000">in</span><span style="color:#000;font-weight:bold">]</span>  <span style="color:#000">DWORD</span>       <span style="color:#000">dwClsCtx</span><span style="color:#000;font-weight:bold">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[</span><span style="color:#000">in</span><span style="color:#000;font-weight:bold">]</span>  <span style="color:#000">PROPVARIANT</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">pActivationParams</span><span style="color:#000;font-weight:bold">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">[</span><span style="color:#000">out</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#204a87;font-weight:bold">void</span>        <span style="color:#ce5c00;font-weight:bold">**</span><span style="color:#000">ppInterface</span>
-</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">);</span>
-</span></span></code></pre></div><p><strong>Parameters Description</strong></p>
-<p><code>iid</code>: interface identifier</p>
-<p>Exp:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">IID</span> <span style="color:#000">IID_IAudioSessionControl2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">__uuidof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">IAudioSessionControl2</span><span style="color:#000;font-weight:bold">);</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">1.</span> <span style="color:#000">IID_IAudioClient</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">2.</span> <span style="color:#000">IID_IAudioEndpointVolume</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">3.</span> <span style="color:#000">IID_IAudioMeterInformation</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">4.</span> <span style="color:#000">IID_IAudioSessionManager</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">5.</span> <span style="color:#000">IID_IAudioSessionManager2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">6.</span> <span style="color:#000">IID_IBaseFilter</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">7.</span> <span style="color:#000">IID_IDeviceTopology</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">8.</span> <span style="color:#000">IID_IDirectSound</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">9.</span> <span style="color:#000">IID_IDirectSound8</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">10.</span> <span style="color:#000">IID_IDirectSoundCapture</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">11.</span> <span style="color:#000">IID_IDirectSoundCapture8</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">12.</span> <span style="color:#000">IID_IMFTrustedOutput</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">13.</span> <span style="color:#000">IID_ISpatialAudioClient</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">14.</span> <span style="color:#000">IID_ISpatialAudioMetadataClient</span>
-</span></span></code></pre></div><p><code>dwClsCtx</code>: double word Class Context</p>
-<p><code>pActivationParams</code>:</p>
-<p><code>ppInterface</code></p>
-
-</div>
-
-
-
-
-
-    
-	
-  
-
-
-
-          </main>
-        </div>
-      </div>
-      <footer class="td-footer row d-print-none">
-  <div class="container-fluid">
-    <div class="row mx-md-2">
-      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
-        <ul class="td-footer__links-list">
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="X" aria-label="X">
-    <a target="_blank" rel="noopener" href="https://x.com/potter_whi3340" aria-label="X">
-      <i class="fab fa-twitter"></i>
-    </a>
-  </li>
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Hugging Face" aria-label="Hugging Face">
-    <a target="_blank" rel="noopener" href="https://huggingface.co/PotterWhite" aria-label="Hugging Face">
-      <i class="fab fa-hugging-face"></i>
-    </a>
-  </li>
-  
-</ul>
-
-      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
-        <ul class="td-footer__links-list">
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub">
-    <a target="_blank" rel="noopener" href="https://github.com/potterwhite" aria-label="GitHub">
-      <i class="fab fa-github"></i>
-    </a>
-  </li>
-  
-  <li class="td-footer__links-item" data-bs-toggle="tooltip" title="Slack" aria-label="Slack">
-    <a target="_blank" rel="noopener" href="https://zadoktec.slack.com" aria-label="Slack">
-      <i class="fab fa-slack"></i>
-    </a>
-  </li>
-  
-</ul>
-
-      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
-        <span class="td-footer__copyright">&copy;
-    2024&ndash;2025
-    <span class="td-footer__authors">Potter White | <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a> |</span></span><span class="td-footer__all_rights_reserved">保留所有权利</span><span class="ms-2"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">隐私政策</a></span>
-      </div>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <script src="/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js" integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin="anonymous"></script>
-<script src='/js/prism.js'></script>
-<script src='/js/tabpane-persist.js'></script>
-
-  </body>
-</html>
+</pre></div></br><p><span style=background-color:gray>(4/5)[in] riid</span></br></br></p><div style=padding-left:2em>A reference to the identifier of the interface to be used to communicate with the object.</br></br><p><em>In</em> REFIID riid</br><code>REFIID riid</code>：</br>是 const IID& 的别名，表示对 IID 的引用。它的作用与 REFCLSID 类似。</br></p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#8f5902;font-style:italic>#define REFIID const IID &amp;
+</span></span></span></code></pre></div></div></br><p><span style=background-color:gray>(5/5)[out] ppv</span></br></br></p><div style=padding-left:2em>Address of pointer variable that receives the interface pointer requested in riid.</br>Upon successful return, *ppv contains the requested interface pointer.</br>Upon failure, *ppv contains NULL.</br></div></br><p><code>ppv</code>: Pointer to Pointer to Void</p></details></div><h2 id=002-immdeviceactivate><strong>002. IMMDevice::Activate</strong></h2><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=display:flex><span><span style=color:#000>HRESULT</span> <span style=color:#000>Activate</span><span style=color:#000;font-weight:700>(</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>[</span><span style=color:#000>in</span><span style=color:#000;font-weight:700>]</span>  <span style=color:#000>REFIID</span>      <span style=color:#000>iid</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>[</span><span style=color:#000>in</span><span style=color:#000;font-weight:700>]</span>  <span style=color:#000>DWORD</span>       <span style=color:#000>dwClsCtx</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>[</span><span style=color:#000>in</span><span style=color:#000;font-weight:700>]</span>  <span style=color:#000>PROPVARIANT</span> <span style=color:#ce5c00;font-weight:700>*</span><span style=color:#000>pActivationParams</span><span style=color:#000;font-weight:700>,</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>[</span><span style=color:#000>out</span><span style=color:#000;font-weight:700>]</span> <span style=color:#204a87;font-weight:700>void</span>        <span style=color:#ce5c00;font-weight:700>**</span><span style=color:#000>ppInterface</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>);</span>
+</span></span></code></pre></div><p><strong>Parameters Description</strong></p><p><code>iid</code>: interface identifier</p><p>Exp:</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=display:flex><span>    <span style=color:#204a87;font-weight:700>const</span> <span style=color:#000>IID</span> <span style=color:#000>IID_IAudioSessionControl2</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>__uuidof</span><span style=color:#000;font-weight:700>(</span><span style=color:#000>IAudioSessionControl2</span><span style=color:#000;font-weight:700>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>1.</span> <span style=color:#000>IID_IAudioClient</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>2.</span> <span style=color:#000>IID_IAudioEndpointVolume</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>3.</span> <span style=color:#000>IID_IAudioMeterInformation</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>4.</span> <span style=color:#000>IID_IAudioSessionManager</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>5.</span> <span style=color:#000>IID_IAudioSessionManager2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>6.</span> <span style=color:#000>IID_IBaseFilter</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>7.</span> <span style=color:#000>IID_IDeviceTopology</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>8.</span> <span style=color:#000>IID_IDirectSound</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>9.</span> <span style=color:#000>IID_IDirectSound8</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>10.</span> <span style=color:#000>IID_IDirectSoundCapture</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>11.</span> <span style=color:#000>IID_IDirectSoundCapture8</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>12.</span> <span style=color:#000>IID_IMFTrustedOutput</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>13.</span> <span style=color:#000>IID_ISpatialAudioClient</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>14.</span> <span style=color:#000>IID_ISpatialAudioMetadataClient</span>
+</span></span></code></pre></div><p><code>dwClsCtx</code>: double word Class Context</p><p><code>pActivationParams</code>:</p><p><code>ppInterface</code></p></div></main></div></div><footer class="td-footer row d-print-none"><div class=container-fluid><div class="row mx-md-2"><div class="td-footer__left col-6 col-sm-4 order-sm-1"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title=X aria-label=X><a target=_blank rel=noopener href=https://x.com/potter_whi3340 aria-label=X><i class="fab fa-twitter"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title="Hugging Face" aria-label="Hugging Face"><a target=_blank rel=noopener href=https://huggingface.co/PotterWhite aria-label="Hugging Face"><i class="fab fa-hugging-face"></i></a></li></ul></div><div class="td-footer__right col-6 col-sm-4 order-sm-3"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title=GitHub aria-label=GitHub><a target=_blank rel=noopener href=https://github.com/potterwhite aria-label=GitHub><i class="fab fa-github"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title=Slack aria-label=Slack><a target=_blank rel=noopener href=https://zadoktec.slack.com aria-label=Slack><i class="fab fa-slack"></i></a></li></ul></div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2"><span class=td-footer__copyright>&copy;
+2024&ndash;2025
+<span class=td-footer__authors>Potter White | <a href=https://creativecommons.org/licenses/by/4.0 target=_blank rel=noopener>CC BY 4.0</a> |</span></span><span class=td-footer__all_rights_reserved>保留所有权利</span><span class=ms-2><a href=https://policies.google.com/privacy target=_blank rel=noopener>隐私政策</a></span></div></div></div></footer></div><script src=/js/main.min.c7cf76e0360e19b696291ec124be8f05e7d46230f8031e081350143806af8320.js integrity="sha256-x8924DYOGbaWKR7BJL6PBefUYjD4Ax4IE1AUOAavgyA=" crossorigin=anonymous></script><script src=/js/prism.js></script><script src=/js/tabpane-persist.js></script></body></html>
