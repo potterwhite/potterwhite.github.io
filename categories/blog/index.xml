@@ -1,4 +1,82 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on 嵌入式系统爱好者</title><link>https://potterwhite.github.io/categories/blog/</link><description>Recent content in Blog on 嵌入式系统爱好者</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 10 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>6.1 Ubuntu Ops</title><link>https://potterwhite.github.io/blog/006_devops/006_001_ubuntu/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/006_devops/006_001_ubuntu/</guid><description/></item><item><title>6.2 Docker Ops</title><link>https://potterwhite.github.io/blog/006_devops/006_002_docker/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/006_devops/006_002_docker/</guid><description/></item><item><title>IMMNotificationClient Callback Problem</title><link>https://potterwhite.github.io/blog/2024/10/10/immnotificationclient-callback-problem/</link><pubDate>Thu, 10 Oct 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/10/10/immnotificationclient-callback-problem/</guid><description>&lt;!-- &lt;iframe src="https://potterwhite.github.io/2024/October/IMNotificationClient_Callback.svg" width="1900" height="5000" style="border:none; overflow:scroll; background: #333333;">&lt;/iframe> -->
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on 嵌入式系统爱好者</title><link>https://potterwhite.github.io/categories/blog/</link><description>Recent content in Blog on 嵌入式系统爱好者</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>6.1 Ubuntu Ops</title><link>https://potterwhite.github.io/blog/006_devops/006_001_ubuntu/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/006_devops/006_001_ubuntu/</guid><description/></item><item><title>6.2 Docker Ops</title><link>https://potterwhite.github.io/blog/006_devops/006_002_docker/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/006_devops/006_002_docker/</guid><description/></item><item><title>GMAC Bring Up Work Flow</title><link>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow/</guid><description>&lt;h2 id="1-从原理图判断是哪一个gmac">1. 从原理图判断是哪一个GMAC&lt;/h2>
+&lt;ul>
+&lt;li>从sdk提供的默认dts里就能够发现, gmac有两个, gmac0和gmac1.&lt;/li>
+&lt;/ul>
+&lt;h3 id="11-此刻去找硬件工程师给的原理图搜索一下gmac-看看他用的是gmac1还是gmac0">1.1 &lt;strong>此刻去找硬件工程师给的原理图,搜索一下gmac, 看看他用的是gmac1还是gmac0&lt;/strong>&lt;/h3>
+&lt;p>具体如何确定,还得看原理图里使用的引脚, 跟dts里的哪一个gmac node的配置比较相似.&lt;/p>
+&lt;p>具体文件是在kernel/arch/arm64/boot/dts/rockchip/rk3568-pinctrl.dtsi.&lt;/p>
+&lt;p>在制作bsp(上一流程)的时候,就有分层了,这份dtsi属于最底下的chip-level.
+这份文件里定义了gmac1的具体子节点, 每一个子节点对应的pins是哪些,例如&lt;/p>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/dts-gmac1m1_miim.png" alt="">&lt;/p>
+&lt;p>具体到gmac1的时候,又分成m0和m1,我所截取的图片就是m1的部分.为何知道要用m1呢?
+可以参考原理图的cpu部分:&lt;/p>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/rk3568-gmac-pins-top-view.png" alt="">&lt;/p>
+&lt;p>我特别截取的就是这次使用到的gmac模块, 硬件同事在每一个引脚名字的后面都加了M1, 也在提醒我们,这次用到的就是GMAC1的M1.&lt;/p>
+&lt;h3 id="12-其实为什么硬件这边能够和dts对应上呢">1.2 &lt;strong>其实,为什么硬件这边能够和dts对应上呢?&lt;/strong>&lt;/h3>
+&lt;p>应该是硬件同事在画图的时候,就是直接参考了Chip Manufacture给的用法. 分成GMAC1和GMAC0, GMAC1又分成M0和M1. 我盲猜, 如果我们硬是要修改, 用一个hybrid version的GMAC2, 也不是完全不可能, 但是dts这边就得完全重新做.一个一个引脚自己写好,就像kernel/arch/arm64/boot/dts/rockchip/rk3568-pinctrl.dtsi所作的那样.&lt;/p>
+&lt;h3 id="13-总结一下">1.3 &lt;strong>总结一下:&lt;/strong>&lt;/h3>
+&lt;p>看原理图的symbols, 只是一个tips, 并不能最终确定.
+确定的方式是对比dts中chip-level的dts include中的pins configs. 它们必须是对应的才行.&lt;/p>
+&lt;h2 id="2-从原理图判断是时钟模式-25m和125m分别是谁给的如何给的">2. 从原理图判断是时钟模式, 25M和125M分别是谁给的,如何给的&lt;/h2>
+&lt;h3 id="21-先看原理图的phy部分">&lt;strong>2.1 先看原理图的PHY部分&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-clock-related-three-pins.png" alt="">&lt;/p>
+&lt;p>这里能看见它是XTAL_I接地了, XTAL_O和CLKOUT还不知道接到哪里去&lt;/p>
+&lt;h3 id="22-看phy的datasheet">&lt;strong>2.2 看PHY的DataSheet&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-clock-pins-in-datasheet.png" alt="">&lt;/p>
+&lt;h4 id="221-先看no44">2.2.1 先看No.44&lt;/h4>
+&lt;p>这里特别写, CLKOUT是output类型的, 而且如果不需要输出时钟给MAC的话,这个pin需要float.&lt;/p>
+&lt;p>而此处并没有float, 因此刚才原理图上一定是输出到MAC提供125MHZ时钟了.&lt;/p>
+&lt;h4 id="222-再看no45">2.2.2 再看No.45&lt;/h4>
+&lt;p>这里介绍, 如果XTAL_O有外部时钟提供25MHZ, 那XTAL_I就要保持接地.
+所以从原理图里XTAL_I接地来看, 应该是外部有25MHZ提供给PHY了.&lt;/p>
+&lt;p>因此,更进一步去跟进到底接入了什么引脚, 就可以了.&lt;/p></description></item><item><title>GMAC Bring-Up Debug Strategies</title><link>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid><description>&lt;p>最重要的就是这三个部分,缺一不可&lt;/p>
+&lt;h2 id="a-电源">&lt;strong>a. 电源&lt;/strong>&lt;/h2>
+&lt;h3 id="电路图">&lt;strong>电路图&lt;/strong>&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png" alt="">&lt;/p>
+&lt;h3 id="说明">&lt;strong>说明&lt;/strong>&lt;/h3>
+&lt;p>电源得先有,而且正常
+&amp;ldquo;正常&amp;quot;的定义在手册里
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png" alt="">&lt;/p>
+&lt;h3 id="第一类-avddl和dvddl">&lt;strong>第一类: AVDDL和DVDDL&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>要求1.2V左右&lt;/li>
+&lt;li>R209和R210的电压要求是1.2V左右&lt;/li>
+&lt;/ul>
+&lt;h3 id="第二类-dvdd33和vdd33和avdd33">&lt;strong>第二类: DVDD33和VDD33和AVDD33&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>要求3.3V左右&lt;/li>
+&lt;/ul>
+&lt;h3 id="第三类-">&lt;strong>第三类: [特殊][小心]DVDD_RGMII&lt;/strong>&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	Note: When CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> 00, the I/O pad power is supplied from
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	the external 3.3V power connected to DVDD_RGMII pin. Otherwise,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	it is supplied from the internal LDO.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>测试方法
+&lt;ul>
+&lt;li>透过测试PHY的36和37脚
+测试后发现, 都是低电平&lt;/li>
+&lt;li>测试R212
+万用表测试后发现, 两端都是3.3V&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="b-晶振时钟">&lt;strong>b. 晶振(时钟)&lt;/strong>&lt;/h2>
+&lt;h3 id="1-xtal_">&lt;strong>1. XTAL_I(跟晶振有关的Input脚)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>这跟脚接地了,所以没有东西&lt;/li>
+&lt;li>这是PHY的47脚&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-xtal_">&lt;strong>2. XTAL_O(跟晶振有关系的Output脚)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>25MHZ从这里测出来&lt;/li>
+&lt;li>怎么测试呢?
+&lt;ul>
+&lt;li>直接测试YT8521SC的46脚&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>这两个得先来, 这两个关乎晶振有没有&lt;/p></description></item><item><title>IMMNotificationClient Callback Problem</title><link>https://potterwhite.github.io/blog/2024/10/10/immnotificationclient-callback-problem/</link><pubDate>Thu, 10 Oct 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/10/10/immnotificationclient-callback-problem/</guid><description>&lt;!-- &lt;iframe src="https://potterwhite.github.io/2024/October/IMNotificationClient_Callback.svg" width="1900" height="5000" style="border:none; overflow:scroll; background: #333333;">&lt;/iframe> -->
 &lt;p>&lt;a href="https://mermaid.live/edit#pako:eNqVVm1T2lgU_ivZfHTQIYhgcdoZi6i03fq225ltcDIBAmQbEhZuutaXGbS-gFCx6jpWq67bWt3uFnWcWsUXfsxyE_jkX9iTBFlEd9mSGYbce85znjz3nCeMkD7Jz5EOMiBIP_tCbBQR33V4RAI-MdkbjLKREKFsTJbiv-KZc-WX_fYBJxKYngiKeUQP0q77tLuJcEY5FnFEmIm0y35eckoiikoCcZdwDSHG2KzeuDxbw4k1fJrrbn-EDybU1Um8d1I82BrUQLXa94nGxnuEk3YDdoyJuMUYYkUfB4AoxMcuz9Kl9TdKfFxJzOPXKzizUprJFPLr-NMKPl_EyVe9OurB6U1gpw7cAcCAzAduMP7mLiHKghBB0TYCJ94ry59qKCore3j-g8FeKz-7WcHu0LBHH48SXdT1pR9GCRftftJUW63xniaPW-QRM8AhxiX6eyVeRMxjCfEB3sciXhIZJysIXtb3TNdsHe-kcHoZOIEGxeyFep4txVfVzW2N39pGcf-lcUyF45yhhCHCNbX0gBjjeg5VBQnFKnUHEIvkmDPEikHO_1d8oqFBOdxVJjPqxAmllcu_KRx_vAmF9w9AFKBUOJ7rfVTMrxW30kCqkN_SSE1t48w7QGhoqOjk0s-gkwZBivkNZW4bQnHmC15IKzvnl2er__SYw-Ed4IO3E-yMSmEoSgBUdUKdx6qQ6NRJdNFPoA-Y7yN-6NCrBLcYkNqUZArP7hbnvuDM8tVGDB4IuCrjexWYLop2CwIXZAWCG-JReZ0T_cYMtdOVMyutHCnZz4N62X-bKC3l9j2DrYVWPyXxxZS69Wfh9KiQS8H3oJHWZdFDuunqPZx5rS5tXp4lChcp_GFCO8T4ofI2p2QW4GAuz5Ll5G49101reirv4srnFE7sX4N36xEP9AjoMnVpF3oDT6dr-o6oL7-G9kBHe0hXH1zdjiRutl7xtz-U5A70Wxn3oY5bF6nG3_5HvGF1HuSiaMMVqkzJcITS-ob6e844_3KbU1d-MEzdXNY8wUJ7JfAcFI4wUSSCufV9yyG2x_sj50MOBy8-l55xsBKSqhjcdpWRcWYCNIFRXa1iZyK-ItcCuXUnzmTI998fA68Z8PrgUfpkTub84HoiPBmY2ldAWDUIpr2_i9C0MhF8rAzD-duqDMpSMahq2QxrgjdDcW9czeXV3RTOJvHUrm5Mh6WlrLL4qnD-FryucLKpnWP2pTI7W3HOsuMn48a7pcZIlfRMaSEB6ZrZ6lwN78PvJ9X56UJuWrfQ6o4YpmhwhlqPqN_4WlP30H2IKE_1xUd1bs8oQ9RKW56EHj2pl67vn4b5wiSBWeD9yXJ-r57fR9ejBo5dGUXDF8oAfTpAP_1TB-eVg0TxYhHP5NTZI5AP3tfghxUj1aL79eintMuQRyRNZJiLhlneD39NRrQYD4lCXJjzkA746ecCrCwgD-kRxyCUlZE08EL0kQ4UlTkTGZXkYIh0BFghBneybu4dPAvTHq6sRljxqSSFr1LglnSMkEOkw9baZG9pvUO12m0Wi9lubjaRL0hHI2WzN1ntVpvdbKXMVIvN0jJmIod1BKqp2XqHslFWq91sMTe32i1jfwO60Sce" target="_blank" rel="noopener">&lt;img src="https://mermaid.ink/img/pako:eNqVVm1T2lgU_ivZfHTQIYhgcdoZi6i03fq225ltcDIBAmQbEhZuutaXGbS-gFCx6jpWq67bWt3uFnWcWsUXfsxyE_jkX9iTBFlEd9mSGYbce85znjz3nCeMkD7Jz5EOMiBIP_tCbBQR33V4RAI-MdkbjLKREKFsTJbiv-KZc-WX_fYBJxKYngiKeUQP0q77tLuJcEY5FnFEmIm0y35eckoiikoCcZdwDSHG2KzeuDxbw4k1fJrrbn-EDybU1Um8d1I82BrUQLXa94nGxnuEk3YDdoyJuMUYYkUfB4AoxMcuz9Kl9TdKfFxJzOPXKzizUprJFPLr-NMKPl_EyVe9OurB6U1gpw7cAcCAzAduMP7mLiHKghBB0TYCJ94ry59qKCore3j-g8FeKz-7WcHu0LBHH48SXdT1pR9GCRftftJUW63xniaPW-QRM8AhxiX6eyVeRMxjCfEB3sciXhIZJysIXtb3TNdsHe-kcHoZOIEGxeyFep4txVfVzW2N39pGcf-lcUyF45yhhCHCNbX0gBjjeg5VBQnFKnUHEIvkmDPEikHO_1d8oqFBOdxVJjPqxAmllcu_KRx_vAmF9w9AFKBUOJ7rfVTMrxW30kCqkN_SSE1t48w7QGhoqOjk0s-gkwZBivkNZW4bQnHmC15IKzvnl2er__SYw-Ed4IO3E-yMSmEoSgBUdUKdx6qQ6NRJdNFPoA-Y7yN-6NCrBLcYkNqUZArP7hbnvuDM8tVGDB4IuCrjexWYLop2CwIXZAWCG-JReZ0T_cYMtdOVMyutHCnZz4N62X-bKC3l9j2DrYVWPyXxxZS69Wfh9KiQS8H3oJHWZdFDuunqPZx5rS5tXp4lChcp_GFCO8T4ofI2p2QW4GAuz5Ll5G49101reirv4srnFE7sX4N36xEP9AjoMnVpF3oDT6dr-o6oL7-G9kBHe0hXH1zdjiRutl7xtz-U5A70Wxn3oY5bF6nG3_5HvGF1HuSiaMMVqkzJcITS-ob6e844_3KbU1d-MEzdXNY8wUJ7JfAcFI4wUSSCufV9yyG2x_sj50MOBy8-l55xsBKSqhjcdpWRcWYCNIFRXa1iZyK-ItcCuXUnzmTI998fA68Z8PrgUfpkTub84HoiPBmY2ldAWDUIpr2_i9C0MhF8rAzD-duqDMpSMahq2QxrgjdDcW9czeXV3RTOJvHUrm5Mh6WlrLL4qnD-FryucLKpnWP2pTI7W3HOsuMn48a7pcZIlfRMaSEB6ZrZ6lwN78PvJ9X56UJuWrfQ6o4YpmhwhlqPqN_4WlP30H2IKE_1xUd1bs8oQ9RKW56EHj2pl67vn4b5wiSBWeD9yXJ-r57fR9ejBo5dGUXDF8oAfTpAP_1TB-eVg0TxYhHP5NTZI5AP3tfghxUj1aL79eintMuQRyRNZJiLhlneD39NRrQYD4lCXJjzkA746ecCrCwgD-kRxyCUlZE08EL0kQ4UlTkTGZXkYIh0BFghBneybu4dPAvTHq6sRljxqSSFr1LglnSMkEOkw9baZG9pvUO12m0Wi9lubjaRL0hHI2WzN1ntVpvdbKXMVIvN0jJmIod1BKqp2XqHslFWq91sMTe32i1jfwO60Sce?type=png" alt="">&lt;/a>&lt;/p></description></item><item><title>QML downgrade from 6 to 5</title><link>https://potterwhite.github.io/blog/2024/09/06/qml-downgrade-from-6-to-5/</link><pubDate>Fri, 06 Sep 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/09/06/qml-downgrade-from-6-to-5/</guid><description>&lt;p>so many weird tricks that matter in Qt5 QML&lt;/p>
 &lt;h3 id="1-the-keyword">&lt;strong>1. the keyword &amp;ldquo;Window&amp;rdquo; is unrecongnized&lt;/strong>&lt;/h3>
 &lt;p>You must type this line in the top of your qml file&lt;/p>
@@ -946,7 +1024,7 @@ qqmail可以收到
 &lt;li>&lt;strong>大型企业&lt;/strong>：从业人员超过3000人，营业收入超过2亿元。&lt;/li>
 &lt;/ul>
 &lt;h4 id="国际标准">国际标准&lt;/h4>
-&lt;p>国际上，企业规模的划分也有不同的标准。例如：&lt;/p></description></item><item><title>Kernel_test</title><link>https://potterwhite.github.io/blog/2024/06/14/kernel_test/</link><pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/14/kernel_test/</guid><description>&lt;p>nice&lt;/p></description></item><item><title>初体验-stable diffusion</title><link>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</link><pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</guid><description>&lt;style>
+&lt;p>国际上，企业规模的划分也有不同的标准。例如：&lt;/p></description></item><item><title>初体验-stable diffusion</title><link>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</link><pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</guid><description>&lt;style>
 .copy-btn {
  margin-left: 5px; /* 与代码块保持一定间隔 */
  cursor: pointer; /* 鼠标悬停时显示为手形图标 */

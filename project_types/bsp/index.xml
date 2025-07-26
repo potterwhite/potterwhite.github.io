@@ -19,10 +19,16 @@
 &lt;p>我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。&lt;/p>
 &lt;h3 id="第一部分标准化移植流程-standard-porting-workflow">&lt;strong>第一部分：标准化移植流程 (Standard Porting Workflow)&lt;/strong>&lt;/h3>
 &lt;p>此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。&lt;/p>
+&lt;ul>
+&lt;li>感兴趣可以看我的日志: &lt;a href="https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow">GMAC Bring Up Work Flow&lt;/a>&lt;/li>
+&lt;/ul>
 &lt;h3 id="第二部分异常诊断清单-troubleshooting-checklist">&lt;strong>第二部分：异常诊断清单 (Troubleshooting Checklist)&lt;/strong>&lt;/h3>
 &lt;p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。&lt;/p>
+&lt;ul>
+&lt;li>感兴趣可以看我的日志: &lt;a href="https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies">GMAC Bring-Up Debug Strategies&lt;/a>&lt;/li>
+&lt;/ul>
 &lt;h3 id="sop流程图">SOP流程图&lt;/h3>
-&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/work-flow.svg" alt="work flow" style="height: 2000px; max-width: 100%;">
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/work-flow.svg" alt="work flow" style="height: 1500px; max-width: 100%;">
 &lt;pre class="mermaid"> info&lt;/pre>
 &lt;pre class="mermaid">graph TD
  %% === 定义与样式 ===
