@@ -23,6 +23,7 @@
 &lt;p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。&lt;/p>
 &lt;h3 id="sop流程图">SOP流程图&lt;/h3>
 &lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/work-flow.svg" alt="work flow" style="height: 2000px; max-width: 100%;">
+&lt;pre class="mermaid"> info&lt;/pre>
 &lt;pre class="mermaid">graph TD
  %% === 定义与样式 ===
  classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab;
