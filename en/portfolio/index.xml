@@ -1,60 +1,26 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>My Projects on</title><link>https://potterwhite.github.io/en/portfolio/</link><description>Recent content in My Projects on</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/portfolio/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title><link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
-&lt;/ul>
-&lt;h1 id="project-overview">&lt;strong>Project Overview&lt;/strong>&lt;/h1>
-&lt;p>&lt;strong>Situation:&lt;/strong>
-In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code>ethernet@fe010000&lt;/code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code>Cannot attach to PHY&lt;/code> and &lt;code>Failed to reset the dma&lt;/code>.&lt;/p>
-&lt;p>&lt;strong>My Role &amp;amp; Contributions:&lt;/strong>
-As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;h2 id="project-overview">Project Overview&lt;/h2>
-&lt;p>The Attendance Analyzer is an &lt;strong>in-house efficiency tool&lt;/strong> developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p>
-&lt;hr>
-&lt;h3 id="demo">Demo&lt;/h3>
-&lt;p>Below is a short video demonstrating the application&amp;rsquo;s core workflow.&lt;/p>
-
-
-
-
-
-
-
- 
- 
- 
-
- 
-
- 
-
-
-&lt;figure >
- 
- 
-
- 
- 
-
- &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
- &lt;video controls autoplay loop muted playsinline
- style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
- &lt;source src="https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4" type="video/mp4">
- Your browser does not support the video tag.
- &lt;/video>
- &lt;/div>
- 
-
- 
- &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">Application Core Workflow Demo&lt;/figcaption>
- 
-&lt;/figure>
-&lt;br>
-&lt;hr>
-&lt;h2 id="core-features--tech-stack">Core Features &amp;amp; Tech Stack&lt;/h2>
-&lt;ul>
-&lt;li>&lt;strong>Rule-Driven Engine&lt;/strong>: All logic is controlled by a &lt;code>rules.toml&lt;/code> file.&lt;/li>
-&lt;li>&lt;strong>Comprehensive Metrics&lt;/strong>: Calculates attended days, overtime, lateness, etc.&lt;/li>
-&lt;li>&lt;strong>Dual-View Reporting&lt;/strong>: Generates both &amp;ldquo;Public&amp;rdquo; and &amp;ldquo;Detailed&amp;rdquo; reports.&lt;/li>
-&lt;li>&lt;strong>Tech Stack&lt;/strong>: &lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>.&lt;/li>
-&lt;/ul>
-&lt;h2 id="core-algorithm-design-v16">Core Algorithm Design (V1.6)&lt;/h2>
-&lt;p>As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My Projects on </title>
+    <link>https://potterwhite.github.io/en/portfolio/</link>
+    <description>Recent content in My Projects on </description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://potterwhite.github.io/en/portfolio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title>
+      <link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link>
+      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Author:&lt;/strong&gt; Potter White&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; July 2025&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;project-overview&#34;&gt;&lt;strong&gt;Project Overview&lt;/strong&gt;&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Situation:&lt;/strong&gt;&#xA;In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code&gt;ethernet@fe010000&lt;/code&gt;). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code&gt;Cannot attach to PHY&lt;/code&gt; and &lt;code&gt;Failed to reset the dma&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;My Role &amp;amp; Contributions:&lt;/strong&gt;&#xA;As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Attendance Analyzer</title>
+      <link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid>
+      <description>&lt;h2 id=&#34;project-overview&#34;&gt;Project Overview&lt;/h2&gt;&#xA;&lt;p&gt;The Attendance Analyzer is an &lt;strong&gt;in-house efficiency tool&lt;/strong&gt; developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h3 id=&#34;demo&#34;&gt;Demo&lt;/h3&gt;&#xA;&lt;p&gt;Below is a short video demonstrating the application&amp;rsquo;s core workflow.&lt;/p&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;  &#xA;    &#xA;  &#xA;&#xA;  &#xA;&#xA;  &#xA;&#xA;&#xA;&lt;figure &gt;&#xA;    &#xA;        &#xA;&#xA;        &#xA;        &#xA;&#xA;        &lt;div class=&#34;video-wrapper&#34; style=&#34;margin: auto; max-width: 800px;&#34;&gt;&#xA;            &lt;video controls autoplay loop muted playsinline&#xA;                   style=&#34;width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);&#34;&gt;&#xA;                &lt;source src=&#34;https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4&#34; type=&#34;video/mp4&#34;&gt;&#xA;                Your browser does not support the video tag.&#xA;            &lt;/video&gt;&#xA;        &lt;/div&gt;&#xA;    &#xA;&#xA;    &#xA;        &lt;figcaption style=&#34;text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);&#34;&gt;Application Core Workflow Demo&lt;/figcaption&gt;&#xA;    &#xA;&lt;/figure&gt;&#xA;&lt;br&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;core-features--tech-stack&#34;&gt;Core Features &amp;amp; Tech Stack&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rule-Driven Engine&lt;/strong&gt;: All logic is controlled by a &lt;code&gt;rules.toml&lt;/code&gt; file.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Comprehensive Metrics&lt;/strong&gt;: Calculates attended days, overtime, lateness, etc.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Dual-View Reporting&lt;/strong&gt;: Generates both &amp;ldquo;Public&amp;rdquo; and &amp;ldquo;Detailed&amp;rdquo; reports.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Tech Stack&lt;/strong&gt;: &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;Pandas&lt;/strong&gt;, &lt;strong&gt;Streamlit&lt;/strong&gt;, &lt;strong&gt;TOML&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;core-algorithm-design-v16&#34;&gt;Core Algorithm Design (V1.6)&lt;/h2&gt;&#xA;&lt;p&gt;As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

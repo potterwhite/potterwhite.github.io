@@ -1,6 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>014_Grp_CPU on 嵌入式系统爱好者</title><link>https://potterwhite.github.io/blog/014_cpu/</link><description>Recent content in 014_Grp_CPU on 嵌入式系统爱好者</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 02 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/blog/014_cpu/index.xml" rel="self" type="application/rss+xml"/><item><title>开发板选择</title><link>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</link><pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</guid><description>&lt;h3 id="迅为">迅为&lt;/h3>
-&lt;h3 id="正点原子">正点原子&lt;/h3>
-&lt;p>&lt;a href="https://www.eet-china.com/mp/a127282.html" target="_blank" rel="noopener">https://www.eet-china.com/mp/a127282.html&lt;/a>&lt;/p>
-&lt;h3 id="野火">野火&lt;/h3>
-&lt;h3 id="友善之臂">友善之臂&lt;/h3>
-&lt;h3 id="全志科技">全志科技&lt;/h3></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>014_Grp_CPU on </title>
+    <link>https://potterwhite.github.io/blog/014_cpu/</link>
+    <description>Recent content in 014_Grp_CPU on </description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://potterwhite.github.io/blog/014_cpu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开发板选择</title>
+      <link>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</link>
+      <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</guid>
+      <description>&lt;h3 id=&#34;迅为&#34;&gt;迅为&lt;/h3&gt;&#xA;&lt;h3 id=&#34;正点原子&#34;&gt;正点原子&lt;/h3&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://www.eet-china.com/mp/a127282.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.eet-china.com/mp/a127282.html&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;野火&#34;&gt;野火&lt;/h3&gt;&#xA;&lt;h3 id=&#34;友善之臂&#34;&gt;友善之臂&lt;/h3&gt;&#xA;&lt;h3 id=&#34;全志科技&#34;&gt;全志科技&lt;/h3&gt;</description>
+    </item>
+  </channel>
+</rss>

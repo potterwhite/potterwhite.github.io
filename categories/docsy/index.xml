@@ -1,56 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docsy on 嵌入式系统爱好者</title><link>https://potterwhite.github.io/categories/docsy/</link><description>Recent content in Docsy on 嵌入式系统爱好者</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 30 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/docsy/index.xml" rel="self" type="application/rss+xml"/><item><title>Docsy 设置教程</title><link>https://potterwhite.github.io/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</link><pubDate>Fri, 30 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</guid><description>&lt;p>&lt;a href="https://before80.github.io/docsy_docs_with_hugo/docs/ContentAndCustomization/AddingContent/" target="_blank" rel="noopener">docsy中文设置教程&lt;/a>&lt;/p></description></item><item><title>Docsy`s Interesting Tricks</title><link>https://potterwhite.github.io/blog/2024/07/18/docsys-interesting-tricks/</link><pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/18/docsys-interesting-tricks/</guid><description>&lt;h2 id="001-if-date-is-in-the-future-this-markdown-file-will-not-be-shown-right-now">&lt;strong>001. if date is in the future, this markdown file will not be shown right now&lt;/strong>&lt;/h2>
-&lt;div style="padding-left: 2em;">
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-markdown" data-lang="markdown">&lt;span style="display:flex;">&lt;span>---
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>title: &amp;#34;Docker使用&amp;#34;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>date: 2024-07-19
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>categories:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#204a87;font-weight:bold">-&lt;/span> blog
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#204a87;font-weight:bold">-&lt;/span> DevOps
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#204a87;font-weight:bold">-&lt;/span> Docker
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>noindex: true
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>and today is 2024-07-18, so that no blog will be shown within this section.&lt;/p>
-&lt;/div>
-&lt;h2 id="002-hugo-server-change-detection-does-not-work-how-to-fix-it">&lt;strong>002. hugo server change detection does not work? How to fix it.&lt;/strong>&lt;/h2>
-&lt;p>Date: Aug07.2024&lt;/p>
-&lt;p>&lt;a href="https://gohugo.io/commands/hugo_server/" target="_blank" rel="noopener">LNK: hugo server intro page&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>By default hugo will also watch your files for any changes you make and automatically rebuild the site. It will then live reload any open browser pages and push the latest content to them. As most Hugo sites are built in a fraction of a second, you will be able to save and see your changes nearly instantly.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="problem">&lt;code>Problem&lt;/code>&lt;/h4>
-&lt;p>but when i edited my files via volume of docker which shared from host to guest os and the host os is windows 10 and the guest os is ubuntu 22.04, nothing will happen anyway.&lt;/p></description></item><item><title>Docsy主题的设置技巧</title><link>https://potterwhite.github.io/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</link><pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</guid><description>&lt;details>
- &lt;summary>001. categories如何增加子类呢？&lt;/summary>
-&lt;h4 id="例如categories-blogerp">例如：categories: [&amp;ldquo;blog&amp;rdquo;][&amp;ldquo;ERP&amp;rdquo;]&lt;/h4>
-&lt;h5 id="错误提示">错误提示：&lt;/h5>
-&lt;pre>&lt;code> Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key
-&lt;/code>&lt;/pre>
-&lt;h5 id="正确做法">正确做法：&lt;/h5>
-&lt;pre>&lt;code> categories:
- - blog
- - ERP
- - ERPNext
-&lt;/code>&lt;/pre>
-&lt;/details>
-&lt;!-- ######################################################################### -->
-&lt;details>
-&lt;summary>002. 如何制造块缩进&lt;/summary>
-&lt;div style="padding-left: 2em;">
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">&amp;lt;&lt;/span>&lt;span style="color:#204a87;font-weight:bold">div&lt;/span> &lt;span style="color:#c4a000">style&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;padding-left: 2em;&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>now the contents included by this div section will be indented 2em.&lt;/p>
-&lt;/div>
-&lt;/details>
-&lt;!-- ######################################################################### -->
-&lt;!-- 第三问 -->
-&lt;details>
-&lt;summary>003. 如何嵌入Merimaid流程图&lt;/summary>
-&lt;h2 id="第一种是不需要加入折叠功能的显示">第一种是不需要加入折叠功能的显示&lt;/h2>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/July/11/mermaid.png" alt="mermaid演示">
-&lt;/br>
-&lt;strong>被注释掉的这两句代码是必须的&lt;/strong>
-&lt;/br>
-取消掉注释的那两句，就可以正常显示了
-&lt;/br>&lt;/p>
-&lt;h2 id="第二种是加入了折叠功能的显示">第二种是加入了折叠功能的显示&lt;/h2>
-&lt;p>&lt;a href="https://mermaid.js.org/config/usage.html" target="_blank" rel="noopener">Mermaid的参考资料&lt;/a>&lt;/br>
-在要显示mermaid流程图的md文档中加入如下代码
-&lt;script type="module">
-import mermaid from &amp;lsquo;&lt;a href="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs%27;" target="_blank" rel="noopener">https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';&lt;/a>
-&lt;/script>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docsy on </title>
+    <link>https://potterwhite.github.io/categories/docsy/</link>
+    <description>Recent content in Docsy on </description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 30 Aug 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://potterwhite.github.io/categories/docsy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docsy 设置教程</title>
+      <link>https://potterwhite.github.io/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Fri, 30 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/blog/2024/08/30/docsy-%E8%AE%BE%E7%BD%AE%E6%95%99%E7%A8%8B/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://before80.github.io/docsy_docs_with_hugo/docs/ContentAndCustomization/AddingContent/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;docsy中文设置教程&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Docsy`s Interesting Tricks</title>
+      <link>https://potterwhite.github.io/blog/2024/07/18/docsys-interesting-tricks/</link>
+      <pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/blog/2024/07/18/docsys-interesting-tricks/</guid>
+      <description>&lt;h2 id=&#34;001-if-date-is-in-the-future-this-markdown-file-will-not-be-shown-right-now&#34;&gt;&lt;strong&gt;001. if date is in the future, this markdown file will not be shown right now&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;div style=&#34;padding-left: 2em;&#34;&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;title: &amp;#34;Docker使用&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;date: 2024-07-19&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;categories:&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;-&lt;/span&gt; blog&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;-&lt;/span&gt; DevOps&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;-&lt;/span&gt; Docker&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;noindex: true&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;and today is 2024-07-18, so that no blog will be shown within this section.&lt;/p&gt;&#xA;&lt;/div&gt;&#xA;&lt;h2 id=&#34;002-hugo-server-change-detection-does-not-work-how-to-fix-it&#34;&gt;&lt;strong&gt;002. hugo server change detection does not work? How to fix it.&lt;/strong&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Date: Aug07.2024&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://gohugo.io/commands/hugo_server/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;LNK: hugo server intro page&lt;/a&gt;&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;By default hugo will also watch your files for any changes you make and automatically rebuild the site. It will then live reload any open browser pages and push the latest content to them. As most Hugo sites are built in a fraction of a second, you will be able to save and see your changes nearly instantly.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;problem&#34;&gt;&lt;code&gt;Problem&lt;/code&gt;&lt;/h4&gt;&#xA;&lt;p&gt;but when i edited my files via volume of docker which shared from host to guest os and the host os is windows 10 and the guest os is ubuntu 22.04, nothing will happen anyway.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Docsy主题的设置技巧</title>
+      <link>https://potterwhite.github.io/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/blog/2024/06/10/docsy%E4%B8%BB%E9%A2%98%E7%9A%84%E8%AE%BE%E7%BD%AE%E6%8A%80%E5%B7%A7/</guid>
+      <description>&lt;details&gt;&#xD;&#xA;    &lt;summary&gt;001. categories如何增加子类呢？&lt;/summary&gt;&#xD;&#xA;&lt;h4 id=&#34;例如categories-blogerp&#34;&gt;例如：categories: [&amp;ldquo;blog&amp;rdquo;][&amp;ldquo;ERP&amp;rdquo;]&lt;/h4&gt;&#xA;&lt;h5 id=&#34;错误提示&#34;&gt;错误提示：&lt;/h5&gt;&#xA;&lt;pre&gt;&lt;code&gt;    Error: error building site: process: readAndProcessContent: &amp;quot;...content/zh-cn/blog/005_ERP/005_001_ERPNext/与ERPNext的初次见面.md:3:1&amp;quot;: failed to unmarshal YAML: yaml: line 3: did not find expected key&#xD;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;h5 id=&#34;正确做法&#34;&gt;正确做法：&lt;/h5&gt;&#xA;&lt;pre&gt;&lt;code&gt;    categories:&#xD;&#xA;        - blog&#xD;&#xA;        - ERP&#xD;&#xA;        - ERPNext&#xD;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;/details&gt;&#xD;&#xA;&lt;!-- ######################################################################### --&gt;&#xD;&#xA;&lt;details&gt;&#xD;&#xA;&lt;summary&gt;002. 如何制造块缩进&lt;/summary&gt;&#xD;&#xA;&lt;div style=&#34;padding-left: 2em;&#34;&gt;&#xD;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color:#c4a000&#34;&gt;style&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;padding-left: 2em;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;now the contents included by this div section will be indented 2em.&lt;/p&gt;&#xA;&lt;/div&gt;&#xD;&#xA;&lt;/details&gt;&#xD;&#xA;&lt;!-- ######################################################################### --&gt;&#xD;&#xA;&lt;!-- 第三问 --&gt;&#xD;&#xA;&lt;details&gt;&#xD;&#xA;&lt;summary&gt;003. 如何嵌入Merimaid流程图&lt;/summary&gt;&#xD;&#xA;&lt;h2 id=&#34;第一种是不需要加入折叠功能的显示&#34;&gt;第一种是不需要加入折叠功能的显示&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://potterwhite.github.io/2024/July/11/mermaid.png&#34; alt=&#34;mermaid演示&#34;&gt;&#xA;&lt;/br&gt;&#xA;&lt;strong&gt;被注释掉的这两句代码是必须的&lt;/strong&gt;&#xA;&lt;/br&gt;&#xA;取消掉注释的那两句，就可以正常显示了&#xA;&lt;/br&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;第二种是加入了折叠功能的显示&#34;&gt;第二种是加入了折叠功能的显示&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://mermaid.js.org/config/usage.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Mermaid的参考资料&lt;/a&gt;&lt;/br&gt;&#xA;在要显示mermaid流程图的md文档中加入如下代码&#xA;&lt;script type=&#34;module&#34;&gt;&#xA;import mermaid from &amp;lsquo;&lt;a href=&#34;https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs%27;&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs&#39;;&lt;/a&gt;&#xA;&lt;/script&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

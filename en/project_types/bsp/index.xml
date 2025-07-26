@@ -1,9 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>BSP on</title><link>https://potterwhite.github.io/en/project_types/bsp/</link><description>Recent content in BSP on</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/project_types/bsp/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title><link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
-&lt;/ul>
-&lt;h1 id="project-overview">&lt;strong>Project Overview&lt;/strong>&lt;/h1>
-&lt;p>&lt;strong>Situation:&lt;/strong>
-In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code>ethernet@fe010000&lt;/code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code>Cannot attach to PHY&lt;/code> and &lt;code>Failed to reset the dma&lt;/code>.&lt;/p>
-&lt;p>&lt;strong>My Role &amp;amp; Contributions:&lt;/strong>
-As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BSP on </title>
+    <link>https://potterwhite.github.io/en/project_types/bsp/</link>
+    <description>Recent content in BSP on </description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://potterwhite.github.io/en/project_types/bsp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title>
+      <link>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</link>
+      <pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://potterwhite.github.io/en/portfolio/bringup_gmac_rk3568_yt8521sc/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Author:&lt;/strong&gt; Potter White&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; July 2025&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;project-overview&#34;&gt;&lt;strong&gt;Project Overview&lt;/strong&gt;&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Situation:&lt;/strong&gt;&#xA;In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code&gt;ethernet@fe010000&lt;/code&gt;). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code&gt;Cannot attach to PHY&lt;/code&gt; and &lt;code&gt;Failed to reset the dma&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;My Role &amp;amp; Contributions:&lt;/strong&gt;&#xA;As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
