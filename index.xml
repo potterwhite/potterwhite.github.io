@@ -1,4 +1,135 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 29 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>NFS(Net File System)</title><link>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</guid><description>&lt;h1 id="nfs-挂载问题深度复盘与标准工作流建立">NFS 挂载问题深度复盘与标准工作流建立&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 18 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>How-to: 显示接口调试标准工作流程 (SOP)</title><link>https://potterwhite.github.io/blog/2025/08/18/how-to-%E6%98%BE%E7%A4%BA%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E6%A0%87%E5%87%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-sop/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/how-to-%E6%98%BE%E7%A4%BA%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E6%A0%87%E5%87%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-sop/</guid><description>&lt;h3 id="how-to-显示接口调试标准工作流程-sop">How-to: &lt;strong>显示接口调试标准工作流程 (SOP)&lt;/strong>&lt;/h3>
+&lt;h4 id="阶段一准备与信息收集-preparation--info-gathering">&lt;strong>阶段一：准备与信息收集 (Preparation &amp;amp; Info Gathering)&lt;/strong>&lt;/h4>
+&lt;p>&lt;strong>目标：&lt;/strong> 在写任何代码或DTS之前，确保你拥有所有必需的“图纸”和“说明书”。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>获取硬件原理图 (Schematic)&lt;/strong>: 这是你的圣经。你需要知道：&lt;/p>
+&lt;ul>
+&lt;li>显示接口（MIPI/LVDS）连接到了主控SoC的哪个物理接口？(&lt;code>DSI0&lt;/code> 还是 &lt;code>DSI1&lt;/code>？)&lt;/li>
+&lt;li>相关的控制引脚（&lt;code>RESET&lt;/code>, &lt;code>POWER_ENABLE&lt;/code>, &lt;code>BACKLIGHT_PWM&lt;/code>）连接到了哪个GPIO或PWM控制器？&lt;/li>
+&lt;li>接口的I2C总线连接到了主控的哪个I2C控制器？（用于触摸或配置桥接芯片）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>获取目标设备“说明书” (Datasheet)&lt;/strong>: 你的“屏幕”可能是物理屏，也可能是FPGA。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>如果是物理屏&lt;/strong>：获取屏幕模组的Datasheet。你需要从中找到：
+&lt;ul>
+&lt;li>&lt;strong>&lt;code>display-timings&lt;/code> (时序参数)&lt;/strong>：分辨率、刷新率、h/v porch、sync len等。&lt;/li>
+&lt;li>&lt;strong>&lt;code>panel-init-sequence&lt;/code> (初始化序列)&lt;/strong>：上电后需要发送的一长串DCS命令。&lt;/li>
+&lt;li>&lt;strong>接口参数&lt;/strong>：MIPI是几条lane？数据格式是RGB888还是RGB666？&lt;/li>
+&lt;li>&lt;strong>供电和复位时序要求&lt;/strong>：先上电还是先复位？延时多少毫秒？&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>如果是FPGA&lt;/strong>：&lt;strong>把FPGA工程师当作你的Datasheet&lt;/strong>。向他索要上述所有参数。FPGA的设计文档就是你的“说明书”。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>获取平台参考资料 (Platform Reference)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>SoC的TRM (技术参考手册)&lt;/strong>：理解VOP、DSI/LVDS控制器、Pinctrl等模块的工作原理。&lt;/li>
+&lt;li>&lt;strong>SoC的SDK中的官方DTS示例&lt;/strong>：这是你最好的抄袭和参考对象，特别是对于&lt;code>VOP路由&lt;/code>和&lt;code>Pinctrl&lt;/code>配置。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>&lt;strong>阶段一产出&lt;/strong>：一个信息清单，包含了所有需要填入DTS的参数，以及明确的硬件连接关系。你同事的DTS在这里就属于“目标设备说明书”的一部分。&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h4 id="阶段二dts配置与编译-dts-configuration">&lt;strong>阶段二：DTS配置与编译 (DTS Configuration)&lt;/strong>&lt;/h4>
+&lt;p>&lt;strong>目标：&lt;/strong> 将阶段一收集到的信息，用DTS语言“翻译”出来，让内核知道如何驱动硬件。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>配置Pin Control (&lt;code>pinctrl&lt;/code>)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>在&lt;code>pinctrl&lt;/code>节点中，为显示接口所需的所有引脚（数据线、时钟线、控制线）配置正确的功能复用。参考官方DTS示例的语法。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>配置核心控制器 (&lt;code>&amp;amp;dsi0&lt;/code>, &lt;code>&amp;amp;vop&lt;/code>等)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>使能（&lt;code>status = &amp;quot;okay&amp;quot;;&lt;/code>）VOP、DSI/LVDS控制器、MIPI PHY等。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>配置显示路由 (Routing)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>这是平台相关的关键一步。根据官方DTS示例，正确地&lt;code>connect&lt;/code> VOP的输出和显示接口的输入。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>创建Panel节点&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>在对应的接口节点下（如&lt;code>&amp;amp;dsi0&lt;/code>），创建一个&lt;code>panel&lt;/code>子节点。&lt;/li>
+&lt;li>填入从Datasheet/FPGA工程师那里拿到的所有参数：&lt;code>compatible&lt;/code>, &lt;code>reg&lt;/code>, &lt;code>display-timings&lt;/code>, &lt;code>dsi,lanes&lt;/code>, &lt;code>dsi,format&lt;/code>等。&lt;/li>
+&lt;li>&lt;strong>关键原则&lt;/strong>：如果是直连物理屏，把所有参数（包括初始化代码）都填上。如果是送给FPGA，&lt;strong>只填FPGA需要的核心时序参数&lt;/strong>，删除所有物理相关的（背光、初始化代码、供电等）。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>编译内核&lt;/strong>: 确保没有DTS语法错误。&lt;/p></description></item><item><title>LCDs(lvds) Bring-Up 调试成功后总结</title><link>https://potterwhite.github.io/blog/2025/08/18/lcdslvds-bring-up-%E8%B0%83%E8%AF%95%E6%88%90%E5%8A%9F%E5%90%8E%E6%80%BB%E7%BB%93/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/lcdslvds-bring-up-%E8%B0%83%E8%AF%95%E6%88%90%E5%8A%9F%E5%90%8E%E6%80%BB%E7%BB%93/</guid><description>&lt;h2 id="dts中帧率的计算公式">&lt;strong>DTS中&amp;quot;帧率&amp;quot;的计算公式&lt;/strong>&lt;/h2>
+&lt;p>一个模式mode的帧率原来并不是直接以一个字段的形式写到timing里的,而是靠时钟去计算
+计算公式如下:&lt;/p>
+&lt;div class="math">
+$$
+\begin{aligned}
+\text{Htotal} &amp;= (\text{hsync\_len} + \text{hfront\_porch} + \text{hback\_porch} + \text{hactive}) \\
+\text{Vtotal} &amp;= (\text{vsync\_len} + \text{vfront\_porch} + \text{vback\_porch} + \text{vactive}) \\
+\text{FrameRate} &amp;= \frac{\text{ClkFreq}}{ \text{Htotal} \times \text{Vtotal} }
+\end{aligned}
+$$
+&lt;/div>
+&lt;h2 id="lvds的dts要怎么写">&lt;strong>lvds的dts要怎么写?&lt;/strong>&lt;/h2>
+&lt;p>参考&lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-%e6%98%be%e7%a4%ba%e6%8e%a5%e5%8f%a3%e8%b0%83%e8%af%95%e6%a0%87%e5%87%86%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b-sop">How-to: 显示接口调试标准工作流程 (SOP)&lt;/a>&lt;/p>
+&lt;h3 id="背景知识">&lt;strong>背景知识&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>rk是用vop来管理输出的硬件端口的&lt;/li>
+&lt;li>vp=video port&lt;/li>
+&lt;li>vop=video output processor
+&lt;ul>
+&lt;li>定义: VOP是从存储器帧缓冲区到显示设备的显示接口,是显示单元用来显示图像Buffer,显示到屏幕。(From &lt;strong>sdk-beside-docs/cn/Linux/Graphics/Rockchip_Developer_Guide_Linux_Graphics_CN.pdf&lt;/strong>)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>vop和vp
+&lt;ul>
+&lt;li>rk的soc都有自己的vop, 首先vop就有两个版本: vop和vop2&lt;/li>
+&lt;li>我们的rk3568使用的就是vop2,这个是soc的设定,不由得我们去修改. 具体的使用哪一个版本的VOP要去查阅rk3568的技术参考手册,我这里的文件名叫: &lt;strong>Rockchip RK3568 TRM Part2 V1.1-20210301.pdf&lt;/strong>
+&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/RK3568-TRM-VOP-Overview.png" alt="">&lt;/li>
+&lt;li>再来说vp, 每一个soc的vop都有数量不等的vp.&lt;/li>
+&lt;li>例如,rk3568有3个vp, rk3588有4个vp. 具体得看&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-vp-mapping-display-interfaces.png" alt="">&lt;/li>
+&lt;li>从上面的图可以看出, 每一个vp可以接的接口类型还不一样.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>dts
+&lt;ul>
+&lt;li>&amp;amp;lvds-代表lvds控制器这个硬件IP(或者等价的逻辑概念的硬件电路)&lt;/li>
+&lt;li>&amp;amp;vp2&lt;/li>
+&lt;li>&amp;amp;panel&lt;/li>
+&lt;li>它们都代表着pcb上的独立(逻辑)硬件电路集成块, 不要只是把它们当成一个普通的dts中的标识符&lt;/li>
+&lt;li>&lt;strong>ports&lt;/strong>: 这是每个设备上的“端口集合”或“接线板”。一个设备可以有多个接线板。&lt;/li>
+&lt;li>&lt;strong>port@n&lt;/strong>:
+&lt;ul>
+&lt;li>这是某个接线板上的一个“端口(Port)”。你可以把它想象成HDMI接口、USB接口。一个端口可以包含多个信号端点。&lt;/li>
+&lt;li>port@1是表示这是一个输出的端口(Port)&lt;/li>
+&lt;li>port@0表示这是一个输入的端口(Port)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>endpoint&lt;/strong>: 这是端口上的一个“端点(Endpoint)”，代表一个具体的信号流向。你可以把它想象成HDMI接口上的一个具体引脚或一组引脚。它是连接的最小单元。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>参考:
+&lt;ul>
+&lt;li>最系统的对显示模块的介绍-&lt;strong>sdk-beside-docs/cn/Common/DISPLAY/DRM/Rockchip_Developer_Guide_DRM_Display_Driver_CN.pdf&lt;/strong>&lt;/li>
+&lt;li>lvds屏幕最相关的介绍-&lt;strong>sdk-beside-docs/cn/Common/DISPLAY/LVDS/Rockchip_Developer_Guide_LVDS_CN.pdf&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>举例: 以lvds为例&lt;/li>
+&lt;/ul>
+&lt;h3 id="数据流-硬件的视角">数据流-(硬件的视角)&lt;/h3>
+&lt;ul>
+&lt;li>好了,这一步就是要确定硬件是怎么接的,我们直接梳理整个数据流的图形&lt;/li>
+&lt;/ul>
+&lt;h4 id="1-数据从内存-vop">1. 数据从内存-&amp;gt;vop&lt;/h4>
+&lt;p>不论是从外设进来的,还是emmc上的, 都要搬进内存.所以数据流的起点是内存.
+这里从内存给到vop里你配置的那个具体的vp.在dts里配置vop的代码如下:&lt;/p></description></item><item><title>NFS(Net File System)</title><link>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</guid><description>&lt;h1 id="nfs-挂载问题深度复盘与标准工作流建立">NFS 挂载问题深度复盘与标准工作流建立&lt;/h1>
 &lt;h2 id="前言">前言&lt;/h2>
 &lt;p>本文档旨在复盘一次在嵌入式 BusyBox 系统 (&lt;code>david&lt;/code> 主机) 挂载 Ubuntu NFS 服务器 (&lt;code>Anastasia-Ubuntu&lt;/code>) 时，反复出现 &lt;code>Connection refused&lt;/code> 错误的排查过程。最终，通过添加 &lt;code>-o nolock&lt;/code> 挂载选项成功解决了问题。本文将详细分析失败的根本原因，并建立一套标准的 NFS 服务端与客户端配置工作流，为未来的部署提供可靠参考。&lt;/p>
 &lt;hr>
