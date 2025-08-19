@@ -22,7 +22,11 @@ draft: false
 tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevOps"]
 --- -->
 &lt;h2 id="1-introduction">1. Introduction&lt;/h2>
-&lt;p>In the first two articles of this series, we discussed the top-level architectural design of a standardized development environment and the image implementation details based on Docker multi-stage builds. However, the ultimate value of a technically excellent solution is reflected in its smooth adoption by end-users (i.e., developers). This article will focus on the &amp;ldquo;last mile&amp;rdquo; of the workflow: how to simplify container management and how to achieve standardized distribution of the development environment.&lt;/p></description></item><item><title>SDK Modernization: From Monolith to `repo` &amp; GitLab</title><link>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Tue, 19 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;h3 id="i-project-overview">I. Project Overview&lt;/h3>
+&lt;p>In the first two articles of this series, we discussed the top-level architectural design of a standardized development environment and the image implementation details based on Docker multi-stage builds. However, the ultimate value of a technically excellent solution is reflected in its smooth adoption by end-users (i.e., developers). This article will focus on the &amp;ldquo;last mile&amp;rdquo; of the workflow: how to simplify container management and how to achieve standardized distribution of the development environment.&lt;/p></description></item><item><title>SDK Modernization: From Monolith to `repo` &amp; GitLab</title><link>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Tue, 19 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;ul>
+&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>Date:&lt;/strong> August 2025&lt;/li>
+&lt;/ul>
+&lt;h3 id="i-project-overview">I. Project Overview&lt;/h3>
 &lt;p>I independently spearheaded and executed the complete migration of a large-scale embedded Linux SDK. This project refactored a massive, monolithic codebase—originally distributed as an offline tarball—and migrated it to our internal GitLab server, establishing a modular, multi-repository collaborative development system based on Google&amp;rsquo;s &lt;code>repo&lt;/code> tool.&lt;/p>
 &lt;p>This transformation not only introduced modern version control best practices but also solved critical technical challenges through an automation script. The result was a scalable, highly efficient team workflow that dramatically improved both development productivity and code quality.&lt;/p></description></item><item><title>Analysis of Key Concepts in the Rockchip Display Subsystem</title><link>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</guid><description>&lt;h2 id="calculation-formula-for">&lt;strong>Calculation Formula for &amp;ldquo;Frame Rate&amp;rdquo; in DTS&lt;/strong>&lt;/h2>
 &lt;p>The frame rate of a mode is not written directly as a field in the timings; instead, it is calculated based on the clock frequency.
@@ -155,24 +159,11 @@ After testing with a multimeter, it was found that both ends are at 3.3V.&lt;/li
 &lt;p>&lt;strong>Situation:&lt;/strong>
 In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code>ethernet@fe010000&lt;/code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code>Cannot attach to PHY&lt;/code> and &lt;code>Failed to reset the dma&lt;/code>.&lt;/p>
 &lt;p>&lt;strong>My Role &amp;amp; Contributions:&lt;/strong>
-As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p></description></item><item><title>About Me</title><link>https://potterwhite.github.io/en/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
-&lt;div class="container text-center pt-5 pb-4">
- &lt;h1 class="display-3">A Developer's Journey&lt;/h1>
- &lt;p class="display-5 text-muted">Bridging Technology, Theology, and Family&lt;/p>
- &lt;div class="mt-4 mb-4">
- &lt;!-- &lt;a class="btn btn-lg btn-primary" href="#technical-expertise">Explore My Skills&lt;/a> -->
- &lt;/div>
-&lt;/div>
-&lt;hr> &lt;!-- This adds a clean separator line -->
-&lt;!-- END: Replacement -->
-&lt;div>&lt;a id="td-block-0" class="td-offset-anchor">&lt;/a>&lt;/div>
-&lt;section class="row td-box td-box--white position-relative td-box--height-auto">
-&lt;div class="col-12">
-&lt;div class="container text-center td-arrow-down">
-&lt;div class="h4 mb-0">
-&lt;div class="text-center">
-I am an Embedded Systems Engineer, passionate about building stable and elegant technical solutions. My life's journey has led me through professional training in both &lt;strong>Computer Science (Bachelor of Engineering)&lt;/strong> and &lt;strong>Theology (Master of Divinity)&lt;/strong>.
-&lt;p>This dual background has shaped my unique perspective on problem-solving: I strive to tackle complex challenges with technical excellence, clear communication, and a strong sense of purpose. As a Christian, a husband, and a father of three, the LORD my God and my family are the cornerstone of all my work.&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;h2 id="project-overview">Project Overview&lt;/h2>
+As the project&amp;rsquo;s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;ul>
+&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
+&lt;/ul>
+&lt;h2 id="project-overview">Project Overview&lt;/h2>
 &lt;p>The Attendance Analyzer is an &lt;strong>in-house efficiency tool&lt;/strong> developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p>
 &lt;hr>
 &lt;h3 id="demo">Demo&lt;/h3>
@@ -223,7 +214,24 @@ I am an Embedded Systems Engineer, passionate about building stable and elegant 
 &lt;li>&lt;strong>Tech Stack&lt;/strong>: &lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>.&lt;/li>
 &lt;/ul>
 &lt;h2 id="core-algorithm-design-v16">Core Algorithm Design (V1.6)&lt;/h2>
-&lt;p>As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p></description></item><item><title>Goldydocs</title><link>https://potterwhite.github.io/en/backupcopy_index/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/backupcopy_index/</guid><description>&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
+&lt;p>As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p></description></item><item><title>About Me</title><link>https://potterwhite.github.io/en/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
+&lt;div class="container text-center pt-5 pb-4">
+ &lt;h1 class="display-3">A Developer's Journey&lt;/h1>
+ &lt;p class="display-5 text-muted">Bridging Technology, Theology, and Family&lt;/p>
+ &lt;div class="mt-4 mb-4">
+ &lt;!-- &lt;a class="btn btn-lg btn-primary" href="#technical-expertise">Explore My Skills&lt;/a> -->
+ &lt;/div>
+&lt;/div>
+&lt;hr> &lt;!-- This adds a clean separator line -->
+&lt;!-- END: Replacement -->
+&lt;div>&lt;a id="td-block-0" class="td-offset-anchor">&lt;/a>&lt;/div>
+&lt;section class="row td-box td-box--white position-relative td-box--height-auto">
+&lt;div class="col-12">
+&lt;div class="container text-center td-arrow-down">
+&lt;div class="h4 mb-0">
+&lt;div class="text-center">
+I am an Embedded Systems Engineer, passionate about building stable and elegant technical solutions. My life's journey has led me through professional training in both &lt;strong>Computer Science (Bachelor of Engineering)&lt;/strong> and &lt;strong>Theology (Master of Divinity)&lt;/strong>.
+&lt;p>This dual background has shaped my unique perspective on problem-solving: I strive to tackle complex challenges with technical excellence, clear communication, and a strong sense of purpose. As a Christian, a husband, and a father of three, the LORD my God and my family are the cornerstone of all my work.&lt;/p></description></item><item><title>Goldydocs</title><link>https://potterwhite.github.io/en/backupcopy_index/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/backupcopy_index/</guid><description>&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
  &lt;div class="col-12">
  &lt;div class="container td-overlay__inner">
  &lt;div class="text-center">
