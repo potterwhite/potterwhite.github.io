@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on 波特的个人笔记</title><link>https://potterwhite.github.io/project_types/devops/</link><description>Recent content in DevOps on 波特的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 07 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>研发流程现代化改造：从单体巨石到 `repo` 多仓库协同</title><link>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;h3 id="一-项目概述">一、 项目概述&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on 波特的个人笔记</title><link>https://potterwhite.github.io/project_types/devops/</link><description>Recent content in DevOps on 波特的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 07 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>研发流程现代化改造：从单体巨石到 `repo` 多仓库协同</title><link>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年6月&lt;/li>
+&lt;/ul>
+&lt;h3 id="一-项目概述">一、 项目概述&lt;/h3>
 &lt;p>我独立主导并实施了一项大型嵌入式 Linux SDK 的完整迁移工程。该项目将一个以离线压缩包形式分发的、庞大的单体代码库，成功重构并迁移至内部 GitLab 服务器，建立了一套基于 Google &lt;code>repo&lt;/code> 工具的模块化、多仓库（multi-repository）协同开发体系。&lt;/p>
 &lt;p>这次改造不仅引入了现代化的版本控制最佳实践，还通过自动化脚本解决了迁移过程中的核心技术难题，最终建立了一套可扩展、高效率的团队协作流程，极大地提升了研发效率与代码质量。&lt;/p>
 &lt;h3 id="二-面临的挑战压缩包地狱与单体代码库的困境">二、 面临的挑战：“压缩包地狱”与单体代码库的困境&lt;/h3>
@@ -32,7 +36,11 @@
 &lt;li>&lt;strong>统一分支规范：&lt;/strong> 自动将所有 N 个仓库中混乱的默认分支名（如 &lt;code>master&lt;/code>, &lt;code>develop&lt;/code> 等）统一重命名为 &lt;code>main&lt;/code>，为后续的 &lt;code>repo&lt;/code> 清单管理奠定了基础。&lt;/li>
 &lt;/ul>
 &lt;h4 id="第二阶段gitlab-服务端环境加固">&lt;strong>第二阶段：GitLab 服务端环境加固&lt;/strong>&lt;/h4>
-&lt;p>为了支撑全新的工作流，我对 GitLab 服务器进行了关键的底层配置：&lt;/p></description></item><item><title>基于配置驱动的标准化开发环境(Docker)</title><link>https://potterwhite.github.io/portfolio/dockerdevenv/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/dockerdevenv/</guid><description>&lt;h2 id="项目概述">项目概述&lt;/h2>
+&lt;p>为了支撑全新的工作流，我对 GitLab 服务器进行了关键的底层配置：&lt;/p></description></item><item><title>基于配置驱动的标准化开发环境(Docker)</title><link>https://potterwhite.github.io/portfolio/dockerdevenv/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/dockerdevenv/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年2月&lt;/li>
+&lt;/ul>
+&lt;h2 id="项目概述">项目概述&lt;/h2>
 &lt;p>本项目是一套旨在解决嵌入式开发中环境迥异造成的问题的完整解决方案。&lt;/p>
 &lt;p>通过引入“配置与逻辑分离”的核心思想，我们利用 Docker 构建了一个自动化的、可复现的标准化开发环境。该系统显著降低了新成员的入门成本、确保了编译产物的一致性，并为后续的 CI/CD 实践奠定了坚实基础。&lt;/p>
 &lt;p>这个项目文档被组织成一个系列，共分为三个部分，详细阐述了从顶层设计到具体实施的全过程：&lt;/p>

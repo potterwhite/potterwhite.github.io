@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on 波特的个人笔记</title><link>https://potterwhite.github.io/project_types/docker/</link><description>Recent content in Docker on 波特的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>基于配置驱动的标准化开发环境(Docker)</title><link>https://potterwhite.github.io/portfolio/dockerdevenv/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/dockerdevenv/</guid><description>&lt;h2 id="项目概述">项目概述&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on 波特的个人笔记</title><link>https://potterwhite.github.io/project_types/docker/</link><description>Recent content in Docker on 波特的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>基于配置驱动的标准化开发环境(Docker)</title><link>https://potterwhite.github.io/portfolio/dockerdevenv/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/dockerdevenv/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年2月&lt;/li>
+&lt;/ul>
+&lt;h2 id="项目概述">项目概述&lt;/h2>
 &lt;p>本项目是一套旨在解决嵌入式开发中环境迥异造成的问题的完整解决方案。&lt;/p>
 &lt;p>通过引入“配置与逻辑分离”的核心思想，我们利用 Docker 构建了一个自动化的、可复现的标准化开发环境。该系统显著降低了新成员的入门成本、确保了编译产物的一致性，并为后续的 CI/CD 实践奠定了坚实基础。&lt;/p>
 &lt;p>这个项目文档被组织成一个系列，共分为三个部分，详细阐述了从顶层设计到具体实施的全过程：&lt;/p>
