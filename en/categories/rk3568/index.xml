@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rk3568 on</title><link>https://potterwhite.github.io/en/categories/rk3568/</link><description>Recent content in Rk3568 on</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 18 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/categories/rk3568/index.xml" rel="self" type="application/rss+xml"/><item><title>How-to: Forcing HDMI Configuration on RK3568</title><link>https://potterwhite.github.io/en/blog/2025/08/18/how-to-forcing-hdmi-configuration-on-rk3568/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/how-to-forcing-hdmi-configuration-on-rk3568/</guid><description>&lt;h1 id="how-to-keep-hdmi-connected-no-matter-what">How-to: Keep HDMI Connected No Matter What&lt;/h1>
+&lt;h2 id="schematic">Schematic:&lt;/h2>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-hdmi-schema.png" alt="">&lt;/p>
+&lt;h2 id="analysis-not-controlled-by-gpio">Analysis: Not controlled by GPIO&lt;/h2>
+&lt;ul>
+&lt;li>Setting either &lt;code>hpd-state&lt;/code> or &lt;code>force_hpd&lt;/code> has no effect.&lt;/li>
+&lt;li>Using &lt;code>display-timings&lt;/code> also doesn&amp;rsquo;t work.&lt;/li>
+&lt;li>The next step would be to consider changing the cmdline&amp;hellip; this seems to be the only available method.&lt;/li>
+&lt;/ul>
+&lt;h2 id="solution-successful">Solution (Successful)&lt;/h2>
+&lt;p>Open &lt;strong>kernel/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c&lt;/strong>
+Modify the function &lt;strong>dw_hdmi_phy_read_hpd&lt;/strong>
+Change it to the following:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">enum&lt;/span> &lt;span style="color:#000">drm_connector_status&lt;/span> &lt;span style="color:#000">dw_hdmi_phy_read_hpd&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87;font-weight:bold">struct&lt;/span> &lt;span style="color:#000">dw_hdmi&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">*&lt;/span>&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span>&lt;span style="color:#204a87;font-weight:bold">void&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">*&lt;/span>&lt;span style="color:#000">data&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#8f5902;font-style:italic">// return hdmi_readb(hdmi, HDMI_PHY_STAT0) &amp;amp; HDMI_PHY_HPD ?
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">&lt;/span>	&lt;span style="color:#8f5902;font-style:italic">// connector_status_connected : connector_status_disconnected;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">&lt;/span>	&lt;span style="color:#204a87;font-weight:bold">return&lt;/span> &lt;span style="color:#000">connector_status_connected&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="how-to-force-hdmi-resolution">How-to: Force HDMI Resolution&lt;/h1>
+&lt;h2 id="method-solution">Method (Solution)&lt;/h2>
+&lt;p>Open &lt;strong>kernel/arch/arm64/boot/dts/rockchip/submodule-display.dtsi&lt;/strong>
+Modify the hdmi node (RK3568 only has one HDMI).
+Modify it as follows (&lt;strong>you can add other properties, but the following statements and blocks are mandatory&lt;/strong>):&lt;/p></description></item><item><title>LCDs (LVDS) Bring-Up on RK3568: A Study of the Data Flow</title><link>https://potterwhite.github.io/en/blog/2025/08/18/lcds-lvds-bring-up-on-rk3568-a-study-of-the-data-flow/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/lcds-lvds-bring-up-on-rk3568-a-study-of-the-data-flow/</guid><description>&lt;h2 id="background-knowledge">&lt;strong>Background Knowledge&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>Reference: &lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-display-interface-debugging-sop">How-to: Display Interface Debugging Standard Operating Procedure (SOP)&lt;/a>&lt;/li>
+&lt;li>Reference: &lt;a href="https://potterwhite.github.io/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/">Analysis of Key Concepts in the Rockchip Display Subsystem&lt;/a>&lt;/li>
+&lt;li>Example: Using LVDS as a case study&lt;/li>
+&lt;/ul>
+&lt;h2 id="data-flow---hardware-perspective">Data Flow - (Hardware Perspective)&lt;/h2>
+&lt;ul>
+&lt;li>Okay, this step is to determine the hardware connections. Let&amp;rsquo;s directly map out the entire data flow.&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-data-from-memory---vop">1. Data from Memory -&amp;gt; VOP&lt;/h3>
+&lt;p>Whether the data comes from peripherals or is on the eMMC, it must be loaded into memory. Therefore, the starting point of the data flow is memory.
+From memory, the data is given to the specific VP configured in the VOP. The DTS code to configure the VOP is as follows:&lt;/p></description></item></channel></rss>

@@ -1,4 +1,54 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Buildroot on</title><link>https://potterwhite.github.io/project_types/buildroot/</link><description>Recent content in Buildroot on</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 25 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/buildroot/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台千兆以太网控制器Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Buildroot on</title><link>https://potterwhite.github.io/project_types/buildroot/</link><description>Recent content in Buildroot on</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 18 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/buildroot/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台显示子系统Bring-up与多接口调试</title><link>https://potterwhite.github.io/portfolio/bringup_display_rk3568_fpga/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_display_rk3568_fpga/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年8月&lt;/li>
+&lt;/ul>
+&lt;h1 id="项目概述-project-overview">&lt;strong>项目概述 (Project Overview)&lt;/strong>&lt;/h1>
+&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+在一个基于Rockchip RK3568 SoC的定制化项目中，需要同时或独立地使能LVDS、MIPI-DSI和HDMI 2.0三大显示接口。其中，LVDS接口需向FPGA输出超越官方规格的1920x1080@30Hz视频流；HDMI与MIPI则需要绕过EDID检测，强制输出固定的1080p@60Hz信号。初始BSP中这些通路均未配置，需要从零开始进行Bring-up。&lt;/p>
+&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+作为项目的BSP工程师，我独立负责整个显示子系统的Bring-up与对接任务。我的核心贡献在于&lt;strong>通过对数据手册和内核源码的深度挖掘，完成了纯软件层面的配置与调试&lt;/strong>：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>深入研究并梳理了RK3568显示子系统的数据流&lt;/strong>，清晰地描绘了从内存(Memory) -&amp;gt; VOP -&amp;gt; 各接口控制器 -&amp;gt; Combo PHY的完整硬件链路。&lt;/li>
+&lt;li>&lt;strong>主导并完成了设备树(DTS)的精确配置&lt;/strong>，为LVDS、MIPI-DSI、HDMI三大接口正确设置了VOP路由、时序参数(Timings)以及PHY复用关系。&lt;/li>
+&lt;li>&lt;strong>通过精密的DTS配置，成功驱动SoC物理层(PHY)输出正确的数字视频信号&lt;/strong>，为后续与FPGA的信号握手及HDMI显示器的点亮奠定了坚实基础。&lt;/li>
+&lt;li>&lt;strong>成功实现了超越官方规格的视频流输出&lt;/strong>，在满足时钟频率限制的前提下，稳定实现了LVDS接口1920x1080@30Hz的信号输出，并获得FPGA端的成功接收。&lt;/li>
+&lt;li>&lt;strong>将整个调试过程提炼并撰写成一套标准作业程序(SOP)与技术文档&lt;/strong>，为团队未来所有显示接口的调试工作提供了清晰、高效的指导框架。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h1 id="我的方法论显示接口调试标准作业程序-sop">&lt;strong>我的方法论：显示接口调试标准作业程序 (SOP)&lt;/strong>&lt;/h1>
+&lt;p>为了系统性地解决此类“点屏”或“信号对接”问题，我沉淀了一套分为四个阶段的SOP。该流程将模糊的调试任务分解为清晰、可验证的步骤，能够快速定位问题是在SoC软件配置侧，还是在对端设备(FPGA/屏幕)侧。&lt;/p>
+&lt;h3 id="项目相关技术文档-project-related-technical-documents">&lt;strong>项目相关技术文档 (Project-Related Technical Documents)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-%e6%98%be%e7%a4%ba%e6%8e%a5%e5%8f%a3%e8%b0%83%e8%af%95%e6%a0%87%e5%87%86%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b-sop">How-to: 显示接口调试标准工作流程 (SOP)&lt;/a>&lt;/strong>: 详细阐述了从信息收集到底层验证的四个关键阶段。&lt;/li>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%e4%b8%8b%e5%bc%ba%e5%88%b6hdmi%e7%9a%84%e9%85%8d%e7%bd%ae">How-to: RK3568下强制HDMI的配置&lt;/a>&lt;/strong>: 记录了如何通过修改驱动代码和DTS来强制HDMI连接状态与分辨率。&lt;/li>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/rockchip%e6%98%be%e7%a4%ba%e5%ad%90%e7%b3%bb%e7%bb%9f%e5%85%b3%e9%94%ae%e6%a6%82%e5%bf%b5%e8%a7%a3%e6%9e%90">Rockchip显示子系统关键概念解析&lt;/a>&lt;/strong>: 总结了VOP、DRM端口路由等核心概念。&lt;/li>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/lcdslvds-on-rk3568-bring-up-%e6%95%b0%e6%8d%ae%e6%b5%81%e7%a0%94%e7%a9%b6">LCDs(lvds) Bring-Up 数据流研究&lt;/a>&lt;/strong>: 深入分析了LVDS从内存到物理引脚的完整数据链路。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h1 id="项目成果与验证-results--verification">&lt;strong>项目成果与验证 (Results &amp;amp; Verification)&lt;/strong>&lt;/h1>
+&lt;p>遵循SOP，我成功使能了RK3568的所有目标显示接口。所有配置均通过软件工具和对端设备的反馈得到验证。&lt;/p>
+&lt;h2 id="内核模式验证-modetest">&lt;strong>内核模式验证 (modetest)&lt;/strong>&lt;/h2>
+&lt;p>&lt;code>modetest&lt;/code>工具的输出确认内核已为各个接口成功创建并应用了我们强制指定的模式，绕过了EDID检测。以下是LVDS接口的示例：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Connectors:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>id encoder status name size &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>mm&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> modes encoders
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#0000cf;font-weight:bold">172&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">171&lt;/span> connected LVDS-1 0x0 &lt;span style="color:#0000cf;font-weight:bold">1&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">171&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> modes:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index name refresh &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>Hz&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> hdisp hss hse htot vdisp vss vse vtot
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8f5902;font-style:italic">#0 1920x1080 29.41 1920 1968 2000 2040 1080 1083 1088 1111 66660 flags: nhsync, nvsync; type: preferred, driver&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#0000cf;font-weight:bold">174&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">173&lt;/span> connected HDMI-A-1 0x0 &lt;span style="color:#0000cf;font-weight:bold">1&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">173&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> modes:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index name refresh &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>Hz&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> hdisp hss hse htot vdisp vss vse vtot
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8f5902;font-style:italic">#0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#0000cf;font-weight:bold">190&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">189&lt;/span> connected DSI-1 68x121 &lt;span style="color:#0000cf;font-weight:bold">1&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">189&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> modes:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index name refresh &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>Hz&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> hdisp hss hse htot vdisp vss vse vtot
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8f5902;font-style:italic">#0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: nhsync, nvsync; type: preferred, driver&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>结论:&lt;/strong> 内核DRM框架已按DTS预期工作，&lt;code>clock-frequency&lt;/code>与时序参数均正确加载。HDMI与MIPI接口也通过类似方式得到验证。&lt;/p></description></item><item><title>RK3568平台千兆以太网控制器Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
 &lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>日期:&lt;/strong> 2025年7月&lt;/li>
 &lt;/ul>
