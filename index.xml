@@ -579,7 +579,70 @@ rk的soc都有自己的vop, 首先vop就有两个版本: vop和vop2&lt;/p>
  FAILURE -.-&amp;gt; C &amp;amp; D&lt;/pre>
 &lt;hr>
 &lt;h1 id="项目成果与验证-results--verification">&lt;strong>项目成果与验证 (Results &amp;amp; Verification)&lt;/strong>&lt;/h1>
-&lt;p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，&lt;code>dma reset&lt;/code>错误消失，网络接口成功初始化。&lt;/p></description></item><item><title>研发流程现代化改造：从单体巨石到 `repo` 多仓库协同</title><link>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;h3 id="一-项目概述">一、 项目概述&lt;/h3>
+&lt;p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，&lt;code>dma reset&lt;/code>错误消失，网络接口成功初始化。&lt;/p></description></item><item><title>考勤分析器：一个规则驱动的HR效率工具</title><link>https://potterwhite.github.io/portfolio/attendace_analyzer/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/attendace_analyzer/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年7月&lt;/li>
+&lt;/ul>
+&lt;h2 id="项目概述">项目概述&lt;/h2>
+&lt;p>考勤分析器是一个为企业内部开发的效率工具，旨在解决复杂且耗时的员工考勤数据分析任务。该应用通过一个高度灵活、由规则驱动的引擎，将原始的Excel导出数据转化为清晰、可执行的分析报告，极大地提升了HR部门的工作流程效率。&lt;/p>
+&lt;hr>
+&lt;h3 id="功能演示">功能演示&lt;/h3>
+&lt;p>以下是一个简短的视频，演示了本应用的核心工作流程。&lt;/p>
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+&lt;figure >
+ 
+ 
+
+ 
+ 
+
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;video controls autoplay loop muted playsinline
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+ &lt;source src="https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4" type="video/mp4">
+ Your browser does not support the video tag.
+ &lt;/video>
+ &lt;/div>
+ 
+
+ 
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">应用核心工作流程演示&lt;/figcaption>
+ 
+&lt;/figure>
+&lt;br>
+&lt;hr>
+&lt;h2 id="核心功能与技术栈">核心功能与技术栈&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>规则驱动引擎&lt;/strong>：所有逻辑由一个 &lt;code>rules.toml&lt;/code> 文件控制。&lt;/li>
+&lt;li>&lt;strong>全面指标计算&lt;/strong>：计算出勤天数、加班、迟到等。&lt;/li>
+&lt;li>&lt;strong>双视图报告&lt;/strong>：生成“公开”和“详细”两种报告。&lt;/li>
+&lt;li>&lt;strong>技术栈&lt;/strong>：&lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>。&lt;/li>
+&lt;/ul>
+&lt;h2 id="核心算法设计-v16">核心算法设计 (V1.6)&lt;/h2>
+&lt;p>作为本项目的架构师，我基于“出勤”、“缺勤”、“异常”三态单元模型和“出勤单元优先”原则，设计了一套严谨的分析算法。&lt;/p>
+&lt;h2 id="项目背后的故事">项目背后的故事&lt;/h2>
+&lt;p>本项目是一个AI辅助开发的案例研究。我的角色从编码员演变为&lt;strong>架构师、总监和质量保证负责人&lt;/strong>。这种人机协作的伙伴关系将开发周期从数周缩短至数天。&lt;/p>
+&lt;hr>
+&lt;p>&lt;em>本项目为公司内部资产，其源代码不予公开。&lt;/em>&lt;/p></description></item><item><title>研发流程现代化改造：从单体巨石到 `repo` 多仓库协同</title><link>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年6月&lt;/li>
+&lt;/ul>
+&lt;h3 id="一-项目概述">一、 项目概述&lt;/h3>
 &lt;p>我独立主导并实施了一项大型嵌入式 Linux SDK 的完整迁移工程。该项目将一个以离线压缩包形式分发的、庞大的单体代码库，成功重构并迁移至内部 GitLab 服务器，建立了一套基于 Google &lt;code>repo&lt;/code> 工具的模块化、多仓库（multi-repository）协同开发体系。&lt;/p>
 &lt;p>这次改造不仅引入了现代化的版本控制最佳实践，还通过自动化脚本解决了迁移过程中的核心技术难题，最终建立了一套可扩展、高效率的团队协作流程，极大地提升了研发效率与代码质量。&lt;/p>
 &lt;h3 id="二-面临的挑战压缩包地狱与单体代码库的困境">二、 面临的挑战：“压缩包地狱”与单体代码库的困境&lt;/h3>
@@ -1053,14 +1116,9 @@ windeployqt会去把相关的依赖项都copy到exe当前的目录下
 &lt;p>将输出目录打包成安装程序（如使用Inno Setup）或压缩文件，然后分发给用户。&lt;/p>
 &lt;h3 id="可能的扩展">可能的扩展&lt;/h3>
 &lt;p>如果你的应用程序有额外的依赖项，比如特定的字体、资源文件或动态链接库（DLL），需要手动添加到部署包中。&lt;/p>
-&lt;p>这样，你就可以完成Qt应用程序的基本部署。如果过程中遇到问题或需要更多细节，可以参考&lt;a href="https://doc.qt.io/Qt-5/windows-deployment.html" target="_blank" rel="noopener">官方文档&lt;/a>或向我求助。&lt;/p></description></item><item><title>微博</title><link>https://potterwhite.github.io/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</link><pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/13/%E5%BE%AE%E5%8D%9A/</guid><description>&lt;h2 id="2024-08-15-1427">2024-08-15 14:27&lt;/h2>
-&lt;p>学习好，成绩好，守规矩，就应该rule the world
-不要被猪给糟蹋了
-论一个胡乱管理的管理者，因为自己的懒惰或无能或懒惰+无能，导致正常的审美和是非都有了不合时宜的恶心。&lt;/p>
-&lt;h2 id="2024-08-14-083220">2024-08-14 08:32:20&lt;/h2>
-&lt;p>弄不清楚特权和人权的区别&lt;/p>
-&lt;p>加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高&lt;/p>
-&lt;p>而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相遇，你必须先朝我点头，甚至哈腰，我回之以充满“自信”的冷冰冰的热情，是给足你面子&lt;/p></description></item><item><title>Time Zone Map</title><link>https://potterwhite.github.io/blog/2024/08/12/time-zone-map/</link><pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/12/time-zone-map/</guid><description>&lt;p>&lt;img src="https://potterwhite.github.io/2024/August/12/TimeZoneOfTheWorld.svg" alt="TimeZoneMap">&lt;/p></description></item><item><title>qml notes</title><link>https://potterwhite.github.io/blog/2024/08/10/qml-notes/</link><pubDate>Sat, 10 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/10/qml-notes/</guid><description>&lt;h2 id="001-expose-propertiesproperty-alias-">001. **[Expose Properties]property alias **&lt;/h2>
+&lt;p>这样，你就可以完成Qt应用程序的基本部署。如果过程中遇到问题或需要更多细节，可以参考&lt;a href="https://doc.qt.io/Qt-5/windows-deployment.html" target="_blank" rel="noopener">官方文档&lt;/a>或向我求助。&lt;/p></description></item><item><title>Time Zone Map</title><link>https://potterwhite.github.io/blog/2024/08/12/time-zone-map/</link><pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/12/time-zone-map/</guid><description>&lt;p>这是一张世界时区图, svg矢量图格式.&lt;/p>
+&lt;p>可用鼠标右键单独打开该图片, 即便放大到较大的倍数也不失真.&lt;/p>
+&lt;p>&lt;img src="https://potterwhite.github.io/2024/August/12/TimeZoneOfTheWorld.svg" alt="TimeZoneMap">&lt;/p></description></item><item><title>qml notes</title><link>https://potterwhite.github.io/blog/2024/08/10/qml-notes/</link><pubDate>Sat, 10 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/10/qml-notes/</guid><description>&lt;h2 id="001-expose-propertiesproperty-alias-">001. **[Expose Properties]property alias **&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000">property&lt;/span> &lt;span style="color:#000">alias&lt;/span> &lt;span style="color:#000">$&lt;/span>&lt;span style="color:#000;font-weight:bold">{&lt;/span>&lt;span style="color:#000">EXTERNAL_SHARED_ID&lt;/span>&lt;span style="color:#000;font-weight:bold">}&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">:&lt;/span> &lt;span style="color:#000">$&lt;/span>&lt;span style="color:#000;font-weight:bold">{&lt;/span>&lt;span style="color:#000">INNER_ID&lt;/span>&lt;span style="color:#000;font-weight:bold">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}&lt;/p>
 &lt;h2 id="002-qml的模块化">002. &lt;strong>QML的模块化&lt;/strong>&lt;/h2>
@@ -1238,48 +1296,12 @@ import content&lt;/p>
  &lt;embed src="https://github.com/potterwhite/potterwhite.github.io/blob/hugo_docsy/books/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%EF%BC%9A%E4%BB%8E%E5%B0%8F%E5%B7%A5%E5%88%B0%E4%B8%93%E5%AE%B6.pdf">
  &lt;p>This browser does not support PDFs. Please download the PDF to view it: &lt;a href="https://github.com/potterwhite/potterwhite.github.io/blob/hugo_docsy/books/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%BF%AE%E7%82%BC%E4%B9%8B%E9%81%93%EF%BC%9A%E4%BB%8E%E5%B0%8F%E5%B7%A5%E5%88%B0%E4%B8%93%E5%AE%B6.pdf">Download PDF&lt;/a>.&lt;/p>
  &lt;/embed>
-&lt;/object> --></description></item><item><title>基本的是非观</title><link>https://potterwhite.github.io/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/</link><pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%98%AF%E9%9D%9E%E8%A7%82/</guid><description>&lt;p>今早看到姜文的电影《邪不压正》的一个自媒体影评 里面提到一句话： 李天然对他的养父亨德勒说：“车让人不是应当的吗？” 亨德勒大夫对李天然说：“这里是北平！”&lt;/p>
-&lt;p>影评说：车不让人意味着没有人权。&lt;/p>
-&lt;p>这句话深深刺痛着我的心。&lt;/p>
-&lt;p>以色列和哈马斯的战火延烧&lt;/p>
-&lt;p>哈马斯为何能够占据加沙，说来话长 得说到一个和平计划，当时因着这个和平计划，以色列将加沙整块让出来。 后来哈马斯在那里，竟然通过民选的方式上台，成为执政党 整个加沙开始了它的恐怖组织的培养皿的命运&lt;/p>
-&lt;p>现在，哈马斯和巴勒斯坦地区的其他派别签署了《bj宣言》 国内具有压倒性数量优势的报道关于以色列如何坚持战争，它的联合国代表如何在联合国会议上辱骂其他国家的代表，为了要灭掉哈马斯。 国内一段时间坚持无条件停火&lt;/p>
-&lt;p>乌克兰和俄罗斯的战火 不断报道，乌克兰有百分之n的民众厌战，愿意土地换和平。 言下之意，乌克兰人的正当防卫已经不得民心，早该继续无条件停火了。&lt;/p>
-&lt;p>三件事都在历史中不断重演，一个没有人权的地方，真相一定是被反复鞭尸的， 其次，妖魔鬼怪的言论充斥主流环境，没有任何保护弱势的力量存在，就势必剩下屠戮者，威胁着每一个弱势，不管弱势占理还是不占理，大棒都是挥舞着向着孤儿寡母。&lt;/p>
-&lt;p>这是上帝厌恶的。 教会里，可能还有一帮人在呼喊着，世界没有希望了，我们要复兴教会，言下之意是，世界完蛋了，我们想救也救不了，复兴教会吧，因为我们是神职人员，复兴之后，我们抱团取暖也更有势力。 一个不呼求上帝的公义和慈爱覆庇着现世，改变神儿女所在的世界的神学，当真是不带人入矛盾体都不行。 越爱神似乎就要越恨这个世界，越爱神越想要直接回天家，仿佛世间一切看淡。&lt;/p>
-&lt;p>求主拯救我们的世界。change the world。可以透过我！In IX`s Name, Amen&lt;/p></description></item><item><title>开发板选择</title><link>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</link><pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</guid><description>&lt;h3 id="迅为">迅为&lt;/h3>
+&lt;/object> --></description></item><item><title>开发板选择</title><link>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</link><pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/02/%E5%BC%80%E5%8F%91%E6%9D%BF%E9%80%89%E6%8B%A9/</guid><description>&lt;h3 id="迅为">迅为&lt;/h3>
 &lt;h3 id="正点原子">正点原子&lt;/h3>
 &lt;p>&lt;a href="https://www.eet-china.com/mp/a127282.html" target="_blank" rel="noopener">https://www.eet-china.com/mp/a127282.html&lt;/a>&lt;/p>
 &lt;h3 id="野火">野火&lt;/h3>
 &lt;h3 id="友善之臂">友善之臂&lt;/h3>
-&lt;h3 id="全志科技">全志科技&lt;/h3></description></item><item><title>ChatGPT</title><link>https://potterwhite.github.io/blog/2024/08/01/chatgpt/</link><pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/01/chatgpt/</guid><description>&lt;h2 id="plus用户的权益">&lt;a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus#h_d78bb59065" target="_blank" rel="noopener">&lt;strong>Plus用户的权益&lt;/strong>（&lt;em>2024年5月13号以后&lt;/em>）&lt;/a>&lt;/h2>
-&lt;div style="padding-left: 2em;">
-&lt;p>这里说的是plus，3小时80条&lt;/p>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>Type&lt;/th>
- &lt;th>Free&lt;/th>
- &lt;th>Plus&lt;/th>
- &lt;th>Team&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>[GPT-4o]Msg_limit&lt;/td>
- &lt;td>16条/3小时&lt;/td>
- &lt;td>80条/3小时&lt;/td>
- &lt;td>160条/3小时&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>[GPT-4] Msg_limit&lt;/td>
- &lt;td>8条/3小时&lt;/td>
- &lt;td>40条/3小时&lt;/td>
- &lt;td>80条/3小时&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;/div></description></item><item><title>QtCreator下的MinGW和MSVC编译器</title><link>https://potterwhite.github.io/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</link><pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</guid><description>&lt;h2 id="problem">&lt;strong>Problem&lt;/strong>&lt;/h2>
+&lt;h3 id="全志科技">全志科技&lt;/h3></description></item><item><title>QtCreator下的MinGW和MSVC编译器</title><link>https://potterwhite.github.io/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</link><pubDate>Thu, 01 Aug 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/08/01/qtcreator%E4%B8%8B%E7%9A%84mingw%E5%92%8Cmsvc%E7%BC%96%E8%AF%91%E5%99%A8/</guid><description>&lt;h2 id="problem">&lt;strong>Problem&lt;/strong>&lt;/h2>
 &lt;p>My project is running at the kit of MSVC When it was switched to MinGW Everything weired&lt;/p>
 &lt;p>call the dll, but no correct response happens. I tried to delete dllls all, then my Qt binary exe returns error that &amp;ldquo;&amp;hellip;dlls not found..&amp;rdquo;&lt;/p>
 &lt;p>&lt;img src="https://potterwhite.github.io/2024/August/1/dlls_not_found.png" alt="错误提示1">&lt;/p>
@@ -1323,19 +1345,7 @@ higher
 
 32/64 bit floating point formats
 &lt;/code>&lt;/pre>&lt;h2 id="d-conclusion">&lt;strong>D. Conclusion&lt;/strong>&lt;/h2>
-&lt;p>今天一天，到下午四点的时候，终于用cubase试验了自己修改过的asio driver。&lt;/p></description></item><item><title>2024年高考余悸</title><link>https://potterwhite.github.io/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/</link><pubDate>Wed, 24 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/24/2024%E5%B9%B4%E9%AB%98%E8%80%83%E4%BD%99%E6%82%B8/</guid><description>&lt;p>人到中年，选择权是自己最后的一点体面&lt;/p>
-&lt;p>人大博士举报自己的老师&lt;/p>
-&lt;p>我觉得自己有一点的（恶）习惯，就是相信事情不会（这么快）临到自己。&lt;/p>
-&lt;p>博士举报自己的导师，遇到的这种痛苦，是她所求甚多，我不求这么多，所以我不会被潜规则。&lt;/p>
-&lt;p>可是等人到中年，如果希望继续秉持着这种只要事不关己的态度，那真的到最后可能会发现，很难要小孩，甚至结婚都觉得自己失去了“事不关己的自由”&lt;/p>
-&lt;p>从社会学、人类学去看这种个体与群体的关系，都很容易知道现在的情况是病态&lt;/p>
-&lt;p>本该青春洋溢，杀伐果断（因为没有踩过坑、吃过屎）的年纪，却被迫的要放下一切追求，仿佛六旬老者，看淡人生。&lt;/p>
-&lt;p>从根儿上来看，不就是我们要相信这一切都不会发生在我们身上吗？ 我们可以去报班、上课、心理安慰、辅导、就为了要让我们“不要焦虑”&lt;/p>
-&lt;p>就因为环境不容得我们怒目圆瞪，只要对视一眼，就是一个大耳光，就因为这样，就要选择安慰自己，不会的，环境不会打我的，只要我安分。&lt;/p>
-&lt;p>最好的年纪，当做最远的打算，一名最优秀的船员，难以想象是从小就一直相信自己不要下海就不会翻船，自己技术不佳，宁可不出海，也不要葬身大海的人。&lt;/p>
-&lt;p>我们究竟是怎么一步一步走到今天的，想起来就觉得又简单又云山雾绕，好像怎么也想不明白。&lt;/p>
-&lt;p>也真就只有耶稣基督，祂为众人死了，使人都可以因祂活着，才能唤起人内心的斗志。 从这个角度来看，祂的心意、祂的style、祂的plan才特别重要，所以基督教并不是一个倚靠信徒修行的信仰团体，乃是因为与耶稣发生了关系，而且自己知道已经与祂有关。&lt;/p>
-&lt;p>耶稣要我们传福音到普天下去，要我们作见证，但环境却随时逼着我们，其实你什么都不能做。&lt;/p></description></item><item><title>DevOps Definition</title><link>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</guid><description>&lt;h3 id="devops的定义">&lt;a href="https://www.google.com/url?sa=t&amp;amp;source=web&amp;amp;rct=j&amp;amp;opi=89978449&amp;amp;url=https://aws.amazon.com/devops/what-is-devops/&amp;amp;ved=2ahUKEwiOs9yZ-7GHAxUTsFYBHeRCBgcQFnoECBoQAw&amp;amp;usg=AOvVaw2hGSM1UgKYzZ4WqCEEg1ET" target="_blank" rel="noopener">DevOps的定义&lt;/a>&lt;/h3>
+&lt;p>今天一天，到下午四点的时候，终于用cubase试验了自己修改过的asio driver。&lt;/p></description></item><item><title>DevOps Definition</title><link>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</guid><description>&lt;h3 id="devops的定义">&lt;a href="https://www.google.com/url?sa=t&amp;amp;source=web&amp;amp;rct=j&amp;amp;opi=89978449&amp;amp;url=https://aws.amazon.com/devops/what-is-devops/&amp;amp;ved=2ahUKEwiOs9yZ-7GHAxUTsFYBHeRCBgcQFnoECBoQAw&amp;amp;usg=AOvVaw2hGSM1UgKYzZ4WqCEEg1ET" target="_blank" rel="noopener">DevOps的定义&lt;/a>&lt;/h3>
 &lt;p>您所说的 &amp;ldquo;开发和操作环境达到一致&amp;rdquo; 是对DevOps的一个简单理解，但DevOps的概念要比这广泛和深入得多。最权威的定义之一来自DevOps研究和评估（DORA，DevOps Research and Assessment）和一些行业权威机构，如亚马逊AWS、谷歌云和微软Azure。&lt;/p>
 &lt;p>&lt;strong>DevOps&lt;/strong> 是一种结合软件开发（Dev）和IT运营（Ops）的方法，其目标是通过自动化、持续集成和持续交付（CI/CD）等手段，加速软件开发和发布的速度，提高软件质量和稳定性。DevOps强调跨职能团队之间的协作和沟通，包括开发人员、质量保证人员、运营人员和其他相关人员。&lt;/p>
 &lt;p>一个较为权威的定义来自于亚马逊AWS：&lt;/p>
@@ -1872,7 +1882,52 @@ import mermaid from &amp;lsquo;&lt;a href="https://cdn.jsdelivr.net/npm/mermaid@
 &lt;p>连总统和所有行政官员都必须俯在宪法之下。&lt;/p>
 &lt;p>&lt;del>不仅仅是克制了君主和独裁者的发挥，还克制了人民主权的滥用。有对苏格拉底所遭遇的多数人暴政的天然警觉性。&lt;/del>&lt;/p>
 &lt;p>大卫是以色列最伟大的君王，在他治理之下，以色列盛极一时。然而大卫晚年因为贪恋部下的妻子而酿成大错。先知拿单当面谴责大卫，宣告上帝的审判。这让我们看见，即便是圣经中最伟大的王，也不能凌驾于上帝的律法之上。最终统治国家的是上帝的律法，而不是王。&lt;/p>
-&lt;p>使用自身的标准而非外在的法律来行使审判权。&lt;/p></description></item><item><title>关于堕胎</title><link>https://potterwhite.github.io/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/</link><pubDate>Mon, 10 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/10/%E5%85%B3%E4%BA%8E%E5%A0%95%E8%83%8E/</guid><description>&lt;h3 id="堕胎">堕胎&lt;/h3>
+&lt;p>使用自身的标准而非外在的法律来行使审判权。&lt;/p></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;!-- ---
+title: "2024年高考余悸"
+date: 2024-07-24
+description: ""
+categories:
+ - blog
+ - Theology
+--- -->
+&lt;p>人到中年，选择权是自己最后的一点体面&lt;/p>
+&lt;p>人大博士举报自己的老师&lt;/p>
+&lt;p>我觉得自己有一点的（恶）习惯，就是相信事情不会（这么快）临到自己。&lt;/p>
+&lt;p>博士举报自己的导师，遇到的这种痛苦，是她所求甚多，我不求这么多，所以我不会被潜规则。&lt;/p>
+&lt;p>可是等人到中年，如果希望继续秉持着这种只要事不关己的态度，那真的到最后可能会发现，很难要小孩，甚至结婚都觉得自己失去了“事不关己的自由”&lt;/p>
+&lt;p>从社会学、人类学去看这种个体与群体的关系，都很容易知道现在的情况是病态&lt;/p>
+&lt;p>本该青春洋溢，杀伐果断（因为没有踩过坑、吃过屎）的年纪，却被迫的要放下一切追求，仿佛六旬老者，看淡人生。&lt;/p>
+&lt;p>从根儿上来看，不就是我们要相信这一切都不会发生在我们身上吗？ 我们可以去报班、上课、心理安慰、辅导、就为了要让我们“不要焦虑”&lt;/p>
+&lt;p>就因为环境不容得我们怒目圆瞪，只要对视一眼，就是一个大耳光，就因为这样，就要选择安慰自己，不会的，环境不会打我的，只要我安分。&lt;/p>
+&lt;p>最好的年纪，当做最远的打算，一名最优秀的船员，难以想象是从小就一直相信自己不要下海就不会翻船，自己技术不佳，宁可不出海，也不要葬身大海的人。&lt;/p>
+&lt;p>我们究竟是怎么一步一步走到今天的，想起来就觉得又简单又云山雾绕，好像怎么也想不明白。&lt;/p>
+&lt;p>也真就只有耶稣基督，祂为众人死了，使人都可以因祂活着，才能唤起人内心的斗志。 从这个角度来看，祂的心意、祂的style、祂的plan才特别重要，所以基督教并不是一个倚靠信徒修行的信仰团体，乃是因为与耶稣发生了关系，而且自己知道已经与祂有关。&lt;/p>
+&lt;p>耶稣要我们传福音到普天下去，要我们作见证，但环境却随时逼着我们，其实你什么都不能做。&lt;/p></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;!-- ---
+title: 微博
+date: 2024-08-13
+categories:
+ - blog
+ - Microblog
+--- -->
+&lt;h2 id="2024-08-15-1427">2024-08-15 14:27&lt;/h2>
+&lt;p>学习好，成绩好，守规矩，就应该rule the world
+不要被猪给糟蹋了
+论一个胡乱管理的管理者，因为自己的懒惰或无能或懒惰+无能，导致正常的审美和是非都有了不合时宜的恶心。&lt;/p>
+&lt;h2 id="2024-08-14-083220">2024-08-14 08:32:20&lt;/h2>
+&lt;p>弄不清楚特权和人权的区别&lt;/p>
+&lt;p>加上权利崇拜，对有权利的个体所做的事情，无底线的接纳，包括压迫自我尊严，甚至认为这就是是社会，这就是情商高&lt;/p>
+&lt;p>而对没有权利的个体，包括弱势群体，总是说“我认识许多有权利的人，公司的老板是我同乡”，你不敢对我呲牙叫嚣，面对面相遇，你必须先朝我点头，甚至哈腰，我回之以充满“自信”的冷冰冰的热情，是给足你面子&lt;/p></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;p>Jul29.2025 20:00
+神学应该读到什么时候才够呢?应该是让自己想要唱ladygaga的歌/以及存在主义/个人主义的歌的时候, 可以向自己解释可以唱或不可以唱的确切原因. 若不可以, 要让自己的情感完全的投0降在神的道理中.&lt;/p>
+&lt;p>神学应该能让自己完全胜于流言蜚语,谩骂,嘲笑,不屑,轻看以及高看,他是武装一个眉毛以下节肢者的唯一完美的武器.&lt;/p>
+&lt;p>神学应该完胜于流氓土匪的拳头, 枭雄的枪炮.&lt;/p>
+&lt;p>神学还应该完胜于自己的无知, 如果未经训练者即可在昏暗的内心中如同天外之一点,唯一闪耀的亮光,喊出&amp;quot;感谢主,祂用圣经对我说话&amp;quot;,为何经受神学训练者反而不可.&lt;/p>
+&lt;p>神学应该能够武装自己的世界观/人观, 以现状来修正自己的神学观, 反推神学使人骄傲. 或是有可能神学只是松开自己摁住自己骄傲内心的一只手罢了.&lt;/p></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;!-- ---
+title: "关于堕胎"
+date: 2024-06-10
+description: ""
+categories: ["blog"]
+--- -->
+&lt;h3 id="堕胎">堕胎&lt;/h3>
 &lt;p>&lt;strong>堕胎的定义&lt;/strong>
 堕胎，这个词，在所所在的中国大陆的社会层面上，我个人认为的一般性理解是：在孩子尚未出母腹，终止孩子的生命。&lt;/p>
 &lt;h3 id="被挤占的空间">被挤占的空间&lt;/h3>
@@ -1898,12 +1953,58 @@ import mermaid from &amp;lsquo;&lt;a href="https://cdn.jsdelivr.net/npm/mermaid@
 正是这种对未来的无力感，见证了父母对神是不认识的。&lt;/p>
 &lt;p>多少个王朝的更替，多少强势君王的兴起和没落，但神的掌权却超越时间。
 神带领在埃及做牛马的以色列人离开埃及&lt;/p>
-&lt;p>未完&lt;/p></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;p>Jul29.2025 20:00
-神学应该读到什么时候才够呢?应该是让自己想要唱ladygaga的歌/以及存在主义/个人主义的歌的时候, 可以向自己解释可以唱或不可以唱的确切原因. 若不可以, 要让自己的情感完全的投0降在神的道理中.&lt;/p>
-&lt;p>神学应该能让自己完全胜于流言蜚语,谩骂,嘲笑,不屑,轻看以及高看,他是武装一个眉毛以下节肢者的唯一完美的武器.&lt;/p>
-&lt;p>神学应该完胜于流氓土匪的拳头, 枭雄的枪炮.&lt;/p>
-&lt;p>神学还应该完胜于自己的无知, 如果未经训练者即可在昏暗的内心中如同天外之一点,唯一闪耀的亮光,喊出&amp;quot;感谢主,祂用圣经对我说话&amp;quot;,为何经受神学训练者反而不可.&lt;/p>
-&lt;p>神学应该能够武装自己的世界观/人观, 以现状来修正自己的神学观, 反推神学使人骄傲. 或是有可能神学只是松开自己摁住自己骄傲内心的一只手罢了.&lt;/p></description></item><item><title>关于我</title><link>https://potterwhite.github.io/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
+&lt;p>未完&lt;/p></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;!-- ---
+title: "基本的是非观"
+date: 2024-08-02
+description: ""
+categories:
+ - blog
+ - Theology
+--- -->
+&lt;p>今早看到姜文的电影《邪不压正》的一个自媒体影评 里面提到一句话： 李天然对他的养父亨德勒说：“车让人不是应当的吗？” 亨德勒大夫对李天然说：“这里是北平！”&lt;/p>
+&lt;p>影评说：车不让人意味着没有人权。&lt;/p>
+&lt;p>这句话深深刺痛着我的心。&lt;/p>
+&lt;p>以色列和哈马斯的战火延烧&lt;/p>
+&lt;p>哈马斯为何能够占据加沙，说来话长 得说到一个和平计划，当时因着这个和平计划，以色列将加沙整块让出来。 后来哈马斯在那里，竟然通过民选的方式上台，成为执政党 整个加沙开始了它的恐怖组织的培养皿的命运&lt;/p>
+&lt;p>现在，哈马斯和巴勒斯坦地区的其他派别签署了《bj宣言》 国内具有压倒性数量优势的报道关于以色列如何坚持战争，它的联合国代表如何在联合国会议上辱骂其他国家的代表，为了要灭掉哈马斯。 国内一段时间坚持无条件停火&lt;/p>
+&lt;p>乌克兰和俄罗斯的战火 不断报道，乌克兰有百分之n的民众厌战，愿意土地换和平。 言下之意，乌克兰人的正当防卫已经不得民心，早该继续无条件停火了。&lt;/p>
+&lt;p>三件事都在历史中不断重演，一个没有人权的地方，真相一定是被反复鞭尸的， 其次，妖魔鬼怪的言论充斥主流环境，没有任何保护弱势的力量存在，就势必剩下屠戮者，威胁着每一个弱势，不管弱势占理还是不占理，大棒都是挥舞着向着孤儿寡母。&lt;/p>
+&lt;p>这是上帝厌恶的。 教会里，可能还有一帮人在呼喊着，世界没有希望了，我们要复兴教会，言下之意是，世界完蛋了，我们想救也救不了，复兴教会吧，因为我们是神职人员，复兴之后，我们抱团取暖也更有势力。 一个不呼求上帝的公义和慈爱覆庇着现世，改变神儿女所在的世界的神学，当真是不带人入矛盾体都不行。 越爱神似乎就要越恨这个世界，越爱神越想要直接回天家，仿佛世间一切看淡。&lt;/p>
+&lt;p>求主拯救我们的世界。change the world。可以透过我！In IX`s Name, Amen&lt;/p></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;!-- ---
+title: "ChatGPT"
+date: 2024-08-01
+categories:
+ - blog
+ - AI
+--- -->
+&lt;h2 id="plus用户的权益">&lt;a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus#h_d78bb59065" target="_blank" rel="noopener">&lt;strong>Plus用户的权益&lt;/strong>（&lt;em>2024年5月13号以后&lt;/em>）&lt;/a>&lt;/h2>
+&lt;div style="padding-left: 2em;">
+&lt;p>这里说的是plus，3小时80条&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th>Type&lt;/th>
+ &lt;th>Free&lt;/th>
+ &lt;th>Plus&lt;/th>
+ &lt;th>Team&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td>[GPT-4o]Msg_limit&lt;/td>
+ &lt;td>16条/3小时&lt;/td>
+ &lt;td>80条/3小时&lt;/td>
+ &lt;td>160条/3小时&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td>[GPT-4] Msg_limit&lt;/td>
+ &lt;td>8条/3小时&lt;/td>
+ &lt;td>40条/3小时&lt;/td>
+ &lt;td>80条/3小时&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;/div></description></item><item><title>关于我</title><link>https://potterwhite.github.io/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
 &lt;div class="container text-center pt-5 pb-4">
  &lt;h1 class="display-3">一位开发者的旅程&lt;/h1>
  &lt;p class="display-5 text-muted">融合技术、神学与家庭&lt;/p>
@@ -1953,59 +2054,4 @@ import mermaid from &amp;lsquo;&lt;a href="https://cdn.jsdelivr.net/npm/mermaid@
 &lt;div class="h4 mb-0">
 &lt;div class="text-center">
 我是一名嵌入式系统工程师，热衷于构建稳定而优雅的技术解决方案。我的人生先后接受了&lt;strong>计算机科学（工学学士）&lt;/strong>与&lt;strong>神学（道学硕士）&lt;/strong>的专业训练。
-&lt;p>这段双重背景塑造了我解决问题的视角：我力求以卓越的技术、清晰的沟通和明确的目标感来应对复杂的挑战。作为一名基督徒、一位丈夫和三个孩子的父亲，耶和华我的神与家庭是我一切工作的基石。&lt;/p></description></item><item><title>考勤分析器：一个规则驱动的HR效率工具</title><link>https://potterwhite.github.io/portfolio/attendace_analyzer/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/attendace_analyzer/</guid><description>&lt;h2 id="项目概述">项目概述&lt;/h2>
-&lt;p>考勤分析器是一个为企业内部开发的效率工具，旨在解决复杂且耗时的员工考勤数据分析任务。该应用通过一个高度灵活、由规则驱动的引擎，将原始的Excel导出数据转化为清晰、可执行的分析报告，极大地提升了HR部门的工作流程效率。&lt;/p>
-&lt;hr>
-&lt;h3 id="功能演示">功能演示&lt;/h3>
-&lt;p>以下是一个简短的视频，演示了本应用的核心工作流程。&lt;/p>
-
-
-
-
-
-
-
- 
- 
- 
-
- 
-
- 
-
-
-&lt;figure >
- 
- 
-
- 
- 
-
- &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
- &lt;video controls autoplay loop muted playsinline
- style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
- &lt;source src="https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4" type="video/mp4">
- Your browser does not support the video tag.
- &lt;/video>
- &lt;/div>
- 
-
- 
- &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">应用核心工作流程演示&lt;/figcaption>
- 
-&lt;/figure>
-&lt;br>
-&lt;hr>
-&lt;h2 id="核心功能与技术栈">核心功能与技术栈&lt;/h2>
-&lt;ul>
-&lt;li>&lt;strong>规则驱动引擎&lt;/strong>：所有逻辑由一个 &lt;code>rules.toml&lt;/code> 文件控制。&lt;/li>
-&lt;li>&lt;strong>全面指标计算&lt;/strong>：计算出勤天数、加班、迟到等。&lt;/li>
-&lt;li>&lt;strong>双视图报告&lt;/strong>：生成“公开”和“详细”两种报告。&lt;/li>
-&lt;li>&lt;strong>技术栈&lt;/strong>：&lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>。&lt;/li>
-&lt;/ul>
-&lt;h2 id="核心算法设计-v16">核心算法设计 (V1.6)&lt;/h2>
-&lt;p>作为本项目的架构师，我基于“出勤”、“缺勤”、“异常”三态单元模型和“出勤单元优先”原则，设计了一套严谨的分析算法。&lt;/p>
-&lt;h2 id="项目背后的故事">项目背后的故事&lt;/h2>
-&lt;p>本项目是一个AI辅助开发的案例研究。我的角色从编码员演变为&lt;strong>架构师、总监和质量保证负责人&lt;/strong>。这种人机协作的伙伴关系将开发周期从数周缩短至数天。&lt;/p>
-&lt;hr>
-&lt;p>&lt;em>本项目为公司内部资产，其源代码不予公开。&lt;/em>&lt;/p></description></item></channel></rss>
+&lt;p>这段双重背景塑造了我解决问题的视角：我力求以卓越的技术、清晰的沟通和明确的目标感来应对复杂的挑战。作为一名基督徒、一位丈夫和三个孩子的父亲，耶和华我的神与家庭是我一切工作的基石。&lt;/p></description></item></channel></rss>
