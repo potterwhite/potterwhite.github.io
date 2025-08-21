@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/devops/</link><description>Recent content in DevOps on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 07 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>研发流程现代化改造：从单体巨石到 `repo` 多仓库协同</title><link>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Sat, 07 Jun 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年6月&lt;/li>
+&lt;/ul>
+&lt;h3 id="一-项目概述">一、 项目概述&lt;/h3>
+&lt;p>我独立主导并实施了一项大型嵌入式 Linux SDK 的完整迁移工程。该项目将一个以离线压缩包形式分发的、庞大的单体代码库，成功重构并迁移至内部 GitLab 服务器，建立了一套基于 Google &lt;code>repo&lt;/code> 工具的模块化、多仓库（multi-repository）协同开发体系。&lt;/p>
+&lt;p>这次改造不仅引入了现代化的版本控制最佳实践，还通过自动化脚本解决了迁移过程中的核心技术难题，最终建立了一套可扩展、高效率的团队协作流程，极大地提升了研发效率与代码质量。&lt;/p>
+&lt;h3 id="二-面临的挑战压缩包地狱与单体代码库的困境">二、 面临的挑战：“压缩包地狱”与单体代码库的困境&lt;/h3>
+&lt;p>在项目改造前，我们基于 Rockchip SDK 的产品研发流程正面临着严峻的挑战：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>版本历史缺失：&lt;/strong> SDK 以一个巨大的 &lt;code>.tar.gz&lt;/code> 压缩包分发，代码的任何变更都无法追溯。我们陷入了依赖文件名（如 &lt;code>sdk_v1.2_final_final.tar.gz&lt;/code>）进行版本管理的“地狱模式”。&lt;/li>
+&lt;li>&lt;strong>庞大臃肿的单体仓库：&lt;/strong>
+&lt;ul>
+&lt;li>在此之前，整个 SDK 被塞进一个&lt;strong>单一、巨大的 Git 仓库&lt;/strong>中。&lt;/li>
+&lt;li>以Rockchip的SDK为例, RK官方可以提供repo的下载权限,需要公司向RK的代理提交代码访问申请表,审核通过后提供操作人员的ssh公钥.如果不透过这个方式,大概率我们拿到的就会是一个不小的压缩包格式的SDK.&lt;/li>
+&lt;li>这种情况下, sdk的克隆耗时极长，代码合并冲突堪称灾难，不同模块的开发者无法独立工作。因此,只能选择一个人或两个人独立负责一个项目, 否则SDK的同步工作将消耗大量时间, 尤其是调试kernel时,需要频繁验证各种设备树的修改甚至驱动和uboot的修改.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>协作流程阻塞：&lt;/strong> 代码变更依赖手动打包和传输，极易出错。功能分支、代码审查（Merge Request）等现代协作方式完全无法实施，导致集成阶段痛苦不堪。&lt;/li>
+&lt;li>&lt;strong>权限管理混乱：&lt;/strong> 所有开发者都拥有全部代码的访问权限，包括他们无需接触的核心 IP 和敏感组件，存在安全隐患。&lt;/li>
+&lt;li>&lt;strong>新人上手困难：&lt;/strong> 搭建一套新的开发环境是项复杂、耗时数小时的手动任务，常常需要资深工程师介入指导。&lt;/li>
+&lt;/ul>
+&lt;h3 id="三-我的解决方案分步击破构建现代化研发体系">三、 我的解决方案：分步击破，构建现代化研发体系&lt;/h3>
+&lt;p>我设计并执行了一套分阶段的解决方案，系统性地解决了上述所有痛点。&lt;/p>
+&lt;h4 id="第一阶段自动化解析与智能化迁移">&lt;strong>第一阶段：自动化解析与智能化迁移&lt;/strong>&lt;/h4>
+&lt;p>我没有采用低效且易错的手动迁移，而是开发了一个&lt;strong>强大的 Python 自动化脚本&lt;/strong>作为项目的基石。该脚本实现了：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>智能解析复杂清单：&lt;/strong> 自动读取并解析原始 SDK 中相互嵌套的 &lt;code>repo&lt;/code> 清单（&lt;code>.xml&lt;/code>）文件，精准识别出全部 N(一般子仓库数量不会少,否则就不需要repo管理了) 个独立的代码模块。&lt;/li>
+&lt;li>&lt;strong>自动化 GitLab 项目创建：&lt;/strong> 调用 GitLab API,并借助PAT(Personal Access Token)，让py脚本在指定的团队空间下为每个模块自动创建对应的、独立的 Git 仓库。&lt;/li>
+&lt;li>&lt;strong>诊断并“修复”不健康仓库：&lt;/strong> 脚本能自动检测出原始仓库的一个致命问题——许多仓库是“浅克隆”（shallow clone），Git 历史不完整。我的解决方案是：
+&lt;ul>
+&lt;li>&lt;strong>对于历史完整的仓库：&lt;/strong> 完整保留其所有分支和标签并推送到 GitLab。&lt;/li>
+&lt;li>&lt;strong>对于历史残缺的仓库：&lt;/strong> 自动将其重新初始化为一个全新的 Git 仓库，并生成一个干净、完整的“初始版本”提交。这步操作是确保后续 &lt;code>repo sync&lt;/code> 能够成功的关键。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>统一分支规范：&lt;/strong> 自动将所有 N 个仓库中混乱的默认分支名（如 &lt;code>master&lt;/code>, &lt;code>develop&lt;/code> 等）统一重命名为 &lt;code>main&lt;/code>，为后续的 &lt;code>repo&lt;/code> 清单管理奠定了基础。&lt;/li>
+&lt;/ul>
+&lt;h4 id="第二阶段gitlab-服务端环境加固">&lt;strong>第二阶段：GitLab 服务端环境加固&lt;/strong>&lt;/h4>
+&lt;p>为了支撑全新的工作流，我对 GitLab 服务器进行了关键的底层配置：&lt;/p></description></item><item><title>基于配置驱动的标准化开发环境(Docker)</title><link>https://potterwhite.github.io/portfolio/dockerdevenv/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/dockerdevenv/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年2月&lt;/li>
+&lt;/ul>
+&lt;h2 id="项目概述">项目概述&lt;/h2>
+&lt;p>本项目是一套旨在解决嵌入式开发中环境迥异造成的问题的完整解决方案。&lt;/p>
+&lt;p>通过引入“配置与逻辑分离”的核心思想，我们利用 Docker 构建了一个自动化的、可复现的标准化开发环境。该系统显著降低了新成员的入门成本、确保了编译产物的一致性，并为后续的 CI/CD 实践奠定了坚实基础。&lt;/p>
+&lt;p>这个项目文档被组织成一个系列，共分为三个部分，详细阐述了从顶层设计到具体实施的全过程：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="./part1/">宏观设计篇：基于配置驱动的标准化开发环境架构&lt;/a>&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>探讨了系统的核心思想——配置驱动，以及如何通过分离配置与构建逻辑来实现灵活性和可维护性。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="./part2/">镜像构建篇：Docker 多阶段构建与动态脚本生成技术解析&lt;/a>&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>深入镜像构建的技术细节，解析如何利用多阶段构建优化镜像体积，并结合动态脚本生成技术响应外部配置。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="./part3/">管理与分发篇：优化开发者工作流与交付实践&lt;/a>&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>聚焦于“最后一公里”，介绍如何通过封装 &lt;code>docker-compose&lt;/code> 简化用户交互，并实现开发环境的“一键式”标准化交付。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h3 id="核心技术栈">核心技术栈&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>容器化:&lt;/strong> Docker, Docker Compose&lt;/li>
+&lt;li>&lt;strong>自动化:&lt;/strong> Shell Scripting, &lt;code>envsubst&lt;/code>&lt;/li>
+&lt;li>&lt;strong>架构思想:&lt;/strong> 配置驱动 (Configuration-Driven), 运行时脚本模板替换(Runtime script Replacement), 关注点分离 (Separation of Concerns)&lt;/li>
+&lt;li>&lt;strong>应用领域:&lt;/strong> 嵌入式系统 (Embedded Systems), 跨平台编译 (Cross-Compilation)&lt;/li>
+&lt;/ul></description></item></channel></rss>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Potter`s Log Book</title><link>https://potterwhite.github.io/en/project_types/python/</link><description>Recent content in Python on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 19 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/project_types/python/index.xml" rel="self" type="application/rss+xml"/><item><title>SDK Modernization: From Monolith to `repo` &amp; GitLab</title><link>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Tue, 19 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;ul>
+&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>Date:&lt;/strong> August 2025&lt;/li>
+&lt;/ul>
+&lt;h3 id="i-project-overview">I. Project Overview&lt;/h3>
+&lt;p>I independently spearheaded and executed the complete migration of a large-scale embedded Linux SDK. This project refactored a massive, monolithic codebase—originally distributed as an offline tarball—and migrated it to our internal GitLab server, establishing a modular, multi-repository collaborative development system based on Google&amp;rsquo;s &lt;code>repo&lt;/code> tool.&lt;/p>
+&lt;p>This transformation not only introduced modern version control best practices but also solved critical technical challenges through an automation script. The result was a scalable, highly efficient team workflow that dramatically improved both development productivity and code quality.&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;ul>
+&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
+&lt;/ul>
+&lt;h2 id="project-overview">Project Overview&lt;/h2>
+&lt;p>The Attendance Analyzer is an &lt;strong>in-house efficiency tool&lt;/strong> developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p>
+&lt;hr>
+&lt;h3 id="demo">Demo&lt;/h3>
+&lt;p>Below is a short video demonstrating the application&amp;rsquo;s core workflow.&lt;/p>
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+&lt;figure >
+ 
+ 
+
+ 
+ 
+
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;video controls autoplay loop muted playsinline
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+ &lt;source src="https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4" type="video/mp4">
+ Your browser does not support the video tag.
+ &lt;/video>
+ &lt;/div>
+ 
+
+ 
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">Application Core Workflow Demo&lt;/figcaption>
+ 
+&lt;/figure>
+&lt;br>
+&lt;hr>
+&lt;h2 id="core-features--tech-stack">Core Features &amp;amp; Tech Stack&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Rule-Driven Engine&lt;/strong>: All logic is controlled by a &lt;code>rules.toml&lt;/code> file.&lt;/li>
+&lt;li>&lt;strong>Comprehensive Metrics&lt;/strong>: Calculates attended days, overtime, lateness, etc.&lt;/li>
+&lt;li>&lt;strong>Dual-View Reporting&lt;/strong>: Generates both &amp;ldquo;Public&amp;rdquo; and &amp;ldquo;Detailed&amp;rdquo; reports.&lt;/li>
+&lt;li>&lt;strong>Tech Stack&lt;/strong>: &lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;h2 id="core-algorithm-design-v16">Core Algorithm Design (V1.6)&lt;/h2>
+&lt;p>As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Embedded on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/embedded/</link><description>Recent content in Embedded on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 21 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/embedded/index.xml" rel="self" type="application/rss+xml"/><item><title>Sherpa ASR在三款Rockchip SoC上的实现</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年7月~8月&lt;/li>
+&lt;/ul>
+&lt;h2 id="项目概述">项目概述&lt;/h2>
+&lt;p>这是一份详尽的技术报告，记录了将 &lt;strong>Sherpa ASR 语音识别框架&lt;/strong>（涵盖 &lt;code>sherpa-onnx&lt;/code> 与 &lt;code>sherpa-ncnn&lt;/code> 两种后端）部署到三款不同硬件架构与市场定位的嵌入式AI平台上的全链路工程实践。&lt;/p>
+&lt;p>项目由我独立负责，完整覆盖了从 &lt;strong>V1.0 的上层应用架构设计&lt;/strong>，到 &lt;strong>V2.0 的底层平台移植与编译问题排查&lt;/strong>，再到 &lt;strong>V3.0 核心的AI模型自主转换与图优化&lt;/strong> 的三个主要阶段。项目旨在为公司核心产品赋能AI能力，通过严谨的技术预研、系统实现与深度优化，最终交付了高性能、高稳定性的服务模块，并沉淀了一整套可复用的工程方法论与核心代码库。&lt;/p>
+&lt;hr>
+&lt;h3 id="核心技术成果">核心技术成果&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>系统级构建与产品化：&lt;/strong>
+独立设计并实现了一套包含并发处理、IPC通信的C/S架构，将一个基础的AI推理SDK（&lt;code>sherpa-onnx&lt;/code>）成功集成为一个稳定、可独立部署的服务。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>底层并发问题的分析与解决：&lt;/strong>
+利用 &lt;code>Valgrind/helgrind&lt;/code> 等动态分析工具，系统性地定位并修复了多个在并发场景下由阻塞式I/O和资源竞争引发的死锁与数据竞争问题，确保了服务的生产级稳定性。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>复杂的跨平台交叉编译与适配：&lt;/strong>
+面对不同目标平台（ARMv8/ARMv7）的老旧工具链（GCC 8.3）、不兼容的GLIBC版本以及存在源码缺陷的依赖库（&lt;code>onnxruntime&lt;/code>），通过修改构建脚本、手动移植代码补丁等手段，成功完成了复杂的交叉编译工作。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>AI模型转换与图优化：&lt;/strong>
+实现了从动态输入ONNX模型到静态RKNN模型的自主转换。通过深入分析&lt;code>decoder&lt;/code>模型的动态控制流（&lt;code>If&lt;/code>算子）与RKNN优化器（&lt;code>fold_constant&lt;/code>）的冲突机制，引入&lt;code>onnx-simplifier&lt;/code>专业工具，解决了因模型结构复杂导致的转换失败问题。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>跨平台性能验证与决策：&lt;/strong>
+在 &lt;strong>RK3588s&lt;/strong> 平台上，通过NPU加速 &lt;code>sherpa-onnx&lt;/code> 实现了 &lt;strong>RTF 0.2&lt;/strong> 的高性能。在 &lt;strong>RV1126&lt;/strong> 平台上，通过对 &lt;code>sherpa-ncnn&lt;/code> 纯CPU方案的性能测试，明确了其在多任务并行场景下的性能瓶颈。基于此结论，针对 &lt;strong>RV1126bp&lt;/strong> 平台，项目直接跳过了CPU方案验证，将技术重心放在了NPU方案的实现上。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="项目三阶段技术纪实">项目三阶段技术纪实&lt;/h3>
+&lt;p>本作品集由三个逻辑递进的章节组成，完整呈现了我在不同平台上面对的核心挑战与解决方案。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="./part1-integration/">第一章：系统架构与集成 — 在RK3588s上构建高性能 &lt;code>sherpa-onnx&lt;/code> 服务&lt;/a>&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>核心问题：&lt;/strong> “如何从一个SDK，构建一个完整的生产级系统？”&lt;/li>
+&lt;li>&lt;strong>内容简介：&lt;/strong> 本章聚焦于项目的V1.0阶段，以RK3588s平台为目标，详细阐述了如何围绕一个核心AI SDK，从零开始设计客户端/服务器架构、将核心功能模块化封装为可复用库，并解决了高并发服务中的线程安全、资源管理和优雅停机等关键工程问题。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="./part2-porting/">第二章：平台移植与问题排查 — 向RV1126平台的适配与 &lt;code>sherpa-ncnn&lt;/code> 方案实现&lt;/a>&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>核心问题：&lt;/strong> “当首选技术路径因平台差异不可行时，如何进行系统性地问题分析并实现备选方案？”&lt;/li>
+&lt;li>&lt;strong>内容简介：&lt;/strong> 本章记录了项目V2.0阶段的完整调试过程。在将系统移植到RV1126平台时，原定的NPU方案（&lt;code>sherpa-onnx&lt;/code>）因SDK版本不兼容而中止。报告详细复盘了转向纯CPU方案（&lt;code>sherpa-ncnn&lt;/code>）后，如何解决一系列交叉编译难题，并最终定位和解决了因&lt;code>Debug&lt;/code>模式导致的严重性能问题的全过程。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part3-conversion">第三章：自主模型转换 — 为RV1126bp实现NPU加速&lt;/a>&lt;/strong>&lt;/p></description></item></channel></rss>

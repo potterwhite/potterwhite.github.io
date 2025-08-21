@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Display Subsystem on Potter的个人笔记</title><link>https://potterwhite.github.io/categories/display-subsystem/</link><description>Recent content in Display Subsystem on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 18 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/display-subsystem/index.xml" rel="self" type="application/rss+xml"/><item><title>How-to: RK3568下强制HDMI的配置</title><link>https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%E4%B8%8B%E5%BC%BA%E5%88%B6hdmi%E7%9A%84%E9%85%8D%E7%BD%AE/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%E4%B8%8B%E5%BC%BA%E5%88%B6hdmi%E7%9A%84%E9%85%8D%E7%BD%AE/</guid><description>&lt;h1 id="how-tohdmi-keep-connected-no-matter-what">How-to:hdmi keep connected no matter what&lt;/h1>
+&lt;h2 id="原理图">原理图:&lt;/h2>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-hdmi-schema.png" alt="">&lt;/p>
+&lt;h2 id="检测-不是用gpio控制的">检测: 不是用gpio控制的&lt;/h2>
+&lt;ul>
+&lt;li>不管是设置hpd-state还是force_hpd;都是不起作用&lt;/li>
+&lt;li>display-timings 也不行&lt;/li>
+&lt;li>接下来就得考虑改变cmdline了&amp;hellip;这是唯一可用的方式&lt;/li>
+&lt;/ul>
+&lt;h2 id="解决办法成功">解决办法(成功)&lt;/h2>
+&lt;p>打开&lt;strong>kernel/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c&lt;/strong>
+修改函数&lt;strong>dw_hdmi_phy_read_hpd&lt;/strong>
+修改为如下:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">enum&lt;/span> &lt;span style="color:#000">drm_connector_status&lt;/span> &lt;span style="color:#000">dw_hdmi_phy_read_hpd&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87;font-weight:bold">struct&lt;/span> &lt;span style="color:#000">dw_hdmi&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">*&lt;/span>&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span>&lt;span style="color:#204a87;font-weight:bold">void&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">*&lt;/span>&lt;span style="color:#000">data&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#8f5902;font-style:italic">// return hdmi_readb(hdmi, HDMI_PHY_STAT0) &amp;amp; HDMI_PHY_HPD ?
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">&lt;/span>	&lt;span style="color:#8f5902;font-style:italic">// connector_status_connected : connector_status_disconnected;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">&lt;/span>	&lt;span style="color:#204a87;font-weight:bold">return&lt;/span> &lt;span style="color:#000">connector_status_connected&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="how-to-hdmi强制分辨率">How-to: hdmi强制分辨率&lt;/h1>
+&lt;h2 id="做法solution">做法(solution)&lt;/h2>
+&lt;p>打开&lt;strong>kernel/arch/arm64/boot/dts/rockchip/submodule-display.dtsi&lt;/strong>
+修改hdmi节点(rk3568只有一个hdmi)
+修改为如下(&lt;strong>可以添加其他内容,但是必须得有以下的几个语句和块&lt;/strong>):&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-dts" data-lang="dts">&amp;amp;hdmi {
+	status = &amp;#34;okay&amp;#34;;
+
+	/*
+	 * Use &amp;#39;force-output&amp;#39; to trigger the driver&amp;#39;s logic to ignore EDID
+	 * and use the &amp;#39;force-timing&amp;#39; node below.
+	 * The properties &amp;#39;force_hpd&amp;#39; and &amp;#39;hpd-state&amp;#39; are not standard
+	 * for this driver and should be removed.
+	 */
+	force-output;
+
+	/*
+	 * This node provides the specific timing information that the driver
+	 * will use when &amp;#39;force-output&amp;#39; is present.
+	 * The name &amp;#39;force_timing&amp;#39; is not what the driver looks for.
+	 * It must be a child node named &amp;#34;force-timing&amp;#34;.
+	 */
+	force_timing {
+		clock-frequency = &amp;lt;148500000&amp;gt;;
+		hactive = &amp;lt;1920&amp;gt;;
+		vactive = &amp;lt;1080&amp;gt;;
+		hfront-porch = &amp;lt;88&amp;gt;;
+		hsync-len = &amp;lt;44&amp;gt;;
+		hback-porch = &amp;lt;148&amp;gt;;
+		vfront-porch = &amp;lt;4&amp;gt;;
+		vsync-len = &amp;lt;5&amp;gt;;
+		vback-porch = &amp;lt;36&amp;gt;;
+		hsync-active = &amp;lt;1&amp;gt;; /* &amp;lt;1&amp;gt; for positive sync, as per standard 1080p60 */
+		vsync-active = &amp;lt;1&amp;gt;; /* &amp;lt;1&amp;gt; for positive sync, as per standard 1080p60 */
+	};
+
+	/* &amp;#39;display-timings&amp;#39; is typically used by simple-panel drivers,
+	 * not by the dw-hdmi bridge driver for forcing modes.
+	 * We should remove this section to avoid confusion.
+	 */
+	// display-timings { ... };
+};
+&lt;/code>&lt;/pre>&lt;h2 id="做法思路解析">做法思路解析&lt;/h2>
+&lt;h3 id="重要步骤">重要步骤&lt;/h3>
+&lt;ol>
+&lt;li>display-timings不适合rk的hdmi驱动&lt;/li>
+&lt;li>一定要是force_timing, 尤其是下划线不可以写错&lt;/li>
+&lt;li>一定要写force-output,否则force_timing写了也没用&lt;/li>
+&lt;/ol>
+&lt;h3 id="依据-源代码-dw_hdmi-rockchipc">依据-源代码-(dw_hdmi-rockchip.c)&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>kernel/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c&lt;/strong>&lt;/li>
+&lt;li>&lt;em>static int rockchip_hdmi_parse_dt(struct rockchip_hdmi *hdmi)&lt;/em>&lt;/li>
+&lt;li>这个函数有一段代码:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">if&lt;/span> &lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">of_property_read_bool&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">np&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;force-output&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">))&lt;/span> &lt;span style="color:#000;font-weight:bold">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">-&amp;gt;&lt;/span>&lt;span style="color:#000">timing_force_output&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#204a87">true&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#000">ret&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#000">of_get_display_timing&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">np&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;force_timing&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&lt;/span>&lt;span style="color:#000">timing&lt;/span>&lt;span style="color:#000;font-weight:bold">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#204a87;font-weight:bold">if&lt;/span> &lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">ret&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">&amp;lt;&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">0&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span> &lt;span style="color:#000;font-weight:bold">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#000">dev_err&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">-&amp;gt;&lt;/span>&lt;span style="color:#000">dev&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;can&amp;#39;t get force timing&lt;/span>&lt;span style="color:#4e9a06">\n&lt;/span>&lt;span style="color:#4e9a06">&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">-&amp;gt;&lt;/span>&lt;span style="color:#000">timing_force_output&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#204a87">false&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#204a87;font-weight:bold">return&lt;/span> &lt;span style="color:#000">ret&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#000;font-weight:bold">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#000">videomode_from_timing&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&lt;/span>&lt;span style="color:#000">timing&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&lt;/span>&lt;span style="color:#000">vm&lt;/span>&lt;span style="color:#000;font-weight:bold">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#000">drm_display_mode_from_videomode&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&lt;/span>&lt;span style="color:#000">vm&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&lt;/span>&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">-&amp;gt;&lt;/span>&lt;span style="color:#000">force_mode&lt;/span>&lt;span style="color:#000;font-weight:bold">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">-&amp;gt;&lt;/span>&lt;span style="color:#000">force_mode&lt;/span>&lt;span style="color:#000;font-weight:bold">.&lt;/span>&lt;span style="color:#000">type&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">|=&lt;/span> &lt;span style="color:#000">DRM_MODE_TYPE_PREFERRED&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#204a87;font-weight:bold">if&lt;/span> &lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">of_property_read_u32&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#000">np&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;force-bus-format&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">&amp;amp;&lt;/span>&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">-&amp;gt;&lt;/span>&lt;span style="color:#000">force_bus_format&lt;/span>&lt;span style="color:#000;font-weight:bold">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>		&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#ce5c00;font-weight:bold">-&amp;gt;&lt;/span>&lt;span style="color:#000">force_bus_format&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#000">MEDIA_BUS_FMT_RGB888_1X24&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里就是说如果去读到force-output,就进一步去读force_timing.
+然后就会内核中读取到正确的强制时序,接着就进一步按照强制时序来设置&lt;/p></description></item><item><title>How-to: 显示接口调试标准工作流程 (SOP)</title><link>https://potterwhite.github.io/blog/2025/08/18/how-to-%E6%98%BE%E7%A4%BA%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E6%A0%87%E5%87%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-sop/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/how-to-%E6%98%BE%E7%A4%BA%E6%8E%A5%E5%8F%A3%E8%B0%83%E8%AF%95%E6%A0%87%E5%87%86%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B-sop/</guid><description>&lt;h3 id="how-to-显示接口调试标准工作流程-sop">How-to: &lt;strong>显示接口调试标准工作流程 (SOP)&lt;/strong>&lt;/h3>
+&lt;h4 id="阶段一准备与信息收集-preparation--info-gathering">&lt;strong>阶段一：准备与信息收集 (Preparation &amp;amp; Info Gathering)&lt;/strong>&lt;/h4>
+&lt;p>&lt;strong>目标：&lt;/strong> 在写任何代码或DTS之前，确保你拥有所有必需的“图纸”和“说明书”。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>获取硬件原理图 (Schematic)&lt;/strong>: 这是你的依据。你需要知道：&lt;/p>
+&lt;ul>
+&lt;li>显示接口（MIPI/LVDS）连接到了主控SoC的哪个物理接口？(&lt;code>DSI0&lt;/code> 还是 &lt;code>DSI1&lt;/code>？)&lt;/li>
+&lt;li>相关的控制引脚（&lt;code>RESET&lt;/code>, &lt;code>POWER_ENABLE&lt;/code>, &lt;code>BACKLIGHT_PWM&lt;/code>）连接到了哪个GPIO或PWM控制器？&lt;/li>
+&lt;li>接口的I2C总线连接到了主控的哪个I2C控制器？（用于触摸或配置桥接芯片）&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>获取目标设备“说明书” (Datasheet)&lt;/strong>: 你的“屏幕”可能是物理屏，也可能是FPGA。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>如果是物理屏&lt;/strong>：获取屏幕模组的Datasheet。你需要从中找到：
+&lt;ul>
+&lt;li>&lt;strong>&lt;code>display-timings&lt;/code> (时序参数)&lt;/strong>：分辨率、刷新率、h/v porch、sync len等。&lt;/li>
+&lt;li>&lt;strong>&lt;code>panel-init-sequence&lt;/code> (初始化序列)&lt;/strong>：上电后需要发送的一长串DCS命令。&lt;/li>
+&lt;li>&lt;strong>接口参数&lt;/strong>：MIPI是几条lane？数据格式是RGB888还是RGB666？&lt;/li>
+&lt;li>&lt;strong>供电和复位时序要求&lt;/strong>：先上电还是先复位？延时多少毫秒？&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>如果是FPGA&lt;/strong>：&lt;strong>把FPGA工程师当作你的Datasheet&lt;/strong>。向他索要上述所有参数。FPGA的设计文档就是你的“说明书”。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>获取平台参考资料 (Platform Reference)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>SoC的TRM (技术参考手册)&lt;/strong>：理解VOP、DSI/LVDS控制器、Pinctrl等模块的工作原理。&lt;/li>
+&lt;li>&lt;strong>SoC的SDK中的官方DTS示例&lt;/strong>：这是你最好的抄袭和参考对象，特别是对于&lt;code>VOP路由&lt;/code>和&lt;code>Pinctrl&lt;/code>配置。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>&lt;strong>阶段一产出&lt;/strong>：一个信息清单，包含了所有需要填入DTS的参数，以及明确的硬件连接关系。你同事的DTS在这里就属于“目标设备说明书”的一部分。&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h4 id="阶段二dts配置与编译-dts-configuration">&lt;strong>阶段二：DTS配置与编译 (DTS Configuration)&lt;/strong>&lt;/h4>
+&lt;p>&lt;strong>目标：&lt;/strong> 将阶段一收集到的信息，用DTS语言“翻译”出来，让内核知道如何驱动硬件。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>配置Pin Control (&lt;code>pinctrl&lt;/code>)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>在&lt;code>pinctrl&lt;/code>节点中，为显示接口所需的所有引脚（数据线、时钟线、控制线）配置正确的功能复用。参考官方DTS示例的语法。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>配置核心控制器 (&lt;code>&amp;amp;dsi0&lt;/code>, &lt;code>&amp;amp;vop&lt;/code>等)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>使能（&lt;code>status = &amp;quot;okay&amp;quot;;&lt;/code>）VOP、DSI/LVDS控制器、MIPI PHY等。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>配置显示路由 (Routing)&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>这是平台相关的关键一步。根据官方DTS示例，正确地&lt;code>connect&lt;/code> VOP的输出和显示接口的输入。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>创建Panel节点&lt;/strong>:&lt;/p>
+&lt;ul>
+&lt;li>在对应的接口节点下（如&lt;code>&amp;amp;dsi0&lt;/code>），创建一个&lt;code>panel&lt;/code>子节点。&lt;/li>
+&lt;li>填入从Datasheet/FPGA工程师那里拿到的所有参数：&lt;code>compatible&lt;/code>, &lt;code>reg&lt;/code>, &lt;code>display-timings&lt;/code>, &lt;code>dsi,lanes&lt;/code>, &lt;code>dsi,format&lt;/code>等。&lt;/li>
+&lt;li>&lt;strong>关键原则&lt;/strong>：如果是直连物理屏，把所有参数（包括初始化代码）都填上。如果是送给FPGA，&lt;strong>只填FPGA需要的核心时序参数&lt;/strong>，删除所有物理相关的（背光、初始化代码、供电等）。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>编译内核&lt;/strong>: 确保没有DTS语法错误。&lt;/p></description></item><item><title>LCDs(lvds) on RK3568 Bring-Up 数据流研究</title><link>https://potterwhite.github.io/blog/2025/08/18/lcdslvds-on-rk3568-bring-up-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A0%94%E7%A9%B6/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/lcdslvds-on-rk3568-bring-up-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%A0%94%E7%A9%B6/</guid><description>&lt;h2 id="背景知识">&lt;strong>背景知识&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>参考:&lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-%e6%98%be%e7%a4%ba%e6%8e%a5%e5%8f%a3%e8%b0%83%e8%af%95%e6%a0%87%e5%87%86%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b-sop">How-to: 显示接口调试标准工作流程 (SOP)&lt;/a>&lt;/li>
+&lt;li>参考:&lt;a href="https://potterwhite.github.io/blog/2025/08/18/rockchip%e6%98%be%e7%a4%ba%e5%ad%90%e7%b3%bb%e7%bb%9f%e5%85%b3%e9%94%ae%e6%a6%82%e5%bf%b5%e8%a7%a3%e6%9e%90/">Rockchip显示子系统关键概念解析&lt;/a>&lt;/li>
+&lt;li>举例: 以lvds为例&lt;/li>
+&lt;/ul>
+&lt;h2 id="数据流-硬件的视角">数据流-(硬件的视角)&lt;/h2>
+&lt;ul>
+&lt;li>好了,这一步就是要确定硬件是怎么接的,我们直接梳理整个数据流的图形&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-数据从内存-vop">1. 数据从内存-&amp;gt;vop&lt;/h3>
+&lt;p>不论是从外设进来的,还是emmc上的, 都要搬进内存.所以数据流的起点是内存.
+这里从内存给到vop里配置的那个具体的vp.在dts里配置vop的代码如下:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#000;font-weight:bold">&amp;amp;&lt;/span>lvds_in_vp2 &lt;span style="color:#ce5c00;font-weight:bold">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	 &lt;span style="color:#000">status&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;okay&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#ce5c00;font-weight:bold">}&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此处是以vp2为最终lvds要关联的vp,但是并不是每个soc/或者每次产品的应用场景都是vp2的.&lt;/p>
+&lt;ul>
+&lt;li>How-to: 如何确定接口的数据是从哪一个vp出去的呢?
+&lt;ul>
+&lt;li>要从rk的这份图来看&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-vp-mapping-display-interfaces.png" alt="">&lt;/li>
+&lt;li>它规定了lvds只能走vp1或vp2,但因为我们的系统需要3个屏幕,且vp0~2的性能是越来越弱, 因此lvds的频率关系就决定了它最合适使用vp2.&lt;/li>
+&lt;li>&lt;strong>在这里要注意,其实这里写着1080p并不是代表lvds(以此为例)就能够到1080p.它还跟lvds本身有单通道和双通道有关系&lt;/strong>&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-lvds-config-table.jpg" alt="">&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-逻辑配置硬件不存在信号抵达route_lvds这个路由器">2. [逻辑配置][硬件不存在]信号抵达route_lvds这个&amp;quot;路由器&amp;quot;&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">&amp;amp;&lt;/span>route_lvds &lt;span style="color:#ce5c00;font-weight:bold">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">status&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &lt;span style="color:#4e9a06">&amp;#34;okay&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000">connect&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &amp;lt;&lt;span style="color:#000;font-weight:bold">&amp;amp;&lt;/span>vp2_out_lvds&amp;gt;&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">}&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在这里, 设备树中配置让lvds可以连接到router.
+这里需要深度去研究一下rk3568内部的封装, AI说这里的router是一个实际存在的IP, 就专门用来关联到不同的display interface.(这里的interface是一个抽象的逻辑概念, 物理上一般由controller和对应的phy组成,例如mipi DSI Host Controller对应mipi_tx dphy)不过,因为没有Rockchip公司给出的资料或者芯片手册中切实的证据去反推这个IP的存在,因为在此,还是把route_lvds作为一个逻辑上存在的概念最安全.&lt;/p>
+&lt;ul>
+&lt;li>补充
+&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-vop-mux-interfaces-disgram.png" alt="">&lt;/li>
+&lt;li>这张图实际上在佐证route非常可能是一个独立的IP存在,很可能具备可写的寄存器.才能实现引入不同display interface的功能.&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-再从vop-lvds控制器">3. 再从vop-&amp;gt;lvds控制器&lt;/h3>
+&lt;ul>
+&lt;li>在RK3568的设计中，LVDS控制器并非一个像MIPI-DSI那样独立的复杂IP核。它的核心控制逻辑被简化并&lt;strong>内嵌&lt;/strong>到了VOP和GRF(通用寄存器文件)中.这一点是靠数据手册里的寄存器介绍和原理介绍反推的.&lt;/li>
+&lt;li>通过特定的寄存器位来进行配置&lt;strong>GRF_VO_CONF0&lt;/strong>和&lt;strong>GRF_VO_CONF2&lt;/strong>.所以可以参考&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/RK3568-MIP-controller-block-diagram.png" alt="">&lt;/li>
+&lt;li>参考MIPI-DSI控制器的架构图，我们可以清晰地看到数据流的末端有一个&lt;strong>PHY Interface Control&lt;/strong>。这表明，**控制器(Controller)&lt;strong>的角色是在VOP的通用视频和PHY的物理层之间，扮演一个&lt;/strong>“协议转换和打包”**的角色。它接收来自VOP的RGB数据，并按照LVDS的bus-format(如SPWG/JEIDA)规则将其打包，然后送给PHY。&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic"># 在panel中设置&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>bus-format &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> &amp;lt;MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA&amp;gt;&lt;span style="color:#000;font-weight:bold">;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-从lvds控制器-mipi-dphy">4. 从lvds控制器-&amp;gt;MIPI-DPHY&lt;/h3>
+&lt;ul>
+&lt;li>3568里, mipi0和lvds0是共用一套phy的, mipi1和lvds1又是共用一套phy.可参考&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568b2-mipi-lvds-pins-multi-useage-table.png" alt="">&lt;/li>
+&lt;li>然后会按照设备树里配置的vp输出去.最终输出去就是按照GRF寄存器里定义的那几个引脚, 这几个引脚就是PHY的引脚, 是不可配置的, 不会出现在GPIO中.&lt;/li>
+&lt;li>设备树的代码如下:&lt;/li>
+&lt;/ul>
+&lt;ol>
+&lt;li>&amp;amp;lvds节点编辑的时候,phys=&amp;lt;&amp;amp;video_phy0&amp;gt;;&lt;/li>
+&lt;li>并且让video_phy0的status=&amp;ldquo;okay&amp;rdquo;.
+ &lt;pre>&lt;code>
+ // 2. 使能lvds对应的物理层PHY
+ &amp;video_phy0 {
+ 	status = "okay";
+ };
+
+ // 3. 完整配置LVDS控制器
+ &amp;lvds {
+ 	status = "okay";
+ 	phys = &lt;&amp;video_phy0>;
+ &lt;/code>
+ }
+ &lt;/code>&lt;/pre>
+&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>这么做就表明是让lvds走phy0了. 当然,在dts里,phy0不是一个被设置为某一个接口的视角, 而是被谁使用的一个角色, 是一个静态客观不变的角色.而这个phy和接口电路的映射关系其实也是固定的,在soc里面被做好的,做成可配置罢了.&lt;/li>
+&lt;/ul>
+&lt;h3 id="5-phy给到lcd">5. PHY给到LCD&lt;/h3>
+&lt;p>&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-mipi0-lvds-combo-phy-pins.png" alt="">
+图中的这些引脚(例如AG17/AH17等)都是PHY直接给出到显示屏幕的引脚, 也是soc这边的数据流的最后一个部分.
+lvds接口中, 4对数据脚(差分),1对时钟脚(差分), 对端按照lvds协议进行接收, 如果一切正确, 就能够显示内存中的图像了.&lt;/p></description></item><item><title>Rockchip显示子系统关键概念解析</title><link>https://potterwhite.github.io/blog/2025/08/18/rockchip%E6%98%BE%E7%A4%BA%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/rockchip%E6%98%BE%E7%A4%BA%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90/</guid><description>&lt;h2 id="dts中帧率的计算公式">&lt;strong>DTS中&amp;quot;帧率&amp;quot;的计算公式&lt;/strong>&lt;/h2>
+&lt;p>一个模式mode的帧率原来并不是直接以一个字段的形式写到timing里的,而是靠时钟去计算
+计算公式如下:&lt;/p>
+&lt;div class="math">
+$$
+\begin{aligned}
+\text{Htotal} &amp;= (\text{hsync\_len} + \text{hfront\_porch} + \text{hback\_porch} + \text{hactive}) \\
+\text{Vtotal} &amp;= (\text{vsync\_len} + \text{vfront\_porch} + \text{vback\_porch} + \text{vactive}) \\
+\text{FrameRate} &amp;= \frac{\text{ClkFreq}}{ \text{Htotal} \times \text{Vtotal} }
+\end{aligned}
+$$
+&lt;/div>
+&lt;h2 id="vop">VOP&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>rk是用vop来管理输出的硬件端口的&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>vp=video port&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>vop=video output processor&lt;/p>
+&lt;ul>
+&lt;li>定义: VOP是从存储器帧缓冲区到显示设备的显示接口,是显示单元用来显示图像Buffer,显示到屏幕。(From &lt;strong>sdk-beside-docs/cn/Linux/Graphics/Rockchip_Developer_Guide_Linux_Graphics_CN.pdf&lt;/strong>)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>vop和vp
+&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/RK3568-TRM-VOP-Overview.png" alt="">
+rk的soc都有自己的vop, 首先vop就有两个版本: vop和vop2&lt;/p>
+&lt;p>我们的rk3568使用的就是vop2,这个是soc的设定,不由得我们去修改.&lt;/p>
+&lt;p>具体的使用哪一个版本的VOP要去查阅rk3568的技术参考手册,我这里的文件名叫: &lt;strong>Rockchip RK3568 TRM Part2 V1.1-20210301.pdf&lt;/strong>&lt;/p>
+&lt;p>再来说vp, 每一个soc的vop都有数量不等的vp.&lt;/p>
+&lt;p>例如,rk3568有3个vp, rk3588有4个vp. 具体得看手册的介绍.如下图:&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-vp-mapping-display-interfaces.png" alt="">&lt;/p>
+&lt;p>从上面的图可以看出, 每一个vp可以接的接口类型还不一样.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="dts">dts&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>&amp;amp;lvds&lt;/strong>-代表lvds控制器这个硬件IP(或者等价的逻辑概念上的硬件电路)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&amp;amp;vp2&lt;/strong>-代表vop里的vp2这个IP&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&amp;amp;panel&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>这不是一个物理上存在的硬件IP,但应该把它当作逻辑设备.它也是一个节点.&lt;/li>
+&lt;li>可以认为它是一个c++上的类的概念,用来阐述最终屏幕的具体配置.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>它们都代表着pcb上的独立(逻辑)硬件电路集成块, 不要只是把它们当成一个普通的dts中的标识符&lt;/p></description></item></channel></rss>

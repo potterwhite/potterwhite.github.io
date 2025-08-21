@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rockchip on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/rockchip/</link><description>Recent content in Rockchip on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 21 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/rockchip/index.xml" rel="self" type="application/rss+xml"/><item><title>Sherpa ASR在三款Rockchip SoC上的实现</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年7月~8月&lt;/li>
+&lt;/ul>
+&lt;h2 id="项目概述">项目概述&lt;/h2>
+&lt;p>这是一份详尽的技术报告，记录了将 &lt;strong>Sherpa ASR 语音识别框架&lt;/strong>（涵盖 &lt;code>sherpa-onnx&lt;/code> 与 &lt;code>sherpa-ncnn&lt;/code> 两种后端）部署到三款不同硬件架构与市场定位的嵌入式AI平台上的全链路工程实践。&lt;/p>
+&lt;p>项目由我独立负责，完整覆盖了从 &lt;strong>V1.0 的上层应用架构设计&lt;/strong>，到 &lt;strong>V2.0 的底层平台移植与编译问题排查&lt;/strong>，再到 &lt;strong>V3.0 核心的AI模型自主转换与图优化&lt;/strong> 的三个主要阶段。项目旨在为公司核心产品赋能AI能力，通过严谨的技术预研、系统实现与深度优化，最终交付了高性能、高稳定性的服务模块，并沉淀了一整套可复用的工程方法论与核心代码库。&lt;/p>
+&lt;hr>
+&lt;h3 id="核心技术成果">核心技术成果&lt;/h3>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>系统级构建与产品化：&lt;/strong>
+独立设计并实现了一套包含并发处理、IPC通信的C/S架构，将一个基础的AI推理SDK（&lt;code>sherpa-onnx&lt;/code>）成功集成为一个稳定、可独立部署的服务。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>底层并发问题的分析与解决：&lt;/strong>
+利用 &lt;code>Valgrind/helgrind&lt;/code> 等动态分析工具，系统性地定位并修复了多个在并发场景下由阻塞式I/O和资源竞争引发的死锁与数据竞争问题，确保了服务的生产级稳定性。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>复杂的跨平台交叉编译与适配：&lt;/strong>
+面对不同目标平台（ARMv8/ARMv7）的老旧工具链（GCC 8.3）、不兼容的GLIBC版本以及存在源码缺陷的依赖库（&lt;code>onnxruntime&lt;/code>），通过修改构建脚本、手动移植代码补丁等手段，成功完成了复杂的交叉编译工作。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>AI模型转换与图优化：&lt;/strong>
+实现了从动态输入ONNX模型到静态RKNN模型的自主转换。通过深入分析&lt;code>decoder&lt;/code>模型的动态控制流（&lt;code>If&lt;/code>算子）与RKNN优化器（&lt;code>fold_constant&lt;/code>）的冲突机制，引入&lt;code>onnx-simplifier&lt;/code>专业工具，解决了因模型结构复杂导致的转换失败问题。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>跨平台性能验证与决策：&lt;/strong>
+在 &lt;strong>RK3588s&lt;/strong> 平台上，通过NPU加速 &lt;code>sherpa-onnx&lt;/code> 实现了 &lt;strong>RTF 0.2&lt;/strong> 的高性能。在 &lt;strong>RV1126&lt;/strong> 平台上，通过对 &lt;code>sherpa-ncnn&lt;/code> 纯CPU方案的性能测试，明确了其在多任务并行场景下的性能瓶颈。基于此结论，针对 &lt;strong>RV1126bp&lt;/strong> 平台，项目直接跳过了CPU方案验证，将技术重心放在了NPU方案的实现上。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="项目三阶段技术纪实">项目三阶段技术纪实&lt;/h3>
+&lt;p>本作品集由三个逻辑递进的章节组成，完整呈现了我在不同平台上面对的核心挑战与解决方案。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="./part1-integration/">第一章：系统架构与集成 — 在RK3588s上构建高性能 &lt;code>sherpa-onnx&lt;/code> 服务&lt;/a>&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>核心问题：&lt;/strong> “如何从一个SDK，构建一个完整的生产级系统？”&lt;/li>
+&lt;li>&lt;strong>内容简介：&lt;/strong> 本章聚焦于项目的V1.0阶段，以RK3588s平台为目标，详细阐述了如何围绕一个核心AI SDK，从零开始设计客户端/服务器架构、将核心功能模块化封装为可复用库，并解决了高并发服务中的线程安全、资源管理和优雅停机等关键工程问题。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="./part2-porting/">第二章：平台移植与问题排查 — 向RV1126平台的适配与 &lt;code>sherpa-ncnn&lt;/code> 方案实现&lt;/a>&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>核心问题：&lt;/strong> “当首选技术路径因平台差异不可行时，如何进行系统性地问题分析并实现备选方案？”&lt;/li>
+&lt;li>&lt;strong>内容简介：&lt;/strong> 本章记录了项目V2.0阶段的完整调试过程。在将系统移植到RV1126平台时，原定的NPU方案（&lt;code>sherpa-onnx&lt;/code>）因SDK版本不兼容而中止。报告详细复盘了转向纯CPU方案（&lt;code>sherpa-ncnn&lt;/code>）后，如何解决一系列交叉编译难题，并最终定位和解决了因&lt;code>Debug&lt;/code>模式导致的严重性能问题的全过程。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>&lt;a href="https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part3-conversion">第三章：自主模型转换 — 为RV1126bp实现NPU加速&lt;/a>&lt;/strong>&lt;/p></description></item><item><title>RK3568平台显示子系统Bring-up与多接口调试</title><link>https://potterwhite.github.io/portfolio/bringup_display_rk3568_fpga/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_display_rk3568_fpga/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年8月&lt;/li>
+&lt;/ul>
+&lt;h1 id="项目概述-project-overview">&lt;strong>项目概述 (Project Overview)&lt;/strong>&lt;/h1>
+&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+在一个基于Rockchip RK3568 SoC的定制化项目中，需要同时或独立地使能LVDS、MIPI-DSI和HDMI 2.0三大显示接口。其中，LVDS接口需向FPGA输出超越官方规格的1920x1080@30Hz视频流；HDMI与MIPI则需要绕过EDID检测，强制输出固定的1080p@60Hz信号。初始BSP中这些通路均未配置，需要从零开始进行Bring-up。&lt;/p>
+&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+作为项目的BSP工程师，我独立负责整个显示子系统的Bring-up与对接任务。我的核心贡献在于&lt;strong>通过对数据手册和内核源码的深度挖掘，完成了纯软件层面的配置与调试&lt;/strong>：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>深入研究并梳理了RK3568显示子系统的数据流&lt;/strong>，清晰地描绘了从内存(Memory) -&amp;gt; VOP -&amp;gt; 各接口控制器 -&amp;gt; Combo PHY的完整硬件链路。&lt;/li>
+&lt;li>&lt;strong>主导并完成了设备树(DTS)的精确配置&lt;/strong>，为LVDS、MIPI-DSI、HDMI三大接口正确设置了VOP路由、时序参数(Timings)以及PHY复用关系。&lt;/li>
+&lt;li>&lt;strong>通过精密的DTS配置，成功驱动SoC物理层(PHY)输出正确的数字视频信号&lt;/strong>，为后续与FPGA的信号握手及HDMI显示器的点亮奠定了坚实基础。&lt;/li>
+&lt;li>&lt;strong>成功实现了超越官方规格的视频流输出&lt;/strong>，在满足时钟频率限制的前提下，稳定实现了LVDS接口1920x1080@30Hz的信号输出，并获得FPGA端的成功接收。&lt;/li>
+&lt;li>&lt;strong>将整个调试过程提炼并撰写成一套标准作业程序(SOP)与技术文档&lt;/strong>，为团队未来所有显示接口的调试工作提供了清晰、高效的指导框架。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h1 id="我的方法论显示接口调试标准作业程序-sop">&lt;strong>我的方法论：显示接口调试标准作业程序 (SOP)&lt;/strong>&lt;/h1>
+&lt;p>为了系统性地解决此类“点屏”或“信号对接”问题，我沉淀了一套分为四个阶段的SOP。该流程将模糊的调试任务分解为清晰、可验证的步骤，能够快速定位问题是在SoC软件配置侧，还是在对端设备(FPGA/屏幕)侧。&lt;/p>
+&lt;h3 id="项目相关技术文档-project-related-technical-documents">&lt;strong>项目相关技术文档 (Project-Related Technical Documents)&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-%e6%98%be%e7%a4%ba%e6%8e%a5%e5%8f%a3%e8%b0%83%e8%af%95%e6%a0%87%e5%87%86%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b-sop">How-to: 显示接口调试标准工作流程 (SOP)&lt;/a>&lt;/strong>: 详细阐述了从信息收集到底层验证的四个关键阶段。&lt;/li>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%e4%b8%8b%e5%bc%ba%e5%88%b6hdmi%e7%9a%84%e9%85%8d%e7%bd%ae">How-to: RK3568下强制HDMI的配置&lt;/a>&lt;/strong>: 记录了如何通过修改驱动代码和DTS来强制HDMI连接状态与分辨率。&lt;/li>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/rockchip%e6%98%be%e7%a4%ba%e5%ad%90%e7%b3%bb%e7%bb%9f%e5%85%b3%e9%94%ae%e6%a6%82%e5%bf%b5%e8%a7%a3%e6%9e%90">Rockchip显示子系统关键概念解析&lt;/a>&lt;/strong>: 总结了VOP、DRM端口路由等核心概念。&lt;/li>
+&lt;li>&lt;strong>&lt;a href="https://potterwhite.github.io/blog/2025/08/18/lcdslvds-on-rk3568-bring-up-%e6%95%b0%e6%8d%ae%e6%b5%81%e7%a0%94%e7%a9%b6">LCDs(lvds) Bring-Up 数据流研究&lt;/a>&lt;/strong>: 深入分析了LVDS从内存到物理引脚的完整数据链路。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h1 id="项目成果与验证-results--verification">&lt;strong>项目成果与验证 (Results &amp;amp; Verification)&lt;/strong>&lt;/h1>
+&lt;p>遵循SOP，我成功使能了RK3568的所有目标显示接口。所有配置均通过软件工具和对端设备的反馈得到验证。&lt;/p>
+&lt;h2 id="内核模式验证-modetest">&lt;strong>内核模式验证 (modetest)&lt;/strong>&lt;/h2>
+&lt;p>&lt;code>modetest&lt;/code>工具的输出确认内核已为各个接口成功创建并应用了我们强制指定的模式，绕过了EDID检测。以下是LVDS接口的示例：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Connectors:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>id encoder status name size &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>mm&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> modes encoders
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#0000cf;font-weight:bold">172&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">171&lt;/span> connected LVDS-1 0x0 &lt;span style="color:#0000cf;font-weight:bold">1&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">171&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> modes:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index name refresh &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>Hz&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> hdisp hss hse htot vdisp vss vse vtot
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8f5902;font-style:italic">#0 1920x1080 29.41 1920 1968 2000 2040 1080 1083 1088 1111 66660 flags: nhsync, nvsync; type: preferred, driver&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#0000cf;font-weight:bold">174&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">173&lt;/span> connected HDMI-A-1 0x0 &lt;span style="color:#0000cf;font-weight:bold">1&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">173&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> modes:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index name refresh &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>Hz&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> hdisp hss hse htot vdisp vss vse vtot
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8f5902;font-style:italic">#0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#0000cf;font-weight:bold">190&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">189&lt;/span> connected DSI-1 68x121 &lt;span style="color:#0000cf;font-weight:bold">1&lt;/span> &lt;span style="color:#0000cf;font-weight:bold">189&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> modes:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> index name refresh &lt;span style="color:#ce5c00;font-weight:bold">(&lt;/span>Hz&lt;span style="color:#ce5c00;font-weight:bold">)&lt;/span> hdisp hss hse htot vdisp vss vse vtot
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#8f5902;font-style:italic">#0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: nhsync, nvsync; type: preferred, driver&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>结论:&lt;/strong> 内核DRM框架已按DTS预期工作，&lt;code>clock-frequency&lt;/code>与时序参数均正确加载。HDMI与MIPI接口也通过类似方式得到验证。&lt;/p></description></item><item><title>RK3568平台千兆以太网控制器Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年7月&lt;/li>
+&lt;/ul>
+&lt;h1 id="项目概述-project-overview">&lt;strong>项目概述 (Project Overview)&lt;/strong>&lt;/h1>
+&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+在一个基于Rockchip RK3568 SoC的定制化产品开发项目中，我负责对板载的千兆以太网接口（GMAC1, &lt;code>ethernet@fe010000&lt;/code>）进行初次的功能Bring-up。在初始BSP配置下，该网络接口未能被内核正确初始化，日志显示&lt;code>Cannot attach to PHY&lt;/code>和&lt;code>Failed to reset the dma&lt;/code>等错误。&lt;/p>
+&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+作为项目的BSP工程师，我负责诊断并解决此底层软硬件集成问题。我的主要工作包括：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>执行了端到端的系统性排查&lt;/strong>，覆盖了从物理电路到内核驱动的全链路。&lt;/li>
+&lt;li>&lt;strong>精确定位了问题根源&lt;/strong>，将其归因于设备树（DTS）中关于GMAC1的时钟树、引脚功能（pinctrl）配置与硬件设计不匹配。&lt;/li>
+&lt;li>&lt;strong>主导并实施了设备树的修正方案&lt;/strong>，成功使能网络接口并确保其稳定运行。&lt;/li>
+&lt;li>&lt;strong>通过&lt;code>iperf&lt;/code>进行了性能验证&lt;/strong>，确认网络吞-吐量达到千兆以太网的设计标准。&lt;/li>
+&lt;li>&lt;strong>将调试过程沉淀为一套标准作业程序 (SOP)&lt;/strong>，用于指导未来类似外设的Bring-up工作。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h1 id="我的方法论嵌入式外设bring-up标准作业程序-sop">&lt;strong>我的方法论：嵌入式外设Bring-up标准作业程序 (SOP)&lt;/strong>&lt;/h1>
+&lt;p>我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。&lt;/p>
+&lt;h3 id="第一部分标准化移植流程-standard-porting-workflow">&lt;strong>第一部分：标准化移植流程 (Standard Porting Workflow)&lt;/strong>&lt;/h3>
+&lt;p>此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。&lt;/p>
+&lt;ul>
+&lt;li>感兴趣可以看我的日志: &lt;a href="https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-work-flow">GMAC Bring Up Work Flow&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="第二部分异常诊断清单-troubleshooting-checklist">&lt;strong>第二部分：异常诊断清单 (Troubleshooting Checklist)&lt;/strong>&lt;/h3>
+&lt;p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。&lt;/p>
+&lt;ul>
+&lt;li>感兴趣可以看我的日志: &lt;a href="https://potterwhite.github.io/blog/2025/07/25/gmac-bring-up-debug-strategies">GMAC Bring-Up Debug Strategies&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="sop流程图">SOP流程图&lt;/h3>
+&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/work-flow.svg" alt="work flow" style="height: 1500px; max-width: 100%;">
+&lt;pre class="mermaid"> info&lt;/pre>
+&lt;pre class="mermaid">graph TD
+ %% === 定义与样式 ===
+ classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab;
+ classDef dark_debug fill:#4b3e58,color:white,stroke:#b8a3d3;
+ classDef dark_decision fill:#27ae60,color:white,stroke:#88d1a1;
+ classDef dark_result_ok fill:#16a085,color:white,stroke:#72d6c1;
+ classDef dark_result_fail fill:#c0392b,color:white,stroke:#e69a93;
+
+ %% === 主流程 (左侧) ===
+ subgraph &amp;#34;标准化移植流程 (Standard Porting Workflow)&amp;#34;
+ direction TB
+ S[&amp;lt;b&amp;gt;开始&amp;lt;/b&amp;gt;]:::dark_main
+ A[&amp;lt;b&amp;gt;1. 硬件接口确认&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;GMAC0或GMAC1]:::dark_main
+ B[&amp;lt;b&amp;gt;2. 时钟模式分析&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;25MHz与125MHz两种时钟的流向]:::dark_main
+ C[&amp;lt;b&amp;gt;3. 设备树DTS适配&amp;lt;/b&amp;gt;&amp;lt;/br&amp;gt;从瑞芯微的ModeConfig手册里节选正确dts配置]:::dark_main
+ D[&amp;lt;b&amp;gt;5. 编译与验证&amp;lt;/b&amp;gt;]:::dark_main
+
+ S --&amp;gt; A --&amp;gt; B --&amp;gt; C --&amp;gt; D
+ end
+
+ %% === 决策点 (中央) ===
+ F{&amp;#34;&amp;lt;div style=&amp;#39;text-align:center&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-question-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;验证&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;网络是否正常工作?&amp;lt;/div&amp;gt;&amp;#34;}:::dark_decision
+ D --&amp;gt; F
+
+ %% === 诊断流程 (右侧) ===
+ subgraph &amp;#34;异常诊断锦囊 (Troubleshooting Checklist)&amp;#34;
+ direction TB
+ G[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bolt&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;物理层健康检查 (L1)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 电源 (Power Rails)&amp;lt;br&amp;gt;- 复位信号 (Reset Signal)&amp;lt;br&amp;gt;- 参考时钟 (Reference Clock)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+ H[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-bullseye&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;控制通路验证 (L2)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- U-Boot &amp;#39;mii read&amp;#39;&amp;lt;br&amp;gt;- Kernel &amp;#39;sysfs&amp;#39; &amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+ I[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-cogs&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;关键逻辑审查 (Logic Review)&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 硬件模式 (Strapping Pins)&amp;lt;br&amp;gt;- 时钟流向 (Clock Direction)&amp;lt;/div&amp;gt;&amp;#34;]:::dark_debug
+
+ G --&amp;gt; H --&amp;gt; I
+ end
+
+ %% === 成功/失败出口 ===
+ SUCCESS[&amp;lt;b&amp;gt;&amp;lt;i class=&amp;#39;fa fa-check-circle&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; 成功&amp;lt;/b&amp;gt;]:::dark_result_ok
+ FAILURE[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;i class=&amp;#39;fa fa-undo&amp;#39;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;b&amp;gt;修正并迭代&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;根据诊断结果&amp;lt;br&amp;gt;返回&amp;lt;b&amp;gt;阶段3或4&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;重新适配DTS&amp;lt;/div&amp;gt;&amp;#34;]:::dark_result_fail
+
+ %% === 流程连接 ===
+ F -- &amp;#34;是 (Yes)&amp;#34; --&amp;gt; SUCCESS
+ F -- &amp;#34;否 (No)&amp;#34; --&amp;gt; G
+ I --&amp;gt; FAILURE
+ FAILURE -.-&amp;gt; C &amp;amp; D&lt;/pre>
+&lt;hr>
+&lt;h1 id="项目成果与验证-results--verification">&lt;strong>项目成果与验证 (Results &amp;amp; Verification)&lt;/strong>&lt;/h1>
+&lt;p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，&lt;code>dma reset&lt;/code>错误消失，网络接口成功初始化。&lt;/p></description></item></channel></rss>
