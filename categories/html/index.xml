@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HTML on Potter的个人笔记</title><link>https://potterwhite.github.io/categories/html/</link><description>Recent content in HTML on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 18 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/html/index.xml" rel="self" type="application/rss+xml"/><item><title>html tricks</title><link>https://potterwhite.github.io/blog/2024/07/18/html-tricks/</link><pubDate>Thu, 18 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/18/html-tricks/</guid><description>&lt;details>
+ &lt;summary>&lt;strong>001. what is the unit of "em"?&lt;strong>&lt;/summary>
+&lt;div style="padding-left: 2em;">
+&lt;p>&lt;code>em&lt;/code> does not have its full-name.
+it standed for the width of alphabet &amp;ldquo;M&amp;rdquo;
+now it always stands for the unit of with of font.&lt;/p>
+&lt;/div>
+&lt;/details></description></item></channel></rss>

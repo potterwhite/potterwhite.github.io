@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>A Configuration-Driven Standardized Development Environment (Docker) on Potter`s Log Book</title><link>https://potterwhite.github.io/en/portfolio/dockerdevenv/</link><description>Recent content in A Configuration-Driven Standardized Development Environment (Docker) on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/portfolio/dockerdevenv/index.xml" rel="self" type="application/rss+xml"/><item><title>Part 1: High-Level Design</title><link>https://potterwhite.github.io/en/portfolio/dockerdevenv/part1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/dockerdevenv/part1/</guid><description>&lt;script type="module">
+ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+&lt;/script>
+&lt;!-- ---
+title: "宏观设计篇：基于配置驱动的标准化开发环境架构"
+date: 2025-08-19T12:00:00+08:00
+draft: false
+tags: ["Docker", "DevOps", "Architecture", "Embedded", "Software Engineering"]
+--- -->
+&lt;h2 id="1-background-and-problem-definition">1. Background and Problem Definition&lt;/h2>
+&lt;p>In modern software engineering practices, especially in fields tightly coupled with hardware like embedded systems, standardizing the development environment is a fundamental and critical challenge. When team members perform cross-compilation for specific hardware platforms (e.g., &lt;code>RK3568&lt;/code>, &lt;code>RV1126&lt;/code>) on different operating systems (Windows, macOS, Linux), different versions of the same OS (Ubuntu 18.04, 20.04, 22.04, etc.), or even on the same OS version but with different gcc/python/glibc versions, environmental heterogeneity leads to a series of predictable engineering problems:&lt;/p></description></item><item><title>Part 2: Image Build Deep Dive</title><link>https://potterwhite.github.io/en/portfolio/dockerdevenv/part2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/dockerdevenv/part2/</guid><description>&lt;!-- ---
+title: "镜像构建篇：Docker 多阶段构建与动态脚本生成技术解析"
+date: 2025-08-19T14:00:00+08:00
+draft: false
+tags: ["Docker", "Dockerfile", "Build Optimization", "Shell Scripting", "DevOps"]
+--- -->
+&lt;h2 id="1-introduction">1. Introduction&lt;/h2>
+&lt;p>In the first article of this series, we explained the high-level architecture for building a standardized development environment based on the &amp;ldquo;configuration-driven&amp;rdquo; idea. This article will dive into the execution core of this architecture—the image build phase—and detail how we leverage Docker&amp;rsquo;s Multi-stage Builds strategy combined with dynamic script generation techniques to create a development environment image that is both feature-complete and highly optimized.&lt;/p></description></item><item><title>Part 3: Management and Distribution</title><link>https://potterwhite.github.io/en/portfolio/dockerdevenv/part3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/dockerdevenv/part3/</guid><description>&lt;!-- ---
+title: "管理与分发篇：优化开发者工作流与交付实践"
+date: 2025-08-19T16:00:00+08:00
+draft: false
+tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevOps"]
+--- -->
+&lt;h2 id="1-introduction">1. Introduction&lt;/h2>
+&lt;p>In the first two articles of this series, we discussed the top-level architectural design of a standardized development environment and the image implementation details based on Docker multi-stage builds. However, the ultimate value of a technically excellent solution is reflected in its smooth adoption by end-users (i.e., developers). This article will focus on the &amp;ldquo;last mile&amp;rdquo; of the workflow: how to simplify container management and how to achieve standardized distribution of the development environment.&lt;/p></description></item></channel></rss>
