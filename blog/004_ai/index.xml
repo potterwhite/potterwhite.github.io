@@ -32,4 +32,24 @@ categories:
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
-&lt;/div></description></item></channel></rss>
+&lt;/div></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;p>danny zhou&lt;/p>
+&lt;p>把两个英文单词的尾字母进行拼接
+hello world
+a.直接输出od
+b.hello的尾字母是o, world的尾字母是d,所以拼接起来是od&lt;/p>
+&lt;p>a是没有推理的
+b是有推理的&lt;/p>
+&lt;p>模型本身就会推理,不需要人去教他们推理&lt;/p>
+&lt;p>let think step by step对模型推理是有用的.&lt;/p>
+&lt;p>first principle in ML:&lt;/p>
+&lt;ul>
+&lt;li>directly optimize what we want!&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>what do we want to optimize here
+i. 定义目标
+optimize the metric of measuring generation quality&lt;/p>
+&lt;p>ii. 计算梯度
+examples: correctness for solving math problems, blue score for machine translation&lt;/p>
+&lt;p>iii. 反向传播
+all the reset is to compute gradients and do backpropagation!&lt;/p></description></item></channel></rss>
