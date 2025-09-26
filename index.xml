@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 21 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一部分：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</guid><description>&lt;script type="module">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 26 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一部分：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h1 id="项目复盘报告-after-action-review---优化版">&lt;strong>项目复盘报告 (After-Action Review) - 优化版&lt;/strong>&lt;/h1>
@@ -357,7 +357,31 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;li>&lt;strong>内置最佳实践 (Embedded Best Practices):&lt;/strong> 可以在脚本中预置最佳参数，例如在启动时自动执行 &lt;code>--build&lt;/code> 以确保镜像是最新的，或是在停止时执行 &lt;code>--remove-orphans&lt;/code> 来清理无用的容器。&lt;/li>
 &lt;/ul>
 &lt;h3 id="22-实现机制概念性">2.2 实现机制（概念性）&lt;/h3>
-&lt;p>&lt;code>ubuntu_only_entrance.sh&lt;/code> 脚本内部实现了一个简单的命令分发器。它通过解析传入的第一个参数来决定执行何种 &lt;code>docker-compose&lt;/code> 操作。&lt;/p></description></item><item><title>How-to: RK3568下强制HDMI的配置</title><link>https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%E4%B8%8B%E5%BC%BA%E5%88%B6hdmi%E7%9A%84%E9%85%8D%E7%BD%AE/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%E4%B8%8B%E5%BC%BA%E5%88%B6hdmi%E7%9A%84%E9%85%8D%E7%BD%AE/</guid><description>&lt;h1 id="how-tohdmi-keep-connected-no-matter-what">How-to:hdmi keep connected no matter what&lt;/h1>
+&lt;p>&lt;code>ubuntu_only_entrance.sh&lt;/code> 脚本内部实现了一个简单的命令分发器。它通过解析传入的第一个参数来决定执行何种 &lt;code>docker-compose&lt;/code> 操作。&lt;/p></description></item><item><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_lt8911exb_on_rk3568/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_lt8911exb_on_rk3568/</guid><description>&lt;script type="module">
+ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+&lt;/script>
+&lt;h3 id="项目总结rockchip-rk3568-平台-mipi-dsi-转-edp-接口调试与验证">&lt;strong>项目总结：Rockchip RK3568 平台 MIPI-DSI 转 eDP 接口调试与验证&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年9月&lt;/li>
+&lt;li>&lt;strong>项目类型:&lt;/strong> Rockchip, Bring-Up, Linux Kernel Driver, Device Tree, I2C&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="1-项目概述-project-overview">&lt;strong>1. 项目概述 (Project Overview)&lt;/strong>&lt;/h3>
+&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+在一个基于 Rockchip RK3568 SoC 的定制化项目中，需要将 MIPI-DSI 视频信号通过 Lontium LT8911EXB 桥接芯片转换为 eDP 信号，以驱动一块 eDP 接口的显示屏。在初始的 BSP (Board Support Package) 集成后，显示屏未能正常点亮，内核日志（&lt;code>dmesg&lt;/code>）中也未出现 LT8911EXB 相关驱动的加载信息。&lt;/p>
+&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+作为项目的 BSP 工程师，我负责从硬件原理到内核驱动的全链路调试，以实现该显示通路的功能 Bring-up。我的核心贡献包括：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>执行了系统性的硬件健康检查&lt;/strong>，验证了 LT8911EXB 芯片工作的基本条件，包括电源、时钟和复位电路。&lt;/li>
+&lt;li>&lt;strong>深入分析了 Linux 设备驱动模型&lt;/strong>，厘清了设备树 (DTS)、内核驱动与硬件之间的交互与触发机制。&lt;/li>
+&lt;li>&lt;strong>精确定位了驱动加载失败的根本原因&lt;/strong>：设备树中 I2C 地址与 GPIO 属性的配置与驱动代码及硬件规范不符。&lt;/li>
+&lt;li>&lt;strong>主导并实施了设备树的修正方案&lt;/strong>，成功使内核驱动与硬件设备匹配，并正确加载。&lt;/li>
+&lt;li>&lt;strong>沉淀了调试过程中的关键知识点&lt;/strong>，形成了包括 RC 电路、I2C 地址表示法、示波器探头使用等在内的技术笔记，为团队知识库做出了贡献。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="2-我的方法论嵌入式外设-bring-up-诊断流程">&lt;strong>2. 我的方法论：嵌入式外设 Bring-up 诊断流程&lt;/strong>&lt;/h3>
+&lt;p>本次调试过程遵循了一套从硬件到软件、由表及里的系统性排查方法。这个流程旨在快速收敛问题范围，避免在不确定的方向上浪费时间。&lt;/p></description></item><item><title>How-to: RK3568下强制HDMI的配置</title><link>https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%E4%B8%8B%E5%BC%BA%E5%88%B6hdmi%E7%9A%84%E9%85%8D%E7%BD%AE/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/08/18/how-to-rk3568%E4%B8%8B%E5%BC%BA%E5%88%B6hdmi%E7%9A%84%E9%85%8D%E7%BD%AE/</guid><description>&lt;h1 id="how-tohdmi-keep-connected-no-matter-what">How-to:hdmi keep connected no matter what&lt;/h1>
 &lt;h2 id="原理图">原理图:&lt;/h2>
 &lt;p>&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-hdmi-schema.png" alt="">&lt;/p>
 &lt;h2 id="检测-不是用gpio控制的">检测: 不是用gpio控制的&lt;/h2>
@@ -2341,7 +2365,27 @@ categories:
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
-&lt;/div></description></item><item><title>关于我</title><link>https://potterwhite.github.io/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
+&lt;/div></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;p>danny zhou&lt;/p>
+&lt;p>把两个英文单词的尾字母进行拼接
+hello world
+a.直接输出od
+b.hello的尾字母是o, world的尾字母是d,所以拼接起来是od&lt;/p>
+&lt;p>a是没有推理的
+b是有推理的&lt;/p>
+&lt;p>模型本身就会推理,不需要人去教他们推理&lt;/p>
+&lt;p>let think step by step对模型推理是有用的.&lt;/p>
+&lt;p>first principle in ML:&lt;/p>
+&lt;ul>
+&lt;li>directly optimize what we want!&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>what do we want to optimize here
+i. 定义目标
+optimize the metric of measuring generation quality&lt;/p>
+&lt;p>ii. 计算梯度
+examples: correctness for solving math problems, blue score for machine translation&lt;/p>
+&lt;p>iii. 反向传播
+all the reset is to compute gradients and do backpropagation!&lt;/p></description></item><item><title>关于我</title><link>https://potterwhite.github.io/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
 &lt;div class="container text-center pt-5 pb-4">
  &lt;h1 class="display-3">一位开发者的旅程&lt;/h1>
  &lt;p class="display-5 text-muted">融合技术、神学与家庭&lt;/p>

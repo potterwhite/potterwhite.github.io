@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Device Tree on Potter`s Log Book</title><link>https://potterwhite.github.io/en/project_types/device-tree/</link><description>Recent content in Device Tree on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 18 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/project_types/device-tree/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568 Platform: Display Subsystem Bring-up and Multi-Interface Debugging</title><link>https://potterwhite.github.io/en/portfolio/bringup_display_rk3568_fpga/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_display_rk3568_fpga/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Device Tree on Potter`s Log Book</title><link>https://potterwhite.github.io/en/project_types/device-tree/</link><description>Recent content in Device Tree on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 26 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/project_types/device-tree/index.xml" rel="self" type="application/rss+xml"/><item><title>Bring-up and Verification of MIPI-to-eDP Chip LT8911EXB on RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup_lt8911exb_on_rk3568/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_lt8911exb_on_rk3568/</guid><description>&lt;script type="module">
+ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+&lt;/script>
+&lt;h3 id="project-summary-debugging-and-verification-of-mipi-dsi-to-edp-interface-on-rockchip-rk3568-platform">&lt;strong>Project Summary: Debugging and Verification of MIPI-DSI to eDP Interface on Rockchip RK3568 Platform&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>Date:&lt;/strong> September 2025&lt;/li>
+&lt;li>&lt;strong>Project Types:&lt;/strong> Rockchip, Bring-Up, Linux Kernel Driver, Device Tree, I2C&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="1-project-overview">&lt;strong>1. Project Overview&lt;/strong>&lt;/h3>
+&lt;p>&lt;strong>Situation:&lt;/strong>
+In a custom project based on the Rockchip RK3568 SoC, it was necessary to convert a MIPI-DSI video signal to an eDP signal using the Lontium LT8911EXB bridge chip to drive an eDP display. After the initial Board Support Package (BSP) integration, the display failed to light up, and the kernel log (&lt;code>dmesg&lt;/code>) showed no loading messages for the LT8911EXB driver.&lt;/p></description></item><item><title>RK3568 Platform: Display Subsystem Bring-up and Multi-Interface Debugging</title><link>https://potterwhite.github.io/en/portfolio/bringup_display_rk3568_fpga/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup_display_rk3568_fpga/</guid><description>&lt;ul>
 &lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>Date:&lt;/strong> August 2025&lt;/li>
 &lt;/ul>
