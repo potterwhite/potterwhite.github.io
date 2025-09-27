@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/python/</link><description>Recent content in Python on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 09 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/python/index.xml" rel="self" type="application/rss+xml"/><item><title>考勤分析器：一个规则驱动的HR效率工具</title><link>https://potterwhite.github.io/portfolio/attendace_analyzer/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/attendace_analyzer/</guid><description>&lt;ul>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/python/</link><description>Recent content in Python on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 27 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/python/index.xml" rel="self" type="application/rss+xml"/><item><title>嵌入式平台 (RV1126) 流式 ASR 模型 (Sherpa-ONNX Zipformer) INT8 端到端量化与部署</title><link>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</guid><description>&lt;script type="module">
+ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+&lt;/script>
+&lt;h3 id="项目名称嵌入式平台-rv1126-流式-asr-模型-sherpa-onnx-zipformer-int8-端到端量化与部署">&lt;strong>项目名称：嵌入式平台 (RV1126) 流式 ASR 模型 (Sherpa-ONNX Zipformer) INT8 端到端量化与部署&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> PotterWhite&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年8~9月&lt;/li>
+&lt;li>&lt;strong>技术栈:&lt;/strong> &lt;code>RKNN-Toolkit2&lt;/code>, &lt;code>ONNX&lt;/code>, &lt;code>C++&lt;/code>, &lt;code>Python&lt;/code>, &lt;code>librosa&lt;/code>, &lt;code>sherpa-onnx&lt;/code>, &lt;code>LibriSpeech&lt;/code>, &lt;code>AiShell&lt;/code>&lt;/li>
+&lt;li>&lt;strong>项目类型:&lt;/strong> 模型部署 (Model Deployment), INT8 量化 (INT8 Quantization), 嵌入式 AI (Embedded AI), 推理引擎集成 (Inference Engine Integration)&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="1-项目目标-project-objective">&lt;strong>1. 项目目标 (Project Objective)&lt;/strong>&lt;/h3>
+&lt;p>为基于 Rockchip RV1126 SoC 的嵌入式设备，将一个 &lt;code>FP32&lt;/code> 精度的流式 Zipformer ASR (Automatic Speech Recognition) ONNX 模型，转换为 &lt;code>INT8&lt;/code> 精度的 RKNN 模型，并在 &lt;code>sherpa-onnx&lt;/code> C++ 推理框架中完成部署与验证，以满足低延迟和低功耗的运行要求。&lt;/p>
+&lt;h3 id="2-执行方法与流程-methodology--workflow">&lt;strong>2. 执行方法与流程 (Methodology &amp;amp; Workflow)&lt;/strong>&lt;/h3>
+&lt;p>本项目采用了一套系统性的方法，覆盖从模型分析、运行时环境改造、量化数据生成到最终模型验证的全过程。&lt;/p></description></item><item><title>考勤分析器：一个规则驱动的HR效率工具</title><link>https://potterwhite.github.io/portfolio/attendace_analyzer/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/attendace_analyzer/</guid><description>&lt;ul>
 &lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>日期:&lt;/strong> 2025年7月&lt;/li>
 &lt;/ul>
