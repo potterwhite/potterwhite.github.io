@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 27 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一部分：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</guid><description>&lt;script type="module">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一部分：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h1 id="项目复盘报告-after-action-review---优化版">&lt;strong>项目复盘报告 (After-Action Review) - 优化版&lt;/strong>&lt;/h1>
@@ -357,7 +357,141 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;li>&lt;strong>内置最佳实践 (Embedded Best Practices):&lt;/strong> 可以在脚本中预置最佳参数，例如在启动时自动执行 &lt;code>--build&lt;/code> 以确保镜像是最新的，或是在停止时执行 &lt;code>--remove-orphans&lt;/code> 来清理无用的容器。&lt;/li>
 &lt;/ul>
 &lt;h3 id="22-实现机制概念性">2.2 实现机制（概念性）&lt;/h3>
-&lt;p>&lt;code>ubuntu_only_entrance.sh&lt;/code> 脚本内部实现了一个简单的命令分发器。它通过解析传入的第一个参数来决定执行何种 &lt;code>docker-compose&lt;/code> 操作。&lt;/p></description></item><item><title>嵌入式平台 (RV1126B) 流式 ASR 模型 (Sherpa-ONNX Zipformer) INT8 端到端量化与部署</title><link>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</guid><description>&lt;script type="module">
+&lt;p>&lt;code>ubuntu_only_entrance.sh&lt;/code> 脚本内部实现了一个简单的命令分发器。它通过解析传入的第一个参数来决定执行何种 &lt;code>docker-compose&lt;/code> 操作。&lt;/p></description></item><item><title>DTS（设备树）调试心得</title><link>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</guid><description>&lt;h2 id="dts里外设的常见结构调试思路">&lt;strong>dts里外设的常见结构（调试思路）：&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>有一个逻辑节点，表示开发者可以控制的那个逻辑设备（例如usb）的全部配置；&lt;/li>
+&lt;li>逻辑节点里会有一个控制器节点（如何判断一个节点是不是控制器几点，可以参考&lt;a href="https://potterwhite.github.io/blog/2025/10/16/dts%e8%ae%be%e5%a4%87%e6%a0%91%e8%b0%83%e8%af%95%e5%bf%83%e5%be%97/#How-to_%e5%a6%82%e4%bd%95%e4%bb%8e%e4%bb%a3%e7%a0%81%e4%b8%ad%e5%88%a4%e6%96%ad%e5%87%ba%e6%8e%a7%e5%88%b6%e5%99%a8%ef%bc%88controller%ef%bc%89%e8%8a%82%e7%82%b9%e6%98%af%e5%93%aa%e4%b8%80%e4%b8%aa%ef%bc%9f">How-to_如何从代码中判断出控制器（controller）节点是哪一个？&lt;/a>&lt;/li>
+&lt;li>控制器节点里会有phy节点，而如果是usb3.0的话，会有两个phy,一个提供usb2.0，一个提供usb3.0的模式支持。
+&lt;ul>
+&lt;li>这是因为usb协议是向前兼容的（即usb3.0接口能够支持usb2.0设备接入），因此，usb3.0就要提供2.0的phy来支持才能做到“向前兼容”&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>要把相应的逻辑节点/控制器节点/phy节点全部打开，而且配置到正确的模式&lt;/li>
+&lt;li>以上这是基于soc vendor给的dts上操作的办法，而且硬件上并没有做出太大的改动。&lt;/li>
+&lt;/ul>
+&lt;h2 id="how-to_">&lt;strong>How-to_如何从代码中判断出控制器（controller）节点是哪一个？&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>有中断，它可以通知cpu（interrupts）&lt;/li>
+&lt;li>拥有PHY（phys, phy-names）&lt;/li>
+&lt;li>与驱动程序绑定(有compatible)&lt;/li>
+&lt;li>拥有大量的寄存器空间(reg = &amp;lt;0x0 0xfcc00000 0x0 0x400000&amp;gt;)&lt;/li>
+&lt;li>拥有复杂的时钟和复位逻辑()&lt;/li>
+&lt;li>拥有高层的模式配置(例如dr_mode=&amp;ldquo;otg&amp;rdquo;)&lt;/li>
+&lt;/ul></description></item><item><title>硬件分层架构设计哲学</title><link>https://potterwhite.github.io/blog/2025/10/16/%E7%A1%AC%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/%E7%A1%AC%E4%BB%B6%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6/</guid><description>&lt;p>&lt;strong>[本文由Gemini辅助编写，Potter编撰/审校/修改]&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>Why为何有此文&lt;/strong>&lt;/p>
+&lt;p>现代SoC中几乎所有高速和复杂外设接口，都遵循着一套通用的分层设计架构。这并非巧合，而是一种核心的设计哲学，旨在&lt;strong>分离关注点 (Separation of Concerns)&lt;/strong>，将复杂的软硬件交互问题分解为更小、更易于管理的部分。&lt;/p>
+&lt;p>这个哲学是SOC上外设接口常见的设计范式，在配置dts（设备树）的工作时，有这个范式在脑海中，对调试的迷茫感会减轻不少。&lt;/p>
+&lt;hr>
+&lt;p>本文将首先阐述这一通用的三层架构模型，然后以USB接口为例，详细解析数据从外部设备到CPU的完整通路，最后探讨该模型的普适性与相关专业术语。&lt;/p>
+&lt;h2 id="一-通用硬件接口架构分层的设计哲学">&lt;strong>一、 通用硬件接口架构：分层的设计哲学&lt;/strong>&lt;/h2>
+&lt;p>一个典型的外设接口数据通路，可以被概括为三个核心阶段：&lt;/p>
+&lt;h3 id="阶段一物理层接口-physical-layer-interface---phy---感官">&lt;strong>阶段一：物理层接口 (Physical Layer Interface - PHY) - “感官”&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>通用职责：&lt;/strong> 这是系统与&lt;strong>物理世界&lt;/strong>直接交互的&lt;strong>模拟前端&lt;/strong>。无论是有线的铜缆、光纤，还是无线的电磁波，PHY都负责处理最原始、最底层的物理信号。&lt;/li>
+&lt;li>&lt;strong>核心功能：&lt;/strong>
+&lt;ol>
+&lt;li>&lt;strong>信号转换：&lt;/strong> 在模拟信号和数字信号之间进行双向转换。&lt;/li>
+&lt;li>&lt;strong>信号调理：&lt;/strong> 对信号进行放大、滤波、均衡，以对抗物理介质带来的噪声和衰减。&lt;/li>
+&lt;li>&lt;strong>时钟和数据恢复 (CDR)：&lt;/strong> 从没有单独时钟线的串行数据流中，精确地恢复出时钟信号和数据比特。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;strong>本质：&lt;/strong> PHY是**“媒质专家”&lt;strong>，它只关心如何在特定的物理介质（如双绞线、同轴电缆）上可靠地发送和接收0和1，但它&lt;/strong>不理解这些0和1的意义**。&lt;/li>
+&lt;/ul>
+&lt;h3 id="阶段二协议引擎控制器-protocol-engine--controller--mac---语言中枢">&lt;strong>阶段二：协议引擎/控制器 (Protocol Engine / Controller / MAC) - “语言中枢”&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>通用职责：&lt;/strong> 这是处理&lt;strong>数字协议逻辑&lt;/strong>的&lt;strong>数字后端&lt;/strong>。它接收来自PHY的干净比特流，并开始赋予它们“意义”。&lt;/li>
+&lt;li>&lt;strong>核心功能：&lt;/strong>
+&lt;ol>
+&lt;li>&lt;strong>成帧 (Framing)：&lt;/strong> 识别数据流中的同步头、起始/结束符，将比特流切割成一个个有意义的数据单元，我们称之为**“帧 (Frame)”&lt;strong>或&lt;/strong>“包 (Packet)”**。&lt;/li>
+&lt;li>&lt;strong>协议处理：&lt;/strong> 解析帧/包的头部信息，比如源/目标地址、长度、类型等。&lt;/li>
+&lt;li>&lt;strong>错误校验：&lt;/strong> 计算和验证CRC/校验和，确保数据在传输过程中没有损坏。&lt;/li>
+&lt;li>&lt;strong>媒体访问控制 (Media Access Control - MAC)：&lt;/strong> （在共享介质的网络中尤其重要，如以太网）决定何时可以发送数据，以避免冲突。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;strong>本质：&lt;/strong> Controller/MAC是**“语法专家”**，它懂得特定通信协议的规则，能将无意义的比特流组成结构化的、可被理解的数据帧。&lt;/li>
+&lt;/ul>
+&lt;h3 id="阶段三系统接口-system-interface---通往大脑的神经">&lt;strong>阶段三：系统接口 (System Interface) - “通往大脑的神经”&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>通用职责：&lt;/strong> 这是连接外设模块和SoC核心（CPU、内存）的&lt;strong>桥梁&lt;/strong>。&lt;/li>
+&lt;li>&lt;strong>核心功能：&lt;/strong>
+&lt;ol>
+&lt;li>&lt;strong>数据缓冲：&lt;/strong> 使用FIFO（先进先出队列）来平滑外设与系统总线之间的速度差异。&lt;/li>
+&lt;li>&lt;strong>总线适配：&lt;/strong> 将数据适配到SoC内部的高速总线协议上（如AXI, AHB）。&lt;/li>
+&lt;li>&lt;strong>直接内存访问 (DMA)：&lt;/strong> 在无需CPU干预的情况下，将数据成块地在内存和控制器之间搬运，极大提升效率。&lt;/li>
+&lt;li>&lt;strong>中断生成：&lt;/strong> 在任务完成或发生错误时，向CPU发送中断信号，唤醒CPU进行处理。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;strong>本质：&lt;/strong> 这是**“系统集成专家”**，负责让外设高效、有序地融入整个SoC的运作体系中。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="二-实例解析以usb为例看完整数据通路">&lt;strong>二、 实例解析：以USB为例看完整数据通路&lt;/strong>&lt;/h2>
+&lt;p>为了更具体地理解上述三层模型，我们以USB接口为例，详细剖析其数据流转的每一个环节。&lt;/p></description></item><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 I2S的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</guid><description/></item><item><title>RK3568平台USB OTG端口功能调试与模式固化</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</guid><description>&lt;h2 id="项目概述-project-overview">&lt;strong>项目概述 (Project Overview)&lt;/strong>&lt;/h2>
+&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+在基于Rockchip RK3568的定制化项目中，基于公版SDK, 重新梳理板上的USB接口，并解决板载的USB 3.0 OTG (Type-A) 端口在默认BSP配置下，无法正常识别U盘等Host模式设备。&lt;/p>
+&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+作为项目的BSP工程师，我独立负责诊断并解决此USB功能性问题。我的核心贡献在于：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>执行了系统性的问题排查&lt;/strong>，覆盖了从性能基线测试、硬件原理图研读，到内核DTS配置和&lt;code>sysfs&lt;/code>运行时状态分析的详细排查。&lt;/li>
+&lt;li>&lt;strong>主导并实施了解决方案&lt;/strong>：根据产品“该端口仅作为U盘接口使用”的明确需求，通过修改设备树(DTS)，将&lt;code>usbdrd_dwc3&lt;/code>控制器的&lt;code>dr_mode&lt;/code>由&lt;code>&amp;quot;otg&amp;quot;&lt;/code>强制修改为&lt;code>&amp;quot;host&amp;quot;&lt;/code>。&lt;/li>
+&lt;li>&lt;strong>精确定位了问题根源&lt;/strong>：OTG端口的ID引脚检测机制在当前硬件设计下未能有效触发模式切换，导致控制器未能自动识别plug-in，因此无法进入Host模式。&lt;/li>
+&lt;li>&lt;strong>完成了性能与功能的完整验证&lt;/strong>，确保修改后的端口不仅能稳定识别设备，其数据传输速率也达到了USB 3.0标准。&lt;/li>
+&lt;li>&lt;strong>将整个调试过程和技术分析&lt;/strong>沉淀为详细的技术文档，为未来类似问题提供了清晰的解决范例。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="我的方法论嵌入式外设调试流程">&lt;strong>我的方法论：嵌入式外设调试流程&lt;/strong>&lt;/h2>
+&lt;p>本次调试遵循了一套由表及里、从软件到硬件的标准化诊断流程：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>文档与原理分析 (Documentation &amp;amp; Schematic Analysis):&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>研读RK3568 TRM，理解其USB子系统架构（2个USB3控制器、OHCI/EHCI控制器、Combo PHY等）。&lt;/li>
+&lt;li>核对硬件原理图，确认OTG端口的物理连接，特别是ID和VBUS引脚。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>设备树(DTS)与驱动映射 (DTS &amp;amp; Driver Mapping):&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>深入分析&lt;code>rk3568.dtsi&lt;/code>，梳理&lt;code>usbdrd30&lt;/code> (OTG)、&lt;code>usbhost30&lt;/code> (Host)、&lt;code>usb2phy&lt;/code>等核心节点之间的配置和关系。&lt;/li>
+&lt;li>理清控制器与PHY之间的&lt;code>phys&lt;/code>引用关系。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>运行时状态诊断 (Runtime State Diagnosis):&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>利用&lt;code>sysfs&lt;/code>下的&lt;code>extcon&lt;/code>接口 (&lt;code>/sys/class/extcon/extcon0&lt;/code>)，实时查看内核感知的OTG端口状态（&lt;code>USB-HOST=0&lt;/code>），印证了其未进入Host模式的猜想。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>方案实施与验证 (Solution Implementation &amp;amp; Verification):&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>在板级DTS中，创建&lt;code>&amp;amp;usbdrd_dwc3&lt;/code>的覆盖节点，将其&lt;code>dr_mode&lt;/code>强制设为&lt;code>&amp;quot;host&amp;quot;&lt;/code>。&lt;/li>
+&lt;li>重新编译并烧录固件，再次使用&lt;code>hdparm&lt;/code>进行测试，验证问题已解决。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>技术总结和文档输出（Technical Summarization and Doc exporting）&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>仔细梳理&lt;a href="https://potterwhite.github.io/blog/2025/10/16/%e7%a1%ac%e4%bb%b6%e5%88%86%e5%b1%82%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1%e5%93%b2%e5%ad%a6/">硬件数据流pipeline&lt;/a>，在项目结尾终于成稿。&lt;/li>
+&lt;li>更新dts调试的心得&lt;a href="https://potterwhite.github.io/blog/2025/10/16/dts%e8%ae%be%e5%a4%87%e6%a0%91%e8%b0%83%e8%af%95%e5%bf%83%e5%be%97/">DTS（设备树）调试心得&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="项目成果-results--verification">&lt;strong>项目成果 (Results &amp;amp; Verification)&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>功能修复:&lt;/strong> OTG端口现可稳定识别U盘及其他USB Host设备。&lt;/li>
+&lt;li>&lt;strong>性能达标:&lt;/strong> 修复后，使用&lt;code>hdparm -t /dev/sda&lt;/code>测试，端口读取速度恢复至 &lt;strong>~48MB/s&lt;/strong>，符合USB 3.0标准。&lt;/li>
+&lt;li>&lt;strong>方案固化:&lt;/strong> 最终的DTS修改被合入产品代码库，成为该硬件的标准化配置。&lt;/li>
+&lt;li>&lt;strong>文档沉淀:&lt;/strong> 完整的调试过程、代码分析和相关资料被整理归档。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="技术栈与工具-tech-stack--tools">&lt;strong>技术栈与工具 (Tech Stack &amp;amp; Tools)&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>硬件平台:&lt;/strong> Rockchip RK3568 SoC&lt;/li>
+&lt;li>&lt;strong>软件环境:&lt;/strong> Linux Kernel 5.10, Buildroot&lt;/li>
+&lt;li>&lt;strong>核心技术:&lt;/strong> Device Tree (DTS), USB 2.0/3.0 Subsystem, OTG, XHCI/EHCI/OHCI, Kernel &lt;code>extcon&lt;/code> Framework&lt;/li>
+&lt;li>&lt;strong>调试工具:&lt;/strong> &lt;code>hdparm&lt;/code>, &lt;code>sysfs&lt;/code>, dmesg, 串口调试&lt;/li>
+&lt;/ul></description></item><item><title>嵌入式平台 (RV1126B) 流式 ASR 模型 (Sherpa-ONNX Zipformer) INT8 端到端量化与部署</title><link>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h3 id="项目名称嵌入式平台-rv1126b-流式-asr-模型-sherpa-zipformer-int8-端到端量化与部署">&lt;strong>项目名称：嵌入式平台 (RV1126B) 流式 ASR 模型 (Sherpa-Zipformer) INT8 端到端量化与部署&lt;/strong>&lt;/h3>
@@ -371,7 +505,7 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;h3 id="1-项目目标-project-objective">&lt;strong>1. 项目目标 (Project Objective)&lt;/strong>&lt;/h3>
 &lt;p>为基于 Rockchip RV1126B SoC 的嵌入式设备，将一个 &lt;code>FP32&lt;/code> 精度的流式 Zipformer ASR (Automatic Speech Recognition) ONNX 模型，转换为 &lt;code>INT8&lt;/code> 精度的 RKNN 模型，并在 &lt;code>sherpa-onnx&lt;/code> C++ 推理框架中完成部署与验证，以满足低延迟和低功耗的运行要求。&lt;/p>
 &lt;h3 id="2-执行方法与流程-methodology--workflow">&lt;strong>2. 执行方法与流程 (Methodology &amp;amp; Workflow)&lt;/strong>&lt;/h3>
-&lt;p>本项目采用了一套系统性的方法，覆盖从模型分析、运行时环境改造、量化数据生成到最终模型验证的全过程。&lt;/p></description></item><item><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_lt8911exb_on_rk3568/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_lt8911exb_on_rk3568/</guid><description>&lt;script type="module">
+&lt;p>本项目采用了一套系统性的方法，覆盖从模型分析、运行时环境改造、量化数据生成到最终模型验证的全过程。&lt;/p></description></item><item><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h3 id="项目总结rockchip-rk3568-平台-mipi-dsi-转-edp-接口调试与验证">&lt;strong>项目总结：Rockchip RK3568 平台 MIPI-DSI 转 eDP 接口调试与验证&lt;/strong>&lt;/h3>
@@ -630,7 +764,7 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;h3 id="5-phy给到lcd">5. PHY给到LCD&lt;/h3>
 &lt;p>&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-mipi0-lvds-combo-phy-pins.png" alt="">
 图中的这些引脚(例如AG17/AH17等)都是PHY直接给出到显示屏幕的引脚, 也是soc这边的数据流的最后一个部分.
-lvds接口中, 4对数据脚(差分),1对时钟脚(差分), 对端按照lvds协议进行接收, 如果一切正确, 就能够显示内存中的图像了.&lt;/p></description></item><item><title>RK3568平台显示子系统Bring-up与多接口调试</title><link>https://potterwhite.github.io/portfolio/bringup_display_rk3568_fpga/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_display_rk3568_fpga/</guid><description>&lt;ul>
+lvds接口中, 4对数据脚(差分),1对时钟脚(差分), 对端按照lvds协议进行接收, 如果一切正确, 就能够显示内存中的图像了.&lt;/p></description></item><item><title>RK3568平台显示子系统Bring-up与多接口调试</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-2-display/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-2-display/</guid><description>&lt;ul>
 &lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>日期:&lt;/strong> 2025年8月&lt;/li>
 &lt;/ul>
@@ -831,7 +965,7 @@ rk的soc都有自己的vop, 首先vop就有两个版本: vop和vop2&lt;/p>
 &lt;/ul>
 &lt;/li>
 &lt;/ul>
-&lt;p>这两个得先来, 这两个关乎晶振有没有&lt;/p></description></item><item><title>RK3568平台千兆以太网控制器Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup_gmac_rk3568_yt8521sc/</guid><description>&lt;ul>
+&lt;p>这两个得先来, 这两个关乎晶振有没有&lt;/p></description></item><item><title>RK3568平台千兆以太网控制器Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-1-gmac/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-1-gmac/</guid><description>&lt;ul>
 &lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>日期:&lt;/strong> 2025年7月&lt;/li>
 &lt;/ul>
