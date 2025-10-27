@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RK3568平台BSP构建 on Potter的个人笔记</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/</link><description>Recent content in RK3568平台BSP构建 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 15 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/portfolio/bringup-rk3568/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 I2S的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</guid><description/></item><item><title>RK3568平台USB OTG端口功能调试与模式固化</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</guid><description>&lt;h2 id="项目概述-project-overview">&lt;strong>项目概述 (Project Overview)&lt;/strong>&lt;/h2>
-&lt;p>&lt;strong>背景 (Situation):&lt;/strong>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RK3568平台BSP构建 on Potter的个人笔记</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/</link><description>Recent content in RK3568平台BSP构建 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 15 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/portfolio/bringup-rk3568/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 I2S的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</guid><description/></item><item><title>RK3568平台USB OTG端口功能调试</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</guid><description>&lt;h2 id="项目概述">&lt;strong>项目概述&lt;/strong>&lt;/h2>
+&lt;p>&lt;strong>背景:&lt;/strong>
 在基于Rockchip RK3568的定制化项目中，基于公版SDK, 重新梳理板上的USB接口，并解决板载的USB 3.0 OTG (Type-A) 端口在默认BSP配置下，无法正常识别U盘等Host模式设备。&lt;/p>
-&lt;p>&lt;strong>我的职责与贡献 (My Role &amp;amp; Contributions):&lt;/strong>
+&lt;p>&lt;strong>我的职责与贡献:&lt;/strong>
 作为项目的BSP工程师，我独立负责诊断并解决此USB功能性问题。我的核心贡献在于：&lt;/p>
 &lt;ul>
-&lt;li>&lt;strong>执行了系统性的问题排查&lt;/strong>，覆盖了从性能基线测试、硬件原理图研读，到内核DTS配置和&lt;code>sysfs&lt;/code>运行时状态分析的详细排查。&lt;/li>
-&lt;li>&lt;strong>主导并实施了解决方案&lt;/strong>：根据产品“该端口仅作为U盘接口使用”的明确需求，通过修改设备树(DTS)，将&lt;code>usbdrd_dwc3&lt;/code>控制器的&lt;code>dr_mode&lt;/code>由&lt;code>&amp;quot;otg&amp;quot;&lt;/code>强制修改为&lt;code>&amp;quot;host&amp;quot;&lt;/code>。&lt;/li>
-&lt;li>&lt;strong>精确定位了问题根源&lt;/strong>：OTG端口的ID引脚检测机制在当前硬件设计下未能有效触发模式切换，导致控制器未能自动识别plug-in，因此无法进入Host模式。&lt;/li>
+&lt;li>&lt;strong>执行了系统性的问题排查&lt;/strong>，覆盖了从硬件原理图核对，功能确认，故障分析，到内核设备树（dts）代码编写调试和&lt;code>sysfs&lt;/code>运行时状态分析以及性能基线测试的详细排查。&lt;/li>
+&lt;li>&lt;strong>主导并实施了解决方案&lt;/strong>：根据产品的硬件原理图，验证两个USB-A口和一个USB-C口的工作情况。并通过修改设备树(DTS)，定下解决方案：将&lt;code>usbdrd_dwc3&lt;/code>控制器的&lt;code>dr_mode&lt;/code>由&lt;code>&amp;quot;otg&amp;quot;&lt;/code>强制修改为&lt;code>&amp;quot;host&amp;quot;&lt;/code>。&lt;/li>
+&lt;li>&lt;strong>精确定位了问题根源&lt;/strong>：OTG端口的ID引脚在当前硬件设计下并不存在，导致控制器无法自动检测plug-in，因此无法切换Host/Device模式。&lt;/li>
 &lt;li>&lt;strong>完成了性能与功能的完整验证&lt;/strong>，确保修改后的端口不仅能稳定识别设备，其数据传输速率也达到了USB 3.0标准。&lt;/li>
 &lt;li>&lt;strong>将整个调试过程和技术分析&lt;/strong>沉淀为详细的技术文档，为未来类似问题提供了清晰的解决范例。&lt;/li>
 &lt;/ul>
@@ -15,34 +15,38 @@
 &lt;p>本次调试遵循了一套由表及里、从软件到硬件的标准化诊断流程：&lt;/p>
 &lt;ol>
 &lt;li>
-&lt;p>&lt;strong>文档与原理分析 (Documentation &amp;amp; Schematic Analysis):&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>文档与电路功能分析:&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>研读RK3568 TRM，理解其USB子系统架构（2个USB3控制器、OHCI/EHCI控制器、Combo PHY等）。&lt;/li>
 &lt;li>核对硬件原理图，确认OTG端口的物理连接，特别是ID和VBUS引脚。&lt;/li>
+&lt;li>梳理两A（USB-A）一C（USB-C）的数据流走向&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;li>
-&lt;p>&lt;strong>设备树(DTS)与驱动映射 (DTS &amp;amp; Driver Mapping):&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>设备树(DTS)与驱动映射:&lt;/strong>&lt;/p>
 &lt;ul>
-&lt;li>深入分析&lt;code>rk3568.dtsi&lt;/code>，梳理&lt;code>usbdrd30&lt;/code> (OTG)、&lt;code>usbhost30&lt;/code> (Host)、&lt;code>usb2phy&lt;/code>等核心节点之间的配置和关系。&lt;/li>
-&lt;li>理清控制器与PHY之间的&lt;code>phys&lt;/code>引用关系。&lt;/li>
+&lt;li>深入分析&lt;code>rk3568.dtsi&lt;/code>等芯片级设备树文件，梳理&lt;code>usbdrd30&lt;/code> (OTG)、&lt;code>usbhost30&lt;/code> (Host)、&lt;code>usb2phy&lt;/code>等核心节点之间的配置和关系。&lt;/li>
+&lt;li>理清控制器与PHY之间的&lt;code>phys&lt;/code>引用关系，并记录汇总成表格。&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;li>
-&lt;p>&lt;strong>运行时状态诊断 (Runtime State Diagnosis):&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>运行时状态诊断:&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>利用&lt;code>sysfs&lt;/code>下的&lt;code>extcon&lt;/code>接口 (&lt;code>/sys/class/extcon/extcon0&lt;/code>)，实时查看内核感知的OTG端口状态（&lt;code>USB-HOST=0&lt;/code>），印证了其未进入Host模式的猜想。&lt;/li>
+&lt;li>回到硬件原理图，研究USB-A/mini/micro/C四种接口的插拔原理，寻找解决方案。&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;li>
-&lt;p>&lt;strong>方案实施与验证 (Solution Implementation &amp;amp; Verification):&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>方案实施与验证:&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>在板级DTS中，创建&lt;code>&amp;amp;usbdrd_dwc3&lt;/code>的覆盖节点，将其&lt;code>dr_mode&lt;/code>强制设为&lt;code>&amp;quot;host&amp;quot;&lt;/code>。&lt;/li>
 &lt;li>重新编译并烧录固件，再次使用&lt;code>hdparm&lt;/code>进行测试，验证问题已解决。&lt;/li>
+&lt;li>SOC端USB作为主，则拒绝一切主设备的接入，由SOC端供电，因此，将固件升级（主设备典型应用）安排到外部按键方式触发进入Maskrom模式来进行&lt;/li>
+&lt;li>系统成功加载后，该USB-A口则作为普通host口使用。&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;li>
-&lt;p>&lt;strong>技术总结和文档输出（Technical Summarization and Doc exporting）&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>技术总结和文档输出:&lt;/strong>&lt;/p>
 &lt;ul>
 &lt;li>仔细梳理&lt;a href="https://potterwhite.github.io/blog/2025/10/16/%e7%a1%ac%e4%bb%b6%e5%88%86%e5%b1%82%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1%e5%93%b2%e5%ad%a6/">硬件数据流pipeline&lt;/a>，在项目结尾终于成稿。&lt;/li>
 &lt;li>更新dts调试的心得&lt;a href="https://potterwhite.github.io/blog/2025/10/16/dts%e8%ae%be%e5%a4%87%e6%a0%91%e8%b0%83%e8%af%95%e5%bf%83%e5%be%97/">DTS（设备树）调试心得&lt;/a>&lt;/li>
@@ -50,7 +54,7 @@
 &lt;/li>
 &lt;/ol>
 &lt;hr>
-&lt;h2 id="项目成果-results--verification">&lt;strong>项目成果 (Results &amp;amp; Verification)&lt;/strong>&lt;/h2>
+&lt;h2 id="项目成果">&lt;strong>项目成果&lt;/strong>&lt;/h2>
 &lt;ul>
 &lt;li>&lt;strong>功能修复:&lt;/strong> OTG端口现可稳定识别U盘及其他USB Host设备。&lt;/li>
 &lt;li>&lt;strong>性能达标:&lt;/strong> 修复后，使用&lt;code>hdparm -t /dev/sda&lt;/code>测试，端口读取速度恢复至 &lt;strong>~48MB/s&lt;/strong>，符合USB 3.0标准。&lt;/li>
@@ -58,13 +62,14 @@
 &lt;li>&lt;strong>文档沉淀:&lt;/strong> 完整的调试过程、代码分析和相关资料被整理归档。&lt;/li>
 &lt;/ul>
 &lt;hr>
-&lt;h2 id="技术栈与工具-tech-stack--tools">&lt;strong>技术栈与工具 (Tech Stack &amp;amp; Tools)&lt;/strong>&lt;/h2>
+&lt;h2 id="技术栈与工具">&lt;strong>技术栈与工具&lt;/strong>&lt;/h2>
 &lt;ul>
 &lt;li>&lt;strong>硬件平台:&lt;/strong> Rockchip RK3568 SoC&lt;/li>
 &lt;li>&lt;strong>软件环境:&lt;/strong> Linux Kernel 5.10, Buildroot&lt;/li>
 &lt;li>&lt;strong>核心技术:&lt;/strong> Device Tree (DTS), USB 2.0/3.0 Subsystem, OTG, XHCI/EHCI/OHCI, Kernel &lt;code>extcon&lt;/code> Framework&lt;/li>
 &lt;li>&lt;strong>调试工具:&lt;/strong> &lt;code>hdparm&lt;/code>, &lt;code>sysfs&lt;/code>, dmesg, 串口调试&lt;/li>
-&lt;/ul></description></item><item><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</guid><description>&lt;script type="module">
+&lt;/ul>
+&lt;hr></description></item><item><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h3 id="项目总结rockchip-rk3568-平台-mipi-dsi-转-edp-接口调试与验证">&lt;strong>项目总结：Rockchip RK3568 平台 MIPI-DSI 转 eDP 接口调试与验证&lt;/strong>&lt;/h3>
