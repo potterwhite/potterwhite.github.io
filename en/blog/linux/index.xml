@@ -1,4 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Potter`s Log Book</title><link>https://potterwhite.github.io/en/blog/linux/</link><description>Recent content in Linux on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 18 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/blog/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Analysis of Key Concepts in the Rockchip Display Subsystem</title><link>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</guid><description>&lt;h2 id="calculation-formula-for">&lt;strong>Calculation Formula for &amp;ldquo;Frame Rate&amp;rdquo; in DTS&lt;/strong>&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Potter`s Log Book</title><link>https://potterwhite.github.io/en/blog/linux/</link><description>Recent content in Linux on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/blog/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Notes on DTS (Device Tree) Debugging</title><link>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</guid><description>&lt;h2 id="the-thought-process-for-debugging-the-dts-of-an-external-peripheral-is-as-follows">&lt;strong>The thought process for debugging the DTS of an external peripheral is as follows:&lt;/strong>&lt;/h2>
+&lt;h3 id="1-logical-node">1. Logical Node&lt;/h3>
+&lt;ul>
+&lt;li>There is a logical node representing the entirety of the logical device that the developer can control (e.g., USB). Generally, this logical node is also defined in the &lt;strong>board-level or product-level&lt;/strong> dtsi file.&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-controller-node">2. Controller Node&lt;/h3>
+&lt;ul>
+&lt;li>Within the logical node, there will be a controller node. For guidance on how to determine if a node is a controller, you can refer to &lt;a href="https://potterwhite.github.io/blog/2025/10/16/dts-device-tree-debugging-notes/#how-to-identify-which-node-is-the-controller-from-the-code">How to identify which node is the controller from the code&lt;/a>.&lt;/li>
+&lt;/ul>
+&lt;h3 id="3-phy-node">3. PHY Node&lt;/h3>
+&lt;ul>
+&lt;li>Within the controller node, there will be a PHY node. For USB 3.0, there will be two PHYs: one providing support for USB 2.0 mode and the other for USB 3.0 mode.
+&lt;ul>
+&lt;li>This is because the USB protocol is backward compatible (meaning a USB 3.0 interface can support USB 2.0 devices). Therefore, USB 3.0 must provide a 2.0 PHY to achieve this &amp;ldquo;backward compatibility.&amp;rdquo;&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="4-enable-everything-in-the-product-level-dtsi">4. Enable Everything in the Product-Level DTSI&lt;/h3>
+&lt;ul>
+&lt;li>The corresponding logical nodes, controller nodes, and PHY nodes must all be enabled and configured to the correct modes.&lt;/li>
+&lt;/ul>
+&lt;h3 id="remarks">Remarks&lt;/h3>
+&lt;ol>
+&lt;li>The method described above is based on operating on the DTS provided by the SoC vendor and assumes that no major hardware changes have been made.&lt;/li>
+&lt;li>Refer to the &lt;a href="https://potterwhite.github.io/blog/2025/10/16/hardware-layered-architecture-design-philosophy/">Hardware Dataflow Pipeline&lt;/a>, which discusses common hardware data flow models. This is very helpful for debugging DTS as it allows you to know which component you are currently working on.&lt;/li>
+&lt;li>Two important types of nodes in USB DTS:
+&lt;ul>
+&lt;li>Some are host-only, typically named &lt;code>usbhost30&lt;/code> in the DTS.&lt;/li>
+&lt;li>Some can function as either host or device (i.e., OTG), typically named &lt;code>usbdrd30&lt;/code> in the DTS.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;h2 id="how-to-identify-which-node-is-the-controller-from-the-code">&lt;strong>How to identify which node is the controller from the code?&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>It has interrupts to notify the CPU (&lt;code>interrupts&lt;/code>).&lt;/li>
+&lt;li>It possesses a PHY (&lt;code>phys&lt;/code>, &lt;code>phy-names&lt;/code>).&lt;/li>
+&lt;li>It is bound to a driver (has a &lt;code>compatible&lt;/code> property).&lt;/li>
+&lt;li>It has a large register address space (&lt;code>reg = &amp;lt;0x0 0xfcc00000 0x0 0x400000&amp;gt;&lt;/code>).&lt;/li>
+&lt;li>It has complex clock and reset logic.&lt;/li>
+&lt;li>It has high-level mode configurations (e.g., &lt;code>dr_mode=&amp;quot;otg&amp;quot;&lt;/code>).&lt;/li>
+&lt;/ul></description></item><item><title>The Philosophy of Layered Hardware Architecture Design</title><link>https://potterwhite.github.io/en/blog/2025/10/16/the-philosophy-of-layered-hardware-architecture-design/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/10/16/the-philosophy-of-layered-hardware-architecture-design/</guid><description>&lt;p>&lt;strong>Why This Article Exists&lt;/strong>&lt;/p>
+&lt;p>Nearly all high-speed and complex peripheral interfaces in modern SoCs follow a common layered design architecture. This is not a coincidence but a core design philosophy aimed at the &lt;strong>Separation of Concerns&lt;/strong>, breaking down complex hardware-software interaction problems into smaller, more manageable parts.&lt;/p>
+&lt;p>This philosophy is a common design paradigm for peripheral interfaces on an SoC. Keeping this paradigm in mind while configuring the DTS (Device Tree) can significantly reduce the feeling of being lost during debugging.&lt;/p></description></item><item><title>Analysis of Key Concepts in the Rockchip Display Subsystem</title><link>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</guid><description>&lt;h2 id="calculation-formula-for">&lt;strong>Calculation Formula for &amp;ldquo;Frame Rate&amp;rdquo; in DTS&lt;/strong>&lt;/h2>
 &lt;p>The frame rate of a mode is not written directly as a field in the timings; instead, it is calculated based on the clock frequency.
 The calculation formula is as follows:&lt;/p>
 &lt;div class="math">

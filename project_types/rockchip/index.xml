@@ -25,7 +25,7 @@
 &lt;hr>
 &lt;h3 id="4-rk3568-平台-usb-接口-bring-up">&lt;strong>4. RK3568 平台 USB 接口 Bring-up&lt;/strong>&lt;/h3>
 &lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong> 解决了OTG端口无法识别U盘的问题&lt;/li>
+&lt;li>&lt;strong>核心成果:&lt;/strong> 梳理USB设备树节点和层级结构，并在现有硬件限制下最优的避开OTG组无法识别U盘的问题&lt;/li>
 &lt;li>&lt;strong>&lt;a href="./module-4-usb/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
 &lt;/ul>
 &lt;hr>
