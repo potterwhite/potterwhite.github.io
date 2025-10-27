@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RK3568平台BSP构建 on Potter的个人笔记</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/</link><description>Recent content in RK3568平台BSP构建 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 15 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/portfolio/bringup-rk3568/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 I2S的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</guid><description/></item><item><title>RK3568平台USB OTG端口功能调试</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</guid><description>&lt;h2 id="项目概述">&lt;strong>项目概述&lt;/strong>&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RK3568平台BSP构建 on Potter的个人笔记</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/</link><description>Recent content in RK3568平台BSP构建 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 15 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/portfolio/bringup-rk3568/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 I2S的接口调试与dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-7-i2s/</guid><description>&lt;h4 id="1-项目目标">&lt;strong>1. 项目目标&lt;/strong>&lt;/h4>
+&lt;p>本次任务的核心目标是在 RK3568 平台上，成功使能并调试多个I2S接口（I2S1, I2S2, I2S3），以实现与外部设备（如FPGA）的数字音频数据通信。具体包括：&lt;/p>
+&lt;ul>
+&lt;li>配置I2S1和I2S3为音频输出 (Playback)。&lt;/li>
+&lt;li>配置I2S2为音频输入 (Capture)。&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-调试主线与过程">&lt;strong>2. 调试主线与过程&lt;/strong>&lt;/h4>
+&lt;p>整个调试过程遵循“&lt;strong>硬件分析 -&amp;gt; DTS配置 -&amp;gt; 命令行测试 -&amp;gt; 问题定位与解决&lt;/strong>”的清晰脉络。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>前期准备 - 硬件资源分析:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>首先，对RK3568 SoC的I2S硬件资源进行梳理，明确了I2S0/1/2/3控制器的基本功能和用途（如I2S0用于HDMI，I2S1/2/3为通用）。&lt;/li>
+&lt;li>将DTS中的I2S控制器节点（&lt;code>i2s@fe4...&lt;/code>）与产品原理图上的GPIO引脚进行了一一对应，为后续的&lt;code>pinctrl&lt;/code>配置打下了坚实基础。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>中期实施 - DTS配置与声卡注册:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>使用 &lt;code>simple-audio-card&lt;/code> 驱动模型来“链接”SoC的I2S控制器（CPU DAI）和一个虚拟的 &lt;code>dummy-codec&lt;/code>（Codec DAI），从而在ALSA框架下注册了三张独立的声卡。&lt;/li>
+&lt;li>分别为&lt;code>card 1&lt;/code> (I2S1, output), &lt;code>card 2&lt;/code> (I2S2, input), &lt;code>card 3&lt;/code> (I2S3, output) 编写了DTS节点。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>后期验证 - 系统性测试与问题发现:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>使用 &lt;code>aplay -l&lt;/code> 和 &lt;code>arecord -l&lt;/code> 命令，成功验证了三张声卡均已在系统中注册。&lt;/li>
+&lt;li>&lt;strong>I2S1 (Output):&lt;/strong> 使用 &lt;code>speaker-test -D hw:1,0 ...&lt;/code> 进行测试，设备工作正常，无报错。&lt;/li>
+&lt;li>&lt;strong>I2S2 (Input):&lt;/strong> 使用 &lt;code>arecord -D hw:2,0 ...&lt;/code> 进行测试，命令按预期“挂起”等待外部时钟，符合I2S Slave模式的正确行为。&lt;/li>
+&lt;li>&lt;strong>I2S3 (Output):&lt;/strong> 使用 &lt;code>speaker-test -D hw:3,0 ...&lt;/code> 进行测试，发现严重问题：设备虽能打开，但持续抛出 &lt;code>Write error: -32, Broken pipe&lt;/code> 错误。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h4 id="3-核心知识学习与沉淀">&lt;strong>3. 核心知识学习与沉淀&lt;/strong>&lt;/h4>
+&lt;p>在调试过程中，对Linux音频子系统和DTS进行了系统性的学习。&lt;/p></description></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-6-csi/</guid><description/></item><item><title>RK3568平台USB OTG端口功能调试</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-4-usb/</guid><description>&lt;h2 id="项目概述">&lt;strong>项目概述&lt;/strong>&lt;/h2>
 &lt;p>&lt;strong>背景:&lt;/strong>
 在基于Rockchip RK3568的定制化项目中，基于公版SDK, 重新梳理板上的USB接口，并解决板载的USB 3.0 OTG (Type-A) 端口在默认BSP配置下，无法正常识别U盘等Host模式设备。&lt;/p>
 &lt;p>&lt;strong>我的职责与贡献:&lt;/strong>
