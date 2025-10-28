@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Welcome on Potter`s Log Book</title><link>https://potterwhite.github.io/en/</link><description>Recent content in Welcome on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Part 1: Modular Deployment of Sherpa ASR on the RK3588S Platform (C/S Architecture)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</guid><description>&lt;script type="module">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Welcome on Potter`s Log Book</title><link>https://potterwhite.github.io/en/</link><description>Recent content in Welcome on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Part 1: Modular Deployment of Sherpa ASR on the RK3588S Platform (C/S Architecture)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage1-integration/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h1 id="project-retrospective-report-after-action-review---enhanced-version">&lt;strong>Project Retrospective Report (After-Action Review) - Enhanced Version&lt;/strong>&lt;/h1>
@@ -216,7 +216,7 @@ draft: false
 tags: ["Docker", "DevOps", "Architecture", "Embedded", "Software Engineering"]
 --- -->
 &lt;h2 id="1-background-and-problem-definition">1. Background and Problem Definition&lt;/h2>
-&lt;p>In modern software engineering practices, especially in fields tightly coupled with hardware like embedded systems, standardizing the development environment is a fundamental and critical challenge. When team members perform cross-compilation for specific hardware platforms (e.g., &lt;code>RK3568&lt;/code>, &lt;code>RV1126&lt;/code>) on different operating systems (Windows, macOS, Linux), different versions of the same OS (Ubuntu 18.04, 20.04, 22.04, etc.), or even on the same OS version but with different gcc/python/glibc versions, environmental heterogeneity leads to a series of predictable engineering problems:&lt;/p></description></item><item><title>Part 2: Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-zipformer-rknn-convert/part2-porting/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-zipformer-rknn-convert/part2-porting/</guid><description>&lt;h3 id="heading">&lt;strong>[Project Retrospective Report] Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform&lt;/strong>&lt;/h3>
+&lt;p>In modern software engineering practices, especially in fields tightly coupled with hardware like embedded systems, standardizing the development environment is a fundamental and critical challenge. When team members perform cross-compilation for specific hardware platforms (e.g., &lt;code>RK3568&lt;/code>, &lt;code>RV1126&lt;/code>) on different operating systems (Windows, macOS, Linux), different versions of the same OS (Ubuntu 18.04, 20.04, 22.04, etc.), or even on the same OS version but with different gcc/python/glibc versions, environmental heterogeneity leads to a series of predictable engineering problems:&lt;/p></description></item><item><title>Part 2: Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage2-porting/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage2-porting/</guid><description>&lt;h3 id="heading">&lt;strong>[Project Retrospective Report] Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform&lt;/strong>&lt;/h3>
 &lt;table>
  &lt;thead>
  &lt;tr>
@@ -235,7 +235,7 @@ tags: ["Docker", "DevOps", "Architecture", "Embedded", "Software Engineering"]
  &lt;/tr>
  &lt;tr>
  &lt;td style="text-align: left">&lt;strong>Project Duration&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">3010 minutes (Approx. 6.3 person-days)&lt;/td>
+ &lt;td style="text-align: left">50.17 hours (Approx. 6.3 person-days)&lt;/td>
  &lt;/tr>
  &lt;tr>
  &lt;td style="text-align: left">&lt;strong>Review Date&lt;/strong>&lt;/td>
@@ -257,7 +257,7 @@ draft: false
 tags: ["Docker", "Dockerfile", "Build Optimization", "Shell Scripting", "DevOps"]
 --- -->
 &lt;h2 id="1-introduction">1. Introduction&lt;/h2>
-&lt;p>In the first article of this series, we explained the high-level architecture for building a standardized development environment based on the &amp;ldquo;configuration-driven&amp;rdquo; idea. This article will dive into the execution core of this architecture—the image build phase—and detail how we leverage Docker&amp;rsquo;s Multi-stage Builds strategy combined with dynamic script generation techniques to create a development environment image that is both feature-complete and highly optimized.&lt;/p></description></item><item><title>Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-zipformer-rknn-convert/part3-conversion/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-zipformer-rknn-convert/part3-conversion/</guid><description>&lt;h3 id="heading">&lt;strong>[Project Retrospective Report V3.0] Independent Model Conversion: Overcoming the Technical Challenges of Converting Dynamic ONNX Models to RKNN (Final Version)&lt;/strong>&lt;/h3>
+&lt;p>In the first article of this series, we explained the high-level architecture for building a standardized development environment based on the &amp;ldquo;configuration-driven&amp;rdquo; idea. This article will dive into the execution core of this architecture—the image build phase—and detail how we leverage Docker&amp;rsquo;s Multi-stage Builds strategy combined with dynamic script generation techniques to create a development environment image that is both feature-complete and highly optimized.&lt;/p></description></item><item><title>Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage3-conversion/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage3-conversion/</guid><description>&lt;h3 id="heading">&lt;strong>[Project Retrospective Report V3.0] Independent Model Conversion: Overcoming the Technical Challenges of Converting Dynamic ONNX Models to RKNN (Final Version)&lt;/strong>&lt;/h3>
 &lt;table>
  &lt;thead>
  &lt;tr>
@@ -297,7 +297,43 @@ draft: false
 tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevOps"]
 --- -->
 &lt;h2 id="1-introduction">1. Introduction&lt;/h2>
-&lt;p>In the first two articles of this series, we discussed the top-level architectural design of a standardized development environment and the image implementation details based on Docker multi-stage builds. However, the ultimate value of a technically excellent solution is reflected in its smooth adoption by end-users (i.e., developers). This article will focus on the &amp;ldquo;last mile&amp;rdquo; of the workflow: how to simplify container management and how to achieve standardized distribution of the development environment.&lt;/p></description></item><item><title>Notes on DTS (Device Tree) Debugging</title><link>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</guid><description>&lt;h2 id="the-thought-process-for-debugging-the-dts-of-an-external-peripheral-is-as-follows">&lt;strong>The thought process for debugging the DTS of an external peripheral is as follows:&lt;/strong>&lt;/h2>
+&lt;p>In the first two articles of this series, we discussed the top-level architectural design of a standardized development environment and the image implementation details based on Docker multi-stage builds. However, the ultimate value of a technically excellent solution is reflected in its smooth adoption by end-users (i.e., developers). This article will focus on the &amp;ldquo;last mile&amp;rdquo; of the workflow: how to simplify container management and how to achieve standardized distribution of the development environment.&lt;/p></description></item><item><title>Chapter 5: End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Zipformer) on an Embedded Platform (RV1126B)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage5-quantization/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/en-stage5-quantization/</guid><description>&lt;script type="module">
+ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+&lt;/script>
+&lt;h3 id="heading">&lt;strong>[Project Retrospective Report V5.0] End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Zipformer) on an Embedded Platform (RV1126B)&lt;/strong>&lt;/h3>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">Project Attribute&lt;/th>
+ &lt;th style="text-align: left">Details&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>Project Name&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">Part 5: Sherpa ASR RKNN Quantization on the RV1126BP Platform&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>Project Period&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">2025-08-21 ~ 2025-09-23&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">Project Duration&lt;/td>
+ &lt;td style="text-align: left">40 hours (Approx. 5 person-days)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>Review Date&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">2025-09-27&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>Key Personnel&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">Potter White&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h3 id="1-project-objective">&lt;strong>1. Project Objective&lt;/strong>&lt;/h3>
+&lt;p>To convert a streaming Zipformer ASR (Automatic Speech Recognition) ONNX model from &lt;code>FP32&lt;/code> precision to an &lt;code>INT8&lt;/code> precision RKNN model for an embedded device based on the Rockchip RV1126B SoC. The goal is to complete its deployment and validation within the &lt;code>sherpa-onnx&lt;/code> C++ inference framework to meet the operational requirements of low latency and low power consumption.&lt;/p></description></item><item><title>Notes on DTS (Device Tree) Debugging</title><link>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</guid><description>&lt;h2 id="the-thought-process-for-debugging-the-dts-of-an-external-peripheral-is-as-follows">&lt;strong>The thought process for debugging the DTS of an external peripheral is as follows:&lt;/strong>&lt;/h2>
 &lt;h3 id="1-logical-node">1. Logical Node&lt;/h3>
 &lt;ul>
 &lt;li>There is a logical node representing the entirety of the logical device that the developer can control (e.g., USB). Generally, this logical node is also defined in the &lt;strong>board-level or product-level&lt;/strong> dtsi file.&lt;/li>
@@ -351,19 +387,7 @@ As the BSP engineer for the project, I was solely responsible for diagnosing and
 &lt;li>Configuring I2S2 as audio input (Capture).&lt;/li>
 &lt;/ul>
 &lt;h4 id="2-debugging-workflow-and-process">&lt;strong>2. Debugging Workflow and Process&lt;/strong>&lt;/h4>
-&lt;p>The entire debugging process followed a clear workflow: &lt;strong>Hardware Analysis -&amp;gt; DTS Configuration -&amp;gt; Command-line Testing -&amp;gt; Problem Isolation and Resolution&lt;/strong>.&lt;/p></description></item><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-6-csi/</guid><description/></item><item><title>End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Sherpa-ONNX Zipformer) on an Embedded Platform (RV1126B)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-int8-quantization-rknn/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-int8-quantization-rknn/</guid><description>&lt;script type="module">
- import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-&lt;/script>
-&lt;h3 id="project-name-end-to-end-int8-quantization-and-deployment-of-a-streaming-asr-model-sherpa-zipformer-on-an-embedded-platform-rv1126b">&lt;strong>Project Name: End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Sherpa-Zipformer) on an Embedded Platform (RV1126B)&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> PotterWhite&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> Aug-Sep 2025&lt;/li>
-&lt;li>&lt;strong>Tech Stack:&lt;/strong> &lt;code>RKNN-Toolkit2&lt;/code>, &lt;code>ONNX&lt;/code>, &lt;code>C++&lt;/code>, &lt;code>Python&lt;/code>, &lt;code>librosa&lt;/code>, &lt;code>sherpa-onnx&lt;/code>, &lt;code>LibriSpeech&lt;/code>, &lt;code>AiShell&lt;/code>&lt;/li>
-&lt;li>&lt;strong>Project Type:&lt;/strong> Model Deployment, INT8 Quantization, Embedded AI, Inference Engine Integration&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="1-project-objective">&lt;strong>1. Project Objective&lt;/strong>&lt;/h3>
-&lt;p>To convert a &lt;code>FP32&lt;/code> precision streaming Zipformer ASR (Automatic Speech Recognition) ONNX model to an &lt;code>INT8&lt;/code> precision RKNN model for an embedded device based on the Rockchip RV1126B SoC. The goal was to complete the deployment and validation within the &lt;code>sherpa-onnx&lt;/code> C++ inference framework to meet low-latency and low-power operational requirements.&lt;/p></description></item><item><title>Bring-up and Verification of MIPI-to-eDP Chip LT8911EXB on RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-3-lt8911exb/</guid><description>&lt;script type="module">
+&lt;p>The entire debugging process followed a clear workflow: &lt;strong>Hardware Analysis -&amp;gt; DTS Configuration -&amp;gt; Command-line Testing -&amp;gt; Problem Isolation and Resolution&lt;/strong>.&lt;/p></description></item><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-6-csi/</guid><description/></item><item><title>Bring-up and Verification of MIPI-to-eDP Chip LT8911EXB on RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/en-module-3-lt8911exb/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h3 id="project-summary-debugging-and-verification-of-mipi-dsi-to-edp-interface-on-rockchip-rk3568-platform">&lt;strong>Project Summary: Debugging and Verification of MIPI-DSI to eDP Interface on Rockchip RK3568 Platform&lt;/strong>&lt;/h3>
