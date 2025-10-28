@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一部分：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part1-integration/</guid><description>&lt;script type="module">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一章：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h1 id="项目复盘报告-after-action-review---优化版">&lt;strong>项目复盘报告 (After-Action Review) - 优化版&lt;/strong>&lt;/h1>
@@ -225,7 +225,7 @@ tags: ["Docker", "DevOps", "Architecture", "Embedded", "Software Engineering"]
 &lt;/ul>
 &lt;p>为了系统性地解决上述问题，我们设计并实现了一套基于 Docker 的标准化开发环境解决方案。本文将重点阐述其顶层架构设计，特别是“配置驱动”这一核心思想。&lt;/p>
 &lt;h2 id="2-核心架构配置与构建逻辑的分离">2. 核心架构：配置与构建逻辑的分离&lt;/h2>
-&lt;p>本解决方案的架构基石是&lt;strong>关注点分离 (Separation of Concerns)&lt;/strong> 原则，具体体现为将易变的&lt;strong>环境配置 (Configuration)&lt;/strong> 与相对稳定的&lt;strong>构建逻辑 (Build Logic)&lt;/strong> 进行解耦。&lt;/p></description></item><item><title>第二部分：RV1126平台 Sherpa ASR 部署技术评估与实现</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part2-porting/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part2-porting/</guid><description>&lt;h3 id="heading">&lt;strong>[项目复盘报告] RV1126平台 Sherpa ASR 部署技术评估与实现&lt;/strong>&lt;/h3>
+&lt;p>本解决方案的架构基石是&lt;strong>关注点分离 (Separation of Concerns)&lt;/strong> 原则，具体体现为将易变的&lt;strong>环境配置 (Configuration)&lt;/strong> 与相对稳定的&lt;strong>构建逻辑 (Build Logic)&lt;/strong> 进行解耦。&lt;/p></description></item><item><title>第二章：RV1126平台 Sherpa ASR 部署技术评估与实现</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage2-porting/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage2-porting/</guid><description>&lt;h3 id="heading">&lt;strong>[项目复盘报告] RV1126平台 Sherpa ASR 部署技术评估与实现&lt;/strong>&lt;/h3>
 &lt;table>
  &lt;thead>
  &lt;tr>
@@ -244,7 +244,7 @@ tags: ["Docker", "DevOps", "Architecture", "Embedded", "Software Engineering"]
  &lt;/tr>
  &lt;tr>
  &lt;td style="text-align: left">&lt;strong>项目用时&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">3010分钟 (约6.3人天)&lt;/td>
+ &lt;td style="text-align: left">50.17小时 (约6.3人天)&lt;/td>
  &lt;/tr>
  &lt;tr>
  &lt;td style="text-align: left">&lt;strong>复盘日期&lt;/strong>&lt;/td>
@@ -301,7 +301,7 @@ tags: ["Docker", "Dockerfile", "Build Optimization", "Shell Scripting", "DevOps"
 &lt;li>&lt;strong>产物&lt;/strong>: 一个包含基础操作系统和已配置包管理器的环境。&lt;/li>
 &lt;/ul>
 &lt;h4 id="stage-2-tools---通用工具层">Stage 2: &lt;code>tools&lt;/code> - 通用工具层&lt;/h4>
-&lt;p>此阶段在前一阶段的基础上，安装所有平台通用的、不随项目频繁变化的开发工具。&lt;/p></description></item><item><title>第三部分：RV1126BP平台 Sherpa ASR RKNN自主模型转换</title><link>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part3-conversion/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-zipformer-rknn-convert/part3-conversion/</guid><description>&lt;h3 id="heading">&lt;strong>[项目复盘报告 V3.0] 自主模型转换：攻克动态ONNX模型至RKNN的技术难题 (最终版)&lt;/strong>&lt;/h3>
+&lt;p>此阶段在前一阶段的基础上，安装所有平台通用的、不随项目频繁变化的开发工具。&lt;/p></description></item><item><title>第三章：RV1126BP平台 Sherpa ASR RKNN自主模型转换</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage3-conversion/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage3-conversion/</guid><description>&lt;h3 id="heading">&lt;strong>[项目复盘报告 V3.0] 自主模型转换：攻克动态ONNX模型至RKNN的技术难题&lt;/strong>&lt;/h3>
 &lt;table>
  &lt;thead>
  &lt;tr>
@@ -357,7 +357,107 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;li>&lt;strong>内置最佳实践 (Embedded Best Practices):&lt;/strong> 可以在脚本中预置最佳参数，例如在启动时自动执行 &lt;code>--build&lt;/code> 以确保镜像是最新的，或是在停止时执行 &lt;code>--remove-orphans&lt;/code> 来清理无用的容器。&lt;/li>
 &lt;/ul>
 &lt;h3 id="22-实现机制概念性">2.2 实现机制（概念性）&lt;/h3>
-&lt;p>&lt;code>ubuntu_only_entrance.sh&lt;/code> 脚本内部实现了一个简单的命令分发器。它通过解析传入的第一个参数来决定执行何种 &lt;code>docker-compose&lt;/code> 操作。&lt;/p></description></item><item><title>DTS（设备树）调试心得</title><link>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</guid><description>&lt;h2 id="调试外部设备的dts的思路是这样的">&lt;strong>调试外部设备的dts的思路是这样的：&lt;/strong>&lt;/h2>
+&lt;p>&lt;code>ubuntu_only_entrance.sh&lt;/code> 脚本内部实现了一个简单的命令分发器。它通过解析传入的第一个参数来决定执行何种 &lt;code>docker-compose&lt;/code> 操作。&lt;/p></description></item><item><title>第五章：嵌入式平台 (RV1126B) 流式 ASR 模型 (Zipformer) INT8 端到端量化与部署</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage5-quantization/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage5-quantization/</guid><description>&lt;script type="module">
+ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+&lt;/script>
+&lt;h3 id="heading">&lt;strong>[项目复盘报告 V5.0] 嵌入式平台 (RV1126B) 流式 ASR 模型 (Zipformer) INT8 端到端量化与部署&lt;/strong>&lt;/h3>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">项目属性&lt;/th>
+ &lt;th style="text-align: left">内容&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>项目名称&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">第五部分：RV1126BP平台 Sherpa ASR RKNN量化&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>项目周期&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">2025-08-21 ~ 2025-09-23&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">项目用时&lt;/td>
+ &lt;td style="text-align: left">40(约5人天)&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>复盘日期&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">2025-09-27&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;strong>核心人员&lt;/strong>&lt;/td>
+ &lt;td style="text-align: left">Potter White&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h3 id="1-项目目标-project-objective">&lt;strong>1. 项目目标 (Project Objective)&lt;/strong>&lt;/h3>
+&lt;p>为基于 Rockchip RV1126B SoC 的嵌入式设备，将一个 &lt;code>FP32&lt;/code> 精度的流式 Zipformer ASR (Automatic Speech Recognition) ONNX 模型，转换为 &lt;code>INT8&lt;/code> 精度的 RKNN 模型，并在 &lt;code>sherpa-onnx&lt;/code> C++ 推理框架中完成部署与验证，以满足低延迟和低功耗的运行要求。&lt;/p>
+&lt;h3 id="2-执行方法与流程-methodology--workflow">&lt;strong>2. 执行方法与流程 (Methodology &amp;amp; Workflow)&lt;/strong>&lt;/h3>
+&lt;p>本项目采用了一套系统性的方法，覆盖从模型分析、运行时环境改造、量化数据生成到最终模型验证的全过程。&lt;/p>
+&lt;pre class="mermaid">graph TD
+ classDef main fill:#2c3e50,color:white,stroke:#8e9eab;
+ classDef task fill:#4b3e58,color:white,stroke:#b8a3d3;
+ classDef check fill:#27ae60,color:white,stroke:#88d1a1;
+ classDef fail fill:#c0392b,color:white,stroke:#e69a93;
+ classDef success fill:#16a085,color:white,stroke:#72d6c1;
+ classDef note fill:#f39c12,color:white,stroke:#f8c471;
+
+ S[&amp;lt;b&amp;gt;开始: FP32 ONNX 模型&amp;lt;/b&amp;gt;]:::main
+ A[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;b&amp;gt;1. 初始模型分析与转换&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 使用预量化的 INT8 ONNX 模型进行直接转换&amp;lt;/div&amp;gt;&amp;#34;]:::task
+
+ %% --- THIS IS THE MISSING LINE THAT FIXES THE CONNECTION ---
+ S --&amp;gt; A
+
+ A --&amp;gt; R1{&amp;#34;&amp;lt;div style=&amp;#39;text-align:center&amp;#39;&amp;gt;转换是否成功?&amp;lt;/div&amp;gt;&amp;#34;}:::check
+ R1 -- &amp;#34;否: 存在 `DynamicQuantizeLinear` 算子&amp;#34; --&amp;gt; B
+
+ B[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;b&amp;gt;2. C&amp;#43;&amp;#43; 运行时适配&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 分析 `sherpa-onnx` RKNN 后端代码&amp;lt;br&amp;gt;- 增加对 `RKNN_TENSOR_INT8` 类型的处理分支&amp;lt;br&amp;gt;- 实现 INT8 输出到 FP32 的手动反量化逻辑&amp;lt;/div&amp;gt;&amp;#34;]:::task
+ B --&amp;gt; C
+
+ C[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;b&amp;gt;3. 校准数据集迭代&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;&amp;lt;b&amp;gt;3.1 (快照法):&amp;lt;/b&amp;gt; 提取特征帧, 状态张量补零&amp;lt;br&amp;gt;&amp;lt;b&amp;gt;3.2 (流式模拟):&amp;lt;/b&amp;gt; 使用 `onnxruntime` 模拟流式推理, 捕获真实的非零状态张量&amp;lt;/div&amp;gt;&amp;#34;]:::task
+ C --&amp;gt; R2{&amp;#34;&amp;lt;div style=&amp;#39;text-align:center&amp;#39;&amp;gt;INT8 模型推理结果?&amp;lt;/div&amp;gt;&amp;#34;}:::check
+
+ R2 -- &amp;#34;3.1 -&amp;gt; Garbled Output&amp;#34; --&amp;gt; C
+ R2 -- &amp;#34;3.2 (`interval=1`) -&amp;gt; &amp;lt;b&amp;gt;First Success&amp;lt;/b&amp;gt;&amp;#34; --&amp;gt; D
+
+ D[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;b&amp;gt;4. 量化策略调优&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- &amp;lt;b&amp;gt;算法:&amp;lt;/b&amp;gt; 测试 `normal` (默认) 与 `kl_divergence` 算法&amp;lt;br&amp;gt;- &amp;lt;b&amp;gt;混合精度:&amp;lt;/b&amp;gt; 尝试手动及自动混合量化&amp;lt;/div&amp;gt;&amp;#34;]:::task
+ D --&amp;gt; E
+
+ E[&amp;#34;&amp;lt;div style=&amp;#39;text-align:left; padding:10px;&amp;#39;&amp;gt;&amp;lt;b&amp;gt;5. 最终方案验证&amp;lt;/b&amp;gt;&amp;lt;br&amp;gt;- 对比不同策略下的模型精度与性能 (RTF)&amp;lt;/div&amp;gt;&amp;#34;]:::task
+ E --&amp;gt; F[&amp;lt;b&amp;gt;完成: 产出可部署的 INT8 RKNN 模型&amp;lt;/b&amp;gt;]:::success
+
+ subgraph &amp;#34;关键技术点&amp;#34;
+ K1[静态图 vs. 动态图]:::note
+ K2[有状态模型的校准]:::note
+ K3[量化算法内存分析]:::note
+ K4[混合精度量化]:::note
+ end
+
+ A --&amp;gt; K1
+ C --&amp;gt; K2
+ D --&amp;gt; K3 &amp;amp; K4&lt;/pre>
+&lt;h3 id="3-工程实施细节与关键问题记录-implementation--key-findings">&lt;strong>3. 工程实施细节与关键问题记录 (Implementation &amp;amp; Key Findings)&lt;/strong>&lt;/h3>
+&lt;h4 id="31-初始模型转换">&lt;strong>3.1 初始模型转换&lt;/strong>&lt;/h4>
+&lt;ul>
+&lt;li>&lt;strong>执行动作&lt;/strong>: 尝试使用 &lt;code>rknn-toolkit2&lt;/code> 直接转换模型提供方发布的 &lt;code>int8.onnx&lt;/code> 模型。&lt;/li>
+&lt;li>&lt;strong>观察结果&lt;/strong>: 转换失败。工具链报错，指出模型中包含 &lt;code>DynamicQuantizeLinear&lt;/code> 算子，该算子与 RKNN NPU 的静态图 (Static Graph) 计算模式不兼容。&lt;/li>
+&lt;li>&lt;strong>采取措施&lt;/strong>: 确定了必须使用 &lt;code>FP32&lt;/code> ONNX 模型作为输入源，并利用 &lt;code>rknn-toolkit2&lt;/code> 自身的静态量化 (Static Quantization) 功能进行转换。&lt;/li>
+&lt;/ul>
+&lt;h4 id="32-c-推理框架-sherpa-onnx-适配">&lt;strong>3.2 C++ 推理框架 (sherpa-onnx) 适配&lt;/strong>&lt;/h4>
+&lt;ul>
+&lt;li>&lt;strong>执行动作&lt;/strong>: 在使用 &lt;code>FP32&lt;/code> 模型成功转换为 &lt;code>INT8&lt;/code> RKNN 模型后，在 &lt;code>sherpa-onnx&lt;/code> 中进行推理。&lt;/li>
+&lt;li>&lt;strong>观察结果&lt;/strong>: 运行时报错，提示 &lt;code>Unsupported tensor type: 2, INT8&lt;/code>。&lt;/li>
+&lt;li>&lt;strong>采取措施&lt;/strong>:
+&lt;ol>
+&lt;li>修改了 &lt;code>sherpa-onnx&lt;/code> 的 RKNN 后端 C++ 源码，在模型输入、输出及状态 (states) 处理逻辑中，增加了对 &lt;code>RKNN_TENSOR_INT8&lt;/code> 数据类型的分支处理。&lt;/li>
+&lt;li>在获取模型输出后，根据 &lt;code>rknn_tensor_attr&lt;/code> 中的 &lt;code>scale&lt;/code> 和 &lt;code>zp&lt;/code> (zero_point) 参数，实现了手动的反量化 (Dequantization) 步骤，将 &lt;code>INT8&lt;/code> 输出转换为后续解码逻辑所需的 &lt;code>FP32&lt;/code> 数据。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="33-量化校准数据集的迭代与优化">&lt;strong>3.3 量化校准数据集的迭代与优化&lt;/strong>&lt;/h4>
+&lt;p>此阶段是项目核心，通过多次迭代确定了有效的校准数据生成方案。&lt;/p></description></item><item><title>DTS（设备树）调试心得</title><link>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</guid><description>&lt;h2 id="调试外部设备的dts的思路是这样的">&lt;strong>调试外部设备的dts的思路是这样的：&lt;/strong>&lt;/h2>
 &lt;h3 id="1-逻辑节点">1. 逻辑节点&lt;/h3>
 &lt;ul>
 &lt;li>有一个逻辑节点，表示开发者可以控制的那个逻辑设备(例如usb)的全部（一般逻辑节点也在被写在&lt;strong>板级或产品级&lt;/strong>的dtsi里面）；&lt;/li>
@@ -550,21 +650,7 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;li>&lt;strong>核心技术:&lt;/strong> Device Tree (DTS), USB 2.0/3.0 Subsystem, OTG, XHCI/EHCI/OHCI, Kernel &lt;code>extcon&lt;/code> Framework&lt;/li>
 &lt;li>&lt;strong>调试工具:&lt;/strong> &lt;code>hdparm&lt;/code>, &lt;code>sysfs&lt;/code>, dmesg, 串口调试&lt;/li>
 &lt;/ul>
-&lt;hr></description></item><item><title>嵌入式平台 (RV1126B) 流式 ASR 模型 (Sherpa-ONNX Zipformer) INT8 端到端量化与部署</title><link>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-int8-quantization-rknn/</guid><description>&lt;script type="module">
- import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-&lt;/script>
-&lt;h3 id="项目名称嵌入式平台-rv1126b-流式-asr-模型-sherpa-zipformer-int8-端到端量化与部署">&lt;strong>项目名称：嵌入式平台 (RV1126B) 流式 ASR 模型 (Sherpa-Zipformer) INT8 端到端量化与部署&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>作者:&lt;/strong> PotterWhite&lt;/li>
-&lt;li>&lt;strong>日期:&lt;/strong> 2025年8~9月&lt;/li>
-&lt;li>&lt;strong>技术栈:&lt;/strong> &lt;code>RKNN-Toolkit2&lt;/code>, &lt;code>ONNX&lt;/code>, &lt;code>C++&lt;/code>, &lt;code>Python&lt;/code>, &lt;code>librosa&lt;/code>, &lt;code>sherpa-onnx&lt;/code>, &lt;code>LibriSpeech&lt;/code>, &lt;code>AiShell&lt;/code>&lt;/li>
-&lt;li>&lt;strong>项目类型:&lt;/strong> 模型部署 (Model Deployment), INT8 量化 (INT8 Quantization), 嵌入式 AI (Embedded AI), 推理引擎集成 (Inference Engine Integration)&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="1-项目目标-project-objective">&lt;strong>1. 项目目标 (Project Objective)&lt;/strong>&lt;/h3>
-&lt;p>为基于 Rockchip RV1126B SoC 的嵌入式设备，将一个 &lt;code>FP32&lt;/code> 精度的流式 Zipformer ASR (Automatic Speech Recognition) ONNX 模型，转换为 &lt;code>INT8&lt;/code> 精度的 RKNN 模型，并在 &lt;code>sherpa-onnx&lt;/code> C++ 推理框架中完成部署与验证，以满足低延迟和低功耗的运行要求。&lt;/p>
-&lt;h3 id="2-执行方法与流程-methodology--workflow">&lt;strong>2. 执行方法与流程 (Methodology &amp;amp; Workflow)&lt;/strong>&lt;/h3>
-&lt;p>本项目采用了一套系统性的方法，覆盖从模型分析、运行时环境改造、量化数据生成到最终模型验证的全过程。&lt;/p></description></item><item><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</guid><description>&lt;script type="module">
+&lt;hr></description></item><item><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/module-3-lt8911exb/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h3 id="项目总结rockchip-rk3568-平台-mipi-dsi-转-edp-接口调试与验证">&lt;strong>项目总结：Rockchip RK3568 平台 MIPI-DSI 转 eDP 接口调试与验证&lt;/strong>&lt;/h3>
