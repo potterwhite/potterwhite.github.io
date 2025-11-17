@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一章：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</guid><description>&lt;script type="module">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 17 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一章：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h1 id="项目复盘报告-after-action-review---优化版">&lt;strong>项目复盘报告 (After-Action Review) - 优化版&lt;/strong>&lt;/h1>
@@ -457,7 +457,50 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;/li>
 &lt;/ul>
 &lt;h4 id="33-量化校准数据集的迭代与优化">&lt;strong>3.3 量化校准数据集的迭代与优化&lt;/strong>&lt;/h4>
-&lt;p>此阶段是项目核心，通过多次迭代确定了有效的校准数据生成方案。&lt;/p></description></item><item><title>DTS（设备树）调试心得</title><link>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</guid><description>&lt;h2 id="调试外部设备的dts的思路是这样的">&lt;strong>调试外部设备的dts的思路是这样的：&lt;/strong>&lt;/h2>
+&lt;p>此阶段是项目核心，通过多次迭代确定了有效的校准数据生成方案。&lt;/p></description></item><item><title>PCIe采集卡</title><link>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</link><pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</guid><description>&lt;ul>
+&lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
+&lt;li>&lt;strong>日期:&lt;/strong> 2025年11月&lt;/li>
+&lt;/ul>
+&lt;h3 id="功能演示">功能演示&lt;/h3>
+&lt;p>以下是一个简短的视频，演示了本应用的核心工作流程。&lt;/p>
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+&lt;figure >
+ 
+ 
+
+ 
+ 
+
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;video controls autoplay loop muted playsinline
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+ &lt;source src="https://potterwhite.github.io/2025/fpga/fpga-uart-led-demonstration.mp4" type="video/mp4">
+ Your browser does not support the video tag.
+ &lt;/video>
+ &lt;/div>
+ 
+
+ 
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">上位机特殊按键触发点灯效果演示&lt;/figcaption>
+ 
+&lt;/figure>
+&lt;br>
+&lt;hr></description></item><item><title>DTS（设备树）调试心得</title><link>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</guid><description>&lt;h2 id="调试外部设备的dts的思路是这样的">&lt;strong>调试外部设备的dts的思路是这样的：&lt;/strong>&lt;/h2>
 &lt;h3 id="1-逻辑节点">1. 逻辑节点&lt;/h3>
 &lt;ul>
 &lt;li>有一个逻辑节点，表示开发者可以控制的那个逻辑设备(例如usb)的全部（一般逻辑节点也在被写在&lt;strong>板级或产品级&lt;/strong>的dtsi里面）；&lt;/li>
