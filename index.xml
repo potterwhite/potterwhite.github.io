@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 17 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一章：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</guid><description>&lt;script type="module">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>欢迎光临 on Potter的个人笔记</title><link>https://potterwhite.github.io/</link><description>Recent content in 欢迎光临 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>第一章：RK3588S平台 Sherpa ASR 模块化部署(C/S架构)</title><link>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/sherpa-deployed-rockchip/stage1-integration/</guid><description>&lt;script type="module">
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script>
 &lt;h1 id="项目复盘报告-after-action-review---优化版">&lt;strong>项目复盘报告 (After-Action Review) - 优化版&lt;/strong>&lt;/h1>
@@ -457,7 +457,88 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;/li>
 &lt;/ul>
 &lt;h4 id="33-量化校准数据集的迭代与优化">&lt;strong>3.3 量化校准数据集的迭代与优化&lt;/strong>&lt;/h4>
-&lt;p>此阶段是项目核心，通过多次迭代确定了有效的校准数据生成方案。&lt;/p></description></item><item><title>PCIe采集卡</title><link>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</link><pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</guid><description>&lt;ul>
+&lt;p>此阶段是项目核心，通过多次迭代确定了有效的校准数据生成方案。&lt;/p></description></item><item><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</title><link>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
+&lt;p>这份配置单涵盖了硬件基础设施、虚拟化显示方案、性能优化及串流设置，适用于我的 &lt;strong>AMD EPYC 7551 (Home)&lt;/strong> 和 &lt;strong>Dual Xeon (Work)&lt;/strong> 环境。&lt;/p>
+&lt;h2 id="硬件环境">&lt;strong>硬件环境&lt;/strong>&lt;/h2>
+&lt;h4 id="homelab配置">&lt;strong>Homelab配置&lt;/strong>&lt;/h4>
+&lt;ul>
+&lt;li>CPU: AMD EPYC 7551 (Home)&lt;/li>
+&lt;li>主板：Supermicro H11SSL-i&lt;/li>
+&lt;li>显卡：NVIDIA GeForce GTX 1050 Ti (4GB)&lt;/li>
+&lt;/ul>
+&lt;h4 id="work-server配置">&lt;strong>Work Server配置&lt;/strong>&lt;/h4>
+&lt;ul>
+&lt;li>CPU: Dual Xeon (Work)&lt;/li>
+&lt;li>主板：白牌X99芯片组&lt;/li>
+&lt;li>显卡：亮机卡只能给PVE使用，不希望维护时还要修改显卡直通配置，所以等同于无显卡&lt;/li>
+&lt;/ul>
+&lt;h2 id="需求">&lt;strong>需求&lt;/strong>&lt;/h2>
+&lt;p>家庭成员多，而且如果每个人使用一台笔记本或PC，首先&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;ol>
+&lt;li>购买计算机的费用就很高；&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;ol start="2">
+&lt;li>其次软件维护的工作量将会很大（需要孤立的去设置每一台计算机上的软件/重装系统等）；&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;ol start="3">
+&lt;li>而且家中有做PPT和轻度设计的需求，所以Mac和Win都是刚需；&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;ol start="4">
+&lt;li>作为一名工程师，很难接受家里的设备不好用的局面。例如：买一台游戏机或买一张很贵的显卡（打游戏用），总不能只能在一台PC上使用，要打游戏的人就都抢这台PC吧。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;ol start="5">
+&lt;li>NAS,把全家的资料都集中存储，极大减少资料丢失的风险，减轻资料备份的繁重工作，还有可怕的存储设备的费用（硬盘真贵啊）。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;p>而上述这些点，就自然而然想到上云，家庭内建立一台强大的服务器Server, 硬件能够一次购买，最大化被所有人共享。&lt;br>
+(同样的需求在公司内部也一样，因为都经我的手，所以处理方案都是用PVE，再此就不再提WorkServer的情况，默认与Homelab情况一致。)&lt;br>&lt;/p>
+&lt;h2 id="困扰">&lt;strong>困扰&lt;/strong>&lt;/h2>
+&lt;p>搭建环境时，一直用RDP来连接HomeLab（安装了PVE）下的VM（有Ubuntu/Mac/Win10/Win11）。&lt;br>
+但是发现鼠标肉眼可见的拖拽卡顿，虽然能用，但满足不了设计师的需求。更别说要远程打开设计软件和Microsoft PowerPoint了。&lt;br>&lt;/p>
+&lt;hr>
+&lt;h2 id="下载">&lt;strong>下载&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://moonlight-stream.org/" target="_blank" rel="noopener">最佳入口：Sunshine&amp;amp;Moonlight在这里都可以下载到&lt;/a>
+&lt;img src="https://potterwhite.github.io/2025/pve/sunshine-moonlight-entrance.png" alt="">&lt;/li>
+&lt;/ul>
+&lt;h2 id="功能点1-显卡策略-gpu-strategy">功能点1. 显卡策略 (GPU Strategy)&lt;/h2>
+&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p>
+&lt;ul>
+&lt;li>&lt;img src="https://potterwhite.github.io/2025/pve/moonlight-connect-stats.png" alt="">&lt;/li>
+&lt;/ul>
+&lt;ul>
+&lt;li>&lt;strong>方案 A：通用虚拟化 (推荐 EPYC/Xeon 部署)&lt;/strong>
+&lt;ul>
+&lt;li>&lt;mark>尚未部署，但是vGPU对我是有巨大的吸引力，而且功耗是50/75w，太适合家用了，只是P4的显存少，美中不足。&lt;/mark>&lt;/li>
+&lt;li>&lt;strong>硬件&lt;/strong>：&lt;strong>NVIDIA Tesla P4 (8GB)&lt;/strong> + &lt;strong>3D打印导风罩 &amp;amp; 暴力风扇&lt;/strong>。&lt;/li>
+&lt;li>&lt;strong>配置&lt;/strong>：PVE 安装 &lt;code>vGPU_unlock&lt;/code> 驱动。&lt;/li>
+&lt;li>&lt;strong>分配&lt;/strong>：切分为 4 个 &lt;code>P4-2Q&lt;/code> (2GB显存) profile，分配给 4 个 VM。&lt;/li>
+&lt;li>&lt;em>用途&lt;/em>：流畅运行 1080P/60FPS 桌面串流、轻量级任务。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>方案 B：高性能直通 (现有设备)&lt;/strong>
+&lt;ul>
+&lt;li>&lt;mark>已部署，且Host latency立刻从20ms～30ms降低到0ms~5ms&lt;/mark>&lt;/li>
+&lt;li>&lt;strong>硬件&lt;/strong>：&lt;strong>GTX 1050 Ti (4GB)&lt;/strong>。&lt;/li>
+&lt;li>&lt;strong>配置&lt;/strong>：PVE 使用 &lt;strong>PCIe Passthrough (直通)&lt;/strong> 模式给主力 Windows VM。&lt;/li>
+&lt;li>&lt;strong>分配&lt;/strong>：独占。&lt;/li>
+&lt;li>&lt;em>用途&lt;/em>：AI 入门学习 (CUDA)、4K 视频播放、轻度游戏。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="功能点2-虚拟显示解决方案-headless-display">功能点2. 虚拟显示解决方案 (Headless Display)&lt;/h2>
+&lt;p>解决无物理显示器导致的黑边、分辨率锁定 (1280x800) 问题。&lt;/p></description></item><item><title>PCIe采集卡</title><link>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</link><pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</guid><description>&lt;ul>
 &lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>日期:&lt;/strong> 2025年11月&lt;/li>
 &lt;/ul>
