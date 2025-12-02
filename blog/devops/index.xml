@@ -47,6 +47,43 @@
 &lt;h2 id="困扰">&lt;strong>困扰&lt;/strong>&lt;/h2>
 &lt;p>搭建环境时，一直用RDP来连接HomeLab（安装了PVE）下的VM（有Ubuntu/Mac/Win10/Win11）。&lt;br>
 但是发现鼠标肉眼可见的拖拽卡顿，虽然能用，但满足不了设计师的需求。更别说要远程打开设计软件和Microsoft PowerPoint了。&lt;br>&lt;/p>
+&lt;h2 id="最终效果">&lt;strong>最终效果&lt;/strong>&lt;/h2>
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+&lt;figure >
+ 
+ 
+
+ 
+ 
+
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;video controls autoplay loop muted playsinline
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+ &lt;source src="https://potterwhite.github.io/2025/pve/moonlight-connect-workserver-nogpu.mp4" type="video/mp4">
+ Your browser does not support the video tag.
+ &lt;/video>
+ &lt;/div>
+ 
+
+ 
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">最终效果&lt;/figcaption>
+ 
+&lt;/figure>
 &lt;hr>
 &lt;h2 id="下载">&lt;strong>下载&lt;/strong>&lt;/h2>
 &lt;ul>
@@ -54,32 +91,7 @@
 &lt;img src="https://potterwhite.github.io/2025/pve/sunshine-moonlight-entrance.png" alt="">&lt;/li>
 &lt;/ul>
 &lt;h2 id="功能点1-显卡策略-gpu-strategy">功能点1. 显卡策略 (GPU Strategy)&lt;/h2>
-&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p>
-&lt;ul>
-&lt;li>&lt;img src="https://potterwhite.github.io/2025/pve/moonlight-connect-stats.png" alt="">&lt;/li>
-&lt;/ul>
-&lt;ul>
-&lt;li>&lt;strong>方案 A：通用虚拟化 (推荐 EPYC/Xeon 部署)&lt;/strong>
-&lt;ul>
-&lt;li>&lt;mark>尚未部署，但是vGPU对我是有巨大的吸引力，而且功耗是50/75w，太适合家用了，只是P4的显存少，美中不足。&lt;/mark>&lt;/li>
-&lt;li>&lt;strong>硬件&lt;/strong>：&lt;strong>NVIDIA Tesla P4 (8GB)&lt;/strong> + &lt;strong>3D打印导风罩 &amp;amp; 暴力风扇&lt;/strong>。&lt;/li>
-&lt;li>&lt;strong>配置&lt;/strong>：PVE 安装 &lt;code>vGPU_unlock&lt;/code> 驱动。&lt;/li>
-&lt;li>&lt;strong>分配&lt;/strong>：切分为 4 个 &lt;code>P4-2Q&lt;/code> (2GB显存) profile，分配给 4 个 VM。&lt;/li>
-&lt;li>&lt;em>用途&lt;/em>：流畅运行 1080P/60FPS 桌面串流、轻量级任务。&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>方案 B：高性能直通 (现有设备)&lt;/strong>
-&lt;ul>
-&lt;li>&lt;mark>已部署，且Host latency立刻从20ms～30ms降低到0ms~5ms&lt;/mark>&lt;/li>
-&lt;li>&lt;strong>硬件&lt;/strong>：&lt;strong>GTX 1050 Ti (4GB)&lt;/strong>。&lt;/li>
-&lt;li>&lt;strong>配置&lt;/strong>：PVE 使用 &lt;strong>PCIe Passthrough (直通)&lt;/strong> 模式给主力 Windows VM。&lt;/li>
-&lt;li>&lt;strong>分配&lt;/strong>：独占。&lt;/li>
-&lt;li>&lt;em>用途&lt;/em>：AI 入门学习 (CUDA)、4K 视频播放、轻度游戏。&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h2 id="功能点2-虚拟显示解决方案-headless-display">功能点2. 虚拟显示解决方案 (Headless Display)&lt;/h2>
-&lt;p>解决无物理显示器导致的黑边、分辨率锁定 (1280x800) 问题。&lt;/p></description></item><item><title>NFS(Net File System)</title><link>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</guid><description>&lt;h1 id="nfs-挂载问题深度复盘与标准工作流建立">NFS 挂载问题深度复盘与标准工作流建立&lt;/h1>
+&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p></description></item><item><title>NFS(Net File System)</title><link>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</guid><description>&lt;h1 id="nfs-挂载问题深度复盘与标准工作流建立">NFS 挂载问题深度复盘与标准工作流建立&lt;/h1>
 &lt;h2 id="前言">前言&lt;/h2>
 &lt;p>本文档旨在复盘一次在嵌入式 BusyBox 系统 (&lt;code>david&lt;/code> 主机) 挂载 Ubuntu NFS 服务器 (&lt;code>Anastasia-Ubuntu&lt;/code>) 时，反复出现 &lt;code>Connection refused&lt;/code> 错误的排查过程。最终，通过添加 &lt;code>-o nolock&lt;/code> 挂载选项成功解决了问题。本文将详细分析失败的根本原因，并建立一套标准的 NFS 服务端与客户端配置工作流，为未来的部署提供可靠参考。&lt;/p>
 &lt;hr>
