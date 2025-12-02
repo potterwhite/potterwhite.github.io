@@ -550,7 +550,59 @@ tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevO
 &lt;img src="https://potterwhite.github.io/2025/pve/sunshine-moonlight-entrance.png" alt="">&lt;/li>
 &lt;/ul>
 &lt;h2 id="功能点1-显卡策略-gpu-strategy">功能点1. 显卡策略 (GPU Strategy)&lt;/h2>
-&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p></description></item><item><title>PCIe采集卡</title><link>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</link><pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</guid><description>&lt;ul>
+&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p></description></item><item><title>异地访问（安全）家中计算机-（OpenWRT+No-IP+WireGuard）</title><link>https://potterwhite.github.io/blog/2025/11/27/%E5%BC%82%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%89%E5%85%A8%E5%AE%B6%E4%B8%AD%E8%AE%A1%E7%AE%97%E6%9C%BA-openwrt-no-ip-wireguard/</link><pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/11/27/%E5%BC%82%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%89%E5%85%A8%E5%AE%B6%E4%B8%AD%E8%AE%A1%E7%AE%97%E6%9C%BA-openwrt-no-ip-wireguard/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
+&lt;p>这是一份我的工作笔记，几乎没有进行润色，AI帮助我把思考过程和尝试过程，包括弯路和最终解法都整理出来，写成文档的格式。&lt;br>
+其实，自从我在Github Pages开通了博客，我就很自然的也很乐此不疲的多增加一步的工作，把记录从Obsidian里搬进我的Github Blog。&lt;/p>
+&lt;p>&lt;strong>环境：&lt;/strong> OpenWrt 23.05
+&lt;strong>目标：&lt;/strong> 实现外网通过 WireGuard 访问内网资源，并确保公网 IP 变动后自动同步。&lt;/p>
+&lt;hr>
+&lt;h2 id="要求">&lt;strong>要求&lt;/strong>&lt;/h2>
+&lt;p>要用到异地访问内网，必须要有两个东西&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;ol>
+&lt;li>我们的ISP提供一个公网IP给我们的宽带（动态变化也可以），并且主路由器需直接获取该公网 IP 作为 WAN 口地址，避免因光猫 NAT 转发导致的多重路由嵌套。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;ol start="2">
+&lt;li>我们需要有一个域名，能够绑定在我们的公网IP上。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="第1部分ddns-环节的回顾与复盘">第1部分：DDNS 环节的回顾与复盘&lt;/h2>
+&lt;h4 id="1-遇到的-bug-故障点">1. 遇到的 Bug (故障点)&lt;/h4>
+&lt;ul>
+&lt;li>&lt;strong>现象：&lt;/strong> 点击 &amp;ldquo;Update DDns Services List&amp;rdquo; 永远显示 &lt;code>NO_LIST&lt;/code>，导致无法在下拉菜单中选择 &lt;code>no-ip.com&lt;/code>。&lt;/li>
+&lt;/ul>
+&lt;ul>
+&lt;li>&lt;img src="https://potterwhite.github.io/2025/openwrt/openwrt-ddns.png" alt="">&lt;/li>
+&lt;/ul>
+&lt;ul>
+&lt;li>&lt;strong>根本原因 (推测)：&lt;/strong>
+&lt;ul>
+&lt;li>OpenWrt 固件由于精简或网络原因，缺少 HTTPS 根证书 (&lt;code>ca-certificates&lt;/code>)。&lt;/li>
+&lt;li>或者路由器的 DNS 尚未配置好，无法解析下载列表的服务器地址。&lt;/li>
+&lt;li>这导致 &lt;code>wget&lt;/code> 或 &lt;code>curl&lt;/code> 命令无法从 OpenWrt 官方源下载服务商数据包。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="2-挽救措施-workaround">2. 挽救措施 (Workaround)&lt;/h4>
+&lt;ul>
+&lt;li>&lt;strong>我们做了什么：&lt;/strong> 放弃了“依赖预设列表”的自动化路径，转而使用“手动挡” (Custom Mode)。&lt;/li>
+&lt;li>&lt;strong>关键操作：&lt;/strong>
+&lt;ul>
+&lt;li>&lt;img src="https://potterwhite.github.io/2025/openwrt/ddns-ipv4.png" alt="">&lt;/li>
+&lt;/ul>
+&lt;ol>
+&lt;li>将服务商设为 &lt;code>-- custom --&lt;/code>。&lt;/li>
+&lt;li>手动构造了 No-IP 的 API 更新链接：&lt;code>http://[USERNAME]:[PASSWORD]@dynupdate.no-ip.com...&lt;/code>&lt;/li>
+&lt;li>&lt;strong>关键修正：&lt;/strong> 考虑到可能存在的证书问题，我们使用了 &lt;code>http://&lt;/code> 而不是 &lt;code>https://&lt;/code>，并取消了 &amp;ldquo;Use HTTP Secure&amp;rdquo; 的勾选，确保在证书环境不完善的情况下也能成功握手。&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ul>
+&lt;h4 id="3-经验总结">3. 经验总结&lt;/h4>
+&lt;p>在 OpenWrt 中，&lt;strong>&amp;ldquo;预设列表&amp;rdquo; 只是一个为了方便的快捷方式，并不是必须的。&lt;/strong> 只要知道服务商的 API 格式，用 Custom 模式往往比修补系统环境（安装证书、排查网络）来得更快、更直接。&lt;/p></description></item><item><title>PCIe采集卡</title><link>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</link><pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/fpga-pcie-capture-device/</guid><description>&lt;ul>
 &lt;li>&lt;strong>作者:&lt;/strong> Potter White&lt;/li>
 &lt;li>&lt;strong>日期:&lt;/strong> 2025年11月&lt;/li>
 &lt;/ul>
