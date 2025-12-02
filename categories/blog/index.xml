@@ -47,6 +47,43 @@
 &lt;h2 id="困扰">&lt;strong>困扰&lt;/strong>&lt;/h2>
 &lt;p>搭建环境时，一直用RDP来连接HomeLab（安装了PVE）下的VM（有Ubuntu/Mac/Win10/Win11）。&lt;br>
 但是发现鼠标肉眼可见的拖拽卡顿，虽然能用，但满足不了设计师的需求。更别说要远程打开设计软件和Microsoft PowerPoint了。&lt;br>&lt;/p>
+&lt;h2 id="最终效果">&lt;strong>最终效果&lt;/strong>&lt;/h2>
+
+
+
+
+
+
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+&lt;figure >
+ 
+ 
+
+ 
+ 
+
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;video controls autoplay loop muted playsinline
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+ &lt;source src="https://potterwhite.github.io/2025/pve/moonlight-connect-workserver-nogpu.mp4" type="video/mp4">
+ Your browser does not support the video tag.
+ &lt;/video>
+ &lt;/div>
+ 
+
+ 
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">最终效果&lt;/figcaption>
+ 
+&lt;/figure>
 &lt;hr>
 &lt;h2 id="下载">&lt;strong>下载&lt;/strong>&lt;/h2>
 &lt;ul>
@@ -54,32 +91,7 @@
 &lt;img src="https://potterwhite.github.io/2025/pve/sunshine-moonlight-entrance.png" alt="">&lt;/li>
 &lt;/ul>
 &lt;h2 id="功能点1-显卡策略-gpu-strategy">功能点1. 显卡策略 (GPU Strategy)&lt;/h2>
-&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p>
-&lt;ul>
-&lt;li>&lt;img src="https://potterwhite.github.io/2025/pve/moonlight-connect-stats.png" alt="">&lt;/li>
-&lt;/ul>
-&lt;ul>
-&lt;li>&lt;strong>方案 A：通用虚拟化 (推荐 EPYC/Xeon 部署)&lt;/strong>
-&lt;ul>
-&lt;li>&lt;mark>尚未部署，但是vGPU对我是有巨大的吸引力，而且功耗是50/75w，太适合家用了，只是P4的显存少，美中不足。&lt;/mark>&lt;/li>
-&lt;li>&lt;strong>硬件&lt;/strong>：&lt;strong>NVIDIA Tesla P4 (8GB)&lt;/strong> + &lt;strong>3D打印导风罩 &amp;amp; 暴力风扇&lt;/strong>。&lt;/li>
-&lt;li>&lt;strong>配置&lt;/strong>：PVE 安装 &lt;code>vGPU_unlock&lt;/code> 驱动。&lt;/li>
-&lt;li>&lt;strong>分配&lt;/strong>：切分为 4 个 &lt;code>P4-2Q&lt;/code> (2GB显存) profile，分配给 4 个 VM。&lt;/li>
-&lt;li>&lt;em>用途&lt;/em>：流畅运行 1080P/60FPS 桌面串流、轻量级任务。&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>方案 B：高性能直通 (现有设备)&lt;/strong>
-&lt;ul>
-&lt;li>&lt;mark>已部署，且Host latency立刻从20ms～30ms降低到0ms~5ms&lt;/mark>&lt;/li>
-&lt;li>&lt;strong>硬件&lt;/strong>：&lt;strong>GTX 1050 Ti (4GB)&lt;/strong>。&lt;/li>
-&lt;li>&lt;strong>配置&lt;/strong>：PVE 使用 &lt;strong>PCIe Passthrough (直通)&lt;/strong> 模式给主力 Windows VM。&lt;/li>
-&lt;li>&lt;strong>分配&lt;/strong>：独占。&lt;/li>
-&lt;li>&lt;em>用途&lt;/em>：AI 入门学习 (CUDA)、4K 视频播放、轻度游戏。&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h2 id="功能点2-虚拟显示解决方案-headless-display">功能点2. 虚拟显示解决方案 (Headless Display)&lt;/h2>
-&lt;p>解决无物理显示器导致的黑边、分辨率锁定 (1280x800) 问题。&lt;/p></description></item><item><title>DTS（设备树）调试心得</title><link>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</guid><description>&lt;h2 id="调试外部设备的dts的思路是这样的">&lt;strong>调试外部设备的dts的思路是这样的：&lt;/strong>&lt;/h2>
+&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p></description></item><item><title>DTS（设备树）调试心得</title><link>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/10/16/dts%E8%AE%BE%E5%A4%87%E6%A0%91%E8%B0%83%E8%AF%95%E5%BF%83%E5%BE%97/</guid><description>&lt;h2 id="调试外部设备的dts的思路是这样的">&lt;strong>调试外部设备的dts的思路是这样的：&lt;/strong>&lt;/h2>
 &lt;h3 id="1-逻辑节点">1. 逻辑节点&lt;/h3>
 &lt;ul>
 &lt;li>有一个逻辑节点，表示开发者可以控制的那个逻辑设备(例如usb)的全部（一般逻辑节点也在被写在&lt;strong>板级或产品级&lt;/strong>的dtsi里面）；&lt;/li>
