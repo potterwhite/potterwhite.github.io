@@ -1,4 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Potter的个人笔记</title><link>https://potterwhite.github.io/categories/docker/</link><description>Recent content in Docker on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 10 Jul 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker使用</title><link>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</link><pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</guid><description>&lt;!-- ---
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Potter的个人笔记</title><link>https://potterwhite.github.io/categories/docker/</link><description>Recent content in Docker on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>为嵌入式 Linux（RK3588、RV1126、RK3568）构建可复现的 Docker 开发环境</title><link>https://potterwhite.github.io/blog/2026/03/28/%E4%B8%BA%E5%B5%8C%E5%85%A5%E5%BC%8F-linuxrk3588rv1126rk3568%E6%9E%84%E5%BB%BA%E5%8F%AF%E5%A4%8D%E7%8E%B0%E7%9A%84-docker-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link><pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2026/03/28/%E4%B8%BA%E5%B5%8C%E5%85%A5%E5%BC%8F-linuxrk3588rv1126rk3568%E6%9E%84%E5%BB%BA%E5%8F%AF%E5%A4%8D%E7%8E%B0%E7%9A%84-docker-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</guid><description>&lt;h1 id="为嵌入式-linux-构建可复现的-docker-开发环境">为嵌入式 Linux 构建可复现的 Docker 开发环境&lt;/h1>
+&lt;h2 id="问题背景">问题背景&lt;/h2>
+&lt;p>如果你在做 RK3588、RK3588S、RV1126、RK3568 等 Rockchip SoC 的嵌入式 Linux 开发，一定遇到过这些问题：&lt;/p>
+&lt;ul>
+&lt;li>团队里每个人安装的工具链版本都略有差异 → 构建结果不一致&lt;/li>
+&lt;li>维护多个差异越来越大的 Dockerfile（每个芯片一个）&lt;/li>
+&lt;li>同时支持 Ubuntu 20.04、22.04、24.04，改一处就破坏另一处&lt;/li>
+&lt;li>多个平台的容器同时运行时端口冲突&lt;/li>
+&lt;li>镜像推送到私有 Harbor registry 需要一堆没人维护的粘合脚本&lt;/li>
+&lt;/ul>
+&lt;p>标准答案是&amp;quot;把开发环境容器化&amp;quot; — 但容器定义本身变成了新的维护负担。&lt;/p>
+&lt;hr>
+&lt;h2 id="解决方案harborpilot">解决方案：HarborPilot&lt;/h2>
+&lt;p>&lt;a href="https://github.com/potterwhite/HarborPilot" target="_blank" rel="noopener">HarborPilot&lt;/a> 是一个全脚本化的工具链，
+自动化嵌入式 Linux Docker 开发镜像的构建-标签-推送全流程。&lt;/p>
+&lt;p>核心思路如下：&lt;/p>
+&lt;h3 id="1-单一的-5-阶段-dockerfile">1. 单一的 5 阶段 Dockerfile&lt;/h3>
+&lt;p>不再是 5 个 Dockerfile，只有一个：&lt;/p>
+&lt;pre tabindex="0">&lt;code>Stage 1: 基础 OS（apt 源替换、软件包、用户创建、locale）
+Stage 2: 开发工具（cmake、gdb、CUDA、OpenCV、Node.js、Python）
+Stage 3: SDK 初始化（git init、符号链接、辅助脚本）
+Stage 4: 环境配置（代理、profile.d 变量）
+Stage 5: 工作区 + entrypoint + 测试
+&lt;/code>&lt;/pre>&lt;p>平台特定行为通过构建时注入的 &lt;code>ARG&lt;/code>/&lt;code>ENV&lt;/code> 变量控制，而不是靠不同的 Dockerfile。&lt;/p></description></item><item><title>Docker使用</title><link>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</link><pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/10/docker%E4%BD%BF%E7%94%A8/</guid><description>&lt;!-- ---
 title: "Docker使用"
 date: 2024-07-17
 description: ""
