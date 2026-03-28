@@ -16,12 +16,12 @@
 &lt;p>核心思路如下：&lt;/p>
 &lt;h3 id="1-单一的-5-阶段-dockerfile">1. 单一的 5 阶段 Dockerfile&lt;/h3>
 &lt;p>不再是 5 个 Dockerfile，只有一个：&lt;/p>
-&lt;pre tabindex="0">&lt;code>Stage 1: 基础 OS（apt 源替换、软件包、用户创建、locale）
-Stage 2: 开发工具（cmake、gdb、CUDA、OpenCV、Node.js、Python）
-Stage 3: SDK 初始化（git init、符号链接、辅助脚本）
-Stage 4: 环境配置（代理、profile.d 变量）
-Stage 5: 工作区 + entrypoint + 测试
-&lt;/code>&lt;/pre>&lt;p>平台特定行为通过构建时注入的 &lt;code>ARG&lt;/code>/&lt;code>ENV&lt;/code> 变量控制，而不是靠不同的 Dockerfile。&lt;/p></description></item><item><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</title><link>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>Stage 1: 基础 OS（apt 源替换、软件包、用户创建、locale）
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Stage 2: 开发工具（cmake、gdb、CUDA、OpenCV、Node.js、Python）
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Stage 3: SDK 初始化（git init、符号链接、辅助脚本）
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Stage 4: 环境配置（代理、profile.d 变量）
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Stage 5: 工作区 + entrypoint + 测试
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>平台特定行为通过构建时注入的 &lt;code>ARG&lt;/code>/&lt;code>ENV&lt;/code> 变量控制，而不是靠不同的 Dockerfile。&lt;/p></description></item><item><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</title><link>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
 &lt;p>这份配置单涵盖了硬件基础设施、虚拟化显示方案、性能优化及串流设置，适用于我的 &lt;strong>AMD EPYC 7551 (Home)&lt;/strong> 和 &lt;strong>Dual Xeon (Work)&lt;/strong> 环境。&lt;/p>
 &lt;h2 id="硬件环境">&lt;strong>硬件环境&lt;/strong>&lt;/h2>
 &lt;h4 id="homelab配置">&lt;strong>Homelab配置&lt;/strong>&lt;/h4>
