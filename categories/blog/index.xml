@@ -1,4 +1,77 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Potter的个人笔记</title><link>https://potterwhite.github.io/categories/blog/</link><description>Recent content in Blog on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 03 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Ubuntu</title><link>https://potterwhite.github.io/blog/devops/ubuntu/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/devops/ubuntu/</guid><description/></item><item><title>Docker</title><link>https://potterwhite.github.io/blog/devops/docker/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/devops/docker/</guid><description/></item><item><title>OSI VS TCP/IP Models</title><link>https://potterwhite.github.io/blog/2025/12/03/osi-vs-tcp/ip-models/</link><pubDate>Wed, 03 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/03/osi-vs-tcp/ip-models/</guid><description>&lt;p>&lt;img src="https://potterwhite.github.io/2025/osi-tcpip-diagram.jpg" alt="OSI VS TCP/IP Models">&lt;/p></description></item><item><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</title><link>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Potter的个人笔记</title><link>https://potterwhite.github.io/categories/blog/</link><description>Recent content in Blog on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Ubuntu</title><link>https://potterwhite.github.io/blog/devops/ubuntu/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/devops/ubuntu/</guid><description/></item><item><title>Docker</title><link>https://potterwhite.github.io/blog/devops/docker/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/devops/docker/</guid><description/></item><item><title>为嵌入式 Linux（RK3588、RV1126、RK3568）构建可复现的 Docker 开发环境</title><link>https://potterwhite.github.io/blog/2026/03/28/%E4%B8%BA%E5%B5%8C%E5%85%A5%E5%BC%8F-linuxrk3588rv1126rk3568%E6%9E%84%E5%BB%BA%E5%8F%AF%E5%A4%8D%E7%8E%B0%E7%9A%84-docker-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link><pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2026/03/28/%E4%B8%BA%E5%B5%8C%E5%85%A5%E5%BC%8F-linuxrk3588rv1126rk3568%E6%9E%84%E5%BB%BA%E5%8F%AF%E5%A4%8D%E7%8E%B0%E7%9A%84-docker-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</guid><description>&lt;h1 id="为嵌入式-linux-构建可复现的-docker-开发环境">为嵌入式 Linux 构建可复现的 Docker 开发环境&lt;/h1>
+&lt;h2 id="问题背景">问题背景&lt;/h2>
+&lt;p>如果你在做 RK3588、RK3588S、RV1126、RK3568 等 Rockchip SoC 的嵌入式 Linux 开发，一定遇到过这些问题：&lt;/p>
+&lt;ul>
+&lt;li>团队里每个人安装的工具链版本都略有差异 → 构建结果不一致&lt;/li>
+&lt;li>维护多个差异越来越大的 Dockerfile（每个芯片一个）&lt;/li>
+&lt;li>同时支持 Ubuntu 20.04、22.04、24.04，改一处就破坏另一处&lt;/li>
+&lt;li>多个平台的容器同时运行时端口冲突&lt;/li>
+&lt;li>镜像推送到私有 Harbor registry 需要一堆没人维护的粘合脚本&lt;/li>
+&lt;/ul>
+&lt;p>标准答案是&amp;quot;把开发环境容器化&amp;quot; — 但容器定义本身变成了新的维护负担。&lt;/p>
+&lt;hr>
+&lt;h2 id="解决方案harborpilot">解决方案：HarborPilot&lt;/h2>
+&lt;p>&lt;a href="https://github.com/potterwhite/HarborPilot" target="_blank" rel="noopener">HarborPilot&lt;/a> 是一个全脚本化的工具链，
+自动化嵌入式 Linux Docker 开发镜像的构建-标签-推送全流程。&lt;/p>
+&lt;p>核心思路如下：&lt;/p>
+&lt;h3 id="1-单一的-5-阶段-dockerfile">1. 单一的 5 阶段 Dockerfile&lt;/h3>
+&lt;p>不再是 5 个 Dockerfile，只有一个：&lt;/p>
+&lt;pre tabindex="0">&lt;code>Stage 1: 基础 OS（apt 源替换、软件包、用户创建、locale）
+Stage 2: 开发工具（cmake、gdb、CUDA、OpenCV、Node.js、Python）
+Stage 3: SDK 初始化（git init、符号链接、辅助脚本）
+Stage 4: 环境配置（代理、profile.d 变量）
+Stage 5: 工作区 + entrypoint + 测试
+&lt;/code>&lt;/pre>&lt;p>平台特定行为通过构建时注入的 &lt;code>ARG&lt;/code>/&lt;code>ENV&lt;/code> 变量控制，而不是靠不同的 Dockerfile。&lt;/p></description></item><item><title>无线图传（WVTS）分类综览</title><link>https://potterwhite.github.io/blog/2025/12/12/%E6%97%A0%E7%BA%BF%E5%9B%BE%E4%BC%A0wvts%E5%88%86%E7%B1%BB%E7%BB%BC%E8%A7%88/</link><pubDate>Fri, 12 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/12/%E6%97%A0%E7%BA%BF%E5%9B%BE%E4%BC%A0wvts%E5%88%86%E7%B1%BB%E7%BB%BC%E8%A7%88/</guid><description>&lt;pre class="mermaid">flowchart LR
+ A[无线图传WVTS&amp;lt;br&amp;gt;Wireless Video Transmission System]
+
+ A --&amp;gt; C[无线电波 RF&amp;lt;br&amp;gt;&amp;gt;99.9% 所有场景]
+ A --&amp;gt; D[非无线电波&amp;lt;br&amp;gt;极罕见]
+
+ %% 无线电波大类
+ C --&amp;gt; C1[按频谱许可划分]
+ C --&amp;gt; C2[按调制技术划分]
+ C --&amp;gt; C3[按典型应用场景划分]
+
+ C1 --&amp;gt; C11[免许可频段 ISM/业余]
+ C1 --&amp;gt; C12[需许可频段 专业/军用]
+
+ C11 --&amp;gt; c111[2.4 GHz&amp;lt;br&amp;gt;Wi-Fi、DJI OcuSync/Lightbridge]
+ C11 --&amp;gt; c112[5.8 GHz&amp;lt;br&amp;gt;FPV主流、DJI O3、Walksnail、HDZero]
+ C11 --&amp;gt; c113[1.2/1.3 GHz&amp;lt;br&amp;gt;长距穿透]
+ C11 --&amp;gt; c114[433/868/915 MHz&amp;lt;br&amp;gt;ELRS、Crossfire超远距]
+ C11 --&amp;gt; c115[60 GHz mmWave&amp;lt;br&amp;gt;短距超高带宽]
+
+ C12 --&amp;gt; c121[C波段 4-8 GHz\&amp;lt;br&amp;gt;Vislink、BMI、Domo]
+ C12 --&amp;gt; c122[Ku/Ka波段&amp;lt;br&amp;gt;卫星、军用无人机]
+ C12 --&amp;gt; c123[L/S/X等军用专用]
+
+ C2 --&amp;gt; C21[模拟 Analog]
+ C2 --&amp;gt; C22[数字 Digital]
+ C2 --&amp;gt; C23[模拟&amp;#43;数字混合]
+
+ C21 --&amp;gt; c211[传统FM&amp;lt;br&amp;gt;Raceband老FPV]
+ C21 --&amp;gt; c212[增强模拟&amp;lt;br&amp;gt;SmartAudio、TBS Fusion]
+
+ C22 --&amp;gt; c221[Wi-Fi基&amp;lt;br&amp;gt;老DJI、GoPro、手机投屏]
+ C22 --&amp;gt; c222[专有协议&amp;lt;br&amp;gt;DJI O3/O4、Walksnail、HDZero、Amimon、Herelink]
+ C22 --&amp;gt; c223[COFDM&amp;lt;br&amp;gt;Silvus、Domo、TrellisWare、L3Harris]
+ C22 --&amp;gt; c224[LTE/5G&amp;lt;br&amp;gt;LiveU、TVU、5G私网]
+ C22 --&amp;gt; c225[卫星&amp;lt;br&amp;gt;Starlink、BGAN、WGS]
+
+ C23 --&amp;gt; c231[Caddx Vista、DJI Air Unit 等可切换方案]
+
+ C3 --&amp;gt; c31[消费/FPV级&amp;lt;br&amp;gt;&amp;lt;50ms 超低延迟]
+ C3 --&amp;gt; c32[电影航拍级&amp;lt;br&amp;gt;DJI Transmission、Teradek]
+ C3 --&amp;gt; c33[工业巡检级&amp;lt;br&amp;gt;高可靠]
+ C3 --&amp;gt; c34[军用/战术级&amp;lt;br&amp;gt;抗干扰、加密、LPI/LPD]
+
+ %% 非无线电波
+ D --&amp;gt; d1[自由空间光 FSO&amp;lt;br&amp;gt;激光/红外，军用头盔]
+ D --&amp;gt; d2[太赫兹&amp;lt;br&amp;gt;实验室]
+ D --&amp;gt; d3[水下声波图传]
+
+ click A &amp;#34;无线图传&amp;#34; _self
+ style A fill:#2a2a4a,stroke:#fff,color:#fff&lt;/pre></description></item><item><title>OSI VS TCP/IP Models</title><link>https://potterwhite.github.io/blog/2025/12/03/osi-vs-tcp/ip-models/</link><pubDate>Wed, 03 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/03/osi-vs-tcp/ip-models/</guid><description>&lt;p>&lt;img src="https://potterwhite.github.io/2025/osi-tcpip-diagram.jpg" alt="OSI VS TCP/IP Models">&lt;/p></description></item><item><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</title><link>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
 &lt;p>这份配置单涵盖了硬件基础设施、虚拟化显示方案、性能优化及串流设置，适用于我的 &lt;strong>AMD EPYC 7551 (Home)&lt;/strong> 和 &lt;strong>Dual Xeon (Work)&lt;/strong> 环境。&lt;/p>
 &lt;h2 id="硬件环境">&lt;strong>硬件环境&lt;/strong>&lt;/h2>
 &lt;h4 id="homelab配置">&lt;strong>Homelab配置&lt;/strong>&lt;/h4>
