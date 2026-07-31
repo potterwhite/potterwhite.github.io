@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Potter`s Log Book</title><link>https://potterwhite.github.io/en/blog/devops/</link><description>Recent content in DevOps on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/blog/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Building Reproducible Docker Dev Environments for Embedded Linux (RK3588, RV1126, RK3568)</title><link>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</link><pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</guid><description>&lt;h1 id="building-reproducible-docker-dev-environments-for-embedded-linux">Building Reproducible Docker Dev Environments for Embedded Linux&lt;/h1>
-&lt;h2 id="the-problem">The Problem&lt;/h2>
-&lt;p>If you&amp;rsquo;re working with embedded Linux boards — RK3588, RK3588S, RV1126, RK3568, or similar
-Rockchip SoCs — you know the pain:&lt;/p>
-&lt;ul>
-&lt;li>Every developer on the team has a slightly different toolchain version installed&lt;/li>
-&lt;li>Build results differ between machines (&amp;ldquo;it works on my Docker container&amp;rdquo;)&lt;/li>
-&lt;li>Supporting Ubuntu 20.04, 22.04, and 24.04 simultaneously without breaking any of them&lt;/li>
-&lt;li>Ports collide when you run containers for multiple chip families at the same time&lt;/li>
-&lt;li>Pushing images to a private Harbor registry requires glue scripts nobody documents&lt;/li>
-&lt;/ul>
-&lt;p>The standard answer is &amp;ldquo;containerise your dev environment&amp;rdquo; — but the container definitions
-themselves become a maintenance burden. You end up with 5 Dockerfiles that diverge over time.&lt;/p></description></item><item><title>Cloud Desktop Tools to Replace RDP (PVE + Sunshine + Moonlight)</title><link>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
-&lt;p>This configuration sheet covers hardware infrastructure, virtual display solutions, performance optimization, and streaming settings, suitable for my &lt;strong>AMD EPYC 7551 (Home)&lt;/strong> and &lt;strong>Dual Xeon (Work)&lt;/strong> environments.&lt;/p>
-&lt;h2 id="hardware-environment">&lt;strong>Hardware Environment&lt;/strong>&lt;/h2>
-&lt;h4 id="homelab-configuration">&lt;strong>Homelab Configuration&lt;/strong>&lt;/h4>
-&lt;ul>
-&lt;li>CPU: AMD EPYC 7551 (Home)&lt;/li>
-&lt;li>Motherboard: Supermicro H11SSL-i&lt;/li>
-&lt;li>Graphics Card: NVIDIA GeForce GTX 1050 Ti (4GB)&lt;/li>
-&lt;/ul>
-&lt;h4 id="work-server-configuration">&lt;strong>Work Server Configuration&lt;/strong>&lt;/h4>
-&lt;ul>
-&lt;li>CPU: Dual Xeon (Work)&lt;/li>
-&lt;li>Motherboard: Generic X99 Chipset&lt;/li>
-&lt;li>Graphics Card: The basic display card is only for PVE use. I don&amp;rsquo;t want to modify GPU passthrough settings during maintenance, so it is equivalent to having no graphics card.&lt;/li>
-&lt;/ul>
-&lt;h2 id="requirements">&lt;strong>Requirements&lt;/strong>&lt;/h2>
-&lt;p>There are many family members, and if everyone uses a laptop or PC, first of all:&lt;/p></description></item><item><title>Remote Access (Secure) to Home Computer - (OpenWRT+No-IP+WireGuard)</title><link>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</link><pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
-&lt;p>This is a set of my working notes, barely polished. AI helped me organize my thought process and trial attempts, including the detours and final solutions, into a document format.&lt;br>
-Actually, ever since I started my blog on Github Pages, I have naturally and happily added an extra step to my workflow: moving records from Obsidian into my Github Blog.&lt;/p>
-&lt;p>&lt;strong>Environment:&lt;/strong> OpenWrt 23.05
-&lt;strong>Goal:&lt;/strong> Enable external access to internal network resources via WireGuard, ensuring automatic synchronization when the public IP changes.&lt;/p></description></item><item><title>NFS (Network File System)</title><link>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</guid><description>&lt;h1 id="an-in-depth-retrospective-on-nfs-mounting-issues--establishing-a-standard-workflow">An In-Depth Retrospective on NFS Mounting Issues &amp;amp; Establishing a Standard Workflow&lt;/h1>
-&lt;h2 id="foreword">Foreword&lt;/h2>
-&lt;p>This document aims to provide a retrospective on the troubleshooting process for a persistent &lt;code>Connection refused&lt;/code> error encountered when mounting an Ubuntu NFS server (&lt;code>Anastasia-Ubuntu&lt;/code>) from an embedded BusyBox system (&lt;code>david&lt;/code> host). The issue was ultimately resolved by adding the &lt;code>-o nolock&lt;/code> mount option. This article will analyze the root cause of the failure in detail and establish a standard workflow for configuring NFS servers and clients, providing a reliable reference for future deployments.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Potter`s Log Book</title><link>https://potterwhite.github.io/en/blog/devops/</link><description>Recent content in DevOps on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/blog/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Building Reproducible Docker Dev Environments for Embedded Linux (RK3588, RV1126, RK3568)</title><link>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</link><pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</guid><description>&lt;h1 id="building-reproducible-docker-dev-environments-for-embedded-linux"&gt;Building Reproducible Docker Dev Environments for Embedded Linux&lt;/h1&gt;
+&lt;h2 id="the-problem"&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;If you&amp;rsquo;re working with embedded Linux boards — RK3588, RK3588S, RV1126, RK3568, or similar
+Rockchip SoCs — you know the pain:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Every developer on the team has a slightly different toolchain version installed&lt;/li&gt;
+&lt;li&gt;Build results differ between machines (&amp;ldquo;it works on my Docker container&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Supporting Ubuntu 20.04, 22.04, and 24.04 simultaneously without breaking any of them&lt;/li&gt;
+&lt;li&gt;Ports collide when you run containers for multiple chip families at the same time&lt;/li&gt;
+&lt;li&gt;Pushing images to a private Harbor registry requires glue scripts nobody documents&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The standard answer is &amp;ldquo;containerise your dev environment&amp;rdquo; — but the container definitions
+themselves become a maintenance burden. You end up with 5 Dockerfiles that diverge over time.&lt;/p&gt;</description></item><item><title>Cloud Desktop Tools to Replace RDP (PVE + Sunshine + Moonlight)</title><link>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about"&gt;&lt;strong&gt;What-is-this-Talking-About&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This configuration sheet covers hardware infrastructure, virtual display solutions, performance optimization, and streaming settings, suitable for my &lt;strong&gt;AMD EPYC 7551 (Home)&lt;/strong&gt; and &lt;strong&gt;Dual Xeon (Work)&lt;/strong&gt; environments.&lt;/p&gt;
+&lt;h2 id="hardware-environment"&gt;&lt;strong&gt;Hardware Environment&lt;/strong&gt;&lt;/h2&gt;
+&lt;h4 id="homelab-configuration"&gt;&lt;strong&gt;Homelab Configuration&lt;/strong&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU: AMD EPYC 7551 (Home)&lt;/li&gt;
+&lt;li&gt;Motherboard: Supermicro H11SSL-i&lt;/li&gt;
+&lt;li&gt;Graphics Card: NVIDIA GeForce GTX 1050 Ti (4GB)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="work-server-configuration"&gt;&lt;strong&gt;Work Server Configuration&lt;/strong&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU: Dual Xeon (Work)&lt;/li&gt;
+&lt;li&gt;Motherboard: Generic X99 Chipset&lt;/li&gt;
+&lt;li&gt;Graphics Card: The basic display card is only for PVE use. I don&amp;rsquo;t want to modify GPU passthrough settings during maintenance, so it is equivalent to having no graphics card.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="requirements"&gt;&lt;strong&gt;Requirements&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;There are many family members, and if everyone uses a laptop or PC, first of all:&lt;/p&gt;</description></item><item><title>Remote Access (Secure) to Home Computer - (OpenWRT+No-IP+WireGuard)</title><link>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</link><pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</guid><description>&lt;h2 id="what-is-this-talking-about"&gt;&lt;strong&gt;What-is-this-Talking-About&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This is a set of my working notes, barely polished. AI helped me organize my thought process and trial attempts, including the detours and final solutions, into a document format.&lt;br&gt;
+Actually, ever since I started my blog on Github Pages, I have naturally and happily added an extra step to my workflow: moving records from Obsidian into my Github Blog.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Environment:&lt;/strong&gt; OpenWrt 23.05
+&lt;strong&gt;Goal:&lt;/strong&gt; Enable external access to internal network resources via WireGuard, ensuring automatic synchronization when the public IP changes.&lt;/p&gt;</description></item><item><title>NFS (Network File System)</title><link>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</guid><description>&lt;h1 id="an-in-depth-retrospective-on-nfs-mounting-issues--establishing-a-standard-workflow"&gt;An In-Depth Retrospective on NFS Mounting Issues &amp;amp; Establishing a Standard Workflow&lt;/h1&gt;
+&lt;h2 id="foreword"&gt;Foreword&lt;/h2&gt;
+&lt;p&gt;This document aims to provide a retrospective on the troubleshooting process for a persistent &lt;code&gt;Connection refused&lt;/code&gt; error encountered when mounting an Ubuntu NFS server (&lt;code&gt;Anastasia-Ubuntu&lt;/code&gt;) from an embedded BusyBox system (&lt;code&gt;david&lt;/code&gt; host). The issue was ultimately resolved by adding the &lt;code&gt;-o nolock&lt;/code&gt; mount option. This article will analyze the root cause of the failure in detail and establish a standard workflow for configuring NFS servers and clients, providing a reliable reference for future deployments.&lt;/p&gt;</description></item></channel></rss>

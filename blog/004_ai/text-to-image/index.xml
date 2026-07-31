@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>004_001_Grp_TTI on Potter的个人笔记</title><link>https://potterwhite.github.io/blog/004_ai/text-to-image/</link><description>Recent content in 004_001_Grp_TTI on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 14 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/blog/004_ai/text-to-image/index.xml" rel="self" type="application/rss+xml"/><item><title>初体验-stable diffusion</title><link>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</link><pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</guid><description>&lt;style>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>004_001_Grp_TTI on Potter的个人笔记</title><link>https://potterwhite.github.io/blog/004_ai/text-to-image/</link><description>Recent content in 004_001_Grp_TTI on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 14 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/blog/004_ai/text-to-image/index.xml" rel="self" type="application/rss+xml"/><item><title>初体验-stable diffusion</title><link>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</link><pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/14/%E5%88%9D%E4%BD%93%E9%AA%8C-stable-diffusion/</guid><description>&lt;style&gt;
 .copy-btn {
  margin-left: 5px; /* 与代码块保持一定间隔 */
  cursor: pointer; /* 鼠标悬停时显示为手形图标 */
 }
-&lt;/style>
-&lt;script>
+&lt;/style&gt;
+&lt;script&gt;
 // JavaScript函数，为所有.copyable-code添加复制按钮
 document.querySelectorAll('.copyable-code').forEach(function(codeBlock) {
  // 找到对应的按钮并设置点击事件
@@ -24,45 +24,45 @@ function copyCode(text) {
  alert('复制失败，请手动复制');
  });
 }
-&lt;/script>
-&lt;p>[tableOfContents]&lt;/p>
-&lt;p>[TOC]&lt;/p>
-&lt;h1 id="一画图测试1">&lt;strong>一、画图测试1&lt;/strong>&lt;/h1>
-&lt;h2 id="11-声音按钮">&lt;strong>1.1 声音按钮&lt;/strong>&lt;/h2>
-&lt;h3 id="111-阿里通义万相作品">1.1.1 [阿里]通义万相作品&lt;/h3>
-&lt;ul>
-&lt;li>
-&lt;p>提示词&lt;/p>
-&lt;pre tabindex="0">&lt;code>赛博朋克，“声音”，按键，图标，背景透明。简约一点，能一眼就看出是这个按键按下去会有声音相关的设置出现，而不是画一个声音。
-&lt;/code>&lt;/pre>&lt;/li>
-&lt;li>
-&lt;p>效果图&lt;/p>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_2.png" alt="12e0d40fa6404e1894129cd6d70ad92d_2.png">&lt;/p>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_1.png" alt="12e0d40fa6404e1894129cd6d70ad92d_1.png">&lt;/p>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_0.png" alt="12e0d40fa6404e1894129cd6d70ad92d_0.png">&lt;/p>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_3.png" alt="12e0d40fa6404e1894129cd6d70ad92d_3.png">&lt;/p>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/June/1/9b5c830f6d0f49c186d2cd74ec0b7dfb_1.png" alt="9b5c830f6d0f49c186d2cd74ec0b7dfb_1.png">&lt;/p>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/June/1/c3ae169c39204702a7245bc2afd301db_0.png" alt="c3ae169c39204702a7245bc2afd301db_0.png">&lt;/p>
-&lt;p>&lt;img src="https://potterwhite.github.io/2024/June/1/c3ae169c39204702a7245bc2afd301db_2.png" alt="c3ae169c39204702a7245bc2afd301db_2.png">&lt;/p>
-&lt;/li>
-&lt;/ul>
-&lt;h3 id="112--pixco">1.1.2 pixco&lt;/h3>
-&lt;ul>
-&lt;li>
-&lt;p>提示词&lt;/p></description></item><item><title>选择文生图工具之路</title><link>https://potterwhite.github.io/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/</link><pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/</guid><description>&lt;h1 id="一最后的结论">一、最后的结论&lt;/h1>
-&lt;pre>&lt;code>选择stable diffusion。
-&lt;/code>&lt;/pre>
-&lt;h1 id="二起因">二、起因&lt;/h1>
-&lt;pre>&lt;code>公司在招美工的道路上一直不顺利，好的美工本来就不容易找到。
+&lt;/script&gt;
+&lt;p&gt;[tableOfContents]&lt;/p&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id="一画图测试1"&gt;&lt;strong&gt;一、画图测试1&lt;/strong&gt;&lt;/h1&gt;
+&lt;h2 id="11-声音按钮"&gt;&lt;strong&gt;1.1 声音按钮&lt;/strong&gt;&lt;/h2&gt;
+&lt;h3 id="111-阿里通义万相作品"&gt;1.1.1 [阿里]通义万相作品&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;提示词&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;赛博朋克，“声音”，按键，图标，背景透明。简约一点，能一眼就看出是这个按键按下去会有声音相关的设置出现，而不是画一个声音。
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;效果图&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_2.png" alt="12e0d40fa6404e1894129cd6d70ad92d_2.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_1.png" alt="12e0d40fa6404e1894129cd6d70ad92d_1.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_0.png" alt="12e0d40fa6404e1894129cd6d70ad92d_0.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2024/June/1/12e0d40fa6404e1894129cd6d70ad92d_3.png" alt="12e0d40fa6404e1894129cd6d70ad92d_3.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2024/June/1/9b5c830f6d0f49c186d2cd74ec0b7dfb_1.png" alt="9b5c830f6d0f49c186d2cd74ec0b7dfb_1.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2024/June/1/c3ae169c39204702a7245bc2afd301db_0.png" alt="c3ae169c39204702a7245bc2afd301db_0.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2024/June/1/c3ae169c39204702a7245bc2afd301db_2.png" alt="c3ae169c39204702a7245bc2afd301db_2.png"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="112--pixco"&gt;1.1.2 pixco&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;提示词&lt;/p&gt;</description></item><item><title>选择文生图工具之路</title><link>https://potterwhite.github.io/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/</link><pubDate>Fri, 14 Jun 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/06/14/%E9%80%89%E6%8B%A9%E6%96%87%E7%94%9F%E5%9B%BE%E5%B7%A5%E5%85%B7%E4%B9%8B%E8%B7%AF/</guid><description>&lt;h1 id="一最后的结论"&gt;一、最后的结论&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;选择stable diffusion。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="二起因"&gt;二、起因&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;公司在招美工的道路上一直不顺利，好的美工本来就不容易找到。
 而美工的主要诉求之一就是做素材。
 其次，我猜公司对美工的诉求也远不止如此。
 所以我就大力建议，先玩起来文生图。
-&lt;/code>&lt;/pre>
-&lt;h1 id="三求知的过程">三、求知的过程&lt;/h1>
-&lt;h2 id="产品候选清单">产品候选清单&lt;/h2>
-&lt;h2 id="01-midjourney">01. MidJourney&lt;/h2>
-&lt;h3 id="快问快答">快问快答：&lt;/h3>
-&lt;pre>&lt;code> ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/266b12e9-31b8-457e-b4b3-20d533571be4/Untitled.png)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="三求知的过程"&gt;三、求知的过程&lt;/h1&gt;
+&lt;h2 id="产品候选清单"&gt;产品候选清单&lt;/h2&gt;
+&lt;h2 id="01-midjourney"&gt;01. MidJourney&lt;/h2&gt;
+&lt;h3 id="快问快答"&gt;快问快答：&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt; ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/266b12e9-31b8-457e-b4b3-20d533571be4/Untitled.png)
  
  ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/20ef8ca6-9114-4d59-9182-1282651b66a7/Untitled.png)
  
@@ -73,9 +73,9 @@ function copyCode(text) {
  ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/77c5c57e-b1b1-4c71-a43f-64e9f7519ee7/Untitled.png)
  
  ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/391b1061-106d-444f-a6c6-c6affaddda76/721e766e-b1c0-4c34-a3ee-b489e9101040/Untitled.png)
-&lt;/code>&lt;/pre>
-&lt;h3 id="--痛点1-关于隐私">- 痛点1-关于隐私&lt;/h3>
-&lt;pre>&lt;code> - midjourney 的Subscription有一段话：we are building an open by default community focused on collective exploration and fun. if you have a need to opt-out of this and be private-by-default you can subscribe to the 60 dollor per month pro plan and activate stealth generation with the /stealth command.请你帮我翻译这段话，并且帮我搜索mj的官方资料，确认：是否我们生成的图像都会被公开出来呢？
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="--痛点1-关于隐私"&gt;- 痛点1-关于隐私&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt; - midjourney 的Subscription有一段话：we are building an open by default community focused on collective exploration and fun. if you have a need to opt-out of this and be private-by-default you can subscribe to the 60 dollor per month pro plan and activate stealth generation with the /stealth command.请你帮我翻译这段话，并且帮我搜索mj的官方资料，确认：是否我们生成的图像都会被公开出来呢？
  
  这段话的翻译如下：
  
@@ -88,9 +88,9 @@ function copyCode(text) {
  However, if you prefer your creations to remain private, you can opt for the Pro plan ($60 per month) or the Mega plan ($120 per month). These plans offer a feature called Stealth Mode, which allows you to keep your generated images private by using the `/stealth` command. This feature ensures that your images will not be visible to others on the MidJourney website as long as you generate them in private Discord channels or direct messages.
  
  It's important to note that even in Stealth Mode, images generated in public Discord channels will still be visible to other users in those channels. To fully utilise Stealth Mode, you should generate images in private settings. Furthermore, if you cancel or downgrade your subscription, any previously created Stealth Mode images will remain unpublished and private【7†source】【8†source】【9†source】.
-&lt;/code>&lt;/pre>
-&lt;h3 id="--痛点2-关于共享">- 痛点2-关于共享&lt;/h3>
-&lt;pre>&lt;code> - 你再帮我查询mj的官方资料，如果我建立一个私人的server，我的subscription可否供给整个群友使用。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="--痛点2-关于共享"&gt;- 痛点2-关于共享&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt; - 你再帮我查询mj的官方资料，如果我建立一个私人的server，我的subscription可否供给整个群友使用。
  
  根据MidJourney的官方资料，如果你建立一个私人服务器，并将MidJourney机器人添加到该服务器上，你的订阅仍然是个人使用的，并不能直接共享给整个群友使用。每位用户在你的服务器中使用MidJourney机器人时，都需要有自己单独的订阅【16†source】【17†source】。
  
@@ -105,9 +105,9 @@ function copyCode(text) {
  3. 默认情况下，所有生成的图像都是公开的，除非你使用Pro或Mega订阅并启用隐身模式。
  
  更多信息可以访问MidJourney的官方文档和帮助页面：[MidJourney帮助中心](https://help.midjourney.com/en/)。
-&lt;/code>&lt;/pre>
-&lt;h3 id="--痛点3-关于api接入">- 痛点3-关于API接入&lt;/h3>
-&lt;pre>&lt;code> - gpt4o-jun13.2024
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="--痛点3-关于api接入"&gt;- 痛点3-关于API接入&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt; - gpt4o-jun13.2024
  
  MidJourney currently does not offer API access for external integration. Users interact with MidJourney through Discord, either within the MidJourney official server or on private servers where the MidJourney Bot has been added.MidJourney 目前不提供用于外部集成的 API 访问。用户通过 Discord 与 MidJourney 进行交互，无论是在 MidJourney 官方服务器内还是在添加了 MidJourney Bot 的私人服务器上。
  
@@ -147,9 +147,9 @@ function copyCode(text) {
  
  
  For detailed information, you can refer to the [MidJourney Quick Start Guide](https://docs.midjourney.com/docs/quick-start) and the [MidJourney Bot Management](https://docs.midjourney.com/docs/add-the-bot) pages.有关详细信息，您可以参阅 MidJourney 快速入门指南和 MidJourney 机器人管理页面。
-&lt;/code>&lt;/pre>
-&lt;h2 id="--02-leonardoai">- 02. Leonardo.ai&lt;/h2>
-&lt;pre>&lt;code>- 对比mj
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="--02-leonardoai"&gt;- 02. Leonardo.ai&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;- 对比mj
  
  [Midjourney为什么无法留住用户？](https://m.huxiu.com/article/2785233.html)
  
@@ -158,26 +158,26 @@ function copyCode(text) {
 
 Leo是可以做API接入的，而且应该是有150个credit可以使用（每天）。
 这些都是强项。
-&lt;/code>&lt;/pre>
-&lt;h2 id="--03-开源腾讯混元">- 03. [开源][腾讯]混元&lt;/h2>
-&lt;pre>&lt;code>**机器学习框架方面**，腾讯采用的是自主研发的**机器学习框架Angel**，训练速度相比业界主流框架提升1倍，推理速度比业界主流框架提升1.3倍。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="--03-开源腾讯混元"&gt;- 03. [开源][腾讯]混元&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;**机器学习框架方面**，腾讯采用的是自主研发的**机器学习框架Angel**，训练速度相比业界主流框架提升1倍，推理速度比业界主流框架提升1.3倍。
 
 [腾讯和OpenAI盯上了同一条赛道](https://wallstreetcn.com/articles/3714968)
 
 [后发而先至的腾讯混元大模型，到底有哪些技术亮点？-电子工程专辑](https://www.google.com/url?sa=t&amp;amp;source=web&amp;amp;rct=j&amp;amp;opi=89978449&amp;amp;url=https://www.eet-china.com/mp/a250911.html&amp;amp;ved=2ahUKEwiIzcDhw9eGAxUmzDgGHXpMDRQQFnoECBMQAQ&amp;amp;usg=AOvVaw0bdpdrKYA_6L5QzeOKQCQh)
-&lt;/code>&lt;/pre>
-&lt;h2 id="--04-阿里通义万相">- 04. [阿里]通义万相&lt;/h2>
-&lt;pre>&lt;code>- 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="--04-阿里通义万相"&gt;- 04. [阿里]通义万相&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;- 1
  
  通义万相-文本生成图像是基于自研的**Composer组合生成框架**的AI绘画创作大模型，能够根据用户输入的文字内容，生成符合语义描述的多样化风格的图像。通过知识重组与可变维度扩散模型，加速收敛并提升最终生成图片的效果，布局自然、细节丰富、画面细腻、结果逼真。AI深度理解中英文文本语义，让文字秒变精致AI画作。
-&lt;/code>&lt;/pre>
-&lt;h2 id="--05-谷歌ai-test-kitchen">- 05. [谷歌]AI Test Kitchen&lt;/h2>
-&lt;h2 id="--06-sora">- 06. Sora&lt;/h2>
-&lt;pre>&lt;code>Sora is still in the research phase; therefore, this text-to-video AI tool is not yet available to the public. Currently, Sora can only be used by a limited group of AI researchers and machine learning experts.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="--05-谷歌ai-test-kitchen"&gt;- 05. [谷歌]AI Test Kitchen&lt;/h2&gt;
+&lt;h2 id="--06-sora"&gt;- 06. Sora&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;Sora is still in the research phase; therefore, this text-to-video AI tool is not yet available to the public. Currently, Sora can only be used by a limited group of AI researchers and machine learning experts.
 
 [Exploring OpenAI's Sora: An In-Depth Look at the Next-Generation AI System](https://litslink.com/blog/sora-a-cutting-edge-ai-system)
 
 [OpenAI Sora and Open Source Efforts to Catch Up](https://ranko-mosic.medium.com/the-anatomy-of-openai-sora-a3c4780753f2)
-&lt;/code>&lt;/pre>
-&lt;h2 id="--07cogvideo">- 07.CogVideo&lt;/h2>
-&lt;h1 id="阶段性总结">阶段性总结&lt;/h1></description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="--07cogvideo"&gt;- 07.CogVideo&lt;/h2&gt;
+&lt;h1 id="阶段性总结"&gt;阶段性总结&lt;/h1&gt;</description></item></channel></rss>

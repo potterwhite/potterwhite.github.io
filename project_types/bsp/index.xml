@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>BSP on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/bsp/</link><description>Recent content in BSP on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 29 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/bsp/index.xml" rel="self" type="application/rss+xml"/><item><title>嵌入式 BSP 工作 · 方法论与实战案例</title><link>https://potterwhite.github.io/portfolio/embedded-bsp/</link><pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/embedded-bsp/</guid><description>&lt;h2 id="一句话"&gt;一句话&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;做嵌入式 BSP：从 datasheet 第一页读到最后一页，把每个 bug 写成 milestone，下次直接复用。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="这是什么--不是什么"&gt;这是什么 / 不是什么&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;这是&lt;/strong&gt;：我关于&amp;quot;嵌入式系统底层开发&amp;quot;的工作方法论 + 两个核心实战案例。
+&lt;strong&gt;不是&lt;/strong&gt;：某个具体芯片的入门教程、某个 SoC 的移植手册。&lt;/p&gt;
+&lt;p&gt;如果你正在招一个能做 BSP 的工程师，看完这一页 + 两个核心 case study 的链接，你应该能判断这个人是不是值得面。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="方法论"&gt;方法论&lt;/h2&gt;
+&lt;h3 id="1-trm-阅读法不是从头读到尾"&gt;1. TRM 阅读法（不是从头读到尾）&lt;/h3&gt;
+&lt;p&gt;TRM 上千页，从头读到尾几乎不可能。我的做法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;先看时钟表&lt;/strong&gt;（Clock Overview）。每个模块有几根时钟、源头在哪里、有没有内部 PLL——这一张表决定 80% 的&amp;quot;为什么不通&amp;quot;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;再看寄存器表&lt;/strong&gt;（Register Description）。只读和当前 bug 相关的章节，但顺手把 chapter 里所有寄存器扫一遍名字。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;最后看电源域&lt;/strong&gt;（Power Domain）。看哪些模块受哪个 PD 控制、reset 来源是什么。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;好处&lt;/strong&gt;：对一个 SoC 做 1-2 次 debug 之后，下次遇到同 SoC 其他子系统 bug，时钟表 + 寄存器表 + 电源域这三张图就能立刻定位 80% 的问题。&lt;/p&gt;
+&lt;h3 id="2-debug-三角代码--log--系统结构图"&gt;2. Debug 三角：代码 + log + 系统结构图&lt;/h3&gt;
+&lt;p&gt;任何一个&amp;quot;为什么挂&amp;quot;的问题，我用三个证据来源交叉验证：&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bring-Up on Potter的个人笔记</title><link>https://potterwhite.github.io/tags/bring-up/</link><description>Recent content in Bring-Up on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 30 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/tags/bring-up/index.xml" rel="self" type="application/rss+xml"/><item><title>SoC 板级 Bring-up 工程手册</title><link>https://potterwhite.github.io/blog/2026/07/30/soc-%E6%9D%BF%E7%BA%A7-bring-up-%E5%B7%A5%E7%A8%8B%E6%89%8B%E5%86%8C/</link><pubDate>Thu, 30 Jul 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2026/07/30/soc-%E6%9D%BF%E7%BA%A7-bring-up-%E5%B7%A5%E7%A8%8B%E6%89%8B%E5%86%8C/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;从硬件三要素，到用证据逼出根因。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这份手册是我在 RK3568、RK3588 上做过 GMAC、显示（LVDS/MIPI/HDMI）、USB、PCIe 等多个模块的 bring-up 之后，回头总结出来的&lt;strong&gt;一套东西&lt;/strong&gt;。它已经脱离了任何单一模块，是我下次面对一颗陌生 SoC、一个陌生外设时，脑子里第一时间会浮现的操作主线。&lt;/p&gt;
+&lt;p&gt;我把以前拆散写过的几篇笔记（电源/时钟/复位、硬件分层架构、dts 三级节点、显示 SOP）全部融进了这条主线——因为它们本来就是同一条脉络上被拆下来的零件。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="一先讲两条底层认知心法"&gt;一、先讲两条底层认知（心法）&lt;/h2&gt;
+&lt;p&gt;在讲具体怎么做之前，得先说清楚我对 bring-up 这件事本身的两个判断。这两条决定了后面所有操作的取舍。&lt;/p&gt;
+&lt;h3 id="1-bring-up-的精华不是调通是找到整条事情的脉络"&gt;1. bring-up 的精华不是「调通」，是「找到整条事情的脉络」&lt;/h3&gt;
+&lt;p&gt;即便你把硬件调通了，若只是碰巧，或者不改 dts、不动驱动代码、甚至是不敢改，那也没意义。&lt;strong&gt;调通只是结果，能说清楚它为什么通、为什么之前不通，才是本事。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;尤其是失败的时候——成功了大家都默认自己做得对；但失败了，多数时候也是猜测：猜测应该是哪里、感觉是哪里，基本上找到一个不合理的地方，所有人就都拥上去说是这个导致的。&lt;/p&gt;
+&lt;p&gt;但 kernel 已经做得极其复杂，一层一层封装包裹，控制器一般是厂商外面买的 IP，所以又在原厂基础上做一层自己的 wrapper，一层一层调用，就得一层一层去解包。这个层层解包的过程，本身就足以劝退一个刚接触这个硬件模块的人。&lt;strong&gt;所以单拿一个显眼的错误就说自己找到了根源，是不牢靠的。&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id="2-bring-up-的根本矛盾有限的时间-vs-近乎无限的打击面"&gt;2. bring-up 的根本矛盾：有限的时间 vs 近乎无限的打击面&lt;/h3&gt;
+&lt;p&gt;bring-up 总是很赶。不是因为没有时间预算，而是因为你面对的可能是浩瀚 kernel 里的任何一个问题（Linus 说过，如今 3500 万行以上的 kernel，已经没人能完全精通了）。而你不可能现场把内核学精通了再回来调。&lt;/p&gt;
+&lt;p&gt;所以这是一个矛盾体：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;有限的时间 vs 近乎无限的打击面（内核）。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;因此，bring-up 最重要的能力，不是「懂很多」，而是&lt;strong&gt;定位问题、缩小打击面的能力&lt;/strong&gt;。靠什么做到？靠脉络。下面这 7 步，就是我缩小打击面的主线。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="二脉络7-步操作主线"&gt;二、脉络：7 步操作主线&lt;/h2&gt;
+&lt;p&gt;这 7 步是有严格先后的。&lt;strong&gt;核心原则：假设越靠前的层越可能出问题，就越先排除它&lt;/strong&gt;；每一步都尽量用最便宜的手段（读一个文件、测一个脚、加一条 printk）得到一个「通 / 挂」的二元结论，一层层往下逼。&lt;/p&gt;
+&lt;h3 id="第-1-步--以-sdk-为起跳点"&gt;第 1 步 · 以 SDK 为起跳点&lt;/h3&gt;
+&lt;p&gt;SDK 本身是最佳起点。原厂给的 SDK 至少保证「能跑起来、不出 bug」，这是你唯一确定的地面。所有改动都从这个已知可用的基线出发，改坏了随时能退回来对比。&lt;strong&gt;先让原始 SDK 跑通，再谈改。&lt;/strong&gt;&lt;/p&gt;</description></item></channel></rss>

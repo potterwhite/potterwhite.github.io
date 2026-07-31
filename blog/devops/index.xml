@@ -1,53 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Potter的个人笔记</title><link>https://potterwhite.github.io/blog/devops/</link><description>Recent content in DevOps on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/blog/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</title><link>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
-&lt;p>这份配置单涵盖了硬件基础设施、虚拟化显示方案、性能优化及串流设置，适用于我的 &lt;strong>AMD EPYC 7551 (Home)&lt;/strong> 和 &lt;strong>Dual Xeon (Work)&lt;/strong> 环境。&lt;/p>
-&lt;h2 id="硬件环境">&lt;strong>硬件环境&lt;/strong>&lt;/h2>
-&lt;h4 id="homelab配置">&lt;strong>Homelab配置&lt;/strong>&lt;/h4>
-&lt;ul>
-&lt;li>CPU: AMD EPYC 7551 (Home)&lt;/li>
-&lt;li>主板：Supermicro H11SSL-i&lt;/li>
-&lt;li>显卡：NVIDIA GeForce GTX 1050 Ti (4GB)&lt;/li>
-&lt;/ul>
-&lt;h4 id="work-server配置">&lt;strong>Work Server配置&lt;/strong>&lt;/h4>
-&lt;ul>
-&lt;li>CPU: Dual Xeon (Work)&lt;/li>
-&lt;li>主板：白牌X99芯片组&lt;/li>
-&lt;li>显卡：亮机卡只能给PVE使用，不希望维护时还要修改显卡直通配置，所以等同于无显卡&lt;/li>
-&lt;/ul>
-&lt;h2 id="需求">&lt;strong>需求&lt;/strong>&lt;/h2>
-&lt;p>家庭成员多，而且如果每个人使用一台笔记本或PC，首先&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;ol>
-&lt;li>购买计算机的费用就很高；&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;li>
-&lt;ol start="2">
-&lt;li>其次软件维护的工作量将会很大（需要孤立的去设置每一台计算机上的软件/重装系统等）；&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;li>
-&lt;ol start="3">
-&lt;li>而且家中有做PPT和轻度设计的需求，所以Mac和Win都是刚需；&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;li>
-&lt;ol start="4">
-&lt;li>作为一名工程师，很难接受家里的设备不好用的局面。例如：买一台游戏机或买一张很贵的显卡（打游戏用），总不能只能在一台PC上使用，要打游戏的人就都抢这台PC吧。&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;li>
-&lt;ol start="5">
-&lt;li>NAS,把全家的资料都集中存储，极大减少资料丢失的风险，减轻资料备份的繁重工作，还有可怕的存储设备的费用（硬盘真贵啊）。&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;/ul>
-&lt;p>而上述这些点，就自然而然想到上云，家庭内建立一台强大的服务器Server, 硬件能够一次购买，最大化被所有人共享。&lt;br>
-(同样的需求在公司内部也一样，因为都经我的手，所以处理方案都是用PVE，再此就不再提WorkServer的情况，默认与Homelab情况一致。)&lt;br>&lt;/p>
-&lt;h2 id="困扰">&lt;strong>困扰&lt;/strong>&lt;/h2>
-&lt;p>搭建环境时，一直用RDP来连接HomeLab（安装了PVE）下的VM（有Ubuntu/Mac/Win10/Win11）。&lt;br>
-但是发现鼠标肉眼可见的拖拽卡顿，虽然能用，但满足不了设计师的需求。更别说要远程打开设计软件和Microsoft PowerPoint了。&lt;br>&lt;/p>
-&lt;h2 id="最终效果">&lt;strong>最终效果&lt;/strong>&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Potter的个人笔记</title><link>https://potterwhite.github.io/blog/devops/</link><description>Recent content in DevOps on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/blog/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</title><link>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/12/01/%E4%BA%91%E6%A1%8C%E9%9D%A2%E4%B9%8B%E5%8F%96%E4%BB%A3rdp%E7%9A%84%E5%B7%A5%E5%85%B7pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about"&gt;&lt;strong&gt;What-is-this-Talking-About&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;这份配置单涵盖了硬件基础设施、虚拟化显示方案、性能优化及串流设置，适用于我的 &lt;strong&gt;AMD EPYC 7551 (Home)&lt;/strong&gt; 和 &lt;strong&gt;Dual Xeon (Work)&lt;/strong&gt; 环境。&lt;/p&gt;
+&lt;h2 id="硬件环境"&gt;&lt;strong&gt;硬件环境&lt;/strong&gt;&lt;/h2&gt;
+&lt;h4 id="homelab配置"&gt;&lt;strong&gt;Homelab配置&lt;/strong&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU: AMD EPYC 7551 (Home)&lt;/li&gt;
+&lt;li&gt;主板：Supermicro H11SSL-i&lt;/li&gt;
+&lt;li&gt;显卡：NVIDIA GeForce GTX 1050 Ti (4GB)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="work-server配置"&gt;&lt;strong&gt;Work Server配置&lt;/strong&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU: Dual Xeon (Work)&lt;/li&gt;
+&lt;li&gt;主板：白牌X99芯片组&lt;/li&gt;
+&lt;li&gt;显卡：亮机卡只能给PVE使用，不希望维护时还要修改显卡直通配置，所以等同于无显卡&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="需求"&gt;&lt;strong&gt;需求&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;家庭成员多，而且如果每个人使用一台笔记本或PC，首先&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ol&gt;
+&lt;li&gt;购买计算机的费用就很高；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;其次软件维护的工作量将会很大（需要孤立的去设置每一台计算机上的软件/重装系统等）；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;而且家中有做PPT和轻度设计的需求，所以Mac和Win都是刚需；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;作为一名工程师，很难接受家里的设备不好用的局面。例如：买一台游戏机或买一张很贵的显卡（打游戏用），总不能只能在一台PC上使用，要打游戏的人就都抢这台PC吧。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start="5"&gt;
+&lt;li&gt;NAS,把全家的资料都集中存储，极大减少资料丢失的风险，减轻资料备份的繁重工作，还有可怕的存储设备的费用（硬盘真贵啊）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;而上述这些点，就自然而然想到上云，家庭内建立一台强大的服务器Server, 硬件能够一次购买，最大化被所有人共享。&lt;br&gt;
+(同样的需求在公司内部也一样，因为都经我的手，所以处理方案都是用PVE，再此就不再提WorkServer的情况，默认与Homelab情况一致。)&lt;br&gt;&lt;/p&gt;
+&lt;h2 id="困扰"&gt;&lt;strong&gt;困扰&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;搭建环境时，一直用RDP来连接HomeLab（安装了PVE）下的VM（有Ubuntu/Mac/Win10/Win11）。&lt;br&gt;
+但是发现鼠标肉眼可见的拖拽卡顿，虽然能用，但满足不了设计师的需求。更别说要远程打开设计软件和Microsoft PowerPoint了。&lt;br&gt;&lt;/p&gt;
+&lt;h2 id="最终效果"&gt;&lt;strong&gt;最终效果&lt;/strong&gt;&lt;/h2&gt;
 
 
 
@@ -64,119 +64,121 @@
  
 
 
-&lt;figure >
+&lt;figure &gt;
  
  
 
  
  
 
- &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
+ &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;"&gt;
  &lt;video controls autoplay loop muted playsinline
- style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
- &lt;source src="https://potterwhite.github.io/2025/pve/moonlight-connect-workserver-nogpu.mp4" type="video/mp4">
+ style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"&gt;
+ &lt;source src="https://potterwhite.github.io/2025/pve/moonlight-connect-workserver-nogpu.mp4" type="video/mp4"&gt;
  Your browser does not support the video tag.
- &lt;/video>
- &lt;/div>
+ &lt;/video&gt;
+ &lt;/div&gt;
  
 
  
- &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">最终效果&lt;/figcaption>
+ &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);"&gt;最终效果&lt;/figcaption&gt;
  
-&lt;/figure>
-&lt;hr>
-&lt;h2 id="下载">&lt;strong>下载&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://moonlight-stream.org/" target="_blank" rel="noopener">最佳入口：Sunshine&amp;amp;Moonlight在这里都可以下载到&lt;/a>
-&lt;img src="https://potterwhite.github.io/2025/pve/sunshine-moonlight-entrance.png" alt="">&lt;/li>
-&lt;/ul>
-&lt;h2 id="功能点1-显卡策略-gpu-strategy">功能点1. 显卡策略 (GPU Strategy)&lt;/h2>
-&lt;p>解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p></description></item><item><title>异地访问（安全）家中计算机-（OpenWRT+No-IP+WireGuard）</title><link>https://potterwhite.github.io/blog/2025/11/27/%E5%BC%82%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%89%E5%85%A8%E5%AE%B6%E4%B8%AD%E8%AE%A1%E7%AE%97%E6%9C%BA-openwrt-no-ip-wireguard/</link><pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/11/27/%E5%BC%82%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%89%E5%85%A8%E5%AE%B6%E4%B8%AD%E8%AE%A1%E7%AE%97%E6%9C%BA-openwrt-no-ip-wireguard/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
-&lt;p>这是一份我的工作笔记，几乎没有进行润色，AI帮助我把思考过程和尝试过程，包括弯路和最终解法都整理出来，写成文档的格式。&lt;br>
-其实，自从我在Github Pages开通了博客，我就很自然的也很乐此不疲的多增加一步的工作，把记录从Obsidian里搬进我的Github Blog。&lt;/p>
-&lt;p>&lt;strong>环境：&lt;/strong> OpenWrt 23.05
-&lt;strong>目标：&lt;/strong> 实现外网通过 WireGuard 访问内网资源，并确保公网 IP 变动后自动同步。&lt;/p>
-&lt;hr>
-&lt;h2 id="要求">&lt;strong>要求&lt;/strong>&lt;/h2>
-&lt;p>要用到异地访问内网，必须要有两个东西&lt;/p>
-&lt;ul>
-&lt;li>
-&lt;ol>
-&lt;li>我们的ISP提供一个公网IP给我们的宽带（动态变化也可以），并且主路由器需直接获取该公网 IP 作为 WAN 口地址，避免因光猫 NAT 转发导致的多重路由嵌套。&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;li>
-&lt;ol start="2">
-&lt;li>我们需要有一个域名，能够绑定在我们的公网IP上。&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;/ul>
-&lt;h2 id="第1部分ddns-环节的回顾与复盘">第1部分：DDNS 环节的回顾与复盘&lt;/h2>
-&lt;h4 id="1-遇到的-bug-故障点">1. 遇到的 Bug (故障点)&lt;/h4>
-&lt;ul>
-&lt;li>&lt;strong>现象：&lt;/strong> 点击 &amp;ldquo;Update DDns Services List&amp;rdquo; 永远显示 &lt;code>NO_LIST&lt;/code>，导致无法在下拉菜单中选择 &lt;code>no-ip.com&lt;/code>。&lt;/li>
-&lt;/ul>
-&lt;ul>
-&lt;li>&lt;img src="https://potterwhite.github.io/2025/openwrt/openwrt-ddns.png" alt="">&lt;/li>
-&lt;/ul>
-&lt;ul>
-&lt;li>&lt;strong>根本原因 (推测)：&lt;/strong>
-&lt;ul>
-&lt;li>OpenWrt 固件由于精简或网络原因，缺少 HTTPS 根证书 (&lt;code>ca-certificates&lt;/code>)。&lt;/li>
-&lt;li>或者路由器的 DNS 尚未配置好，无法解析下载列表的服务器地址。&lt;/li>
-&lt;li>这导致 &lt;code>wget&lt;/code> 或 &lt;code>curl&lt;/code> 命令无法从 OpenWrt 官方源下载服务商数据包。&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h4 id="2-挽救措施-workaround">2. 挽救措施 (Workaround)&lt;/h4>
-&lt;ul>
-&lt;li>&lt;strong>我们做了什么：&lt;/strong> 放弃了“依赖预设列表”的自动化路径，转而使用“手动挡” (Custom Mode)。&lt;/li>
-&lt;li>&lt;strong>关键操作：&lt;/strong>
-&lt;ul>
-&lt;li>&lt;img src="https://potterwhite.github.io/2025/openwrt/ddns-ipv4.png" alt="">&lt;/li>
-&lt;/ul>
-&lt;ol>
-&lt;li>将服务商设为 &lt;code>-- custom --&lt;/code>。&lt;/li>
-&lt;li>手动构造了 No-IP 的 API 更新链接：&lt;code>http://[USERNAME]:[PASSWORD]@dynupdate.no-ip.com...&lt;/code>&lt;/li>
-&lt;li>&lt;strong>关键修正：&lt;/strong> 考虑到可能存在的证书问题，我们使用了 &lt;code>http://&lt;/code> 而不是 &lt;code>https://&lt;/code>，并取消了 &amp;ldquo;Use HTTP Secure&amp;rdquo; 的勾选，确保在证书环境不完善的情况下也能成功握手。&lt;/li>
-&lt;/ol>
-&lt;/li>
-&lt;/ul>
-&lt;h4 id="3-经验总结">3. 经验总结&lt;/h4>
-&lt;p>在 OpenWrt 中，&lt;strong>&amp;ldquo;预设列表&amp;rdquo; 只是一个为了方便的快捷方式，并不是必须的。&lt;/strong> 只要知道服务商的 API 格式，用 Custom 模式往往比修补系统环境（安装证书、排查网络）来得更快、更直接。&lt;/p></description></item><item><title>NFS(Net File System)</title><link>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</guid><description>&lt;h1 id="nfs-挂载问题深度复盘与标准工作流建立">NFS 挂载问题深度复盘与标准工作流建立&lt;/h1>
-&lt;h2 id="前言">前言&lt;/h2>
-&lt;p>本文档旨在复盘一次在嵌入式 BusyBox 系统 (&lt;code>david&lt;/code> 主机) 挂载 Ubuntu NFS 服务器 (&lt;code>Anastasia-Ubuntu&lt;/code>) 时，反复出现 &lt;code>Connection refused&lt;/code> 错误的排查过程。最终，通过添加 &lt;code>-o nolock&lt;/code> 挂载选项成功解决了问题。本文将详细分析失败的根本原因，并建立一套标准的 NFS 服务端与客户端配置工作流，为未来的部署提供可靠参考。&lt;/p>
-&lt;hr>
-&lt;h2 id="part-1-connection-refused-问题深度复盘">Part 1: &lt;code>Connection refused&lt;/code> 问题深度复盘&lt;/h2>
-&lt;h3 id="11-问题现象">1.1 问题现象&lt;/h3>
-&lt;p>在嵌入式客户端 (&lt;code>david&lt;/code>) 上，尝试使用标准命令挂载 NFS 服务器 (&lt;code>192.168.3.164&lt;/code>) 上的共享目录，始终遭遇 &lt;code>Connection refused&lt;/code> 错误，即便是修正了多次语法错误之后。&lt;/p>
-&lt;p>&lt;strong>关键日志复现：&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>root@david:/mnt&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>&lt;span style="color:#8f5902;font-style:italic"># mount -t nfs 192.168.3.164:/mnt/nfs/rv1126 /mnt/nfs&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>mount: mounting 192.168.3.164:/mnt/nfs/rv1126 on /mnt/nfs failed: Connection refused
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然而，当添加 &lt;code>-o nolock&lt;/code> 选项后，挂载立即成功。&lt;/p>
-&lt;p>&lt;strong>成功挂载日志：&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>root@david:/mnt&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>&lt;span style="color:#8f5902;font-style:italic"># mount -t nfs 192.168.3.164:/mnt/nfs/rv1126 -o nolock /mnt/nfs&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>root@david:/mnt&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>&lt;span style="color:#8f5902;font-style:italic"># df -h&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Filesystem Size Used Available Use% Mounted on
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/dev/root 2.9G 751.8M 2.1G 26% /
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.3.164:/mnt/nfs/rv1126
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 453.2G 236.4G 193.8G 55% /mnt/nfs
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="12-排查之路排除所有常规嫌犯">1.2 排查之路：排除所有“常规嫌犯”&lt;/h3>
-&lt;p>在定位到 &lt;code>-o nolock&lt;/code> 之前，我们进行了地毯式的排查，逐步排除了所有常见的 NFS 故障原因。&lt;/p></description></item><item><title>DevOps Definition</title><link>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</guid><description>&lt;h3 id="devops的定义">&lt;a href="https://www.google.com/url?sa=t&amp;amp;source=web&amp;amp;rct=j&amp;amp;opi=89978449&amp;amp;url=https://aws.amazon.com/devops/what-is-devops/&amp;amp;ved=2ahUKEwiOs9yZ-7GHAxUTsFYBHeRCBgcQFnoECBoQAw&amp;amp;usg=AOvVaw2hGSM1UgKYzZ4WqCEEg1ET" target="_blank" rel="noopener">DevOps的定义&lt;/a>&lt;/h3>
-&lt;p>您所说的 &amp;ldquo;开发和操作环境达到一致&amp;rdquo; 是对DevOps的一个简单理解，但DevOps的概念要比这广泛和深入得多。最权威的定义之一来自DevOps研究和评估（DORA，DevOps Research and Assessment）和一些行业权威机构，如亚马逊AWS、谷歌云和微软Azure。&lt;/p>
-&lt;p>&lt;strong>DevOps&lt;/strong> 是一种结合软件开发（Dev）和IT运营（Ops）的方法，其目标是通过自动化、持续集成和持续交付（CI/CD）等手段，加速软件开发和发布的速度，提高软件质量和稳定性。DevOps强调跨职能团队之间的协作和沟通，包括开发人员、质量保证人员、运营人员和其他相关人员。&lt;/p>
-&lt;p>一个较为权威的定义来自于亚马逊AWS：&lt;/p>
-&lt;blockquote>
-&lt;p>&amp;ldquo;DevOps is the combination of cultural philosophies, practices, and tools that increases an organization’s ability to deliver applications and services at high velocity: evolving and improving products at a faster pace than organizations using traditional software development and infrastructure management processes.&amp;rdquo;&lt;/p>&lt;/blockquote>
-&lt;p>翻译成中文：&lt;/p>
-&lt;blockquote>
-&lt;p>“DevOps 是一种结合了文化理念、实践和工具的方法，能够提高组织以高速度交付应用程序和服务的能力：以比采用传统软件开发和基础设施管理流程的组织更快的速度演变和改进产品。”&lt;/p>&lt;/blockquote>
-&lt;h3 id="grub的配置是否属于devops范围">GRUB的配置是否属于DevOps范围&lt;/h3>
-&lt;p>严格来说，GRUB（GRand Unified Bootloader）的配置可以算作系统运维（Operations）的一部分，而运维是DevOps的一部分。因此，GRUB的配置是涵盖在DevOps范围内的。&lt;/p>
-&lt;p>在具体的DevOps实践中，涉及系统配置和管理的任务，比如GRUB配置、系统引导加载程序配置、内核参数调整等，通常属于运维团队的职责。这些任务在DevOps环境下可能会通过基础设施即代码（Infrastructure as Code, IaC）工具来自动化，以确保环境的一致性和可重复性。例如，使用Ansible、Puppet或Chef等工具可以自动化配置GRUB等系统设置。&lt;/p>
-&lt;p>总结：&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>DevOps的定义&lt;/strong>更广泛，包括文化、实践和工具的结合，旨在加快软件交付和提高质量。&lt;/li>
-&lt;li>&lt;strong>GRUB的配置&lt;/strong>属于系统运维的一部分，因此可以算作DevOps范围的一部分，尤其是在自动化和基础设施管理的上下文中。&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;/figure&gt;
+&lt;hr&gt;
+&lt;h2 id="下载"&gt;&lt;strong&gt;下载&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://moonlight-stream.org/" target="_blank" rel="noopener"&gt;最佳入口：Sunshine&amp;amp;Moonlight在这里都可以下载到&lt;/a&gt;
+&lt;img src="https://potterwhite.github.io/2025/pve/sunshine-moonlight-entrance.png" alt=""&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="功能点1-显卡策略-gpu-strategy"&gt;功能点1. 显卡策略 (GPU Strategy)&lt;/h2&gt;
+&lt;p&gt;解决 Host latency 高、顿挫感重的核心硬件方案。&lt;/p&gt;</description></item><item><title>异地访问（安全）家中计算机-（OpenWRT+No-IP+WireGuard）</title><link>https://potterwhite.github.io/blog/2025/11/27/%E5%BC%82%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%89%E5%85%A8%E5%AE%B6%E4%B8%AD%E8%AE%A1%E7%AE%97%E6%9C%BA-openwrt-no-ip-wireguard/</link><pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/11/27/%E5%BC%82%E5%9C%B0%E8%AE%BF%E9%97%AE%E5%AE%89%E5%85%A8%E5%AE%B6%E4%B8%AD%E8%AE%A1%E7%AE%97%E6%9C%BA-openwrt-no-ip-wireguard/</guid><description>&lt;h2 id="what-is-this-talking-about"&gt;&lt;strong&gt;What-is-this-Talking-About&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;这是一份我的工作笔记，几乎没有进行润色，AI帮助我把思考过程和尝试过程，包括弯路和最终解法都整理出来，写成文档的格式。&lt;br&gt;
+其实，自从我在Github Pages开通了博客，我就很自然的也很乐此不疲的多增加一步的工作，把记录从Obsidian里搬进我的Github Blog。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;环境：&lt;/strong&gt; OpenWrt 23.05
+&lt;strong&gt;目标：&lt;/strong&gt; 实现外网通过 WireGuard 访问内网资源，并确保公网 IP 变动后自动同步。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="要求"&gt;&lt;strong&gt;要求&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;要用到异地访问内网，必须要有两个东西&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ol&gt;
+&lt;li&gt;我们的ISP提供一个公网IP给我们的宽带（动态变化也可以），并且主路由器需直接获取该公网 IP 作为 WAN 口地址，避免因光猫 NAT 转发导致的多重路由嵌套。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;我们需要有一个域名，能够绑定在我们的公网IP上。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="第1部分ddns-环节的回顾与复盘"&gt;第1部分：DDNS 环节的回顾与复盘&lt;/h2&gt;
+&lt;h4 id="1-遇到的-bug-故障点"&gt;1. 遇到的 Bug (故障点)&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;现象：&lt;/strong&gt; 点击 &amp;ldquo;Update DDns Services List&amp;rdquo; 永远显示 &lt;code&gt;NO_LIST&lt;/code&gt;，导致无法在下拉菜单中选择 &lt;code&gt;no-ip.com&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;img src="https://potterwhite.github.io/2025/openwrt/openwrt-ddns.png" alt=""&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;根本原因 (推测)：&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;OpenWrt 固件由于精简或网络原因，缺少 HTTPS 根证书 (&lt;code&gt;ca-certificates&lt;/code&gt;)。&lt;/li&gt;
+&lt;li&gt;或者路由器的 DNS 尚未配置好，无法解析下载列表的服务器地址。&lt;/li&gt;
+&lt;li&gt;这导致 &lt;code&gt;wget&lt;/code&gt; 或 &lt;code&gt;curl&lt;/code&gt; 命令无法从 OpenWrt 官方源下载服务商数据包。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-挽救措施-workaround"&gt;2. 挽救措施 (Workaround)&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我们做了什么：&lt;/strong&gt; 放弃了“依赖预设列表”的自动化路径，转而使用“手动挡” (Custom Mode)。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;关键操作：&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;img src="https://potterwhite.github.io/2025/openwrt/ddns-ipv4.png" alt=""&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;将服务商设为 &lt;code&gt;-- custom --&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;手动构造了 No-IP 的 API 更新链接：&lt;code&gt;http://[USERNAME]:[PASSWORD]@dynupdate.no-ip.com...&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;关键修正：&lt;/strong&gt; 考虑到可能存在的证书问题，我们使用了 &lt;code&gt;http://&lt;/code&gt; 而不是 &lt;code&gt;https://&lt;/code&gt;，并取消了 &amp;ldquo;Use HTTP Secure&amp;rdquo; 的勾选，确保在证书环境不完善的情况下也能成功握手。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-经验总结"&gt;3. 经验总结&lt;/h4&gt;
+&lt;p&gt;在 OpenWrt 中，&lt;strong&gt;&amp;ldquo;预设列表&amp;rdquo; 只是一个为了方便的快捷方式，并不是必须的。&lt;/strong&gt; 只要知道服务商的 API 格式，用 Custom 模式往往比修补系统环境（安装证书、排查网络）来得更快、更直接。&lt;/p&gt;</description></item><item><title>NFS(Net File System)</title><link>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2025/07/29/nfsnet-file-system/</guid><description>&lt;h1 id="nfs-挂载问题深度复盘与标准工作流建立"&gt;NFS 挂载问题深度复盘与标准工作流建立&lt;/h1&gt;
+&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;p&gt;本文档旨在复盘一次在嵌入式 BusyBox 系统 (&lt;code&gt;david&lt;/code&gt; 主机) 挂载 Ubuntu NFS 服务器 (&lt;code&gt;Anastasia-Ubuntu&lt;/code&gt;) 时，反复出现 &lt;code&gt;Connection refused&lt;/code&gt; 错误的排查过程。最终，通过添加 &lt;code&gt;-o nolock&lt;/code&gt; 挂载选项成功解决了问题。本文将详细分析失败的根本原因，并建立一套标准的 NFS 服务端与客户端配置工作流，为未来的部署提供可靠参考。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="part-1-connection-refused-问题深度复盘"&gt;Part 1: &lt;code&gt;Connection refused&lt;/code&gt; 问题深度复盘&lt;/h2&gt;
+&lt;h3 id="11-问题现象"&gt;1.1 问题现象&lt;/h3&gt;
+&lt;p&gt;在嵌入式客户端 (&lt;code&gt;david&lt;/code&gt;) 上，尝试使用标准命令挂载 NFS 服务器 (&lt;code&gt;192.168.3.164&lt;/code&gt;) 上的共享目录，始终遭遇 &lt;code&gt;Connection refused&lt;/code&gt; 错误，即便是修正了多次语法错误之后。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;关键日志复现：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;[&lt;/span&gt;root@david:/mnt&lt;span style="color:#ce5c00;font-weight:bold"&gt;]&lt;/span&gt;&lt;span style="color:#8f5902;font-style:italic"&gt;# mount -t nfs 192.168.3.164:/mnt/nfs/rv1126 /mnt/nfs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;mount: mounting 192.168.3.164:/mnt/nfs/rv1126 on /mnt/nfs failed: Connection refused
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然而，当添加 &lt;code&gt;-o nolock&lt;/code&gt; 选项后，挂载立即成功。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;成功挂载日志：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;[&lt;/span&gt;root@david:/mnt&lt;span style="color:#ce5c00;font-weight:bold"&gt;]&lt;/span&gt;&lt;span style="color:#8f5902;font-style:italic"&gt;# mount -t nfs 192.168.3.164:/mnt/nfs/rv1126 -o nolock /mnt/nfs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;[&lt;/span&gt;root@david:/mnt&lt;span style="color:#ce5c00;font-weight:bold"&gt;]&lt;/span&gt;&lt;span style="color:#8f5902;font-style:italic"&gt;# df -h&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Filesystem Size Used Available Use% Mounted on
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/dev/root 2.9G 751.8M 2.1G 26% /
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;192.168.3.164:/mnt/nfs/rv1126
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 453.2G 236.4G 193.8G 55% /mnt/nfs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id="12-排查之路排除所有常规嫌犯"&gt;1.2 排查之路：排除所有“常规嫌犯”&lt;/h3&gt;
+&lt;p&gt;在定位到 &lt;code&gt;-o nolock&lt;/code&gt; 之前，我们进行了地毯式的排查，逐步排除了所有常见的 NFS 故障原因。&lt;/p&gt;</description></item><item><title>DevOps Definition</title><link>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</link><pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/2024/07/19/devops-definition/</guid><description>&lt;h3 id="devops的定义"&gt;&lt;a href="https://www.google.com/url?sa=t&amp;amp;source=web&amp;amp;rct=j&amp;amp;opi=89978449&amp;amp;url=https://aws.amazon.com/devops/what-is-devops/&amp;amp;ved=2ahUKEwiOs9yZ-7GHAxUTsFYBHeRCBgcQFnoECBoQAw&amp;amp;usg=AOvVaw2hGSM1UgKYzZ4WqCEEg1ET" target="_blank" rel="noopener"&gt;DevOps的定义&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;您所说的 &amp;ldquo;开发和操作环境达到一致&amp;rdquo; 是对DevOps的一个简单理解，但DevOps的概念要比这广泛和深入得多。最权威的定义之一来自DevOps研究和评估（DORA，DevOps Research and Assessment）和一些行业权威机构，如亚马逊AWS、谷歌云和微软Azure。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;DevOps&lt;/strong&gt; 是一种结合软件开发（Dev）和IT运营（Ops）的方法，其目标是通过自动化、持续集成和持续交付（CI/CD）等手段，加速软件开发和发布的速度，提高软件质量和稳定性。DevOps强调跨职能团队之间的协作和沟通，包括开发人员、质量保证人员、运营人员和其他相关人员。&lt;/p&gt;
+&lt;p&gt;一个较为权威的定义来自于亚马逊AWS：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;DevOps is the combination of cultural philosophies, practices, and tools that increases an organization’s ability to deliver applications and services at high velocity: evolving and improving products at a faster pace than organizations using traditional software development and infrastructure management processes.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;翻译成中文：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“DevOps 是一种结合了文化理念、实践和工具的方法，能够提高组织以高速度交付应用程序和服务的能力：以比采用传统软件开发和基础设施管理流程的组织更快的速度演变和改进产品。”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="grub的配置是否属于devops范围"&gt;GRUB的配置是否属于DevOps范围&lt;/h3&gt;
+&lt;p&gt;严格来说，GRUB（GRand Unified Bootloader）的配置可以算作系统运维（Operations）的一部分，而运维是DevOps的一部分。因此，GRUB的配置是涵盖在DevOps范围内的。&lt;/p&gt;
+&lt;p&gt;在具体的DevOps实践中，涉及系统配置和管理的任务，比如GRUB配置、系统引导加载程序配置、内核参数调整等，通常属于运维团队的职责。这些任务在DevOps环境下可能会通过基础设施即代码（Infrastructure as Code, IaC）工具来自动化，以确保环境的一致性和可重复性。例如，使用Ansible、Puppet或Chef等工具可以自动化配置GRUB等系统设置。&lt;/p&gt;
+&lt;p&gt;总结：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DevOps的定义&lt;/strong&gt;更广泛，包括文化、实践和工具的结合，旨在加快软件交付和提高质量。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GRUB的配置&lt;/strong&gt;属于系统运维的一部分，因此可以算作DevOps范围的一部分，尤其是在自动化和基础设施管理的上下文中。&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>
