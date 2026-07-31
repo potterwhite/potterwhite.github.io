@@ -1,50 +1,63 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bring Up on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/bring-up/</link><description>Recent content in Bring Up on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Thu, 16 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/bring-up/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3568平台BSP构建</title><link>https://potterwhite.github.io/portfolio/bringup-rk3568/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/bringup-rk3568/</guid><description>&lt;h2 id="项目介绍">项目介绍&lt;/h2>
-&lt;p>该项目是基于Rockchip的公版SDK(&lt;strong>rk356x_linux5.10_release_v1.6.0_20241220_sync20250611.tgz&lt;/strong>)进行整板调试。&lt;/p>
-&lt;p>我的角色是BSP工程师，我的核心工作在于 &lt;strong>底层 Bring-up、设备树 (DTS) 精确配置、以及Linux内核驱动的调试&lt;/strong>。&lt;/p>
-&lt;p>本作品集展示了我在RK3568平台上完成的该项目中涉及到的所有模块的Bring-up。&lt;/p>
-&lt;p>有部分模块汇总出一套我总结的&lt;strong>标准作业程序 (SOP)&lt;/strong>，旨在帮助自己和团队更具有系统性地定位并解决未来遇到的此类问题，确保各模块功能稳定、且性能达标。&lt;/p>
-&lt;hr>
-&lt;h2 id="项目列表-project-list">项目列表 (Project List)&lt;/h2>
-&lt;h3 id="1-rk3568-平台千兆以太网控制器-bring-up-与性能验证">&lt;strong>1. RK3568 平台千兆以太网控制器 Bring-up 与性能验证&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong> 精准定位并修复了DTS中时钟与pinctrl配置错误，成功使能GMAC控制器，并通过iperf验证其吞吐量达到千兆线速标准。&lt;/li>
-&lt;li>&lt;strong>&lt;a href="./module-1-gmac/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="2-rk3568-平台显示子系统-bring-up-与多接口调试">&lt;strong>2. RK3568 平台显示子系统 Bring-up 与多接口调试&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong> 系统性地使能了LVDS、MIPI-DSI及HDMI显示接口，成功发送数据流给FPGA并实现了超越官方手册规格的LVDS接口1080p视频流输出。&lt;/li>
-&lt;li>&lt;strong>&lt;a href="./module-2-display/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="3-rk3568-平台-mipi-dsi-转-edp-桥接芯片-lt8911exb-bring-up">&lt;strong>3. RK3568 平台 MIPI-DSI 转 eDP 桥接芯片 LT8911EXB Bring-up&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong> 解决了从硬件RC复位电路到内核驱动加载机制的多层问题，成功驱动LT8911EXB芯片，打通了从SoC MIPI到eDP屏幕的完整显示链路。&lt;/li>
-&lt;li>&lt;strong>&lt;a href="./module-3-lt8911exb/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="4-rk3568-平台-usb-接口-bring-up">&lt;strong>4. RK3568 平台 USB 接口 Bring-up&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong> 梳理USB设备树节点和层级结构，并在现有硬件限制下最优的避开OTG组无法识别U盘的问题&lt;/li>
-&lt;li>&lt;strong>&lt;a href="./module-4-usb/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="5-rk3568-平台-quad-gsv2011-i2c-bring-up">&lt;strong>5. RK3568 平台 Quad GSV2011 (i2c) Bring-up&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong>&lt;/li>
-&lt;li>&lt;strong>&lt;a href="./module-5-gsv2011-i2c/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="6-rk3568-平台-mipi-csi-bring-up">&lt;strong>6. RK3568 平台 MIPI CSI Bring-up&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong>&lt;/li>
-&lt;li>&lt;strong>&lt;a href="./module-6-csi/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="7-rk3568-平台-i2s-bring-up">&lt;strong>7. RK3568 平台 I2S Bring-up&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>核心成果:&lt;/strong> 编写I2S子系统的设备树代码，按着新板电路图启用多个ALSA设备，为系统音频应用提供支持。&lt;/li>
-&lt;li>&lt;strong>&lt;a href="./module-7-i2s/">阅读项目详情 »&lt;/a>&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;!-- 在这里添加新的项目摘要 --></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bring Up on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/bring-up/</link><description>Recent content in Bring Up on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 29 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/bring-up/index.xml" rel="self" type="application/rss+xml"/><item><title>RK3588平台BSP构建 - PCIe模块Bringup</title><link>https://potterwhite.github.io/portfolio/embedded-bsp/bringup-rk3588/</link><pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/embedded-bsp/bringup-rk3588/</guid><description>&lt;h2 id="项目介绍"&gt;项目介绍&lt;/h2&gt;
+&lt;p&gt;该项目是基于Topeet北京迅为的定制版SDK(&lt;strong&gt;rk3588-linux_20250321.tar.xz&lt;/strong&gt;)进行&lt;strong&gt;内核&lt;/strong&gt;调试。&lt;/p&gt;
+&lt;p&gt;我的角色是BSP工程师，我的核心工作在于 &lt;strong&gt;Bring-up、设备树 (DTS) 精确配置、以及Linux内核驱动的问题定位及调试&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;本作品集展示了我在RK3588平台上完成的PCIe模块的Bring-up。&lt;/p&gt;
+&lt;p&gt;最后调试的结果是：硬件问题，无法完成软件功能。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="模块列表-module-list"&gt;模块列表 (Module List)&lt;/h2&gt;
+&lt;h3 id="1-rk3588-平台pcie模块-bring-up-调试"&gt;&lt;strong&gt;1. RK3588 平台PCIe模块 Bring-up 调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="https://potterwhite.github.io/blog/2026/07/29/%e4%b8%8d%e9%9d%a0%e7%8c%9c%e5%a6%82%e4%bd%95%e7%94%a8-trm-%e6%8e%a8%e5%af%bc%e5%87%ba-pcie-%e6%a8%a1%e5%9d%97%e7%9a%84%e9%97%ae%e9%a2%98/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;!-- 在这里添加新的项目摘要 --&gt;</description></item><item><title>RK3568平台BSP构建</title><link>https://potterwhite.github.io/portfolio/embedded-bsp/bringup-rk3568/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/embedded-bsp/bringup-rk3568/</guid><description>&lt;h2 id="项目介绍"&gt;项目介绍&lt;/h2&gt;
+&lt;p&gt;该项目是基于Rockchip的公版SDK(&lt;strong&gt;rk356x_linux5.10_release_v1.6.0_20241220_sync20250611.tgz&lt;/strong&gt;)进行整板调试。&lt;/p&gt;
+&lt;p&gt;我的角色是BSP工程师，我的核心工作在于 &lt;strong&gt;底层 Bring-up、设备树 (DTS) 精确配置、以及Linux内核驱动的调试&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;本作品集展示了我在RK3568平台上完成的该项目中涉及到的所有模块的Bring-up。&lt;/p&gt;
+&lt;p&gt;有部分模块汇总出一套我总结的&lt;strong&gt;标准作业程序 (SOP)&lt;/strong&gt;，旨在帮助自己和团队更具有系统性地定位并解决未来遇到的此类问题，确保各模块功能稳定、且性能达标。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="项目列表-project-list"&gt;项目列表 (Project List)&lt;/h2&gt;
+&lt;h3 id="1-rk3568-平台千兆以太网控制器-bring-up-与性能验证"&gt;&lt;strong&gt;1. RK3568 平台千兆以太网控制器 Bring-up 与性能验证&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 精准定位并修复了DTS中时钟与pinctrl配置错误，成功使能GMAC控制器，并通过iperf验证其吞吐量达到千兆线速标准。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./module-1-gmac/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="2-rk3568-平台显示子系统-bring-up-与多接口调试"&gt;&lt;strong&gt;2. RK3568 平台显示子系统 Bring-up 与多接口调试&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 系统性地使能了LVDS、MIPI-DSI及HDMI显示接口，成功发送数据流给FPGA并实现了超越官方手册规格的LVDS接口1080p视频流输出。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./module-2-display/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="3-rk3568-平台-mipi-dsi-转-edp-桥接芯片-lt8911exb-bring-up"&gt;&lt;strong&gt;3. RK3568 平台 MIPI-DSI 转 eDP 桥接芯片 LT8911EXB Bring-up&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 解决了从硬件RC复位电路到内核驱动加载机制的多层问题，成功驱动LT8911EXB芯片，打通了从SoC MIPI到eDP屏幕的完整显示链路。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./module-3-lt8911exb/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="4-rk3568-平台-usb-接口-bring-up"&gt;&lt;strong&gt;4. RK3568 平台 USB 接口 Bring-up&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 梳理USB设备树节点和层级结构，并在现有硬件限制下最优的避开OTG组无法识别U盘的问题&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./module-4-usb/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="5-rk3568-平台-quad-gsv2011-i2c-bring-up"&gt;&lt;strong&gt;5. RK3568 平台 Quad GSV2011 (i2c) Bring-up&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./module-5-gsv2011-i2c/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="6-rk3568-平台-mipi-csi-bring-up"&gt;&lt;strong&gt;6. RK3568 平台 MIPI CSI Bring-up&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./module-6-csi/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="7-rk3568-平台-i2s-bring-up"&gt;&lt;strong&gt;7. RK3568 平台 I2S Bring-up&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 编写I2S子系统的设备树代码，按着新板电路图启用多个ALSA设备，为系统音频应用提供支持。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./module-7-i2s/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;!-- 在这里添加新的项目摘要 --&gt;</description></item></channel></rss>

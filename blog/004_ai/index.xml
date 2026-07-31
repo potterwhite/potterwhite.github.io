@@ -4,52 +4,52 @@ date: 2024-08-01
 categories:
  - blog
  - AI
---- -->
-&lt;h2 id="plus用户的权益">&lt;a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus#h_d78bb59065" target="_blank" rel="noopener">&lt;strong>Plus用户的权益&lt;/strong>（&lt;em>2024年5月13号以后&lt;/em>）&lt;/a>&lt;/h2>
-&lt;div style="padding-left: 2em;">
-&lt;p>这里说的是plus，3小时80条&lt;/p>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th>Type&lt;/th>
- &lt;th>Free&lt;/th>
- &lt;th>Plus&lt;/th>
- &lt;th>Team&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td>[GPT-4o]Msg_limit&lt;/td>
- &lt;td>16条/3小时&lt;/td>
- &lt;td>80条/3小时&lt;/td>
- &lt;td>160条/3小时&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td>[GPT-4] Msg_limit&lt;/td>
- &lt;td>8条/3小时&lt;/td>
- &lt;td>40条/3小时&lt;/td>
- &lt;td>80条/3小时&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;/div></description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;p>danny zhou&lt;/p>
-&lt;p>把两个英文单词的尾字母进行拼接
+--- --&gt;
+&lt;h2 id="plus用户的权益"&gt;&lt;a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus#h_d78bb59065" target="_blank" rel="noopener"&gt;&lt;strong&gt;Plus用户的权益&lt;/strong&gt;（&lt;em&gt;2024年5月13号以后&lt;/em&gt;）&lt;/a&gt;&lt;/h2&gt;
+&lt;div style="padding-left: 2em;"&gt;
+&lt;p&gt;这里说的是plus，3小时80条&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Type&lt;/th&gt;
+					&lt;th&gt;Free&lt;/th&gt;
+					&lt;th&gt;Plus&lt;/th&gt;
+					&lt;th&gt;Team&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;[GPT-4o]Msg_limit&lt;/td&gt;
+					&lt;td&gt;16条/3小时&lt;/td&gt;
+					&lt;td&gt;80条/3小时&lt;/td&gt;
+					&lt;td&gt;160条/3小时&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;[GPT-4] Msg_limit&lt;/td&gt;
+					&lt;td&gt;8条/3小时&lt;/td&gt;
+					&lt;td&gt;40条/3小时&lt;/td&gt;
+					&lt;td&gt;80条/3小时&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;</description></item><item><title/><link>https://potterwhite.github.io/blog/1/01/01/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/blog/1/01/01/</guid><description>&lt;p&gt;danny zhou&lt;/p&gt;
+&lt;p&gt;把两个英文单词的尾字母进行拼接
 hello world
 a.直接输出od
-b.hello的尾字母是o, world的尾字母是d,所以拼接起来是od&lt;/p>
-&lt;p>a是没有推理的
-b是有推理的&lt;/p>
-&lt;p>模型本身就会推理,不需要人去教他们推理&lt;/p>
-&lt;p>let think step by step对模型推理是有用的.&lt;/p>
-&lt;p>first principle in ML:&lt;/p>
-&lt;ul>
-&lt;li>directly optimize what we want!&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;p>what do we want to optimize here
+b.hello的尾字母是o, world的尾字母是d,所以拼接起来是od&lt;/p&gt;
+&lt;p&gt;a是没有推理的
+b是有推理的&lt;/p&gt;
+&lt;p&gt;模型本身就会推理,不需要人去教他们推理&lt;/p&gt;
+&lt;p&gt;let think step by step对模型推理是有用的.&lt;/p&gt;
+&lt;p&gt;first principle in ML:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;directly optimize what we want!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;what do we want to optimize here
 i. 定义目标
-optimize the metric of measuring generation quality&lt;/p>
-&lt;p>ii. 计算梯度
-examples: correctness for solving math problems, blue score for machine translation&lt;/p>
-&lt;p>iii. 反向传播
-all the reset is to compute gradients and do backpropagation!&lt;/p></description></item></channel></rss>
+optimize the metric of measuring generation quality&lt;/p&gt;
+&lt;p&gt;ii. 计算梯度
+examples: correctness for solving math problems, blue score for machine translation&lt;/p&gt;
+&lt;p&gt;iii. 反向传播
+all the reset is to compute gradients and do backpropagation!&lt;/p&gt;</description></item></channel></rss>

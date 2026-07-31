@@ -1,446 +1,403 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Welcome on Potter`s Log Book</title><link>https://potterwhite.github.io/en/</link><description>Recent content in Welcome on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Part 1: Modular Deployment of Sherpa ASR on the RK3588S Platform (C/S Architecture)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage1-integration/</guid><description>&lt;script type="module">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Welcome on Potter`s Log Book</title><link>https://potterwhite.github.io/en/</link><description>Recent content in Welcome on Potter`s Log Book</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 28 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Part 1: Modular Deployment of Sherpa ASR on the RK3588S Platform (C/S Architecture)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage1-integration/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage1-integration/</guid><description>&lt;script type="module"&gt;
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-&lt;/script>
-&lt;h1 id="project-retrospective-report-after-action-review---enhanced-version">&lt;strong>Project Retrospective Report (After-Action Review) - Enhanced Version&lt;/strong>&lt;/h1>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th style="text-align: left">Project Attribute&lt;/th>
- &lt;th style="text-align: left">Details&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Name&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Modular Deployment of Sherpa ASR on the RK3588S Platform (C/S Architecture)&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Timeline&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-04-25 ~ 2025-06-24&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Review Date&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-06-24&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Core Personnel&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Potter White&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Total Workdays&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">34 Workdays&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;h2 id="1-goal-review-what-was-supposed-to-happen">1. Goal Review (What was supposed to happen?)&lt;/h2>
-&lt;h3 id="11-project-goals">1.1 Project Goals&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Core Functionality:&lt;/strong> Build a production-grade, high-concurrency offline Automatic Speech Recognition (ASR) service.&lt;/li>
-&lt;li>&lt;strong>Performance Expectations:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Explicit Requirement:&lt;/strong> Real-Time Factor (RTF) significantly better than 1.0.&lt;/li>
-&lt;li>&lt;strong>Implicit Requirement:&lt;/strong> Inference latency within an acceptable range (target &amp;lt; 1 second) for a smooth user experience.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Quality &amp;amp; Stability Expectations:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Explicit Requirement:&lt;/strong> The service must be modularly deployable and decoupled from the main application.&lt;/li>
-&lt;li>&lt;strong>Implicit Requirement:&lt;/strong> 24/7 stable operation with no memory leaks, deadlocks, or data races.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h3 id="12-initial-plan--assumptions">1.2 Initial Plan &amp;amp; Assumptions&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Core Tech Stack:&lt;/strong> C++17, CMake, &lt;code>std::thread&lt;/code>, self-developed LibSocket (IPC)&lt;/li>
-&lt;li>&lt;strong>Architectural Evolution Strategy:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Phase 1 (Prototype-Driven):&lt;/strong> Given the uncertainty in technology selection, a rapid prototyping approach was initially adopted to validate the feasibility of core technologies (Whisper vs. Sherpa).&lt;/li>
-&lt;li>&lt;strong>Phase 2 (Architecture Finalization):&lt;/strong> After successful prototype validation, an &lt;strong>IPC + C/S Architecture&lt;/strong> was established. This design aimed to enable independent deployment, testing, and upgrading of the ASR service, thereby reducing system coupling.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Key Assumptions (Later Proven False):&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Assumption 1 (Incorrect):&lt;/strong> &lt;strong>Model loading cost is low.&lt;/strong> It was mistakenly believed that the ASR model could be dynamically loaded for each new client session without considering its high I/O and memory overhead.&lt;/li>
-&lt;li>&lt;strong>Assumption 2 (Incorrect):&lt;/strong> &lt;strong>Concurrency management is simple.&lt;/strong> It was wrongly assumed that simple thread detachment (&lt;code>std::thread::detach&lt;/code>) or thread management without proper synchronization mechanisms would be sufficient for production-level concurrent requests.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="2-actual-results-what-actually-happened">2. Actual Results (What actually happened?)&lt;/h2>
-&lt;h3 id="21-final-outcomes">2.1 Final Outcomes&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Performance:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Achieved a Real-Time Factor (RTF) of 0.2&lt;/strong>, meaning it takes only 0.2 seconds to process 1 second of audio. This far exceeded expectations and provided ample performance headroom for the system.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Functional Completeness:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Implemented non-appending text stream output&lt;/strong>, significantly improving the user experience for real-time subtitles.&lt;/li>
-&lt;li>&lt;strong>Successfully built a modular C/S architecture&lt;/strong>, where the ASR service runs as an independent server process, ensuring high stability and ease of maintenance.&lt;/li>
-&lt;li>&lt;strong>Passed &lt;code>helgrind&lt;/code> stress tests&lt;/strong>, systematically identifying and fixing all potential data races and deadlocks, guaranteeing concurrency safety.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Reusable Assets:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Encapsulated three high-quality C++ libraries:&lt;/strong> &lt;code>LibASR&lt;/code>, &lt;code>LibSocket&lt;/code>, and &lt;code>LibUtils&lt;/code>, achieving high functional cohesion and code reuse.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h3 id="22-key-events--process-timeline">2.2 Key Events &amp;amp; Process (Timeline)&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Iteration 1 (Tech Research - 4 days):&lt;/strong> Investigated Whisper but pivoted to Sherpa due to the complexity of its conversion and deployment process.&lt;/li>
-&lt;li>&lt;strong>Iteration 2 (Prototype Validation - 4 days):&lt;/strong> Successfully ran the Sherpa C++ Demo, resolving hardware environment issues (ALSA configuration) and validating the core solution&amp;rsquo;s feasibility.&lt;/li>
-&lt;li>&lt;strong>Iteration 3 (Core Logic Development - 7 days):&lt;/strong> Refactored the demo code to implement initial decoding logic for WAV and microphone inputs, laying the foundation for future development.&lt;/li>
-&lt;li>&lt;strong>Iteration 4 (Advanced Feature Exploration - 6 days):&lt;/strong> Successfully integrated VAD (Voice Activity Detection) and solved a key user experience problem: &lt;strong>how to interrupt the appending output stream&lt;/strong>, which was partially resolved using the Endpointing mechanism.&lt;/li>
-&lt;li>&lt;strong>Iteration 5 (Architecture Refactor &amp;amp; Library Encapsulation - 5 days):&lt;/strong> &lt;strong>A key turning point for the project.&lt;/strong> The prototype code was refactored into three independent libraries (ASR, Socket, Utils), making the code modular, standardized, and highly reusable. During this phase, I gained a deep understanding of the POSIX Socket API and the Singleton pattern.&lt;/li>
-&lt;li>&lt;strong>Iteration 6 (Integration &amp;amp; Testing - 6.5 days):&lt;/strong> Integrated the libraries with the App layer and built a comprehensive testing suite.
-&lt;ul>
-&lt;li>&lt;strong>Resolved server-side connection handling lifecycle issues&lt;/strong>, enabling robust management of multiple client connections.&lt;/li>
-&lt;li>&lt;strong>Optimized the model loading strategy&lt;/strong>, realizing the performance bottleneck of loading a model for each worker thread (marked as an item for future optimization).&lt;/li>
-&lt;li>&lt;strong>Built gtest unit tests, integration tests, and stress tests&lt;/strong> to systematically ensure code quality.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Iteration 7 (Concurrency Debugging &amp;amp; Hardening - 1.5 days):&lt;/strong>
-&lt;ul>
-&lt;li>Used &lt;code>Valgrind&lt;/code> and &lt;code>helgrind&lt;/code> for in-depth memory and concurrency analysis.&lt;/li>
-&lt;li>&lt;strong>Identified and fixed critical concurrency bugs&lt;/strong> by adding mutex protection (&lt;code>std::lock_guard&lt;/code>) for shared resources (e.g., worker list, socket connections).&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="3-gap-analysis-root-cause-exploration-why-was-there-a-difference">3. Gap Analysis: Root Cause Exploration (Why was there a difference?)&lt;/h2>
-&lt;h3 id="31-successes-what-went-well-and-why">3.1 Successes (What went well, and why?)&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Success 1: Adopted an object-oriented, structured concurrency design.&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Observation:&lt;/strong> The ASR task (&lt;code>ASRTaskSherpa&lt;/code>) and its execution thread (&lt;code>std::thread&lt;/code>) were encapsulated into a unified lifecycle management unit (&lt;code>TaskHandler&lt;/code>), which was then managed collectively in a &lt;code>std::vector&lt;/code>.&lt;/li>
-&lt;li>&lt;strong>Root Cause:&lt;/strong> This was essentially &lt;strong>applying the RAII (Resource Acquisition Is Initialization) philosophy to manage thread resources&lt;/strong>. By binding the thread&amp;rsquo;s lifecycle to the task object&amp;rsquo;s lifecycle, it eliminated the complexity and risks of manually managing thread &lt;code>join&lt;/code> or &lt;code>detach&lt;/code>, eradicating resource leaks and &amp;ldquo;zombie threads&amp;rdquo; by design. &lt;strong>This represented a leap from a &amp;ldquo;procedural&amp;rdquo; approach to thread management to an &amp;ldquo;object-oriented&amp;rdquo; management of concurrent entities, drastically reducing cognitive load and the probability of errors.&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Success 2: Made a decisive architectural refactor, achieving high modularity.&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Observation:&lt;/strong> In the middle of the project, the tightly coupled prototype code was split into three independent libraries.&lt;/li>
-&lt;li>&lt;strong>Root Cause:&lt;/strong> &lt;strong>Recognized that the stability and reusability of foundational capabilities are the bedrock for the rapid iteration of business logic.&lt;/strong> By encapsulating base libraries (communication, logging, core ASR API), the main application&amp;rsquo;s logic became extremely clean, focusing solely on business process orchestration. This reflects the core design principle of &lt;strong>&amp;ldquo;Separation of Concerns&amp;rdquo;&lt;/strong> and was a critical step in evolving the project from &amp;ldquo;usable&amp;rdquo; to &amp;ldquo;user-friendly and maintainable.&amp;rdquo;&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h3 id="32-shortcomings-what-could-be-improved-and-why">3.2 Shortcomings (What could be improved, and why?)&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Issue 1: Inadequate consideration for interrupting blocking I/O concurrently, preventing a graceful shutdown.&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Observation:&lt;/strong> When the main thread tried to stop a worker thread using &lt;code>stop_flag_&lt;/code>, if the worker was blocked on &lt;code>::recv()&lt;/code>, it couldn&amp;rsquo;t respond to the stop signal. This caused &lt;code>join()&lt;/code> to wait indefinitely, freezing the program.&lt;/li>
-&lt;li>&lt;strong>Root Cause:&lt;/strong> &lt;strong>A lack of understanding of &amp;ldquo;asynchronous interruption&amp;rdquo; mechanisms.&lt;/strong> An &lt;code>atomic&lt;/code> flag can only be checked within a thread&amp;rsquo;s polling loop; it cannot wake up a thread that is in a deep sleep in kernel space (e.g., blocked on &lt;code>recv&lt;/code>). This is a classic misuse of synchronous programming thinking in an asynchronous concurrent environment. &lt;strong>The correct solution would be to use non-blocking I/O + I/O multiplexing (e.g., &lt;code>epoll&lt;/code>, &lt;code>select&lt;/code>) or set a timeout on the socket (&lt;code>setsockopt&lt;/code>), allowing &lt;code>recv&lt;/code> to return after a specified time and thus get a chance to check &lt;code>stop_flag_&lt;/code>.&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Issue 2: Unclear ownership and access control for shared resources in a multi-threaded environment.&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Observation:&lt;/strong> Directly manipulating a worker thread&amp;rsquo;s &lt;code>client_&lt;/code> (&lt;code>unique_ptr&lt;/code>) from the main thread&amp;rsquo;s &lt;code>stop_me()&lt;/code> method triggered a data race report from &lt;code>helgrind&lt;/code>.&lt;/li>
-&lt;li>&lt;strong>Root Cause:&lt;/strong> &lt;strong>A blind spot in understanding C++ memory ownership and thread-safety boundaries.&lt;/strong> Even with a seemingly safe smart pointer like &lt;code>unique_ptr&lt;/code>, the &lt;strong>pointer itself&lt;/strong> (not the object it points to) requires a synchronization mechanism (like a &lt;code>mutex&lt;/code>) for protection when it is shared and modified across multiple threads. &lt;strong>The core issue is that any mutable state shared across threads must be explicitly protected. This is an iron rule of concurrent programming.&lt;/strong>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;ul>
-&lt;li>&lt;strong>Architectural Point for Optimization 1: Model loading strategy coupled with session lifecycle.&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Observation:&lt;/strong> Each new client connection triggered a complete reload of the model, causing significant I/O and performance overhead.&lt;/li>
-&lt;li>&lt;strong>Root Cause:&lt;/strong> &lt;strong>Failure to separate the lifecycle of &amp;ldquo;heavyweight resources&amp;rdquo; (models) from &amp;ldquo;lightweight sessions&amp;rdquo; (client connections).&lt;/strong> This was a direct consequence of the initial incorrect design assumption (Assumption 1).&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Architectural Point for Optimization 2: Lack of abstraction for different ASR models.&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Observation:&lt;/strong> The current &lt;code>ASRTaskSherpa&lt;/code> class is tightly coupled with Sherpa&amp;rsquo;s specific implementation. Switching to another ASR solution (like Whisper) would require extensive code changes.&lt;/li>
-&lt;li>&lt;strong>Root Cause:&lt;/strong> Failure to apply the &lt;strong>&amp;ldquo;program to an interface&amp;rdquo;&lt;/strong> design philosophy. An abstract &lt;code>IASRTask&lt;/code> interface layer was missing.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="4-action-plan-what-will-we-do-next-time">4. Action Plan (What will we do next time?)&lt;/h2>
-&lt;h3 id="41-personal-growth">4.1 Personal Growth&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Deepen Technical Stack:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>C++ Concurrent Programming:&lt;/strong> Systematically learn &lt;code>std::future&lt;/code>, &lt;code>std::promise&lt;/code>, and &lt;code>std::async&lt;/code> to master more modern asynchronous programming paradigms. Conduct an in-depth study of non-blocking I/O and &lt;code>epoll&lt;/code>.&lt;/li>
-&lt;li>&lt;strong>Design Patterns:&lt;/strong> Internalize the &amp;ldquo;Builder&amp;rdquo; and &amp;ldquo;Singleton&amp;rdquo; patterns used in this project and proactively learn others like &amp;ldquo;Strategy&amp;rdquo; and &amp;ldquo;Observer&amp;rdquo; to handle more complex business scenarios.&lt;/li>
-&lt;li>&lt;strong>C++ Core Guidelines:&lt;/strong> Deepen understanding of &amp;ldquo;RAII&amp;rdquo; and the &amp;ldquo;Rule of Zero/Five&amp;rdquo; to write code that is inherently safe and efficient.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Mindset Shift:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Concurrency-First Mindset:&lt;/strong> When designing any class or function, always ask first: &amp;ldquo;Will this object or data be accessed by multiple threads?&amp;rdquo; Treat thread safety as a first-class citizen.&lt;/li>
-&lt;li>&lt;strong>Design Before Implementation:&lt;/strong> For complex modules, force myself to first draw simple sequence diagrams, state machine diagrams, or component interaction diagrams to clarify lifecycles and data flows before starting to code.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h3 id="42-process--standards-improvement">4.2 Process &amp;amp; Standards Improvement&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Mandatory Design Gates:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Concurrency Design Review:&lt;/strong> For any module involving multi-threading, a brief &lt;strong>concurrency model document&lt;/strong> must be produced, clarifying: shared resources, synchronization mechanisms (which locks to use), and thread lifecycle management strategies.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Automated Quality Assurance:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Integrate Static/Dynamic Analysis Tools:&lt;/strong> Integrate &lt;code>Clang-Tidy&lt;/code> (static analysis), &lt;code>ThreadSanitizer&lt;/code> (data race detection), and &lt;code>MemorySanitizer&lt;/code> (memory issue detection) into the CMake and CI/CD pipeline to enable early, automated discovery of issues.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Standardize Coding Conventions:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Establish a unified C++ coding standard for the team&lt;/strong> (can be based on the Google Style Guide) and enforce it with &lt;code>clang-format&lt;/code>, covering naming, header management, comments, etc.&lt;/li>
-&lt;li>&lt;strong>Directory Structure Standards:&lt;/strong> Standardize the project structure with &lt;code>include/&lt;/code>, &lt;code>src/&lt;/code>, &lt;code>test/&lt;/code>, &lt;code>libs/&lt;/code>, etc., and promote it as a team-wide project template.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h3 id="43-knowledge-management--reuse">4.3 Knowledge Management &amp;amp; Reuse&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Turn Outcomes into Assets:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>C++ Server Project Template:&lt;/strong> Consolidate this project&amp;rsquo;s structure, CMake configuration, logging library, and testing framework into a Git template repository for jump-starting new projects.&lt;/li>
-&lt;li>&lt;strong>Document Best Practices:&lt;/strong> Write an internal document on &amp;ldquo;Common Pitfalls &amp;amp; Best Practices for C++ Concurrent Servers,&amp;rdquo; including case studies from this retrospective on graceful shutdown and data races.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Sharing Plan:&lt;/strong>
-&lt;ul>
-&lt;li>&lt;strong>Internal Tech Talk:&lt;/strong> Organize a technical sharing session titled &amp;ldquo;From Single-Threaded to High-Concurrency: The Evolution and Pitfalls of a C++ ASR Server.&amp;rdquo;&lt;/li>
-&lt;li>&lt;strong>Publish Blog Posts/Articles:&lt;/strong> Refine the key takeaways from this retrospective (especially the &amp;ldquo;Gap Analysis&amp;rdquo; and &amp;ldquo;Action Plan&amp;rdquo; sections) into articles for sharing with the broader tech community.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul></description></item><item><title>Part 1: High-Level Design</title><link>https://potterwhite.github.io/en/portfolio/dockerdevenv/part1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/dockerdevenv/part1/</guid><description>&lt;script type="module">
+&lt;/script&gt;
+&lt;h1 id="project-retrospective-report-after-action-review---enhanced-version"&gt;&lt;strong&gt;Project Retrospective Report (After-Action Review) - Enhanced Version&lt;/strong&gt;&lt;/h1&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th style="text-align: left"&gt;Project Attribute&lt;/th&gt;
+					&lt;th style="text-align: left"&gt;Details&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Name&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Modular Deployment of Sherpa ASR on the RK3588S Platform (C/S Architecture)&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Timeline&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-04-25 ~ 2025-06-24&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Review Date&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-06-24&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Core Personnel&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Potter White&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Total Workdays&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;34 Workdays&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="1-goal-review-what-was-supposed-to-happen"&gt;1. Goal Review (What was supposed to happen?)&lt;/h2&gt;
+&lt;h3 id="11-project-goals"&gt;1.1 Project Goals&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Core Functionality:&lt;/strong&gt; Build a production-grade, high-concurrency offline Automatic Speech Recognition (ASR) service.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance Expectations:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Explicit Requirement:&lt;/strong&gt; Real-Time Factor (RTF) significantly better than 1.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Implicit Requirement:&lt;/strong&gt; Inference latency within an acceptable range (target &amp;lt; 1 second) for a smooth user experience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quality &amp;amp; Stability Expectations:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Explicit Requirement:&lt;/strong&gt; The service must be modularly deployable and decoupled from the main application.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Implicit Requirement:&lt;/strong&gt; 24/7 stable operation with no memory leaks, deadlocks, or data races.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="12-initial-plan--assumptions"&gt;1.2 Initial Plan &amp;amp; Assumptions&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Core Tech Stack:&lt;/strong&gt; C++17, CMake, &lt;code&gt;std::thread&lt;/code&gt;, self-developed LibSocket (IPC)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architectural Evolution Strategy:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Phase 1 (Prototype-Driven):&lt;/strong&gt; Given the uncertainty in technology selection, a rapid prototyping approach was initially adopted to validate the feasibility of core technologies (Whisper vs. Sherpa).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Phase 2 (Architecture Finalization):&lt;/strong&gt; After successful prototype validation, an &lt;strong&gt;IPC + C/S Architecture&lt;/strong&gt; was established. This design aimed to enable independent deployment, testing, and upgrading of the ASR service, thereby reducing system coupling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Key Assumptions (Later Proven False):&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Assumption 1 (Incorrect):&lt;/strong&gt; &lt;strong&gt;Model loading cost is low.&lt;/strong&gt; It was mistakenly believed that the ASR model could be dynamically loaded for each new client session without considering its high I/O and memory overhead.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assumption 2 (Incorrect):&lt;/strong&gt; &lt;strong&gt;Concurrency management is simple.&lt;/strong&gt; It was wrongly assumed that simple thread detachment (&lt;code&gt;std::thread::detach&lt;/code&gt;) or thread management without proper synchronization mechanisms would be sufficient for production-level concurrent requests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="2-actual-results-what-actually-happened"&gt;2. Actual Results (What actually happened?)&lt;/h2&gt;
+&lt;h3 id="21-final-outcomes"&gt;2.1 Final Outcomes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Performance:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Achieved a Real-Time Factor (RTF) of 0.2&lt;/strong&gt;, meaning it takes only 0.2 seconds to process 1 second of audio. This far exceeded expectations and provided ample performance headroom for the system.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Functional Completeness:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Implemented non-appending text stream output&lt;/strong&gt;, significantly improving the user experience for real-time subtitles.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Successfully built a modular C/S architecture&lt;/strong&gt;, where the ASR service runs as an independent server process, ensuring high stability and ease of maintenance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Passed &lt;code&gt;helgrind&lt;/code&gt; stress tests&lt;/strong&gt;, systematically identifying and fixing all potential data races and deadlocks, guaranteeing concurrency safety.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reusable Assets:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Encapsulated three high-quality C++ libraries:&lt;/strong&gt; &lt;code&gt;LibASR&lt;/code&gt;, &lt;code&gt;LibSocket&lt;/code&gt;, and &lt;code&gt;LibUtils&lt;/code&gt;, achieving high functional cohesion and code reuse.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="22-key-events--process-timeline"&gt;2.2 Key Events &amp;amp; Process (Timeline)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Iteration 1 (Tech Research - 4 days):&lt;/strong&gt; Investigated Whisper but pivoted to Sherpa due to the complexity of its conversion and deployment process.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iteration 2 (Prototype Validation - 4 days):&lt;/strong&gt; Successfully ran the Sherpa C++ Demo, resolving hardware environment issues (ALSA configuration) and validating the core solution&amp;rsquo;s feasibility.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iteration 3 (Core Logic Development - 7 days):&lt;/strong&gt; Refactored the demo code to implement initial decoding logic for WAV and microphone inputs, laying the foundation for future development.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iteration 4 (Advanced Feature Exploration - 6 days):&lt;/strong&gt; Successfully integrated VAD (Voice Activity Detection) and solved a key user experience problem: &lt;strong&gt;how to interrupt the appending output stream&lt;/strong&gt;, which was partially resolved using the Endpointing mechanism.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iteration 5 (Architecture Refactor &amp;amp; Library Encapsulation - 5 days):&lt;/strong&gt; &lt;strong&gt;A key turning point for the project.&lt;/strong&gt; The prototype code was refactored into three independent libraries (ASR, Socket, Utils), making the code modular, standardized, and highly reusable. During this phase, I gained a deep understanding of the POSIX Socket API and the Singleton pattern.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iteration 6 (Integration &amp;amp; Testing - 6.5 days):&lt;/strong&gt; Integrated the libraries with the App layer and built a comprehensive testing suite.
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resolved server-side connection handling lifecycle issues&lt;/strong&gt;, enabling robust management of multiple client connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Optimized the model loading strategy&lt;/strong&gt;, realizing the performance bottleneck of loading a model for each worker thread (marked as an item for future optimization).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Built gtest unit tests, integration tests, and stress tests&lt;/strong&gt; to systematically ensure code quality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iteration 7 (Concurrency Debugging &amp;amp; Hardening - 1.5 days):&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Used &lt;code&gt;Valgrind&lt;/code&gt; and &lt;code&gt;helgrind&lt;/code&gt; for in-depth memory and concurrency analysis.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Identified and fixed critical concurrency bugs&lt;/strong&gt; by adding mutex protection (&lt;code&gt;std::lock_guard&lt;/code&gt;) for shared resources (e.g., worker list, socket connections).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="3-gap-analysis-root-cause-exploration-why-was-there-a-difference"&gt;3. Gap Analysis: Root Cause Exploration (Why was there a difference?)&lt;/h2&gt;
+&lt;h3 id="31-successes-what-went-well-and-why"&gt;3.1 Successes (What went well, and why?)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Success 1: Adopted an object-oriented, structured concurrency design.&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Observation:&lt;/strong&gt; The ASR task (&lt;code&gt;ASRTaskSherpa&lt;/code&gt;) and its execution thread (&lt;code&gt;std::thread&lt;/code&gt;) were encapsulated into a unified lifecycle management unit (&lt;code&gt;TaskHandler&lt;/code&gt;), which was then managed collectively in a &lt;code&gt;std::vector&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause:&lt;/strong&gt; This was essentially &lt;strong&gt;applying the RAII (Resource Acquisition Is Initialization) philosophy to manage thread resources&lt;/strong&gt;. By binding the thread&amp;rsquo;s lifecycle to the task object&amp;rsquo;s lifecycle, it eliminated the complexity and risks of manually managing thread &lt;code&gt;join&lt;/code&gt; or &lt;code&gt;detach&lt;/code&gt;, eradicating resource leaks and &amp;ldquo;zombie threads&amp;rdquo; by design. &lt;strong&gt;This represented a leap from a &amp;ldquo;procedural&amp;rdquo; approach to thread management to an &amp;ldquo;object-oriented&amp;rdquo; management of concurrent entities, drastically reducing cognitive load and the probability of errors.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Success 2: Made a decisive architectural refactor, achieving high modularity.&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Observation:&lt;/strong&gt; In the middle of the project, the tightly coupled prototype code was split into three independent libraries.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause:&lt;/strong&gt; &lt;strong&gt;Recognized that the stability and reusability of foundational capabilities are the bedrock for the rapid iteration of business logic.&lt;/strong&gt; By encapsulating base libraries (communication, logging, core ASR API), the main application&amp;rsquo;s logic became extremely clean, focusing solely on business process orchestration. This reflects the core design principle of &lt;strong&gt;&amp;ldquo;Separation of Concerns&amp;rdquo;&lt;/strong&gt; and was a critical step in evolving the project from &amp;ldquo;usable&amp;rdquo; to &amp;ldquo;user-friendly and maintainable.&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="32-shortcomings-what-could-be-improved-and-why"&gt;3.2 Shortcomings (What could be improved, and why?)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Issue 1: Inadequate consideration for interrupting blocking I/O concurrently, preventing a graceful shutdown.&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Observation:&lt;/strong&gt; When the main thread tried to stop a worker thread using &lt;code&gt;stop_flag_&lt;/code&gt;, if the worker was blocked on &lt;code&gt;::recv()&lt;/code&gt;, it couldn&amp;rsquo;t respond to the stop signal. This caused &lt;code&gt;join()&lt;/code&gt; to wait indefinitely, freezing the program.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause:&lt;/strong&gt; &lt;strong&gt;A lack of understanding of &amp;ldquo;asynchronous interruption&amp;rdquo; mechanisms.&lt;/strong&gt; An &lt;code&gt;atomic&lt;/code&gt; flag can only be checked within a thread&amp;rsquo;s polling loop; it cannot wake up a thread that is in a deep sleep in kernel space (e.g., blocked on &lt;code&gt;recv&lt;/code&gt;). This is a classic misuse of synchronous programming thinking in an asynchronous concurrent environment. &lt;strong&gt;The correct solution would be to use non-blocking I/O + I/O multiplexing (e.g., &lt;code&gt;epoll&lt;/code&gt;, &lt;code&gt;select&lt;/code&gt;) or set a timeout on the socket (&lt;code&gt;setsockopt&lt;/code&gt;), allowing &lt;code&gt;recv&lt;/code&gt; to return after a specified time and thus get a chance to check &lt;code&gt;stop_flag_&lt;/code&gt;.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Issue 2: Unclear ownership and access control for shared resources in a multi-threaded environment.&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Observation:&lt;/strong&gt; Directly manipulating a worker thread&amp;rsquo;s &lt;code&gt;client_&lt;/code&gt; (&lt;code&gt;unique_ptr&lt;/code&gt;) from the main thread&amp;rsquo;s &lt;code&gt;stop_me()&lt;/code&gt; method triggered a data race report from &lt;code&gt;helgrind&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause:&lt;/strong&gt; &lt;strong&gt;A blind spot in understanding C++ memory ownership and thread-safety boundaries.&lt;/strong&gt; Even with a seemingly safe smart pointer like &lt;code&gt;unique_ptr&lt;/code&gt;, the &lt;strong&gt;pointer itself&lt;/strong&gt; (not the object it points to) requires a synchronization mechanism (like a &lt;code&gt;mutex&lt;/code&gt;) for protection when it is shared and modified across multiple threads. &lt;strong&gt;The core issue is that any mutable state shared across threads must be explicitly protected. This is an iron rule of concurrent programming.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Architectural Point for Optimization 1: Model loading strategy coupled with session lifecycle.&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Observation:&lt;/strong&gt; Each new client connection triggered a complete reload of the model, causing significant I/O and performance overhead.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause:&lt;/strong&gt; &lt;strong&gt;Failure to separate the lifecycle of &amp;ldquo;heavyweight resources&amp;rdquo; (models) from &amp;ldquo;lightweight sessions&amp;rdquo; (client connections).&lt;/strong&gt; This was a direct consequence of the initial incorrect design assumption (Assumption 1).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Architectural Point for Optimization 2: Lack of abstraction for different ASR models.&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Observation:&lt;/strong&gt; The current &lt;code&gt;ASRTaskSherpa&lt;/code&gt; class is tightly coupled with Sherpa&amp;rsquo;s specific implementation. Switching to another ASR solution (like Whisper) would require extensive code changes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Root Cause:&lt;/strong&gt; Failure to apply the &lt;strong&gt;&amp;ldquo;program to an interface&amp;rdquo;&lt;/strong&gt; design philosophy. An abstract &lt;code&gt;IASRTask&lt;/code&gt; interface layer was missing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="4-action-plan-what-will-we-do-next-time"&gt;4. Action Plan (What will we do next time?)&lt;/h2&gt;
+&lt;h3 id="41-personal-growth"&gt;4.1 Personal Growth&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Deepen Technical Stack:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;C++ Concurrent Programming:&lt;/strong&gt; Systematically learn &lt;code&gt;std::future&lt;/code&gt;, &lt;code&gt;std::promise&lt;/code&gt;, and &lt;code&gt;std::async&lt;/code&gt; to master more modern asynchronous programming paradigms. Conduct an in-depth study of non-blocking I/O and &lt;code&gt;epoll&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Design Patterns:&lt;/strong&gt; Internalize the &amp;ldquo;Builder&amp;rdquo; and &amp;ldquo;Singleton&amp;rdquo; patterns used in this project and proactively learn others like &amp;ldquo;Strategy&amp;rdquo; and &amp;ldquo;Observer&amp;rdquo; to handle more complex business scenarios.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;C++ Core Guidelines:&lt;/strong&gt; Deepen understanding of &amp;ldquo;RAII&amp;rdquo; and the &amp;ldquo;Rule of Zero/Five&amp;rdquo; to write code that is inherently safe and efficient.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mindset Shift:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Concurrency-First Mindset:&lt;/strong&gt; When designing any class or function, always ask first: &amp;ldquo;Will this object or data be accessed by multiple threads?&amp;rdquo; Treat thread safety as a first-class citizen.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Design Before Implementation:&lt;/strong&gt; For complex modules, force myself to first draw simple sequence diagrams, state machine diagrams, or component interaction diagrams to clarify lifecycles and data flows before starting to code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="42-process--standards-improvement"&gt;4.2 Process &amp;amp; Standards Improvement&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mandatory Design Gates:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Concurrency Design Review:&lt;/strong&gt; For any module involving multi-threading, a brief &lt;strong&gt;concurrency model document&lt;/strong&gt; must be produced, clarifying: shared resources, synchronization mechanisms (which locks to use), and thread lifecycle management strategies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated Quality Assurance:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Integrate Static/Dynamic Analysis Tools:&lt;/strong&gt; Integrate &lt;code&gt;Clang-Tidy&lt;/code&gt; (static analysis), &lt;code&gt;ThreadSanitizer&lt;/code&gt; (data race detection), and &lt;code&gt;MemorySanitizer&lt;/code&gt; (memory issue detection) into the CMake and CI/CD pipeline to enable early, automated discovery of issues.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Standardize Coding Conventions:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Establish a unified C++ coding standard for the team&lt;/strong&gt; (can be based on the Google Style Guide) and enforce it with &lt;code&gt;clang-format&lt;/code&gt;, covering naming, header management, comments, etc.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Directory Structure Standards:&lt;/strong&gt; Standardize the project structure with &lt;code&gt;include/&lt;/code&gt;, &lt;code&gt;src/&lt;/code&gt;, &lt;code&gt;test/&lt;/code&gt;, &lt;code&gt;libs/&lt;/code&gt;, etc., and promote it as a team-wide project template.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="43-knowledge-management--reuse"&gt;4.3 Knowledge Management &amp;amp; Reuse&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Turn Outcomes into Assets:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;C++ Server Project Template:&lt;/strong&gt; Consolidate this project&amp;rsquo;s structure, CMake configuration, logging library, and testing framework into a Git template repository for jump-starting new projects.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Document Best Practices:&lt;/strong&gt; Write an internal document on &amp;ldquo;Common Pitfalls &amp;amp; Best Practices for C++ Concurrent Servers,&amp;rdquo; including case studies from this retrospective on graceful shutdown and data races.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sharing Plan:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Internal Tech Talk:&lt;/strong&gt; Organize a technical sharing session titled &amp;ldquo;From Single-Threaded to High-Concurrency: The Evolution and Pitfalls of a C++ ASR Server.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Publish Blog Posts/Articles:&lt;/strong&gt; Refine the key takeaways from this retrospective (especially the &amp;ldquo;Gap Analysis&amp;rdquo; and &amp;ldquo;Action Plan&amp;rdquo; sections) into articles for sharing with the broader tech community.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Part 1: High-Level Design</title><link>https://potterwhite.github.io/en/portfolio/harborpilot/part1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/harborpilot/part1/</guid><description>&lt;script type="module"&gt;
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-&lt;/script>
+&lt;/script&gt;
 &lt;!-- ---
 title: "宏观设计篇：基于配置驱动的标准化开发环境架构"
 date: 2025-08-19T12:00:00+08:00
 draft: false
 tags: ["Docker", "DevOps", "Architecture", "Embedded", "Software Engineering"]
---- -->
-&lt;h2 id="1-background-and-problem-definition">1. Background and Problem Definition&lt;/h2>
-&lt;p>In modern software engineering practices, especially in fields tightly coupled with hardware like embedded systems, standardizing the development environment is a fundamental and critical challenge. When team members perform cross-compilation for specific hardware platforms (e.g., &lt;code>RK3568&lt;/code>, &lt;code>RV1126&lt;/code>) on different operating systems (Windows, macOS, Linux), different versions of the same OS (Ubuntu 18.04, 20.04, 22.04, etc.), or even on the same OS version but with different gcc/python/glibc versions, environmental heterogeneity leads to a series of predictable engineering problems:&lt;/p></description></item><item><title>Part 2: Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage2-porting/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage2-porting/</guid><description>&lt;h3 id="heading">&lt;strong>[Project Retrospective Report] Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform&lt;/strong>&lt;/h3>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th style="text-align: left">Project Attribute&lt;/th>
- &lt;th style="text-align: left">Details&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Name&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Part 2: Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Timeline&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-07-26 ~ 2025-08-06 (Estimated)&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Duration&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">50.17 hours (Approx. 6.3 person-days)&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Review Date&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-08-20&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Core Personnel&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Potter White&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;h3 id="1-project-background-and-initial-goals">&lt;strong>1. Project Background and Initial Goals&lt;/strong>&lt;/h3>
-&lt;h4 id="11-project-kick-off-background">&lt;strong>1.1 Project Kick-off Background&lt;/strong>&lt;/h4>
-&lt;p>This project aimed to integrate a high-performance, real-time Automatic Speech Recognition (ASR) function into the company&amp;rsquo;s product line on the Rockchip RV1126b embedded platform. Given the success of the V1.0 project in deploying &lt;code>sherpa-onnx&lt;/code> on the RK3588s platform and achieving excellent performance with NPU acceleration, the initial plan for this project was to replicate that successful path. The goal was to implement a cost-effective AI feature with solid performance on the lower-cost RV1126b platform.&lt;/p></description></item><item><title>Part 2: Image Build Deep Dive</title><link>https://potterwhite.github.io/en/portfolio/dockerdevenv/part2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/dockerdevenv/part2/</guid><description>&lt;!-- ---
+--- --&gt;
+&lt;h2 id="1-background-and-problem-definition"&gt;1. Background and Problem Definition&lt;/h2&gt;
+&lt;p&gt;In modern software engineering practices, especially in fields tightly coupled with hardware like embedded systems, standardizing the development environment is a fundamental and critical challenge. When team members perform cross-compilation for specific hardware platforms (e.g., &lt;code&gt;RK3568&lt;/code&gt;, &lt;code&gt;RV1126&lt;/code&gt;) on different operating systems (Windows, macOS, Linux), different versions of the same OS (Ubuntu 18.04, 20.04, 22.04, etc.), or even on the same OS version but with different gcc/python/glibc versions, environmental heterogeneity leads to a series of predictable engineering problems:&lt;/p&gt;</description></item><item><title>Part 2: Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage2-porting/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage2-porting/</guid><description>&lt;h3 id="heading"&gt;&lt;strong&gt;[Project Retrospective Report] Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform&lt;/strong&gt;&lt;/h3&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th style="text-align: left"&gt;Project Attribute&lt;/th&gt;
+					&lt;th style="text-align: left"&gt;Details&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Name&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Part 2: Technical Evaluation and Implementation of Sherpa ASR Deployment on the RV1126 Platform&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Timeline&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-07-26 ~ 2025-08-06 (Estimated)&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Duration&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;50.17 hours (Approx. 6.3 person-days)&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Review Date&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-08-20&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Core Personnel&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Potter White&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id="1-project-background-and-initial-goals"&gt;&lt;strong&gt;1. Project Background and Initial Goals&lt;/strong&gt;&lt;/h3&gt;
+&lt;h4 id="11-project-kick-off-background"&gt;&lt;strong&gt;1.1 Project Kick-off Background&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;This project aimed to integrate a high-performance, real-time Automatic Speech Recognition (ASR) function into the company&amp;rsquo;s product line on the Rockchip RV1126b embedded platform. Given the success of the V1.0 project in deploying &lt;code&gt;sherpa-onnx&lt;/code&gt; on the RK3588s platform and achieving excellent performance with NPU acceleration, the initial plan for this project was to replicate that successful path. The goal was to implement a cost-effective AI feature with solid performance on the lower-cost RV1126b platform.&lt;/p&gt;</description></item><item><title>Part 2: Image Build Deep Dive</title><link>https://potterwhite.github.io/en/portfolio/harborpilot/part2/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/harborpilot/part2/</guid><description>&lt;!-- ---
 title: "镜像构建篇：Docker 多阶段构建与动态脚本生成技术解析"
 date: 2025-08-19T14:00:00+08:00
 draft: false
 tags: ["Docker", "Dockerfile", "Build Optimization", "Shell Scripting", "DevOps"]
---- -->
-&lt;h2 id="1-introduction">1. Introduction&lt;/h2>
-&lt;p>In the first article of this series, we explained the high-level architecture for building a standardized development environment based on the &amp;ldquo;configuration-driven&amp;rdquo; idea. This article will dive into the execution core of this architecture—the image build phase—and detail how we leverage Docker&amp;rsquo;s Multi-stage Builds strategy combined with dynamic script generation techniques to create a development environment image that is both feature-complete and highly optimized.&lt;/p></description></item><item><title>Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage3-conversion/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage3-conversion/</guid><description>&lt;h3 id="heading">&lt;strong>[Project Retrospective Report V3.0] Independent Model Conversion: Overcoming the Technical Challenges of Converting Dynamic ONNX Models to RKNN (Final Version)&lt;/strong>&lt;/h3>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th style="text-align: left">Project Attribute&lt;/th>
- &lt;th style="text-align: left">Details&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Name&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Timeline&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-07-31 ~ 2025-08-09 (Estimated)&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Duration&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">31.5 hours (Approx. 3.9 person-days)&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Review Date&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-08-20&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Core Personnel&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Potter White&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;h3 id="1-project-background-and-kick-off">&lt;strong>1. Project Background and Kick-off&lt;/strong>&lt;/h3>
-&lt;p>In the V2.0 project, we verified that the &lt;code>sherpa-onnx&lt;/code> framework could not directly use NPU acceleration due to the outdated RKNN SDK version on the target platform. At the same time, the pure CPU solution with &lt;code>sherpa-ncnn&lt;/code> had already reached its performance bottleneck. Therefore, to fully leverage the NPU hardware of the RV1126b platform, the core objective of this project (V3.0) was to &lt;strong>bypass the compilation limitations of &lt;code>sherpa-onnx&lt;/code> and independently complete the conversion from ONNX models to RKNN models&lt;/strong>.&lt;/p></description></item><item><title>Part 3: Management and Distribution</title><link>https://potterwhite.github.io/en/portfolio/dockerdevenv/part3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/dockerdevenv/part3/</guid><description>&lt;!-- ---
+--- --&gt;
+&lt;h2 id="1-introduction"&gt;1. Introduction&lt;/h2&gt;
+&lt;p&gt;In the first article of this series, we explained the high-level architecture for building a standardized development environment based on the &amp;ldquo;configuration-driven&amp;rdquo; idea. This article will dive into the execution core of this architecture—the image build phase—and detail how we leverage Docker&amp;rsquo;s Multi-stage Builds strategy combined with dynamic script generation techniques to create a development environment image that is both feature-complete and highly optimized.&lt;/p&gt;</description></item><item><title>Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage3-conversion/</link><pubDate>Thu, 21 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage3-conversion/</guid><description>&lt;h3 id="heading"&gt;&lt;strong&gt;[Project Retrospective Report V3.0] Independent Model Conversion: Overcoming the Technical Challenges of Converting Dynamic ONNX Models to RKNN (Final Version)&lt;/strong&gt;&lt;/h3&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th style="text-align: left"&gt;Project Attribute&lt;/th&gt;
+					&lt;th style="text-align: left"&gt;Details&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Name&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Timeline&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-07-31 ~ 2025-08-09 (Estimated)&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Duration&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;31.5 hours (Approx. 3.9 person-days)&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Review Date&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-08-20&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Core Personnel&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Potter White&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id="1-project-background-and-kick-off"&gt;&lt;strong&gt;1. Project Background and Kick-off&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;In the V2.0 project, we verified that the &lt;code&gt;sherpa-onnx&lt;/code&gt; framework could not directly use NPU acceleration due to the outdated RKNN SDK version on the target platform. At the same time, the pure CPU solution with &lt;code&gt;sherpa-ncnn&lt;/code&gt; had already reached its performance bottleneck. Therefore, to fully leverage the NPU hardware of the RV1126b platform, the core objective of this project (V3.0) was to &lt;strong&gt;bypass the compilation limitations of &lt;code&gt;sherpa-onnx&lt;/code&gt; and independently complete the conversion from ONNX models to RKNN models&lt;/strong&gt;.&lt;/p&gt;</description></item><item><title>Part 3: Management and Distribution</title><link>https://potterwhite.github.io/en/portfolio/harborpilot/part3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/harborpilot/part3/</guid><description>&lt;!-- ---
 title: "管理与分发篇：优化开发者工作流与交付实践"
 date: 2025-08-19T16:00:00+08:00
 draft: false
 tags: ["Docker Compose", "Developer Experience", "Workflow", "Automation", "DevOps"]
---- -->
-&lt;h2 id="1-introduction">1. Introduction&lt;/h2>
-&lt;p>In the first two articles of this series, we discussed the top-level architectural design of a standardized development environment and the image implementation details based on Docker multi-stage builds. However, the ultimate value of a technically excellent solution is reflected in its smooth adoption by end-users (i.e., developers). This article will focus on the &amp;ldquo;last mile&amp;rdquo; of the workflow: how to simplify container management and how to achieve standardized distribution of the development environment.&lt;/p></description></item><item><title>Chapter 5: End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Zipformer) on an Embedded Platform (RV1126B)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage5-quantization/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage5-quantization/</guid><description>&lt;script type="module">
+--- --&gt;
+&lt;h2 id="1-introduction"&gt;1. Introduction&lt;/h2&gt;
+&lt;p&gt;In the first two articles of this series, we discussed the top-level architectural design of a standardized development environment and the image implementation details based on Docker multi-stage builds. However, the ultimate value of a technically excellent solution is reflected in its smooth adoption by end-users (i.e., developers). This article will focus on the &amp;ldquo;last mile&amp;rdquo; of the workflow: how to simplify container management and how to achieve standardized distribution of the development environment.&lt;/p&gt;</description></item><item><title>Chapter 5: End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Zipformer) on an Embedded Platform (RV1126B)</title><link>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage5-quantization/</link><pubDate>Sat, 27 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/sherpa-deployed-rockchip/stage5-quantization/</guid><description>&lt;script type="module"&gt;
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-&lt;/script>
-&lt;h3 id="heading">&lt;strong>[Project Retrospective Report V5.0] End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Zipformer) on an Embedded Platform (RV1126B)&lt;/strong>&lt;/h3>
-&lt;table>
- &lt;thead>
- &lt;tr>
- &lt;th style="text-align: left">Project Attribute&lt;/th>
- &lt;th style="text-align: left">Details&lt;/th>
- &lt;/tr>
- &lt;/thead>
- &lt;tbody>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Name&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Part 5: Sherpa ASR RKNN Quantization on the RV1126BP Platform&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Project Period&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-08-21 ~ 2025-09-23&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">Project Duration&lt;/td>
- &lt;td style="text-align: left">40 hours (Approx. 5 person-days)&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Review Date&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">2025-09-27&lt;/td>
- &lt;/tr>
- &lt;tr>
- &lt;td style="text-align: left">&lt;strong>Key Personnel&lt;/strong>&lt;/td>
- &lt;td style="text-align: left">Potter White&lt;/td>
- &lt;/tr>
- &lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;h3 id="1-project-objective">&lt;strong>1. Project Objective&lt;/strong>&lt;/h3>
-&lt;p>To convert a streaming Zipformer ASR (Automatic Speech Recognition) ONNX model from &lt;code>FP32&lt;/code> precision to an &lt;code>INT8&lt;/code> precision RKNN model for an embedded device based on the Rockchip RV1126B SoC. The goal is to complete its deployment and validation within the &lt;code>sherpa-onnx&lt;/code> C++ inference framework to meet the operational requirements of low latency and low power consumption.&lt;/p></description></item><item><title>Building Reproducible Docker Dev Environments for Embedded Linux (RK3588, RV1126, RK3568)</title><link>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</link><pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</guid><description>&lt;h1 id="building-reproducible-docker-dev-environments-for-embedded-linux">Building Reproducible Docker Dev Environments for Embedded Linux&lt;/h1>
-&lt;h2 id="the-problem">The Problem&lt;/h2>
-&lt;p>If you&amp;rsquo;re working with embedded Linux boards — RK3588, RK3588S, RV1126, RK3568, or similar
-Rockchip SoCs — you know the pain:&lt;/p>
-&lt;ul>
-&lt;li>Every developer on the team has a slightly different toolchain version installed&lt;/li>
-&lt;li>Build results differ between machines (&amp;ldquo;it works on my Docker container&amp;rdquo;)&lt;/li>
-&lt;li>Supporting Ubuntu 20.04, 22.04, and 24.04 simultaneously without breaking any of them&lt;/li>
-&lt;li>Ports collide when you run containers for multiple chip families at the same time&lt;/li>
-&lt;li>Pushing images to a private Harbor registry requires glue scripts nobody documents&lt;/li>
-&lt;/ul>
-&lt;p>The standard answer is &amp;ldquo;containerise your dev environment&amp;rdquo; — but the container definitions
-themselves become a maintenance burden. You end up with 5 Dockerfiles that diverge over time.&lt;/p></description></item><item><title>Cloud Desktop Tools to Replace RDP (PVE + Sunshine + Moonlight)</title><link>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
-&lt;p>This configuration sheet covers hardware infrastructure, virtual display solutions, performance optimization, and streaming settings, suitable for my &lt;strong>AMD EPYC 7551 (Home)&lt;/strong> and &lt;strong>Dual Xeon (Work)&lt;/strong> environments.&lt;/p>
-&lt;h2 id="hardware-environment">&lt;strong>Hardware Environment&lt;/strong>&lt;/h2>
-&lt;h4 id="homelab-configuration">&lt;strong>Homelab Configuration&lt;/strong>&lt;/h4>
-&lt;ul>
-&lt;li>CPU: AMD EPYC 7551 (Home)&lt;/li>
-&lt;li>Motherboard: Supermicro H11SSL-i&lt;/li>
-&lt;li>Graphics Card: NVIDIA GeForce GTX 1050 Ti (4GB)&lt;/li>
-&lt;/ul>
-&lt;h4 id="work-server-configuration">&lt;strong>Work Server Configuration&lt;/strong>&lt;/h4>
-&lt;ul>
-&lt;li>CPU: Dual Xeon (Work)&lt;/li>
-&lt;li>Motherboard: Generic X99 Chipset&lt;/li>
-&lt;li>Graphics Card: The basic display card is only for PVE use. I don&amp;rsquo;t want to modify GPU passthrough settings during maintenance, so it is equivalent to having no graphics card.&lt;/li>
-&lt;/ul>
-&lt;h2 id="requirements">&lt;strong>Requirements&lt;/strong>&lt;/h2>
-&lt;p>There are many family members, and if everyone uses a laptop or PC, first of all:&lt;/p></description></item><item><title>Remote Access (Secure) to Home Computer - (OpenWRT+No-IP+WireGuard)</title><link>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</link><pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</guid><description>&lt;h2 id="what-is-this-talking-about">&lt;strong>What-is-this-Talking-About&lt;/strong>&lt;/h2>
-&lt;p>This is a set of my working notes, barely polished. AI helped me organize my thought process and trial attempts, including the detours and final solutions, into a document format.&lt;br>
-Actually, ever since I started my blog on Github Pages, I have naturally and happily added an extra step to my workflow: moving records from Obsidian into my Github Blog.&lt;/p>
-&lt;p>&lt;strong>Environment:&lt;/strong> OpenWrt 23.05
-&lt;strong>Goal:&lt;/strong> Enable external access to internal network resources via WireGuard, ensuring automatic synchronization when the public IP changes.&lt;/p></description></item><item><title>Notes on DTS (Device Tree) Debugging</title><link>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/10/16/notes-on-dts-device-tree-debugging/</guid><description>&lt;h2 id="the-thought-process-for-debugging-the-dts-of-an-external-peripheral-is-as-follows">&lt;strong>The thought process for debugging the DTS of an external peripheral is as follows:&lt;/strong>&lt;/h2>
-&lt;h3 id="1-logical-node">1. Logical Node&lt;/h3>
-&lt;ul>
-&lt;li>There is a logical node representing the entirety of the logical device that the developer can control (e.g., USB). Generally, this logical node is also defined in the &lt;strong>board-level or product-level&lt;/strong> dtsi file.&lt;/li>
-&lt;/ul>
-&lt;h3 id="2-controller-node">2. Controller Node&lt;/h3>
-&lt;ul>
-&lt;li>Within the logical node, there will be a controller node. For guidance on how to determine if a node is a controller, you can refer to &lt;a href="https://potterwhite.github.io/blog/2025/10/16/dts-device-tree-debugging-notes/#how-to-identify-which-node-is-the-controller-from-the-code">How to identify which node is the controller from the code&lt;/a>.&lt;/li>
-&lt;/ul>
-&lt;h3 id="3-phy-node">3. PHY Node&lt;/h3>
-&lt;ul>
-&lt;li>Within the controller node, there will be a PHY node. For USB 3.0, there will be two PHYs: one providing support for USB 2.0 mode and the other for USB 3.0 mode.
-&lt;ul>
-&lt;li>This is because the USB protocol is backward compatible (meaning a USB 3.0 interface can support USB 2.0 devices). Therefore, USB 3.0 must provide a 2.0 PHY to achieve this &amp;ldquo;backward compatibility.&amp;rdquo;&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h3 id="4-enable-everything-in-the-product-level-dtsi">4. Enable Everything in the Product-Level DTSI&lt;/h3>
-&lt;ul>
-&lt;li>The corresponding logical nodes, controller nodes, and PHY nodes must all be enabled and configured to the correct modes.&lt;/li>
-&lt;/ul>
-&lt;h3 id="remarks">Remarks&lt;/h3>
-&lt;ol>
-&lt;li>The method described above is based on operating on the DTS provided by the SoC vendor and assumes that no major hardware changes have been made.&lt;/li>
-&lt;li>Refer to the &lt;a href="https://potterwhite.github.io/blog/2025/10/16/hardware-layered-architecture-design-philosophy/">Hardware Dataflow Pipeline&lt;/a>, which discusses common hardware data flow models. This is very helpful for debugging DTS as it allows you to know which component you are currently working on.&lt;/li>
-&lt;li>Two important types of nodes in USB DTS:
-&lt;ul>
-&lt;li>Some are host-only, typically named &lt;code>usbhost30&lt;/code> in the DTS.&lt;/li>
-&lt;li>Some can function as either host or device (i.e., OTG), typically named &lt;code>usbdrd30&lt;/code> in the DTS.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ol>
-&lt;hr>
-&lt;h2 id="how-to-identify-which-node-is-the-controller-from-the-code">&lt;strong>How to identify which node is the controller from the code?&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>It has interrupts to notify the CPU (&lt;code>interrupts&lt;/code>).&lt;/li>
-&lt;li>It possesses a PHY (&lt;code>phys&lt;/code>, &lt;code>phy-names&lt;/code>).&lt;/li>
-&lt;li>It is bound to a driver (has a &lt;code>compatible&lt;/code> property).&lt;/li>
-&lt;li>It has a large register address space (&lt;code>reg = &amp;lt;0x0 0xfcc00000 0x0 0x400000&amp;gt;&lt;/code>).&lt;/li>
-&lt;li>It has complex clock and reset logic.&lt;/li>
-&lt;li>It has high-level mode configurations (e.g., &lt;code>dr_mode=&amp;quot;otg&amp;quot;&lt;/code>).&lt;/li>
-&lt;/ul></description></item><item><title>The Philosophy of Layered Hardware Architecture Design</title><link>https://potterwhite.github.io/en/blog/2025/10/16/the-philosophy-of-layered-hardware-architecture-design/</link><pubDate>Thu, 16 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/10/16/the-philosophy-of-layered-hardware-architecture-design/</guid><description>&lt;p>&lt;strong>Why This Article Exists&lt;/strong>&lt;/p>
-&lt;p>Nearly all high-speed and complex peripheral interfaces in modern SoCs follow a common layered design architecture. This is not a coincidence but a core design philosophy aimed at the &lt;strong>Separation of Concerns&lt;/strong>, breaking down complex hardware-software interaction problems into smaller, more manageable parts.&lt;/p>
-&lt;p>This philosophy is a common design paradigm for peripheral interfaces on an SoC. Keeping this paradigm in mind while configuring the DTS (Device Tree) can significantly reduce the feeling of being lost during debugging.&lt;/p></description></item><item><title>Functional Debugging for the USB OTG Port on the RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-4-usb/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-4-usb/</guid><description>&lt;h2 id="project-overview">&lt;strong>Project Overview&lt;/strong>&lt;/h2>
-&lt;p>&lt;strong>Background&lt;/strong>
-In a custom project based on the Rockchip RK3568, the objective was to re-evaluate the on-board USB interfaces using the public SDK and resolve an issue where the on-board USB 3.0 OTG (Type-A) port could not correctly recognize U-disks and other Host-mode devices under the default BSP configuration.&lt;/p>
-&lt;p>&lt;strong>My Role and Contributions:&lt;/strong>
-As the BSP engineer for the project, I was solely responsible for diagnosing and resolving this USB functionality issue. My core contributions include:&lt;/p></description></item><item><title>I2S Interface Debugging and DTS Configuration on the RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-7-i2s/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-7-i2s/</guid><description>&lt;h4 id="1-project-objective">&lt;strong>1. Project Objective&lt;/strong>&lt;/h4>
-&lt;p>The core objective of this task was to successfully enable and debug multiple I2S interfaces (I2S1, I2S2, I2S3) on the RK3568 platform to establish digital audio communication with external devices, such as an FPGA. This specifically included:&lt;/p>
-&lt;ul>
-&lt;li>Configuring I2S1 and I2S3 as audio output (Playback).&lt;/li>
-&lt;li>Configuring I2S2 as audio input (Capture).&lt;/li>
-&lt;/ul>
-&lt;h4 id="2-debugging-workflow-and-process">&lt;strong>2. Debugging Workflow and Process&lt;/strong>&lt;/h4>
-&lt;p>The entire debugging process followed a clear workflow: &lt;strong>Hardware Analysis -&amp;gt; DTS Configuration -&amp;gt; Command-line Testing -&amp;gt; Problem Isolation and Resolution&lt;/strong>.&lt;/p></description></item><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-6-csi/</guid><description/></item><item><title>Bring-up and Verification of MIPI-to-eDP Chip LT8911EXB on RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-3-lt8911exb/</guid><description>&lt;script type="module">
+&lt;/script&gt;
+&lt;h3 id="heading"&gt;&lt;strong&gt;[Project Retrospective Report V5.0] End-to-End INT8 Quantization and Deployment of a Streaming ASR Model (Zipformer) on an Embedded Platform (RV1126B)&lt;/strong&gt;&lt;/h3&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th style="text-align: left"&gt;Project Attribute&lt;/th&gt;
+					&lt;th style="text-align: left"&gt;Details&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Name&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Part 5: Sherpa ASR RKNN Quantization on the RV1126BP Platform&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Project Period&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-08-21 ~ 2025-09-23&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;Project Duration&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;40 hours (Approx. 5 person-days)&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Review Date&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;2025-09-27&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td style="text-align: left"&gt;&lt;strong&gt;Key Personnel&lt;/strong&gt;&lt;/td&gt;
+					&lt;td style="text-align: left"&gt;Potter White&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id="1-project-objective"&gt;&lt;strong&gt;1. Project Objective&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;To convert a streaming Zipformer ASR (Automatic Speech Recognition) ONNX model from &lt;code&gt;FP32&lt;/code&gt; precision to an &lt;code&gt;INT8&lt;/code&gt; precision RKNN model for an embedded device based on the Rockchip RV1126B SoC. The goal is to complete its deployment and validation within the &lt;code&gt;sherpa-onnx&lt;/code&gt; C++ inference framework to meet the operational requirements of low latency and low power consumption.&lt;/p&gt;</description></item><item><title>Building Reproducible Docker Dev Environments for Embedded Linux (RK3588, RV1126, RK3568)</title><link>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</link><pubDate>Sat, 28 Mar 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2026/03/28/building-reproducible-docker-dev-environments-for-embedded-linux-rk3588-rv1126-rk3568/</guid><description>&lt;h1 id="building-reproducible-docker-dev-environments-for-embedded-linux"&gt;Building Reproducible Docker Dev Environments for Embedded Linux&lt;/h1&gt;
+&lt;h2 id="the-problem"&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;If you&amp;rsquo;re working with embedded Linux boards — RK3588, RK3588S, RV1126, RK3568, or similar
+Rockchip SoCs — you know the pain:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Every developer on the team has a slightly different toolchain version installed&lt;/li&gt;
+&lt;li&gt;Build results differ between machines (&amp;ldquo;it works on my Docker container&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;Supporting Ubuntu 20.04, 22.04, and 24.04 simultaneously without breaking any of them&lt;/li&gt;
+&lt;li&gt;Ports collide when you run containers for multiple chip families at the same time&lt;/li&gt;
+&lt;li&gt;Pushing images to a private Harbor registry requires glue scripts nobody documents&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The standard answer is &amp;ldquo;containerise your dev environment&amp;rdquo; — but the container definitions
+themselves become a maintenance burden. You end up with 5 Dockerfiles that diverge over time.&lt;/p&gt;</description></item><item><title>Cloud Desktop Tools to Replace RDP (PVE + Sunshine + Moonlight)</title><link>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</link><pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/12/01/cloud-desktop-tools-to-replace-rdp-pve--sunshine--moonlight/</guid><description>&lt;h2 id="what-is-this-talking-about"&gt;&lt;strong&gt;What-is-this-Talking-About&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This configuration sheet covers hardware infrastructure, virtual display solutions, performance optimization, and streaming settings, suitable for my &lt;strong&gt;AMD EPYC 7551 (Home)&lt;/strong&gt; and &lt;strong&gt;Dual Xeon (Work)&lt;/strong&gt; environments.&lt;/p&gt;
+&lt;h2 id="hardware-environment"&gt;&lt;strong&gt;Hardware Environment&lt;/strong&gt;&lt;/h2&gt;
+&lt;h4 id="homelab-configuration"&gt;&lt;strong&gt;Homelab Configuration&lt;/strong&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU: AMD EPYC 7551 (Home)&lt;/li&gt;
+&lt;li&gt;Motherboard: Supermicro H11SSL-i&lt;/li&gt;
+&lt;li&gt;Graphics Card: NVIDIA GeForce GTX 1050 Ti (4GB)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="work-server-configuration"&gt;&lt;strong&gt;Work Server Configuration&lt;/strong&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU: Dual Xeon (Work)&lt;/li&gt;
+&lt;li&gt;Motherboard: Generic X99 Chipset&lt;/li&gt;
+&lt;li&gt;Graphics Card: The basic display card is only for PVE use. I don&amp;rsquo;t want to modify GPU passthrough settings during maintenance, so it is equivalent to having no graphics card.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="requirements"&gt;&lt;strong&gt;Requirements&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;There are many family members, and if everyone uses a laptop or PC, first of all:&lt;/p&gt;</description></item><item><title>Remote Access (Secure) to Home Computer - (OpenWRT+No-IP+WireGuard)</title><link>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</link><pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/11/27/remote-access-secure-to-home-computer-openwrt-no-ip-wireguard/</guid><description>&lt;h2 id="what-is-this-talking-about"&gt;&lt;strong&gt;What-is-this-Talking-About&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;This is a set of my working notes, barely polished. AI helped me organize my thought process and trial attempts, including the detours and final solutions, into a document format.&lt;br&gt;
+Actually, ever since I started my blog on Github Pages, I have naturally and happily added an extra step to my workflow: moving records from Obsidian into my Github Blog.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Environment:&lt;/strong&gt; OpenWrt 23.05
+&lt;strong&gt;Goal:&lt;/strong&gt; Enable external access to internal network resources via WireGuard, ensuring automatic synchronization when the public IP changes.&lt;/p&gt;</description></item><item><title>Functional Debugging for the USB OTG Port on the RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-4-usb/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-4-usb/</guid><description>&lt;h2 id="project-overview"&gt;&lt;strong&gt;Project Overview&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Background&lt;/strong&gt;
+In a custom project based on the Rockchip RK3568, the objective was to re-evaluate the on-board USB interfaces using the public SDK and resolve an issue where the on-board USB 3.0 OTG (Type-A) port could not correctly recognize U-disks and other Host-mode devices under the default BSP configuration.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;My Role and Contributions:&lt;/strong&gt;
+As the BSP engineer for the project, I was solely responsible for diagnosing and resolving this USB functionality issue. My core contributions include:&lt;/p&gt;</description></item><item><title>I2S Interface Debugging and DTS Configuration on the RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-7-i2s/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-7-i2s/</guid><description>&lt;h4 id="1-project-objective"&gt;&lt;strong&gt;1. Project Objective&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;The core objective of this task was to successfully enable and debug multiple I2S interfaces (I2S1, I2S2, I2S3) on the RK3568 platform to establish digital audio communication with external devices, such as an FPGA. This specifically included:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Configuring I2S1 and I2S3 as audio output (Playback).&lt;/li&gt;
+&lt;li&gt;Configuring I2S2 as audio input (Capture).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-debugging-workflow-and-process"&gt;&lt;strong&gt;2. Debugging Workflow and Process&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;The entire debugging process followed a clear workflow: &lt;strong&gt;Hardware Analysis -&amp;gt; DTS Configuration -&amp;gt; Command-line Testing -&amp;gt; Problem Isolation and Resolution&lt;/strong&gt;.&lt;/p&gt;</description></item><item><title>RK3568平台 (I2C) 四个GSV2011芯片的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-5-gsv2011-i2c/</guid><description/></item><item><title>RK3568平台 MIPI CSI的dts配置</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-6-csi/</link><pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-6-csi/</guid><description/></item><item><title>Bring-up and Verification of MIPI-to-eDP Chip LT8911EXB on RK3568 Platform</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-3-lt8911exb/</link><pubDate>Fri, 26 Sep 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-3-lt8911exb/</guid><description>&lt;script type="module"&gt;
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-&lt;/script>
-&lt;h3 id="project-summary-debugging-and-verification-of-mipi-dsi-to-edp-interface-on-rockchip-rk3568-platform">&lt;strong>Project Summary: Debugging and Verification of MIPI-DSI to eDP Interface on Rockchip RK3568 Platform&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> September 2025&lt;/li>
-&lt;li>&lt;strong>Project Types:&lt;/strong> Rockchip, Bring-Up, Linux Kernel Driver, Device Tree, I2C&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="1-project-overview">&lt;strong>1. Project Overview&lt;/strong>&lt;/h3>
-&lt;p>&lt;strong>Situation:&lt;/strong>
-In a custom project based on the Rockchip RK3568 SoC, it was necessary to convert a MIPI-DSI video signal to an eDP signal using the Lontium LT8911EXB bridge chip to drive an eDP display. After the initial Board Support Package (BSP) integration, the display failed to light up, and the kernel log (&lt;code>dmesg&lt;/code>) showed no loading messages for the LT8911EXB driver.&lt;/p></description></item><item><title>SDK Modernization: From Monolith to `repo` &amp; GitLab</title><link>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Tue, 19 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> August 2025&lt;/li>
-&lt;/ul>
-&lt;h3 id="i-project-overview">I. Project Overview&lt;/h3>
-&lt;p>I independently spearheaded and executed the complete migration of a large-scale embedded Linux SDK. This project refactored a massive, monolithic codebase—originally distributed as an offline tarball—and migrated it to our internal GitLab server, establishing a modular, multi-repository collaborative development system based on Google&amp;rsquo;s &lt;code>repo&lt;/code> tool.&lt;/p>
-&lt;p>This transformation not only introduced modern version control best practices but also solved critical technical challenges through an automation script. The result was a scalable, highly efficient team workflow that dramatically improved both development productivity and code quality.&lt;/p></description></item><item><title>Analysis of Key Concepts in the Rockchip Display Subsystem</title><link>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</guid><description>&lt;h2 id="calculation-formula-for">&lt;strong>Calculation Formula for &amp;ldquo;Frame Rate&amp;rdquo; in DTS&lt;/strong>&lt;/h2>
-&lt;p>The frame rate of a mode is not written directly as a field in the timings; instead, it is calculated based on the clock frequency.
-The calculation formula is as follows:&lt;/p>
-&lt;div class="math">
+&lt;/script&gt;
+&lt;h3 id="project-summary-debugging-and-verification-of-mipi-dsi-to-edp-interface-on-rockchip-rk3568-platform"&gt;&lt;strong&gt;Project Summary: Debugging and Verification of MIPI-DSI to eDP Interface on Rockchip RK3568 Platform&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Author:&lt;/strong&gt; Potter White&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; September 2025&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Project Types:&lt;/strong&gt; Rockchip, Bring-Up, Linux Kernel Driver, Device Tree, I2C&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="1-project-overview"&gt;&lt;strong&gt;1. Project Overview&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Situation:&lt;/strong&gt;
+In a custom project based on the Rockchip RK3568 SoC, it was necessary to convert a MIPI-DSI video signal to an eDP signal using the Lontium LT8911EXB bridge chip to drive an eDP display. After the initial Board Support Package (BSP) integration, the display failed to light up, and the kernel log (&lt;code&gt;dmesg&lt;/code&gt;) showed no loading messages for the LT8911EXB driver.&lt;/p&gt;</description></item><item><title>SDK Modernization: From Monolith to `repo` &amp; GitLab</title><link>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</link><pubDate>Tue, 19 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/repo_python_version_control_code_of_sdk/</guid><description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Author:&lt;/strong&gt; Potter White&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; August 2025&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="i-project-overview"&gt;I. Project Overview&lt;/h3&gt;
+&lt;p&gt;I independently spearheaded and executed the complete migration of a large-scale embedded Linux SDK. This project refactored a massive, monolithic codebase—originally distributed as an offline tarball—and migrated it to our internal GitLab server, establishing a modular, multi-repository collaborative development system based on Google&amp;rsquo;s &lt;code&gt;repo&lt;/code&gt; tool.&lt;/p&gt;
+&lt;p&gt;This transformation not only introduced modern version control best practices but also solved critical technical challenges through an automation script. The result was a scalable, highly efficient team workflow that dramatically improved both development productivity and code quality.&lt;/p&gt;</description></item><item><title>Analysis of Key Concepts in the Rockchip Display Subsystem</title><link>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/</guid><description>&lt;h2 id="calculation-formula-for"&gt;&lt;strong&gt;Calculation Formula for &amp;ldquo;Frame Rate&amp;rdquo; in DTS&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;The frame rate of a mode is not written directly as a field in the timings; instead, it is calculated based on the clock frequency.
+The calculation formula is as follows:&lt;/p&gt;
+&lt;div class="math"&gt;
 $$
 \begin{aligned}
 \text{Htotal} &amp;= (\text{hsync\_len} + \text{hfront\_porch} + \text{hback\_porch} + \text{hactive}) \\
@@ -448,228 +405,115 @@ $$
 \text{FrameRate} &amp;= \frac{\text{ClkFreq}}{ \text{Htotal} \times \text{Vtotal} }
 \end{aligned}
 $$
-&lt;/div>
-&lt;h2 id="vop">VOP&lt;/h2>
-&lt;ul>
-&lt;li>
-&lt;p>Rockchip uses VOP to manage the hardware output ports.&lt;/p></description></item><item><title>How-to: Display Interface Debugging Standard Operating Procedure (SOP)</title><link>https://potterwhite.github.io/en/blog/2025/08/18/how-to-display-interface-debugging-standard-operating-procedure-sop/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/how-to-display-interface-debugging-standard-operating-procedure-sop/</guid><description>&lt;h3 id="how-to-display-interface-debugging-standard-operating-procedure-sop">How-to: &lt;strong>Display Interface Debugging Standard Operating Procedure (SOP)&lt;/strong>&lt;/h3>
-&lt;h4 id="phase-1-preparation--info-gathering">&lt;strong>Phase 1: Preparation &amp;amp; Info Gathering&lt;/strong>&lt;/h4>
-&lt;p>&lt;strong>Goal:&lt;/strong> Before writing any code or DTS, ensure you have all the necessary &amp;ldquo;blueprints&amp;rdquo; and &amp;ldquo;manuals.&amp;rdquo;&lt;/p>
-&lt;ol>
-&lt;li>
-&lt;p>&lt;strong>Obtain the Hardware Schematic&lt;/strong>: This is your foundation. You need to know:&lt;/p>
-&lt;ul>
-&lt;li>Which physical interface on the main SoC is the display interface (MIPI/LVDS) connected to? (&lt;code>DSI0&lt;/code> or &lt;code>DSI1&lt;/code>?)&lt;/li>
-&lt;li>Which GPIO or PWM controller are the relevant control pins (&lt;code>RESET&lt;/code>, &lt;code>POWER_ENABLE&lt;/code>, &lt;code>BACKLIGHT_PWM&lt;/code>) connected to?&lt;/li>
-&lt;li>Which I2C controller on the main SoC is the interface&amp;rsquo;s I2C bus connected to? (Used for touch or configuring bridge chips).&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>
-&lt;p>&lt;strong>Obtain the Target Device &amp;ldquo;Manual&amp;rdquo; (Datasheet)&lt;/strong>: Your &amp;ldquo;screen&amp;rdquo; could be a physical panel or an FPGA.&lt;/p></description></item><item><title>How-to: Forcing HDMI Configuration on RK3568</title><link>https://potterwhite.github.io/en/blog/2025/08/18/how-to-forcing-hdmi-configuration-on-rk3568/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/how-to-forcing-hdmi-configuration-on-rk3568/</guid><description>&lt;h1 id="how-to-keep-hdmi-connected-no-matter-what">How-to: Keep HDMI Connected No Matter What&lt;/h1>
-&lt;h2 id="schematic">Schematic:&lt;/h2>
-&lt;p>&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-hdmi-schema.png" alt="">&lt;/p>
-&lt;h2 id="analysis-not-controlled-by-gpio">Analysis: Not controlled by GPIO&lt;/h2>
-&lt;ul>
-&lt;li>Setting either &lt;code>hpd-state&lt;/code> or &lt;code>force_hpd&lt;/code> has no effect.&lt;/li>
-&lt;li>Using &lt;code>display-timings&lt;/code> also doesn&amp;rsquo;t work.&lt;/li>
-&lt;li>The next step would be to consider changing the cmdline&amp;hellip; this seems to be the only available method.&lt;/li>
-&lt;/ul>
-&lt;h2 id="solution-successful">Solution (Successful)&lt;/h2>
-&lt;p>Open &lt;strong>kernel/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c&lt;/strong>
-Modify the function &lt;strong>dw_hdmi_phy_read_hpd&lt;/strong>
-Change it to the following:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#204a87;font-weight:bold">enum&lt;/span> &lt;span style="color:#000">drm_connector_status&lt;/span> &lt;span style="color:#000">dw_hdmi_phy_read_hpd&lt;/span>&lt;span style="color:#000;font-weight:bold">(&lt;/span>&lt;span style="color:#204a87;font-weight:bold">struct&lt;/span> &lt;span style="color:#000">dw_hdmi&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">*&lt;/span>&lt;span style="color:#000">hdmi&lt;/span>&lt;span style="color:#000;font-weight:bold">,&lt;/span>&lt;span style="color:#204a87;font-weight:bold">void&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">*&lt;/span>&lt;span style="color:#000">data&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	&lt;span style="color:#8f5902;font-style:italic">// return hdmi_readb(hdmi, HDMI_PHY_STAT0) &amp;amp; HDMI_PHY_HPD ?
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">&lt;/span>	&lt;span style="color:#8f5902;font-style:italic">// connector_status_connected : connector_status_disconnected;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#8f5902;font-style:italic">&lt;/span>	&lt;span style="color:#204a87;font-weight:bold">return&lt;/span> &lt;span style="color:#000">connector_status_connected&lt;/span>&lt;span style="color:#000;font-weight:bold">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="how-to-force-hdmi-resolution">How-to: Force HDMI Resolution&lt;/h1>
-&lt;h2 id="method-solution">Method (Solution)&lt;/h2>
-&lt;p>Open &lt;strong>kernel/arch/arm64/boot/dts/rockchip/submodule-display.dtsi&lt;/strong>
+&lt;/div&gt;
+&lt;h2 id="vop"&gt;VOP&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Rockchip uses VOP to manage the hardware output ports.&lt;/p&gt;</description></item><item><title>How-to: Forcing HDMI Configuration on RK3568</title><link>https://potterwhite.github.io/en/blog/2025/08/18/how-to-forcing-hdmi-configuration-on-rk3568/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/how-to-forcing-hdmi-configuration-on-rk3568/</guid><description>&lt;h1 id="how-to-keep-hdmi-connected-no-matter-what"&gt;How-to: Keep HDMI Connected No Matter What&lt;/h1&gt;
+&lt;h2 id="schematic"&gt;Schematic:&lt;/h2&gt;
+&lt;p&gt;&lt;img src="https://potterwhite.github.io/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-hdmi-schema.png" alt=""&gt;&lt;/p&gt;
+&lt;h2 id="analysis-not-controlled-by-gpio"&gt;Analysis: Not controlled by GPIO&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Setting either &lt;code&gt;hpd-state&lt;/code&gt; or &lt;code&gt;force_hpd&lt;/code&gt; has no effect.&lt;/li&gt;
+&lt;li&gt;Using &lt;code&gt;display-timings&lt;/code&gt; also doesn&amp;rsquo;t work.&lt;/li&gt;
+&lt;li&gt;The next step would be to consider changing the cmdline&amp;hellip; this seems to be the only available method.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="solution-successful"&gt;Solution (Successful)&lt;/h2&gt;
+&lt;p&gt;Open &lt;strong&gt;kernel/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c&lt;/strong&gt;
+Modify the function &lt;strong&gt;dw_hdmi_phy_read_hpd&lt;/strong&gt;
+Change it to the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#204a87;font-weight:bold"&gt;enum&lt;/span&gt; &lt;span style="color:#000"&gt;drm_connector_status&lt;/span&gt; &lt;span style="color:#000"&gt;dw_hdmi_phy_read_hpd&lt;/span&gt;&lt;span style="color:#000;font-weight:bold"&gt;(&lt;/span&gt;&lt;span style="color:#204a87;font-weight:bold"&gt;struct&lt;/span&gt; &lt;span style="color:#000"&gt;dw_hdmi&lt;/span&gt; &lt;span style="color:#ce5c00;font-weight:bold"&gt;*&lt;/span&gt;&lt;span style="color:#000"&gt;hdmi&lt;/span&gt;&lt;span style="color:#000;font-weight:bold"&gt;,&lt;/span&gt;&lt;span style="color:#204a87;font-weight:bold"&gt;void&lt;/span&gt; &lt;span style="color:#ce5c00;font-weight:bold"&gt;*&lt;/span&gt;&lt;span style="color:#000"&gt;data&lt;/span&gt;&lt;span style="color:#000;font-weight:bold"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#000;font-weight:bold"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#8f5902;font-style:italic"&gt;// return hdmi_readb(hdmi, HDMI_PHY_STAT0) &amp;amp; HDMI_PHY_HPD ?
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#8f5902;font-style:italic"&gt;// connector_status_connected : connector_status_disconnected;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;	&lt;span style="color:#204a87;font-weight:bold"&gt;return&lt;/span&gt; &lt;span style="color:#000"&gt;connector_status_connected&lt;/span&gt;&lt;span style="color:#000;font-weight:bold"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#000;font-weight:bold"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="how-to-force-hdmi-resolution"&gt;How-to: Force HDMI Resolution&lt;/h1&gt;
+&lt;h2 id="method-solution"&gt;Method (Solution)&lt;/h2&gt;
+&lt;p&gt;Open &lt;strong&gt;kernel/arch/arm64/boot/dts/rockchip/submodule-display.dtsi&lt;/strong&gt;
 Modify the hdmi node (RK3568 only has one HDMI).
-Modify it as follows (&lt;strong>you can add other properties, but the following statements and blocks are mandatory&lt;/strong>):&lt;/p></description></item><item><title>LCDs (LVDS) Bring-Up on RK3568: A Study of the Data Flow</title><link>https://potterwhite.github.io/en/blog/2025/08/18/lcds-lvds-bring-up-on-rk3568-a-study-of-the-data-flow/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/lcds-lvds-bring-up-on-rk3568-a-study-of-the-data-flow/</guid><description>&lt;h2 id="background-knowledge">&lt;strong>Background Knowledge&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>Reference: &lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-display-interface-debugging-sop">How-to: Display Interface Debugging Standard Operating Procedure (SOP)&lt;/a>&lt;/li>
-&lt;li>Reference: &lt;a href="https://potterwhite.github.io/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/">Analysis of Key Concepts in the Rockchip Display Subsystem&lt;/a>&lt;/li>
-&lt;li>Example: Using LVDS as a case study&lt;/li>
-&lt;/ul>
-&lt;h2 id="data-flow---hardware-perspective">Data Flow - (Hardware Perspective)&lt;/h2>
-&lt;ul>
-&lt;li>Okay, this step is to determine the hardware connections. Let&amp;rsquo;s directly map out the entire data flow.&lt;/li>
-&lt;/ul>
-&lt;h3 id="1-data-from-memory---vop">1. Data from Memory -&amp;gt; VOP&lt;/h3>
-&lt;p>Whether the data comes from peripherals or is on the eMMC, it must be loaded into memory. Therefore, the starting point of the data flow is memory.
-From memory, the data is given to the specific VP configured in the VOP. The DTS code to configure the VOP is as follows:&lt;/p></description></item><item><title>RK3568 Platform: Display Subsystem Bring-up and Multi-Interface Debugging</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-2-display/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-2-display/</guid><description>&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> August 2025&lt;/li>
-&lt;/ul>
-&lt;h1 id="project-overview">&lt;strong>Project Overview&lt;/strong>&lt;/h1>
-&lt;p>&lt;strong>Situation:&lt;/strong>
-In a custom project based on the Rockchip RK3568 SoC, the objective was to enable the LVDS, MIPI-DSI, and HDMI 2.0 display interfaces, either simultaneously or independently. The LVDS interface was required to output a 1920x1080@30Hz video stream to an FPGA, exceeding the SoC&amp;rsquo;s official datasheet specifications (max 1280x800). The HDMI and MIPI interfaces needed to bypass EDID detection and force a fixed 1080p@60Hz output. These data paths were unconfigured in the initial BSP, requiring a complete bring-up from scratch.&lt;/p></description></item><item><title>NFS (Network File System)</title><link>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</guid><description>&lt;h1 id="an-in-depth-retrospective-on-nfs-mounting-issues--establishing-a-standard-workflow">An In-Depth Retrospective on NFS Mounting Issues &amp;amp; Establishing a Standard Workflow&lt;/h1>
-&lt;h2 id="foreword">Foreword&lt;/h2>
-&lt;p>This document aims to provide a retrospective on the troubleshooting process for a persistent &lt;code>Connection refused&lt;/code> error encountered when mounting an Ubuntu NFS server (&lt;code>Anastasia-Ubuntu&lt;/code>) from an embedded BusyBox system (&lt;code>david&lt;/code> host). The issue was ultimately resolved by adding the &lt;code>-o nolock&lt;/code> mount option. This article will analyze the root cause of the failure in detail and establish a standard workflow for configuring NFS servers and clients, providing a reliable reference for future deployments.&lt;/p></description></item><item><title>GMAC Bring Up Work Flow</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</guid><description>&lt;h2 id="1-identifying-the-gmac-from-the-schematic">1. Identifying the GMAC from the Schematic&lt;/h2>
-&lt;ul>
-&lt;li>From the default DTS provided by the SDK, it can be seen that there are two GMACs, gmac0 and gmac1.&lt;/li>
-&lt;/ul>
-&lt;h3 id="11-first-check-the-schematic-from-the-hardware-engineer-search-for-gmac-and-see-if-gmac1-or-gmac0-is-used">1.1 First, check the schematic from the hardware engineer, search for GMAC, and see if gmac1 or gmac0 is used.&lt;/h3>
-&lt;p>To determine this, one must look at the pins used in the schematic and compare them with the configuration of the gmac nodes in the DTS.&lt;/p></description></item><item><title>GMAC Bring-Up Debug Strategies</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-debug-strategies/</guid><description>&lt;p>The most important are these three parts, none can be missing.&lt;/p>
-&lt;h2 id="a-power">&lt;strong>a. Power&lt;/strong>&lt;/h2>
-&lt;h3 id="schematic-diagram">&lt;strong>Schematic Diagram&lt;/strong>&lt;/h3>
-&lt;p>&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/product-power-part-schema.png" alt="">&lt;/p>
-&lt;h3 id="description">&lt;strong>Description&lt;/strong>&lt;/h3>
-&lt;p>The power supply must be present first, and it must be normal.
-The definition of &amp;ldquo;normal&amp;rdquo; is in the datasheet.
-&lt;img src="https://potterwhite.github.io/2025/gmac-rk3568-bring-up/yt8521sc-datasheet-power-part.png" alt="">&lt;/p>
-&lt;h3 id="category-1-avddl-and-dvddl">&lt;strong>Category 1: AVDDL and DVDDL&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>Requires around 1.2V&lt;/li>
-&lt;li>The voltage requirement for R209 and R210 is around 1.2V&lt;/li>
-&lt;/ul>
-&lt;h3 id="category-2-dvdd33-vdd33-and-avdd33">&lt;strong>Category 2: DVDD33, VDD33, and AVDD33&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>Requires around 3.3V&lt;/li>
-&lt;/ul>
-&lt;h3 id="category-3-">&lt;strong>Category 3: [Special][Caution] DVDD_RGMII&lt;/strong>&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Digital RGMII I/O, MDC/MDIO power, adjusted by CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span>.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	Note: When CFG_LDO&lt;span style="color:#ce5c00;font-weight:bold">[&lt;/span>1:0&lt;span style="color:#ce5c00;font-weight:bold">]&lt;/span> &lt;span style="color:#ce5c00;font-weight:bold">=&lt;/span> 00, the I/O pad power is supplied from
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	the external 3.3V power connected to DVDD_RGMII pin. Otherwise,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>	it is supplied from the internal LDO.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
-&lt;li>Test Method
-&lt;ul>
-&lt;li>By testing pins 36 and 37 of the PHY
-After testing, it was found that both are at a low level.&lt;/li>
-&lt;li>Testing R212
-After testing with a multimeter, it was found that both ends are at 3.3V.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;h2 id="b-crystal-clock">&lt;strong>b. Crystal (Clock)&lt;/strong>&lt;/h2>
-&lt;h3 id="1-xtal_">&lt;strong>1. XTAL_I (Input pin related to the crystal)&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>This pin is grounded, so there is nothing.&lt;/li>
-&lt;li>This is pin 47 of the PHY.&lt;/li>
-&lt;/ul>
-&lt;h3 id="2-xtal_">&lt;strong>2. XTAL_O (Output pin related to the crystal)&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>25MHz is measured from here.&lt;/li>
-&lt;li>How to test?
-&lt;ul>
-&lt;li>Directly test pin 46 of the YT8521SC.&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;p>These two must come first, as they determine if the crystal is present.&lt;/p></description></item><item><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-1-gmac/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-1-gmac/</guid><description>&lt;script type="module">
+Modify it as follows (&lt;strong&gt;you can add other properties, but the following statements and blocks are mandatory&lt;/strong&gt;):&lt;/p&gt;</description></item><item><title>LCDs (LVDS) Bring-Up on RK3568: A Study of the Data Flow</title><link>https://potterwhite.github.io/en/blog/2025/08/18/lcds-lvds-bring-up-on-rk3568-a-study-of-the-data-flow/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/08/18/lcds-lvds-bring-up-on-rk3568-a-study-of-the-data-flow/</guid><description>&lt;h2 id="background-knowledge"&gt;&lt;strong&gt;Background Knowledge&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Reference: &lt;a href="https://potterwhite.github.io/blog/2025/08/18/how-to-display-interface-debugging-sop"&gt;How-to: Display Interface Debugging Standard Operating Procedure (SOP)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Reference: &lt;a href="https://potterwhite.github.io/blog/2025/08/18/analysis-of-key-concepts-in-the-rockchip-display-subsystem/"&gt;Analysis of Key Concepts in the Rockchip Display Subsystem&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Example: Using LVDS as a case study&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="data-flow---hardware-perspective"&gt;Data Flow - (Hardware Perspective)&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Okay, this step is to determine the hardware connections. Let&amp;rsquo;s directly map out the entire data flow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="1-data-from-memory---vop"&gt;1. Data from Memory -&amp;gt; VOP&lt;/h3&gt;
+&lt;p&gt;Whether the data comes from peripherals or is on the eMMC, it must be loaded into memory. Therefore, the starting point of the data flow is memory.
+From memory, the data is given to the specific VP configured in the VOP. The DTS code to configure the VOP is as follows:&lt;/p&gt;</description></item><item><title>RK3568 Platform: Display Subsystem Bring-up and Multi-Interface Debugging</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-2-display/</link><pubDate>Mon, 18 Aug 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-2-display/</guid><description>&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Author:&lt;/strong&gt; Potter White&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; August 2025&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="project-overview"&gt;&lt;strong&gt;Project Overview&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Situation:&lt;/strong&gt;
+In a custom project based on the Rockchip RK3568 SoC, the objective was to enable the LVDS, MIPI-DSI, and HDMI 2.0 display interfaces, either simultaneously or independently. The LVDS interface was required to output a 1920x1080@30Hz video stream to an FPGA, exceeding the SoC&amp;rsquo;s official datasheet specifications (max 1280x800). The HDMI and MIPI interfaces needed to bypass EDID detection and force a fixed 1080p@60Hz output. These data paths were unconfigured in the initial BSP, requiring a complete bring-up from scratch.&lt;/p&gt;</description></item><item><title>NFS (Network File System)</title><link>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/29/nfs-network-file-system/</guid><description>&lt;h1 id="an-in-depth-retrospective-on-nfs-mounting-issues--establishing-a-standard-workflow"&gt;An In-Depth Retrospective on NFS Mounting Issues &amp;amp; Establishing a Standard Workflow&lt;/h1&gt;
+&lt;h2 id="foreword"&gt;Foreword&lt;/h2&gt;
+&lt;p&gt;This document aims to provide a retrospective on the troubleshooting process for a persistent &lt;code&gt;Connection refused&lt;/code&gt; error encountered when mounting an Ubuntu NFS server (&lt;code&gt;Anastasia-Ubuntu&lt;/code&gt;) from an embedded BusyBox system (&lt;code&gt;david&lt;/code&gt; host). The issue was ultimately resolved by adding the &lt;code&gt;-o nolock&lt;/code&gt; mount option. This article will analyze the root cause of the failure in detail and establish a standard workflow for configuring NFS servers and clients, providing a reliable reference for future deployments.&lt;/p&gt;</description></item><item><title>GMAC Bring Up Work Flow</title><link>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/blog/2025/07/25/gmac-bring-up-work-flow/</guid><description>&lt;h2 id="1-identifying-the-gmac-from-the-schematic"&gt;1. Identifying the GMAC from the Schematic&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;From the default DTS provided by the SDK, it can be seen that there are two GMACs, gmac0 and gmac1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="11-first-check-the-schematic-from-the-hardware-engineer-search-for-gmac-and-see-if-gmac1-or-gmac0-is-used"&gt;1.1 First, check the schematic from the hardware engineer, search for GMAC, and see if gmac1 or gmac0 is used.&lt;/h3&gt;
+&lt;p&gt;To determine this, one must look at the pins used in the schematic and compare them with the configuration of the gmac nodes in the DTS.&lt;/p&gt;</description></item><item><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</title><link>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-1-gmac/</link><pubDate>Fri, 25 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/bringup-rk3568/module-1-gmac/</guid><description>&lt;script type="module"&gt;
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-&lt;/script>
-&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
-&lt;/ul>
-&lt;h1 id="project-overview">&lt;strong>Project Overview&lt;/strong>&lt;/h1>
-&lt;p>&lt;strong>Situation:&lt;/strong>
-In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code>ethernet@fe010000&lt;/code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code>Cannot attach to PHY&lt;/code> and &lt;code>Failed to reset the dma&lt;/code>.&lt;/p></description></item><item><title>Attendance Analyzer</title><link>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/portfolio/attendance_analyzer/</guid><description>&lt;ul>
-&lt;li>&lt;strong>Author:&lt;/strong> Potter White&lt;/li>
-&lt;li>&lt;strong>Date:&lt;/strong> July 2025&lt;/li>
-&lt;/ul>
-&lt;h2 id="project-overview">Project Overview&lt;/h2>
-&lt;p>The Attendance Analyzer is an &lt;strong>in-house efficiency tool&lt;/strong> developed to tackle the complex and time-consuming task of analyzing employee attendance data within a corporate environment. The application transforms raw Excel exports into clear, actionable reports via a highly flexible, rule-driven engine, significantly improving HR workflow efficiency.&lt;/p>
-&lt;hr>
-&lt;h3 id="demo">Demo&lt;/h3>
-&lt;p>Below is a short video demonstrating the application&amp;rsquo;s core workflow.&lt;/p>
+&lt;/script&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Author:&lt;/strong&gt; Potter White&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date:&lt;/strong&gt; July 2025&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="project-overview"&gt;&lt;strong&gt;Project Overview&lt;/strong&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Situation:&lt;/strong&gt;
+In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, &lt;code&gt;ethernet@fe010000&lt;/code&gt;). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as &lt;code&gt;Cannot attach to PHY&lt;/code&gt; and &lt;code&gt;Failed to reset the dma&lt;/code&gt;.&lt;/p&gt;</description></item><item><title>About Me</title><link>https://potterwhite.github.io/en/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this --&gt;
+&lt;div class="container text-center pt-5 pb-4"&gt;
+ &lt;h1 class="display-3"&gt;A Developer's Journey&lt;/h1&gt;
+ &lt;p class="display-5 text-muted"&gt;Bridging Technology, Theology, and Family&lt;/p&gt;
+ &lt;div class="mt-4 mb-4"&gt;
+ &lt;!-- &lt;a class="btn btn-lg btn-primary" href="#technical-expertise"&gt;Explore My Skills&lt;/a&gt; --&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+&lt;hr&gt; &lt;!-- This adds a clean separator line --&gt;
+&lt;!-- END: Replacement --&gt;
+&lt;div&gt;&lt;a id="td-block-0" class="td-anchor-no-extra-offset"&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;section class="row td-box td-box--white position-relative td-box--height-auto"&gt;
+&lt;div class="col-12"&gt;
+&lt;div class="container text-center td-arrow-down"&gt;
+&lt;div class="h4 mb-0"&gt;
+&lt;div class="text-center"&gt;
+I am an Embedded Systems Engineer, passionate about building stable and elegant technical solutions. My life's journey has led me through professional training in both &lt;strong&gt;Computer Science (Bachelor of Engineering)&lt;/strong&gt; and &lt;strong&gt;Theology (Master of Divinity)&lt;/strong&gt;.
+&lt;p&gt;This dual background has shaped my unique perspective on problem-solving: I strive to tackle complex challenges with technical excellence, clear communication, and a strong sense of purpose. As a Christian, a husband, and a father of three, the LORD my God and my family are the cornerstone of all my work.&lt;/p&gt;</description></item><item><title>Goldydocs</title><link>https://potterwhite.github.io/en/backupcopy_index/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/backupcopy_index/</guid><description>&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark" &gt;
+ &lt;div class="col-12"&gt;
+ &lt;div class="container td-overlay__inner"&gt;
+ &lt;div class="text-center"&gt;
+ &lt;h1 class="display-1 mt-0 mt-md-5 pb-4"&gt;Welcome to Goldydocs: A Docsy Example Project!&lt;/h1&gt;
+ &lt;div class="pt-3 lead"&gt;
+ 
+&lt;a class="btn btn-lg btn-primary me-3 mb-4" href="https://potterwhite.github.io/docs/"&gt;
+ Learn More &lt;i class="fas fa-arrow-alt-circle-right ms-2"&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;a class="btn btn-lg btn-secondary me-3 mb-4" href="https://github.com/google/docsy-example"&gt;
+ Download &lt;i class="fab fa-github ms-2 "&gt;&lt;/i&gt;
+&lt;/a&gt;
+&lt;p class="lead mt-5"&gt;Porridge temperature assessment &amp;mdash; in the cloud!&lt;/p&gt;
 
 
 
+&lt;a class="btn btn-link text-info" href="#td-block-1" aria-label="Read more"&gt;&lt;i class="fa-solid fa-circle-chevron-down" style="font-size: 400%"&gt;&lt;/i&gt;&lt;/a&gt;
 
+&lt;/div&gt;
+ &lt;/div&gt;
+ &lt;/div&gt;
+ &lt;/div&gt;
+ 
+&lt;/section&gt;
 
-
-
- 
- 
- 
-
- 
-
- 
-
-
-&lt;figure >
- 
- 
-
- 
- 
-
- &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;">
- &lt;video controls autoplay loop muted playsinline
- style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
- &lt;source src="https://potterwhite.github.io/2025/project_attendance_analyzer_show_video.mp4" type="video/mp4">
- Your browser does not support the video tag.
- &lt;/video>
- &lt;/div>
- 
-
- 
- &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);">Application Core Workflow Demo&lt;/figcaption>
- 
-&lt;/figure>
-&lt;br>
-&lt;hr>
-&lt;h2 id="core-features--tech-stack">Core Features &amp;amp; Tech Stack&lt;/h2>
-&lt;ul>
-&lt;li>&lt;strong>Rule-Driven Engine&lt;/strong>: All logic is controlled by a &lt;code>rules.toml&lt;/code> file.&lt;/li>
-&lt;li>&lt;strong>Comprehensive Metrics&lt;/strong>: Calculates attended days, overtime, lateness, etc.&lt;/li>
-&lt;li>&lt;strong>Dual-View Reporting&lt;/strong>: Generates both &amp;ldquo;Public&amp;rdquo; and &amp;ldquo;Detailed&amp;rdquo; reports.&lt;/li>
-&lt;li>&lt;strong>Tech Stack&lt;/strong>: &lt;strong>Python&lt;/strong>, &lt;strong>Pandas&lt;/strong>, &lt;strong>Streamlit&lt;/strong>, &lt;strong>TOML&lt;/strong>.&lt;/li>
-&lt;/ul>
-&lt;h2 id="core-algorithm-design-v16">Core Algorithm Design (V1.6)&lt;/h2>
-&lt;p>As the project&amp;rsquo;s architect, I designed a rigorous analysis algorithm based on a three-state unit model (&amp;ldquo;Attended&amp;rdquo;, &amp;ldquo;Absent&amp;rdquo;, &amp;ldquo;Abnormal&amp;rdquo;) and an &amp;ldquo;Attended Unit First&amp;rdquo; principle.&lt;/p></description></item><item><title>About Me</title><link>https://potterwhite.github.io/en/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/about/</guid><description>&lt;!-- START: Replace the 'blocks/cover' shortcode with this -->
-&lt;div class="container text-center pt-5 pb-4">
- &lt;h1 class="display-3">A Developer's Journey&lt;/h1>
- &lt;p class="display-5 text-muted">Bridging Technology, Theology, and Family&lt;/p>
- &lt;div class="mt-4 mb-4">
- &lt;!-- &lt;a class="btn btn-lg btn-primary" href="#technical-expertise">Explore My Skills&lt;/a> -->
- &lt;/div>
-&lt;/div>
-&lt;hr> &lt;!-- This adds a clean separator line -->
-&lt;!-- END: Replacement -->
-&lt;div>&lt;a id="td-block-0" class="td-offset-anchor">&lt;/a>&lt;/div>
-&lt;section class="row td-box td-box--white position-relative td-box--height-auto">
-&lt;div class="col-12">
-&lt;div class="container text-center td-arrow-down">
-&lt;div class="h4 mb-0">
-&lt;div class="text-center">
-I am an Embedded Systems Engineer, passionate about building stable and elegant technical solutions. My life's journey has led me through professional training in both &lt;strong>Computer Science (Bachelor of Engineering)&lt;/strong> and &lt;strong>Theology (Master of Divinity)&lt;/strong>.
-&lt;p>This dual background has shaped my unique perspective on problem-solving: I strive to tackle complex challenges with technical excellence, clear communication, and a strong sense of purpose. As a Christian, a husband, and a father of three, the LORD my God and my family are the cornerstone of all my work.&lt;/p></description></item><item><title>Goldydocs</title><link>https://potterwhite.github.io/en/backupcopy_index/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/en/backupcopy_index/</guid><description>&lt;section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
- &lt;div class="col-12">
- &lt;div class="container td-overlay__inner">
- &lt;div class="text-center">
- &lt;h1 class="display-1 mt-0 mt-md-5 pb-4">Welcome to Goldydocs: A Docsy Example Project!&lt;/h1>
- 
- &lt;div class="pt-3 lead">
- 
- &lt;a class="btn btn-lg btn-primary me-3 mb-4" href="https://potterwhite.github.io/docs/">
- Learn More &lt;i class="fas fa-arrow-alt-circle-right ms-2">&lt;/i>
-&lt;/a>
-&lt;a class="btn btn-lg btn-secondary me-3 mb-4" href="https://github.com/google/docsy-example">
- Download &lt;i class="fab fa-github ms-2 ">&lt;/i>
-&lt;/a>
-&lt;p class="lead mt-5">Porridge temperature assessment &amp;mdash; in the cloud!&lt;/p>
-&lt;p>&lt;a class="btn btn-link text-info" href="#td-block-1" aria-label="Read more">&lt;i class="fa-solid fa-circle-chevron-down" style="font-size: 400%">&lt;/i>&lt;/a>&lt;/p>
- 
- &lt;/div>
- &lt;/div>
- &lt;/div>
- &lt;/div>
- 
-&lt;/section>
-
-&lt;div>&lt;a id="td-block-1" class="td-offset-anchor">&lt;/a>&lt;/div>
-&lt;section class="row td-box td-box--primary position-relative td-box--height-auto">
-&lt;div class="col-12">
-&lt;div class="container text-center td-arrow-down">
-&lt;div class="h4 mb-0">
-&lt;p>Goldydocs provides a single web UI providing visibility into porridge
+&lt;div&gt;&lt;a id="td-block-1" class="td-anchor-no-extra-offset"&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;section class="row td-box td-box--primary position-relative td-box--height-auto"&gt;
+&lt;div class="col-12"&gt;
+&lt;div class="container text-center td-arrow-down"&gt;
+&lt;div class="h4 mb-0"&gt;
+&lt;p&gt;Goldydocs provides a single web UI providing visibility into porridge
 temperature, chair size, and bed softness metrics! You can even find out who&amp;rsquo;s
-been eating &lt;strong>your&lt;/strong> porridge.&lt;/p></description></item></channel></rss>
+been eating &lt;strong&gt;your&lt;/strong&gt; porridge.&lt;/p&gt;</description></item></channel></rss>
