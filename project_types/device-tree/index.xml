@@ -7,7 +7,7 @@
 &lt;h2 id="模块列表-module-list"&gt;模块列表 (Module List)&lt;/h2&gt;
 &lt;h3 id="1-rk3588-平台pcie模块-bring-up-调试"&gt;&lt;strong&gt;1. RK3588 平台PCIe模块 Bring-up 调试&lt;/strong&gt;&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心成果:&lt;/strong&gt; 用 TRM 逐级推导替代试错,把故障定位到硬件链路,排除了软件侧成因。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;a href="https://potterwhite.github.io/blog/2026/07/29/%e4%b8%8d%e9%9d%a0%e7%8c%9c%e5%a6%82%e4%bd%95%e7%94%a8-trm-%e6%8e%a8%e5%af%bc%e5%87%ba-pcie-%e6%a8%a1%e5%9d%97%e7%9a%84%e9%97%ae%e9%a2%98/"&gt;阅读项目详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;

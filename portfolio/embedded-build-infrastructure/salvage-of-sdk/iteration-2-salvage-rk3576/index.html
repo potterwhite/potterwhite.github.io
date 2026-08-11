@@ -1,0 +1,421 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-cn class=no-js data-theme-init><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=color-scheme content="light dark"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#000000"><style>html{background:Canvas;color:CanvasText}@media(prefers-color-scheme:dark){html{background:#0b0d12;color:#e6e6e6}}html[data-theme-init] *{transition:none!important}</style><script>(function(){const t="td-color-theme",n=localStorage.getItem(t);let e=n||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");e==="auto"&&(e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),document.documentElement.setAttribute("data-bs-theme",e)})()</script><meta name=robots content="index, follow"><link rel="shortcut icon" href=/favicons/favicon.ico><link rel=apple-touch-icon href=/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/favicons/android-192x192.png sizes=192x192><title>第二次迭代（2026）：把没有 repo 链路的厂商 SDK 恢复成 N 个 Git 子仓库 | Potter的个人笔记</title><meta name=description content="把一份被开发板厂商深度定制、repo 链路已损坏的 SDK 压缩包,恢复成可一键拉取、可正确编译、且镜像能正常运行的多仓库 SDK。"><meta property="og:url" content="https://potterwhite.github.io/portfolio/embedded-build-infrastructure/salvage-of-sdk/iteration-2-salvage-rk3576/"><meta property="og:site_name" content="Potter的个人笔记"><meta property="og:title" content="第二次迭代（2026）：把没有 repo 链路的厂商 SDK 恢复成 N 个 Git 子仓库"><meta property="og:description" content="把一份被开发板厂商深度定制、repo 链路已损坏的 SDK 压缩包,恢复成可一键拉取、可正确编译、且镜像能正常运行的多仓库 SDK。"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="portfolio"><meta property="article:published_time" content="2026-08-10T00:00:00+00:00"><meta property="article:modified_time" content="2026-08-10T00:00:00+00:00"><meta itemprop=name content="第二次迭代（2026）：把没有 repo 链路的厂商 SDK 恢复成 N 个 Git 子仓库"><meta itemprop=description content="把一份被开发板厂商深度定制、repo 链路已损坏的 SDK 压缩包,恢复成可一键拉取、可正确编译、且镜像能正常运行的多仓库 SDK。"><meta itemprop=datePublished content="2026-08-10T00:00:00+00:00"><meta itemprop=dateModified content="2026-08-10T00:00:00+00:00"><meta itemprop=wordCount content="2253"><meta name=twitter:card content="summary"><meta name=twitter:title content="第二次迭代（2026）：把没有 repo 链路的厂商 SDK 恢复成 N 个 Git 子仓库"><meta name=twitter:description content="把一份被开发板厂商深度定制、repo 链路已损坏的 SDK 压缩包,恢复成可一键拉取、可正确编译、且镜像能正常运行的多仓库 SDK。"><link rel=preload href=/scss/main.min.fd1542a29ad60b25d40194603bc3343a38c8be59e2b83d8a1150335b827461bb.css as=style integrity="sha256-/RVCoprWCyXUAZRgO8M0OjjIvlniuD2KEVAzW4J0Ybs=" crossorigin=anonymous><link href=/scss/main.min.fd1542a29ad60b25d40194603bc3343a38c8be59e2b83d8a1150335b827461bb.css rel=stylesheet integrity="sha256-/RVCoprWCyXUAZRgO8M0OjjIvlniuD2KEVAzW4J0Ybs=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script><script defer src=https://unpkg.com/lunr@2.3.9/lunr.min.js integrity=sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli crossorigin=anonymous></script><link rel=stylesheet href=/css/prism.css></head><body class=td-page><header><nav class="td-navbar js-navbar-scroll"><div class="td-navbar-container container-fluid flex-column flex-md-row"><a class=navbar-brand href=/><span class="navbar-brand__logo navbar-logo"></span><span class=navbar-brand__name>Potter的个人笔记</span></a><div class="td-navbar__main td-navbar-nav-scroll td-navbar-nav-scroll--indicator" id=main_navbar><div class="scroll-indicator scroll-left"></div><ul class=navbar-nav><li class=nav-item><a class=nav-link href=/about/><span>关于</span></a></li><li class=nav-item><a class=nav-link href=/blog/><span>博客</span></a></li><li class=nav-item><a class=nav-link href=/portfolio/><span>我的作品</span></a></li><li class="nav-item td-navbar__lang-menu"><div class="td-lang-menu dropdown"><a class="nav-link dropdown-toggle td-lang-menu__title" href=# role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false><span class=td-lang-menu__title-text>简体中文</span>
+<span class=td-lang-menu__title-code>ZH-CN</span></a><ul class=dropdown-menu><li><span class="dropdown-item active">简体中文</span></li><li><span class="dropdown-item disabled">English</span></li></ul></div></li><li class="nav-item td-navbar__light-dark-menu"><div class="td-light-dark-menu dropdown"><svg class="d-none"><symbol id="check2" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5.0 010 .708l-7 7a.5.5.0 01-.708.0l-3.5-3.5a.5.5.0 11.708-.708L6.5 10.293l6.646-6.647a.5.5.0 01.708.0z"/></symbol><symbol id="circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 108 1v14zm0 1A8 8 0 118 0a8 8 0 010 16z"/></symbol><symbol id="moon-stars-fill" viewBox="0 0 16 16"><path d="M6 .278a.768.768.0 01.08.858 7.208 7.208.0 00-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527.0 1.04-.055 1.533-.16a.787.787.0 01.81.316.733.733.0 01-.031.893A8.349 8.349.0 018.344 16C3.734 16 0 12.286.0 7.71.0 4.266 2.114 1.312 5.124.06A.752.752.0 016 .278z"/><path d="M10.794 3.148a.217.217.0 01.412.0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217.0 010 .412l-1.162.387A1.734 1.734.0 0011.593 7.69l-.387 1.162a.217.217.0 01-.412.0l-.387-1.162A1.734 1.734.0 009.31 6.593l-1.162-.387a.217.217.0 010-.412l1.162-.387a1.734 1.734.0 001.097-1.097l.387-1.162zM13.863.099a.145.145.0 01.274.0l.258.774c.115.346.386.617.732.732l.774.258a.145.145.0 010 .274l-.774.258a1.156 1.156.0 00-.732.732l-.258.774a.145.145.0 01-.274.0l-.258-.774a1.156 1.156.0 00-.732-.732l-.774-.258a.145.145.0 010-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/></symbol><symbol id="sun-fill" viewBox="0 0 16 16"><path d="M8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 0zm0 13a.5.5.0 01.5.5v2a.5.5.0 01-1 0v-2A.5.5.0 018 13zm8-5a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2a.5.5.0 01.5.5zM3 8a.5.5.0 01-.5.5h-2a.5.5.0 010-1h2A.5.5.0 013 8zm10.657-5.657a.5.5.0 010 .707l-1.414 1.415a.5.5.0 11-.707-.708l1.414-1.414a.5.5.0 01.707.0zm-9.193 9.193a.5.5.0 010 .707L3.05 13.657a.5.5.0 01-.707-.707l1.414-1.414a.5.5.0 01.707.0zm9.193 2.121a.5.5.0 01-.707.0l-1.414-1.414a.5.5.0 01.707-.707l1.414 1.414a.5.5.0 010 .707zM4.464 4.465a.5.5.0 01-.707.0L2.343 3.05a.5.5.0 11.707-.707l1.414 1.414a.5.5.0 010 .708z"/></symbol></svg>
+<button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center" id=bd-theme type=button aria-expanded=false data-bs-toggle=dropdown aria-label="Toggle theme (auto)">
+<svg class="bi my-1 theme-icon-active"><use href="#circle-half"/></svg></button><ul class=dropdown-menu aria-labelledby=bd-theme><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=light aria-pressed=false>
+<svg class="bi me-2 opacity-50"><use href="#sun-fill"/></svg>
+Light
+<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center" data-bs-theme-value=dark aria-pressed=false>
+<svg class="bi me-2 opacity-50"><use href="#moon-stars-fill"/></svg>
+Dark
+<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li><li><button type=button class="dropdown-item d-flex align-items-center active" data-bs-theme-value=auto aria-pressed=true>
+<svg class="bi me-2 opacity-50"><use href="#circle-half"/></svg>
+Auto
+<svg class="bi ms-auto d-none"><use href="#check2"/></svg></button></li></ul></div></li></ul><div class="scroll-indicator scroll-right"></div></div><div class="td-navbar__search d-none d-lg-block"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search name=q class="td-search__input form-control" placeholder=站内搜索… aria-label=站内搜索… autocomplete=off data-offline-search-index-json-src=/offline-search-index.44a9d9da256faacc00627c6bbe487b69.json data-offline-search-base-href=/ data-offline-search-max-results=10></div></div></div></nav></header><div class="container-fluid td-default td-outer"><main role=main class=td-main><div class=td-content><main class=td-page-main><div class=td-page-header><h1 class=td-page-title>第二次迭代（2026）：把没有 repo 链路的厂商 SDK 恢复成 N 个 Git 子仓库</h1><p class=td-page-meta-lead>把一份被开发板厂商深度定制、repo 链路已损坏的 SDK 压缩包,恢复成可一键拉取、可正确编译、且镜像能正常运行的多仓库 SDK。</p></div><div class=td-page-content><div class="pageinfo pageinfo-primary"><p>从一份经过开发板厂商深度定制过的SDK压缩包，经过整个流程（5份shell脚本+1份python脚本）的处理。</p><p>得到一份可以一键式拉取就可以正确编译出镜像，且镜像能够正常运行的深度修复的由若干（一般几十到一百多个）子仓库组成的SDK代码。</p></div><figure><a href=/2026/sdk-salvage-rk3576/4-verify-sync-summary-fail-2026-08-11.png target=_blank><img src=/2026/sdk-salvage-rk3576/4-verify-sync-summary-fail-2026-08-11.png style=max-width:100%;height:auto;border-radius:8px alt="`4-verify-sync.sh` 的 6 项断言结果:重建出来的 58 仓库与只读基线逐字节比对。3 项 FAIL 是逐项判定后接受的差异,不是没跑完 —— 每一项的取舍见下文"></a><figcaption style=text-align:center;font-style:italic;margin-top:.5em;color:var(--td-sidebar-text-color)><code>4-verify-sync.sh</code> 的 6 项断言结果:重建出来的 58 仓库与只读基线逐字节比对。3 项 FAIL 是逐项判定后接受的差异,不是没跑完 —— 每一项的取舍见下文</figcaption></figure><hr><h2 id=一做了什么>一、做了什么</h2><h3 id=输入>输入</h3><p>厂商给到手的就是一个 tarball,没有任何 repo 链路:</p><p><strong>体积 10G</strong></p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>-rwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer 10G Jul <span style=color:#0000cf;font-weight:700>31</span> 19:44 &lt;share&gt;/02.Products/rk3576/rk3576-linux-6.1_20260709.tar.xz
+</span></span></code></pre></div><p><strong><code>.repo</code> 不存在</strong></p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>developer@rk3576-rk3576_ubuntu-22-04:~/sdk/linux/sdk-src/rk3576-linux-6.1-readonly$ find . -name <span style=color:#4e9a06>&#34;.repo&#34;</span>
+</span></span><span style=display:flex><span>developer@rk3576-rk3576_ubuntu-22-04:~/sdk/linux/sdk-src/rk3576-linux-6.1-readonly$
+</span></span></code></pre></div><p><strong>所有 <code>.git</code> 都是指向那个不存在的 <code>.repo</code> 的软链接</strong></p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>developer@rk3576-rk3576_ubuntu-22-04:~/sdk/linux/sdk-src/rk3576-linux-6.1-readonly$ find . -name <span style=color:#4e9a06>&#34;.git&#34;</span> -exec ls -lhat <span style=color:#ce5c00;font-weight:700>{}</span> <span style=color:#4e9a06>\;</span>
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>28</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:46 ./u-boot/.git -&gt; ../.repo/projects/u-boot.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>32</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./kernel-6.1/.git -&gt; ../.repo/projects/kernel-6.1.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>27</span> Nov <span style=color:#0000cf;font-weight:700>20</span>  <span style=color:#0000cf;font-weight:700>2025</span> ./rkbin/.git -&gt; ../.repo/projects/rkbin.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>47</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:28 ./external/rknn-toolkit2/.git -&gt; ../../.repo/projects/external/rknn-toolkit2.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>41</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:40 ./external/libmali/.git -&gt; ../../.repo/projects/external/libmali.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>42</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./external/rknn-llm/.git -&gt; ../../.repo/projects/external/rknn-llm.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>41</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./external/uvc_app/.git -&gt; ../../.repo/projects/external/uvc_app.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>44</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./external/minilogger/.git -&gt; ../../.repo/projects/external/minilogger.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>49</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/security/bin/.git -&gt; ../../../.repo/projects/external/security/bin.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>57</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/security/rk_tee_user/.git -&gt; ../../../.repo/projects/external/security/rk_tee_user.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>57</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/security/librkcrypto/.git -&gt; ../../../.repo/projects/external/security/librkcrypto.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>40</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/rockit/.git -&gt; ../../.repo/projects/external/rockit.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>42</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/rkupdate/.git -&gt; ../../.repo/projects/external/rkupdate.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>47</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/rockchip-test/.git -&gt; ../../.repo/projects/external/rockchip-test.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>53</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./external/camera_engine_rkaiq/.git -&gt; ../../.repo/projects/external/camera_engine_rkaiq.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>42</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./external/chromium/.git -&gt; ../../.repo/projects/external/chromium.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>46</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/rkwifibt-app/.git -&gt; ../../.repo/projects/external/rkwifibt-app.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>37</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./external/mpp/.git -&gt; ../../.repo/projects/external/mpp.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>45</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./external/alsa-config/.git -&gt; ../../.repo/projects/external/alsa-config.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>38</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:39 ./external/dpdk/.git -&gt; ../../.repo/projects/external/dpdk.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>42</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/rkwifibt/.git -&gt; ../../.repo/projects/external/rkwifibt.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>37</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./external/avs/.git -&gt; ../../.repo/projects/external/avs.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>46</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./external/rk_pcba_test/.git -&gt; ../../.repo/projects/external/rk_pcba_test.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>50</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:39 ./external/common_algorithm/.git -&gt; ../../.repo/projects/external/common_algorithm.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>37</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:39 ./external/iva/.git -&gt; ../../.repo/projects/external/iva.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>46</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:39 ./external/ethercat_igh/.git -&gt; ../../.repo/projects/external/ethercat_igh.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>41</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./external/uac_app/.git -&gt; ../../.repo/projects/external/uac_app.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>41</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/samples/.git -&gt; ../../.repo/projects/external/samples.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>43</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/rktoolkit/.git -&gt; ../../.repo/projects/external/rktoolkit.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>43</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./external/linux-rga/.git -&gt; ../../.repo/projects/external/linux-rga.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>42</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./external/recovery/.git -&gt; ../../.repo/projects/external/recovery.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>41</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./external/xserver/.git -&gt; ../../.repo/projects/external/xserver.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>44</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:39 ./external/drm-cursor/.git -&gt; ../../.repo/projects/external/drm-cursor.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>40</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./external/rkfsmk/.git -&gt; ../../.repo/projects/external/rkfsmk.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>52</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:39 ./external/gstreamer-rockchip/.git -&gt; ../../.repo/projects/external/gstreamer-rockchip.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>44</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./external/rockit_uvc/.git -&gt; ../../.repo/projects/external/rockit_uvc.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>40</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:33 ./external/rknpu2/.git -&gt; ../../.repo/projects/external/rknpu2.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>27</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:45 ./tools/.git -&gt; ../.repo/projects/tools.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>32</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:35 ./docs/cn/.git -&gt; ../../.repo/projects/docs/cn.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>42</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:36 ./docs/cn/RK3576/.git -&gt; ../../../.repo/projects/docs/cn/RK3576.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>26</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:35 ./docs/.git -&gt; ../.repo/projects/docs.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>38</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./docs/rtt-docs/.git -&gt; ../../.repo/projects/docs/rtt-docs.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>32</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:37 ./docs/en/.git -&gt; ../../.repo/projects/docs/en.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>42</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:38 ./docs/en/RK3576/.git -&gt; ../../../.repo/projects/docs/en/RK3576.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>39</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:29 ./app/rkpartybox/.git -&gt; ../../.repo/projects/app/rkpartybox.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>34</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:29 ./app/rkadk/.git -&gt; ../../.repo/projects/app/rkadk.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>43</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:28 ./app/ipcweb-backend/.git -&gt; ../../.repo/projects/app/ipcweb-backend.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>34</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:29 ./app/rkipc/.git -&gt; ../../.repo/projects/app/rkipc.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>38</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:28 ./app/lvgl_demo/.git -&gt; ../../.repo/projects/app/lvgl_demo.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>116</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:43 ./prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/.git -&gt; ../../../../../.repo/projects/prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>117</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:42 ./prebuilts/gcc/linux-x86/aarch64/arm-gnu-toolchain-13.2.Rel1-x86_64-aarch64-none-elf/.git -&gt; ../../../../../.repo/projects/prebuilts/gcc/linux-x86/aarch64/arm-gnu-toolchain-13.2.Rel1-x86_64-aarch64-none-elf.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>114</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:44 ./prebuilts/gcc/linux-x86/arm/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf/.git -&gt; ../../../../../.repo/projects/prebuilts/gcc/linux-x86/arm/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>109</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:44 ./prebuilts/gcc/linux-x86/arm/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux/.git -&gt; ../../../../../.repo/projects/prebuilts/gcc/linux-x86/arm/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>40</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:33 ./device/rockchip/.git -&gt; ../../.repo/projects/device/rockchip.git
+</span></span><span style=display:flex><span>lrwxrwxrwx <span style=color:#0000cf;font-weight:700>1</span> developer developer <span style=color:#0000cf;font-weight:700>31</span> Jun <span style=color:#0000cf;font-weight:700>22</span> 17:29 ./buildroot/.git -&gt; ../.repo/projects/buildroot.git
+</span></span><span style=display:flex><span>developer@rk3576-rk3576_ubuntu-22-04:~/sdk/linux/sdk-src/rk3576-linux-6.1-readonly$
+</span></span></code></pre></div><h3 id=输出>输出</h3><table><thead><tr><th>项目</th><th>结果</th></tr></thead><tbody><tr><td>独立 Git 仓库</td><td><strong>58 个</strong></td></tr><tr><td>清单仓库</td><td><code>default.xml</code>(manifest),托管在 <code>&lt;server>/&lt;GROUP>/</code></td></tr><tr><td>客户端拉取</td><td><strong>3 条命令</strong>(<code>repo init</code> / <code>repo sync -j8 --verify</code> / <code>repo forall -c 'git lfs pull'</code>)</td></tr><tr><td>体积</td><td>编译前 <strong>~28G</strong>,编译后 <strong>~78G</strong></td></tr><tr><td>校验</td><td><code>4-verify-sync.sh</code>,<strong>6 项自动断言</strong></td></tr><tr><td>交付文档</td><td>纯命令、零理论;<strong>8 类故障 + 对应处置</strong></td></tr><tr><td>验收</td><td><strong>同事独立编译 + 烧写,均成功</strong></td></tr></tbody></table><h3 id=客户端拉取完整无省略>客户端拉取(完整,无省略)</h3><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>repo init -u http://&lt;server&gt;/&lt;GROUP&gt;/manifest.git -b main -m default.xml --no-clone-bundle
+</span></span><span style=display:flex><span>repo sync -j8 --verify
+</span></span><span style=display:flex><span>repo start main --all
+</span></span><span style=display:flex><span>repo forall -c <span style=color:#4e9a06>&#39;git lfs pull&#39;</span>
+</span></span></code></pre></div><blockquote><p>除了 <code>repo start main --all</code> 之外的三条都不能省。
+<code>--verify</code> 少了会停在 <code>(yes/always/NO)</code> 交互提示上,默认 NO, 于是 repo hook 不执行、空目录不出现、编译可能直接失败;
+<code>git lfs pull</code> 少了只有 17G 而不是 28G,编译报文件损坏。</p></blockquote><h3 id=验收>验收</h3><figure><div class=video-wrapper style=margin:auto;max-width:800px><video controls playsinline preload=metadata style="width:100%;height:auto;border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)"><source src=/2026/sdk-salvage-rk3576/flash-boot-reboot-ddrtest-onetake.mp4 type=video/mp4>Your browser does not support the video tag.</video></div><figcaption style=text-align:center;font-style:italic;margin-top:.5em;color:var(--td-sidebar-text-color)>一镜到底,未剪辑,222 秒(3:42)</figcaption></figure><table><thead><tr><th>时间点</th><th>画面</th></tr></thead><tbody><tr><td><code>00:43</code></td><td>烧写开始</td></tr><tr><td><code>01:28</code></td><td>烧写完成,工具报成功</td></tr><tr><td><code>01:39</code></td><td>首次启动完成,出现 shell / 登录提示</td></tr><tr><td><code>02:13</code></td><td>DDR 测试开始</td></tr><tr><td><code>02:57</code></td><td>敲下 <code>reboot</code></td></tr><tr><td><code>03:15</code></td><td>重启后再次起来</td></tr></tbody></table><p>DDR 测试未全部跑完,但已验证 bin 可被执行,代表文件系统的基础功能正常。(假设 DDR 若有问题,可能要结合 kernel 进行调试,这属于 BSP 的工作范畴。)</p><p>一镜到底表明经过完整的代码控制的sdk是能够编译出可以正常运行的系统完整镜像的，而且这中间的验证过程是后期无感的，不需要特殊调试的，即使用者根本不需要知道到底sdk与原版被厂商毁掉repo的tarball比起来经过哪些修改。</p><figure><a href=/2026/sdk-salvage-rk3576/board-rk3576-booted-1600px.jpg target=_blank><img src=/2026/sdk-salvage-rk3576/board-rk3576-booted-1600px.jpg style=max-width:100%;height:auto;border-radius:8px alt="这块板子上跑的是同事从恢复后的 58 个仓库拉取、自行编译烧写的镜像,不是我给的成品"></a><figcaption style=text-align:center;font-style:italic;margin-top:.5em;color:var(--td-sidebar-text-color)>这块板子上跑的是同事从恢复后的 58 个仓库拉取、自行编译烧写的镜像,不是我给的成品</figcaption></figure><p>重启可以确保从ROM->uboot->kernel的这条链路能够不止一次的被加载，而且加载成功，一次启动的成功还可能有一些底层软件的原因会被隐藏，但是如果能够两次成功启动，底层软件应是没有问题的。</p><p><code>4-verify-sync.sh</code> 做的是重建结果与只读基线之间的文件级比对。下面是 2026-08-11 10:14 那一次的完整输出,<code>OVERALL: FAIL</code> —— 贴的是带 FAIL 的这一次,没有挑一次全 PASS 的来贴。6 项断言里 Top level、Empty directories、Symlink targets 通过,Structure、Permissions、Content 报 FAIL,这三项为什么可以接受,见下文与第二节。</p><details><summary><strong>4-verify-sync.sh 完整输出</strong>(点开)</summary><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>developer@rk3576-rk3576_ubuntu-22-04:~/sdk/linux/sdk-src$ <span style=color:#204a87>time</span> /development/src/sdk/linux/SalvageOfSDK.git/4-verify-sync.sh <span style=color:#4e9a06>\
+</span></span></span><span style=display:flex><span>        --baseline-dir /development/src/sdk/linux/sdk-src/rk3576-linux-6.1-readonly <span style=color:#4e9a06>\
+</span></span></span><span style=display:flex><span>        --candidate-dir /development/src/sdk/linux/sdk-src/clone-aug06-v2 <span style=color:#4e9a06>\
+</span></span></span><span style=display:flex><span>        --work-dir ./verify-aug06
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; baseline:  /development/src/sdk/linux/sdk-src/rk3576-linux-6.1-readonly
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; candidate: /development/src/sdk/linux/sdk-src/clone-aug06-v2
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; work dir:  /development/src/sdk/linux/sdk-src/./verify-aug06 <span style=color:#ce5c00;font-weight:700>(</span>kept<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; content:   full byte-for-byte <span style=color:#000>comparison</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; listing baseline ...
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; listing candidate ...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; section 1: top <span style=color:#000>level</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; section 2: <span style=color:#000>structure</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; section 3: empty <span style=color:#000>directories</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; section 4: symlink <span style=color:#000>targets</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; section 5: <span style=color:#000>permissions</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; section 6: content -- reading every byte of both trees, this is the slow part ...
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>Tree comparison <span style=color:#000>report</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>generated  2026-08-11 10:14:04 HKT
+</span></span><span style=display:flex><span>baseline   /development/src/sdk/linux/sdk-src/rk3576-linux-6.1-readonly
+</span></span><span style=display:flex><span>candidate  /development/src/sdk/linux/sdk-src/clone-aug06-v2
+</span></span><span style=display:flex><span>excluded   .git, .repo and .hooks directories, everywhere
+</span></span><span style=display:flex><span>listings   /development/src/sdk/linux/sdk-src/./verify-aug06
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>An entry <span style=color:#4e9a06>&#34;in baseline only&#34;</span> is one the rebuild failed to reproduce. One <span style=color:#4e9a06>&#34;in
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>candidate only&#34;</span> is one it introduced. Neither tree was modified by this run.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>SUMMARY
+</span></span><span style=display:flex><span>-------
+</span></span><span style=display:flex><span>  1. Top level              PASS <span style=color:#ce5c00;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>0</span> differing entries<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span>  2. Structure              FAIL <span style=color:#ce5c00;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>140</span> differing entries<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span>  3. Empty directories      PASS <span style=color:#ce5c00;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>0</span> differing directories<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span>  4. Symlink targets        PASS <span style=color:#ce5c00;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>0</span> differing symlinks<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span>  5. Permissions            FAIL <span style=color:#ce5c00;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>2</span> differing entries, <span style=color:#0000cf;font-weight:700>0</span> not umask-consistent<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span>  6. Content                FAIL <span style=color:#ce5c00;font-weight:700>(</span><span style=color:#0000cf;font-weight:700>16</span> differing files, <span style=color:#0000cf;font-weight:700>0</span> uncomparable<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>OVERALL: <span style=color:#000>FAIL</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>1. Top <span style=color:#000>level</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>baseline  <span style=color:#0000cf;font-weight:700>18</span> top-level entries
+</span></span><span style=display:flex><span>candidate <span style=color:#0000cf;font-weight:700>18</span> top-level entries
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>[</span>PASS<span style=color:#ce5c00;font-weight:700>]</span> both trees hold the same top-level <span style=color:#000>entries</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>2. Structure <span style=color:#ce5c00;font-weight:700>(</span>every entry, with <span style=color:#204a87>type</span><span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>baseline  <span style=color:#0000cf;font-weight:700>188793</span> entries
+</span></span><span style=display:flex><span>candidate <span style=color:#0000cf;font-weight:700>188689</span> entries
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>IN BASELINE ONLY -- the rebuild did not reproduce these <span style=color:#ce5c00;font-weight:700>(</span>122<span style=color:#ce5c00;font-weight:700>)</span>:
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.Module.symvers.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.aiutils.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcm_app_utils.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd.ko.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd.mod.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd.mod.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd_pcie.ko.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd_pcie.mod.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd_pcie.mod.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmdhd_pcie.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmevent.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmsdh.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmsdh_linux.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmsdh_sdmmc.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmsdh_sdmmc_linux.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmstdlib_s.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmutils.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmwifi_channels.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.bcmxtlv.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_ccode.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_cdc.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_cfg80211.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_common.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_config.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_custom_gpio.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_dbg_ring.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_debug.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_debug_linux.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_flowring.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_gpio.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_ip.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_exportfs.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_lb.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_pktdump.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_platdev.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_rx.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_sched.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_tx.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_linux_wq.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_mschdbg.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_msgbuf.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_pcie.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_pcie_linux.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_pno.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_sdio.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_static_buf.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.dhd_wlfc.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.frag.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.fwpkg_utils.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.hnd_pktpool.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.hnd_pktq.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.hndpmu.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.linux_osl.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.linux_pkt.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.linuxerrmap.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.modules.order.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.pcie_core.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.sbutils.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.siutils.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_android.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_android_ext.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_cfg80211.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_cfg_btcoex.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_cfgp2p.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_cfgscan.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_cfgvendor.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_cfgvif.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_escan.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_event.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_iapsta.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_iw.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_linux_mon.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_roam.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wl_timer.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/.wldev_common.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/Module.symvers
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/bcmdhd.ko
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/bcmdhd.mod
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/bcmdhd.mod.c
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/bcmdhd_pcie.ko
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/bcmdhd_pcie.mod
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/bcmdhd_pcie.mod.c
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bcmdhd/modules.order
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.Module.symvers.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.hci_h4.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.hci_ldisc.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.hci_rtk_h5.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.hci_uart.ko.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.hci_uart.mod.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.hci_uart.mod.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.hci_uart.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.modules.order.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/.rtk_coex.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/Module.symvers
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/hci_uart.ko
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/hci_uart.mod
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/hci_uart.mod.c
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_uart_driver/modules.order
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.Module.symvers.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.modules.order.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.rtk_bt.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.rtk_btusb.ko.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.rtk_btusb.mod.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.rtk_btusb.mod.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.rtk_btusb.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.rtk_coex.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/.rtk_misc.o.cmd
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/Module.symvers
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/modules.order
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/rtk_btusb.ko
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/rtk_btusb.mod
+</span></span><span style=display:flex><span>    f	external/rkwifibt/drivers/bluetooth_usb_driver/rtk_btusb.mod.c
+</span></span><span style=display:flex><span>    f	external/xserver/debian/local/xvfb-run.1
+</span></span><span style=display:flex><span>    f	kernel-6.1/.scmversion
+</span></span><span style=display:flex><span>    f	kernel-6.1/drivers/bluetooth/Module.symvers
+</span></span><span style=display:flex><span>    f	kernel-6.1/drivers/net/wireless/rockchip_wlan/Module.symvers
+</span></span><span style=display:flex><span>    f	kernel-6.1/drivers/net/wireless/rockchip_wlan/aic8800/Module.symvers
+</span></span><span style=display:flex><span>    f	kernel-6.1/drivers/net/wireless/rockchip_wlan/rtl8733bu/Module.symvers
+</span></span><span style=display:flex><span>    f	u-boot/.checkpatch.conf
+</span></span><span style=display:flex><span>    f	u-boot/.travis.yml
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>IN CANDIDATE ONLY -- these are not in the baseline <span style=color:#ce5c00;font-weight:700>(</span>18<span style=color:#ce5c00;font-weight:700>)</span>:
+</span></span><span style=display:flex><span>    f	buildroot/.gitattributes
+</span></span><span style=display:flex><span>    f	debian/.gitattributes
+</span></span><span style=display:flex><span>    f	device/rockchip/.gitattributes
+</span></span><span style=display:flex><span>    f	docs/.gitattributes
+</span></span><span style=display:flex><span>    f	docs/cn/.gitattributes
+</span></span><span style=display:flex><span>    f	docs/en/.gitattributes
+</span></span><span style=display:flex><span>    f	external/camera_engine_rkaiq/.gitattributes
+</span></span><span style=display:flex><span>    f	external/chromium/.gitattributes
+</span></span><span style=display:flex><span>    f	external/libmali/.gitattributes
+</span></span><span style=display:flex><span>    f	external/rknn-llm/.gitattributes
+</span></span><span style=display:flex><span>    f	external/rknn-toolkit2/.gitattributes
+</span></span><span style=display:flex><span>    f	external/rknpu2/.gitattributes
+</span></span><span style=display:flex><span>    f	kernel-6.1/drivers/gpu/arm/bifrost/.gitignore
+</span></span><span style=display:flex><span>    f	kernel-6.1/tools/testing/selftests/arm64/.gitignore
+</span></span><span style=display:flex><span>    f	prebuilts/gcc/linux-x86/aarch64/arm-gnu-toolchain-13.2.Rel1-x86_64-aarch64-none-elf/.gitattributes
+</span></span><span style=display:flex><span>    f	prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/.gitattributes
+</span></span><span style=display:flex><span>    f	tools/.gitattributes
+</span></span><span style=display:flex><span>    f	ubuntu/.gitattributes
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>[</span>FAIL<span style=color:#ce5c00;font-weight:700>]</span> <span style=color:#0000cf;font-weight:700>122</span> only in baseline, <span style=color:#0000cf;font-weight:700>18</span> only in <span style=color:#000>candidate</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>3. Empty <span style=color:#000>directories</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>baseline  <span style=color:#0000cf;font-weight:700>39</span> empty directories
+</span></span><span style=display:flex><span>candidate <span style=color:#0000cf;font-weight:700>39</span> empty directories
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>[</span>PASS<span style=color:#ce5c00;font-weight:700>]</span> both trees hold the same empty directories
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Note: git has no way to store an empty directory. One present in the
+</span></span><span style=display:flex><span>baseline and absent from the candidate is therefore expected, and will
+</span></span><span style=display:flex><span>recur on every fresh sync -- it is not a transient fault. Closing the gap
+</span></span><span style=display:flex><span>needs either a placeholder file committed into each such directory, which
+</span></span><span style=display:flex><span>makes the candidate differ by that file instead, or a post-sync step that
+</span></span><span style=display:flex><span>recreates them from a recorded list.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>4. Symlink <span style=color:#000>targets</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>baseline  <span style=color:#0000cf;font-weight:700>535</span> symlinks
+</span></span><span style=display:flex><span>candidate <span style=color:#0000cf;font-weight:700>535</span> symlinks
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>[</span>PASS<span style=color:#ce5c00;font-weight:700>]</span> both trees hold the same <span style=color:#000>symlinks</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>5. <span style=color:#000>Permissions</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Mode histogram, baseline:
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>16698</span> d <span style=color:#0000cf;font-weight:700>755</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>22</span> d <span style=color:#0000cf;font-weight:700>775</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>163666</span> f <span style=color:#0000cf;font-weight:700>644</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>120</span> f <span style=color:#0000cf;font-weight:700>664</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>7739</span> f <span style=color:#0000cf;font-weight:700>755</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>13</span> f <span style=color:#0000cf;font-weight:700>775</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>535</span> l <span style=color:#0000cf;font-weight:700>777</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Mode histogram, candidate:
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>16696</span> d <span style=color:#0000cf;font-weight:700>755</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>24</span> d <span style=color:#0000cf;font-weight:700>775</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>163562</span> f <span style=color:#0000cf;font-weight:700>644</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>120</span> f <span style=color:#0000cf;font-weight:700>664</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>7739</span> f <span style=color:#0000cf;font-weight:700>755</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>13</span> f <span style=color:#0000cf;font-weight:700>775</span>
+</span></span><span style=display:flex><span>    <span style=color:#0000cf;font-weight:700>535</span> l <span style=color:#0000cf;font-weight:700>777</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#0000cf;font-weight:700>2</span> entries differ. By transition <span style=color:#ce5c00;font-weight:700>(</span>count, type, baseline, candidate, class<span style=color:#ce5c00;font-weight:700>)</span>:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    2	d	755	775	<span style=color:#204a87>umask</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Class <span style=color:#4e9a06>&#39;umask&#39;</span> means the owner<span style=color:#4e9a06>&#39;s bits are identical and only the group or
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>other bits differ. Git stores one permission bit per file -- the owner
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>execute bit -- so it cannot carry the rest; they come from the umask of
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>the shell that created the file. A whole tree shifted this way points at
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>the environment, not at the commit: umask 022 yields 755 and 644, umask
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>002 yields 775 and 664. This is consistency, not proof -- it is what a
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>umask difference looks like, and nothing here rules out another cause.
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>
+</span></span></span><span style=display:flex><span><span style=color:#4e9a06>Class &#39;</span>owner-exec<span style=color:#a40000>&#39;</span> is never dismissed: that bit IS in the commit, so a
+</span></span><span style=display:flex><span>difference means the two trees disagree about whether a file is runnable.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Every difference is confined to group and other bits.
+</span></span><span style=display:flex><span>full list: /development/src/sdk/linux/sdk-src/./verify-aug06/modes.diff
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>[</span>FAIL<span style=color:#ce5c00;font-weight:700>]</span> <span style=color:#0000cf;font-weight:700>2</span> entries differ, all umask-consistent <span style=color:#ce5c00;font-weight:700>(</span>see the note above<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>6. Content <span style=color:#ce5c00;font-weight:700>(</span>byte <span style=color:#204a87;font-weight:700>for</span> byte<span style=color:#ce5c00;font-weight:700>)</span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>============================================================================</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Compared with: diff -qr --no-dereference, excluding .git and .repo.
+</span></span><span style=display:flex><span>Symlinks are compared as links, not followed.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>FILES WHOSE CONTENT DIFFERS <span style=color:#ce5c00;font-weight:700>(</span>16<span style=color:#ce5c00;font-weight:700>)</span>:
+</span></span><span style=display:flex><span>    buildroot/.gitignore
+</span></span><span style=display:flex><span>    device/rockchip/.chips/rk3576/topeet_rk3576_defconfig
+</span></span><span style=display:flex><span>    device/rockchip/.gitignore
+</span></span><span style=display:flex><span>    external/camera_engine_rkaiq/.gitignore
+</span></span><span style=display:flex><span>    external/dpdk/.gitignore
+</span></span><span style=display:flex><span>    external/mpp/.gitignore
+</span></span><span style=display:flex><span>    external/mpp/build/.gitignore
+</span></span><span style=display:flex><span>    external/rkwifibt/.gitignore
+</span></span><span style=display:flex><span>    external/xserver/.gitignore
+</span></span><span style=display:flex><span>    kernel-6.1/.gitignore
+</span></span><span style=display:flex><span>    kernel-6.1/arch/arm64/boot/Image
+</span></span><span style=display:flex><span>    kernel-6.1/arch/arm64/boot/Image.lz4
+</span></span><span style=display:flex><span>    kernel-6.1/arch/arm64/kernel/vdso/vdso.so
+</span></span><span style=display:flex><span>    kernel-6.1/arch/arm64/kernel/vdso/vdso.so.dbg
+</span></span><span style=display:flex><span>    kernel-6.1/drivers/gpu/arm/mali400/mali/__malidrv_build_info.c
+</span></span><span style=display:flex><span>    u-boot/.gitignore
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>[</span>FAIL<span style=color:#ce5c00;font-weight:700>]</span> <span style=color:#0000cf;font-weight:700>16</span> file<span style=color:#ce5c00;font-weight:700>(</span>s<span style=color:#ce5c00;font-weight:700>)</span> differ, <span style=color:#0000cf;font-weight:700>0</span> path<span style=color:#ce5c00;font-weight:700>(</span>s<span style=color:#ce5c00;font-weight:700>)</span> could not be <span style=color:#000>compared</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; overall: <span style=color:#000>FAIL</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; Read the SUMMARY at the top of the report, <span style=color:#204a87;font-weight:700>then</span> the sections it marks FAIL.
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; Every count in the summary is backed by a file in /development/src/sdk/linux/sdk-src/./verify-aug06,
+</span></span><span style=display:flex><span><span style=color:#ce5c00;font-weight:700>==</span>&gt; named in the section that reports it.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>real	15m46.062s
+</span></span><span style=display:flex><span>user	0m7.975s
+</span></span><span style=display:flex><span>sys	0m38.760s
+</span></span><span style=display:flex><span>developer@rk3576-rk3576_ubuntu-22-04:~/sdk/linux/sdk-src$
+</span></span></code></pre></div></details><p>其中 <strong>Structure</strong>(140 项)是唯一需要逐项人工过的:它筛出两边文件列表的异同,遇到一项就得进到对应目录去看既有的 <code>.gitignore</code>。这个 <code>.gitignore</code> 是核心 —— 若原版目录根本没有这份过滤列表,就只能自建,而自建需要对整个包有「基础 60 分」的理解才写得出来,才有底气判断某个文件到底是不是可以被过滤掉的临时产物。上面记录里的这 140 项,是我逐项筛查过的。</p><p>另一类差异是 <code>IN CANDIDATE ONLY -- these are not in the baseline (18):</code>,即只在新 SDK 里才有的文件。这 18 个是 16 个 <code>.gitattributes</code> 加 2 个 <code>.gitignore</code>:<code>.gitattributes</code> 是启用 LFS 之后比旧 SDK 多出来的,那 2 个 <code>.gitignore</code> 是我手动新建的,用来管理对应目录下的文件。</p><p>总耗时:<strong>1859 分钟</strong>(约 31 小时)。</p><hr><h2 id=二难在哪>二、难在哪</h2><h3 id=核心陷阱gitignore-并非-100-可信>核心陷阱:<code>.gitignore</code> 并非 100% 可信</h3><p>上游厂商基于RK的公版SDK进行深度的定制，然后分发给他自己的客户，作为终端客户拿到的只是一个tarball,而不是用repo管理的一个url，虽然RK原版SDK是用Repo（git）进行代码管理。
+上游厂商的定制时基本完全抛弃git管理，在被.gitignore拉黑的目录里存在重要的文件。例如以下这六个头文件：</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>external/camera_engine_rkaiq/.gitignore/rkaiq/algos/ae/rk_aiq_algo_ae_itf.h
+</span></span><span style=display:flex><span>external/camera_engine_rkaiq/.gitignore/rkaiq/algos/af/rk_aiq_algo_af_itf.h
+</span></span><span style=display:flex><span>external/camera_engine_rkaiq/.gitignore/rkaiq/algos/asd/rk_aiq_algo_asd_itf.h
+</span></span><span style=display:flex><span>external/camera_engine_rkaiq/.gitignore/rkaiq/algos/awb/rk_aiq_algo_awb_itf.h
+</span></span><span style=display:flex><span>external/camera_engine_rkaiq/.gitignore/rkaiq/algos_camgroup/ae/rk_aiq_algo_camgroup_ae_itf.h
+</span></span><span style=display:flex><span>external/camera_engine_rkaiq/.gitignore/rkaiq/algos_camgroup/awb/rk_aiq_algo_camgroup_awb_itf.h
+</span></span></code></pre></div><p>若不将他们放进git的白名单列表，在最终编译的时候将会直接报错“Not such file xxxx”。
+可是若直接查看原.gitignore会发现，这里的所有header和source都是黑名单成员：</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>developer@rk3576-rk3576_ubuntu-22-04:~/sdk/linux/sdk-src/clone-aug06-v2$ cat external/camera_engine_rkaiq/.gitignore  <span style=color:#000;font-weight:700>|</span> grep algos<span style=color:#4e9a06>\/</span>ae
+</span></span><span style=display:flex><span>rkaiq/algos/ae/linux/rv1106/aarch64
+</span></span><span style=display:flex><span>rkaiq/algos/aeis/linux/
+</span></span><span style=display:flex><span>rkaiq/algos/ae/*.cpp
+</span></span><span style=display:flex><span>rkaiq/algos/ae/*.h
+</span></span></code></pre></div><p>这是无法全脚本自动化执行的内容，需要工程师以丰富的经验和快速的学习能力去判断是否要相信当前的.gitignore。
+所幸的是，大部分错误并不致命，一般在编译阶段都能被发现，只要发现后加入git白名单即可编译通过。</p><h3 id=具体战果>具体战果</h3><table><thead><tr><th>现象</th><th>定位</th><th>处置</th></tr></thead><tbody><tr><td><code>u-boot</code></td><td><code>descriptor.bin</code> 和 <code>bl31.elf</code></td><td>放行这 2 个文件</td></tr><tr><td><code>kernel-6.1</code> 90 项缺失</td><td>其中 <strong>66 项确为产物</strong></td><td>逐项判定后放行其余</td></tr><tr><td><code>external/mpp</code> <code>build/</code> 下 41 项被吞</td><td>in-source cmake,该目录<strong>全是源码、0 产物</strong></td><td>白名单放行</td></tr><tr><td><code>external/rkwifibt</code> <code>/debian/</code> 整目录消失</td><td>父级规则剪掉整个目录,git 不再递归进去</td><td><strong>删掉父级那一行,不加替代</strong>——上游自带的 <code>debian/.gitignore</code> 13 行本就完整</td></tr><tr><td><code>external/dpdk</code></td><td><code>config/ppc</code> 和 <code>devtools</code> 在内的 12 个文件</td><td>放行</td></tr><tr><td><code>external/xserver</code></td><td>1 个 patch,不知道是否会自动 download,而且才 1.3KB</td><td>放行</td></tr><tr><td><code>external/camera_engine_rkaiq</code> 编译失败</td><td>6 个 <code>rk_aiq_algo_*_itf.h</code> 被吞</td><td>放行这 6 个头文件</td></tr></tbody></table><p>上表中大部分能够一眼被我识别，唯独camera_engine_rkaiq这一行值得单独展开一段——那次失败编译花了 <strong>2h19min</strong> 才报错,
+而且改完 <code>.gitignore</code> + <code>repo sync</code> <strong>还不够</strong>,必须手工删掉 <code>output/build/camera_engine*</code>才会生效，因为buildroot的编译是把package复制或解压到output/latest/build目录下面进行编译的，唯有删掉这里的临时编译子目录才能触发新版的软件包被复制过来重新编译。
+这种「反馈周期两小时」的排错体验,是这个项目难度之一所在,比任何架构图都更能说明问题。它都不致命，但是面对浩瀚的SDK目录树，而且大多数是不够熟悉的，这个挑战并不小。</p><h3 id=git-结构性存不下的四类东西>git 结构性存不下的四类东西</h3><table><thead><tr><th>类别</th><th>症状</th><th>处置</th></tr></thead><tbody><tr><td>空目录</td><td>编译失败</td><td>记录清单,由 repo hook 在 sync 后重放</td></tr><tr><td>权限位</td><td>40 处 umask 差异</td><td><strong>接受</strong>——验收底线是「能编译」,不是位级一致</td></tr><tr><td>大文件</td><td>少 11G,编译报文件损坏</td><td>Git LFS + <code>git lfs pull</code></td></tr><tr><td>符号链接</td><td>6 个顶层链接失效</td><td>单独记录重建</td></tr></tbody></table><p>这张表背后是两条原则。</p><p><strong>第一:除了一眼就确定是垃圾的文件,我宁可错放,也不可错杀。</strong></p><p><strong>第二:我的目标是「能编译 + 能运行」,而不是「位级一致」。</strong> 因为上游开发板厂商的习惯可能也很糟糕,时常把临时文件带进最终的分发包里。正是这个思想,让我认为那 40 处 umask 差异可以不修,先看看编译会不会有问题。</p><p>四类东西各自的取舍:</p><ul><li><strong>空目录</strong>:不敢不加。所有脚本是否都会先做 <code>mkdir -p</code> 并不一定,而且说不定有很多脚本会做 <code>if [ -d ${dir_name} ]</code>,那就会报错了。</li><li><strong>大文件</strong>:LFS 需要手动 <code>git lfs pull</code>,这也不难,没做的话很快就会编译报错。</li><li><strong>符号链接</strong>:这里最危险,谁也不知道内部做了什么软链接。顶层目录下还可以用 manifest 来创建,子目录里的软链接就都得靠 <code>.gitignore</code> 来管理了,否则浩如烟海,所花之功夫甚巨。</li></ul><hr><h2 id=三做了什么判断>三、做了什么判断</h2><h3 id=判断一找对不变量>判断一:找对不变量</h3><ul><li>我原以为本次的SDK将会是「全树都没有任何 <code>.git</code>」。<strong>后来纠正:<code>.git</code> 是有的,只是与原先的 <code>.repo</code> 链路断了。</strong></li><li>所以项目边界的物证不在清单里,<strong>在文件系统里</strong>。</li><li><code>.repo/manifests/*.xml</code> 会丢、会被改坏、厂商可能根本不给;<strong>但每个子项目自己的 <code>.git</code> 目录一直在原地。</strong></li></ul><p>这里我做了一个两次任务的对比:</p><table><thead><tr><th>任务</th><th>项目列表怎么来</th><th>换一颗 SOC 要做什么</th></tr></thead><tbody><tr><td>RK 原版 SDK(2025)</td><td>逐层 <code>cat</code> manifest XML,<strong>手抄进代码</strong></td><td>全部重抄</td></tr><tr><td>厂商深度定制破坏版 SDK(2026)</td><td><code>find -name .git</code>,<strong>自动推导</strong></td><td><strong>什么都不用改</strong></td></tr></tbody></table><p>需要说清楚的是:<strong>原版 SDK 我没有实际跑过。</strong> 上面是关于方法的判断,不是测试结论。</p><p>而下一版要做的,正是把这件事从「逻辑上成立」落到「结构上成立」——共性抽成一层,差异集中到另一层:</p><ul><li><strong>共性层</strong>:不依赖清单的判据 —— <code>.git</code> 即项目边界、6 项断言。
+这一层对所有 SDK 是同一份代码。</li><li><strong>差异层</strong>:每种 SDK 各自的应对方式 —— 清单在不在、目录布局、要放行哪些 <code>.gitignore</code> ——
+全部收到一个地方,按上游项目名索引,而不是散在流程里。</li></ul><p>这样加一种新 SDK 只动差异层,共性层一行不碰。<strong>也只有做到这一步,第四节那句「第二次比第一次快」才有结构上的依据,而不是一句愿望。</strong></p><h3 id=判断二拒绝-git-add--f>判断二:拒绝 <code>git add -f</code></h3><p>AI给过我一个最快的做法是 <code>git add -f</code> 把误杀的文件强行塞进去。可是我思考一会儿之后并没有同意,而是去改 <code>.gitignore</code> 本身。
+给.gitignore这一道最佳屏障添加例外，这是一个饮血止渴的做法，这一步走出去，未来如果想回来，比重新做更难，因为要抽丝剥茧知道到底之前放过了什么文件。
+「我知道有捷径,我算过代价后选择不走」，这是我的另一个工程思想。</p><h3 id=判断三凭据一次都不落盘>判断三:凭据一次都不落盘</h3><p>token 只作为参数传入,只在 push 的那一瞬间拼进 URL。
+另外 git-lfs 会把带凭据的 push URL 打进日志,所以 <code>3-publish-manifest.sh</code> 只按<strong>严格白名单</strong>提交(<code>default.xml</code> + <code>.gitignore</code>)。
+manifest 用 SSH 拉(不存凭据)、HTTP+PAT 推。例如：</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#204a87;font-weight:700>&lt;remote</span> <span style=color:#c4a000>name=</span><span style=color:#4e9a06>&#34;origin&#34;</span> <span style=color:#c4a000>fetch=</span><span style=color:#4e9a06>&#34;ssh://git@&lt;server&gt;/&lt;GROUP&gt;/&#34;</span> <span style=color:#204a87;font-weight:700>/&gt;</span>
+</span></span></code></pre></div><p>这样就可以保证客户端进行拉取代码的时候走ssh,无感于password（gitlab目前是允许http走password验证的方法操作代码的）。</p><h3 id=判断四只读基线不可动摇>判断四:只读基线不可动摇</h3><p>我有一份 readonly 的 SDK,这份代码是从 tarball 直接解压之后得到的,我手动设置为 <code>sudo chmod a-x ./rk3576-sdk-readonly -R</code>。
+后期的 <code>4-verify-sync.sh</code> 就是一直对照这一份sdk作为baseline来进行比对。因为一旦被 <code>2-rebuild.sh</code> 操作过的sdk,至少内部的.git都会被建立为实际的.git目录。这样就与客户端repo sync下来的sdk有本质的区别了。</p><h3 id=判断五手动建立-main-分支>判断五:手动建立 main 分支</h3><p>repo 的标准做法是建立一个detached的HEAD去track一个具体的commit,所以客户端最终修改完代码要提交时，就无法直接git commit & git push，因为没有branch。
+我的做法是在每一个客户端拉取代码的时候增加一句代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>repo start main --all
+</span></span></code></pre></div><p>这样每一个仓库都有一个默认的分支，名为main了。
+当然，如果你 <code>2-rebuild.sh</code>里用非main的分支名，那你可以改名，这样能够跟remote origin/${BRANCH_NAME} 一致，避免后期有认知负担，需要一直记得两个分支名，一个是本地分支，一个是远程分支。</p><hr><h2 id=附常见故障与处置>附:常见故障与处置</h2><p><strong>Q1:<code>repo init</code> 失败,提示 <code>fatal: ... unable to resolve "stable"</code></strong></p><ul><li><strong>原因</strong>:<code>repo</code> 工具默认要检出名为 <code>stable</code> 的 repo 源码分支,而内部镜像的主分支是 <code>main</code>。</li><li><strong>处置</strong>:<code>repo init</code> 时用 <code>--repo-branch</code>(或 <code>-b</code>)指定正确的分支名。此问题已通过在最终部署命令里带上 <code>-b main</code> 而规避。</li></ul><p><strong>Q2:<code>repo init</code> 失败,提示 <code>fatal: couldn't find remote ref refs/heads/master</code></strong></p><ul><li><p><strong>原因</strong>:<code>repo</code> 默认从清单仓库的 <code>master</code> 分支取清单文件,而我们的清单仓库主分支是 <code>main</code>。</p></li><li><p><strong>处置</strong>:<code>repo init</code> 时用 <code>-b</code>(即 <code>--manifest-branch</code>)指定正确的清单分支名。</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>repo init -u &lt;URL&gt; -b main
+</span></span></code></pre></div></li></ul><p><strong>Q3:国内无代理环境下,<code>repo init</code> 失败,连不上 <code>gerrit.googlesource.com</code></strong></p><ul><li><p><strong>原因</strong>:<code>repo</code> 启动器默认从 Google 下载它自己的完整程序。</p></li><li><p><strong>处置</strong>:管理员先在内部 GitLab 上建一个 repo 工具的镜像仓库(例如 <code>&lt;GROUP>/git-repo</code>),用户 <code>repo init</code> 时用 <code>--repo-url</code> 指向这个内部镜像。</p><div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>repo init -u &lt;清单URL&gt; --repo-url<span style=color:#ce5c00;font-weight:700>=</span>http://&lt;server&gt;/tools/git-repo.git ...
+</span></span></code></pre></div></li></ul><p><strong>Q4:<code>repo sync</code> 失败,提示 <code>HTTP Basic: Access denied</code>,或被重定向到登录页</strong></p><ul><li><p><strong>原因</strong>:走 HTTP 访问私有仓库,没有提供有效的认证信息。</p></li><li><p><strong>处置一(URL 里嵌 PAT)</strong>:在 <code>repo init</code> 的 <code>-u</code> 和 <code>--repo-url</code> 两个 URL 里都嵌入 <code>username:PAT@</code>。</p></li><li><p><strong>处置二(<code>~/.netrc</code>,推荐)</strong>:在家目录建 <code>~/.netrc</code> 存 GitLab 的认证信息,git 会自动读取,命令本身不用改。</p><pre tabindex=0><code># ~/.netrc
+machine &lt;server&gt;
+login &lt;user&gt;
+password glpat-xxxxxxxx
+</code></pre><p>最终我们切换到了 SSH 方案,此问题不再出现。</p></li></ul><p><strong>Q5:<code>repo sync</code> 的 <code>Checking out</code> 阶段失败,提示 <code>ManifestInvalidRevisionError: revision main in ... not found</code></strong></p><ul><li><strong>原因</strong>:GitLab 上部分子项目仓库没有 <code>main</code> 分支(可能保留了原始的 <code>master</code> 等分支名),与清单文件要求的 <code>revision="main"</code> 不符。</li><li><strong>处置(管理员)</strong>:跑一个脚本(如 <code>migrate_sdk_intelligent_final.py</code>),把所有子项目仓库的主分支统一重命名为 <code>main</code> 并推送到 GitLab。</li></ul><p><strong>Q6:<code>repo sync</code> 过程中出现大量 <code>Invalid clone.bundle file; ignoring.</code> 警告</strong></p><ul><li><strong>原因</strong>:<code>repo</code> 去下载 GitLab 服务器上并不存在的 <code>clone.bundle</code> 性能优化文件。</li><li><strong>处置(用户)</strong>:<code>repo init</code> 时加 <code>--no-clone-bundle</code>,可彻底消除这个无害警告。</li></ul><hr></div></main></div></main><footer class="td-footer row d-print-none"><div class=container-fluid><div class="row mx-md-2"><div class="td-footer__left col-6 col-sm-4 order-sm-1"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title=X aria-label=X><a href=https://x.com/potter_whi3340 aria-label=X target=_blank rel=noopener><i class="fab fa-twitter"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title="Hugging Face" aria-label="Hugging Face"><a href=https://huggingface.co/PotterWhite aria-label="Hugging Face" target=_blank rel=noopener><i class="fab fa-robot"></i></a></li></ul></div><div class="td-footer__right col-6 col-sm-4 order-sm-3"><ul class=td-footer__links-list><li class=td-footer__links-item data-bs-toggle=tooltip title=GitHub aria-label=GitHub><a href=https://github.com/potterwhite aria-label=GitHub target=_blank rel=noopener><i class="fab fa-github"></i></a></li><li class=td-footer__links-item data-bs-toggle=tooltip title=Slack aria-label=Slack><a href=https://zadoktec.slack.com aria-label=Slack target=_blank rel=noopener><i class="fab fa-slack"></i></a></li></ul></div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2"><span class=td-footer__copyright>&copy;
+2024&ndash;2026
+<span class=td-footer__authors>Potter White | <a href=https://creativecommons.org/licenses/by/4.0 target=_blank rel=noopener>CC BY 4.0</a> |</span></span><span class=td-footer__all_rights_reserved>保留所有权利</span><span class=ms-2><a href=https://policies.google.com/privacy target=_blank rel=noopener>隐私政策</a></span></div></div></div></footer></div><script src=/js/main.min.65d702cee0bf35691ed701b78b7b713d03be4a9f1f184f95e8049d065c07bc57.js integrity="sha256-ZdcCzuC/NWke1wG3i3txPQO+Sp8fGE+V6ASdBlwHvFc=" crossorigin=anonymous></script><script src=/js/prism.js></script><script src=/js/tabpane-persist.js></script></body></html>

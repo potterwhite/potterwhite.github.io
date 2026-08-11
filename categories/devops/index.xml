@@ -71,42 +71,8 @@
 &lt;p&gt;搭建环境时，一直用RDP来连接HomeLab（安装了PVE）下的VM（有Ubuntu/Mac/Win10/Win11）。&lt;br&gt;
 但是发现鼠标肉眼可见的拖拽卡顿，虽然能用，但满足不了设计师的需求。更别说要远程打开设计软件和Microsoft PowerPoint了。&lt;br&gt;&lt;/p&gt;
 &lt;h2 id="最终效果"&gt;&lt;strong&gt;最终效果&lt;/strong&gt;&lt;/h2&gt;
+&lt;figure&gt;&lt;div class="video-wrapper" style="margin: auto; max-width: 800px;"&gt;&lt;video controls playsinline autoplay muted loop preload="auto" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"&gt;&lt;source src="https://potterwhite.github.io/2025/pve/moonlight-connect-workserver-nogpu.mp4" type="video/mp4"&gt;Your browser does not support the video tag.&lt;/video&gt;&lt;/div&gt;&lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);"&gt;最终效果&lt;/figcaption&gt;&lt;/figure&gt;
 
-
-
-
-
-
-
- 
- 
- 
-
- 
-
- 
-
-
-&lt;figure &gt;
- 
- 
-
- 
- 
-
- &lt;div class="video-wrapper" style="margin: auto; max-width: 800px;"&gt;
- &lt;video controls autoplay loop muted playsinline
- style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"&gt;
- &lt;source src="https://potterwhite.github.io/2025/pve/moonlight-connect-workserver-nogpu.mp4" type="video/mp4"&gt;
- Your browser does not support the video tag.
- &lt;/video&gt;
- &lt;/div&gt;
- 
-
- 
- &lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);"&gt;最终效果&lt;/figcaption&gt;
- 
-&lt;/figure&gt;
 &lt;hr&gt;
 &lt;h2 id="下载"&gt;&lt;strong&gt;下载&lt;/strong&gt;&lt;/h2&gt;
 &lt;ul&gt;
