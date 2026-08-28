@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Helmsman：端侧（SOC）AI 人像抠图 — 从模型到部署的全栈工程 on Potter的个人笔记</title><link>https://potterwhite.github.io/portfolio/edge-ai/helmsman/</link><description>Recent content in Helmsman：端侧（SOC）AI 人像抠图 — 从模型到部署的全栈工程 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 09 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/portfolio/edge-ai/helmsman/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 1: 黄金参考系统 — 在 x86 上搭建像素级对齐的 C++ 推理管线</title><link>https://potterwhite.github.io/portfolio/edge-ai/helmsman/stage1-golden-reference/</link><pubDate>Tue, 09 Jun 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/edge-ai/helmsman/stage1-golden-reference/</guid><description>&lt;script type="module"&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Helmsman：端侧（SOC）AI 人像抠图 — 从模型到部署的全栈工程 on Potter的个人笔记</title><link>https://potterwhite.github.io/portfolio/edge-ai/helmsman/</link><description>Recent content in Helmsman：端侧（SOC）AI 人像抠图 — 从模型到部署的全栈工程 on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Fri, 28 Aug 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/portfolio/edge-ai/helmsman/index.xml" rel="self" type="application/rss+xml"/><item><title>Chapter 1: 黄金参考系统 — 在 x86 上搭建像素级对齐的 C++ 推理管线</title><link>https://potterwhite.github.io/portfolio/edge-ai/helmsman/stage1-golden-reference/</link><pubDate>Tue, 09 Jun 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/edge-ai/helmsman/stage1-golden-reference/</guid><description>&lt;script type="module"&gt;
  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 &lt;/script&gt;
 &lt;h3 id="chapter-1-building-a-golden-reference-system"&gt;&lt;strong&gt;Chapter 1: Building a Golden Reference System&lt;/strong&gt;&lt;/h3&gt;
@@ -743,4 +743,66 @@ gantt
 "从一个只会 import ultralytics 跑 YOLO 的人，变成了一个能从模型手术到 NPU 推理全栈打通的系统工程师。"
 
 或者更深层的收获：工程判断力 —— 知道什么时候该坚持，什么时候该放弃，什么时候该先 profiling 再动手。
---&gt;</description></item></channel></rss>
+--&gt;</description></item><item><title>Section 8.1: Orin NX 上给 RVM 测 FPS 基线</title><link>https://potterwhite.github.io/portfolio/edge-ai/helmsman/section8.1-orin-nx-deployment/</link><pubDate>Fri, 28 Aug 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/edge-ai/helmsman/section8.1-orin-nx-deployment/</guid><description>&lt;h1 id="orin-nx-上给-rvm-测-fps-基线"&gt;Orin NX 上给 RVM 测 FPS 基线&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;状态&lt;/strong&gt;：骨架，待填肉。数字已核对，散文全部待写。
+&lt;strong&gt;归属&lt;/strong&gt;：Helmsman / CUDA 平台线（与现有 7 章 Rockchip 线并列，勿插入编号）
+&lt;strong&gt;数据来源&lt;/strong&gt;：&lt;code&gt;deploy/cuda/day3-docker-pytorch-and-rvm-fp32.md&lt;/code&gt;（2026-08-26/27 实测）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="--流水账"&gt;〇 · 流水账&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;镜像选型 → 容器起来 → CUDA 可用性验证 → RVM 仓库 + 权重就位&lt;/li&gt;
+&lt;li&gt;出图成功：363 帧 1080p，vlc 确认抠图正常、发丝边缘干净&lt;/li&gt;
+&lt;li&gt;端到端 &lt;code&gt;1.83 it/s&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- 填肉：镜像 tag 怎么选的、踩了哪些环境坑（cv2/X11 那些扔附录，别进正文） --&gt;
+&lt;p&gt;ClaudeCode用来建立课程，尤其是自己不太熟悉的领域，效果不错。&lt;/p&gt;
+&lt;p&gt;虽然RVM的模型部署对我来说并不陌生了，但是毕竟Jetson是陌生的，所以最初的基础还是CC给我建立的。&lt;/p&gt;
+&lt;p&gt;拿到硬件的检查，打印外壳，模组压力测试，温度曲线，GPU使用率曲线等都属于BSP的内容，我在此就以BSP环节都完成为起点，直接展开RVM的部署记载。&lt;/p&gt;
+&lt;h3 id="第一件事选择什么容器镜像"&gt;第一件事，选择什么容器镜像&lt;/h3&gt;
+&lt;p&gt;虽然我觉得在arm板上再部署docker,对于最终性能的损耗总会有担心，但AI给的回答是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;现在以快速上线为第一，而英伟达给的容器镜像就把这部分依赖环境都给建立好，所以用容器的学习成本是小于投入时间研究环境的代价的。&lt;/li&gt;
+&lt;li&gt;容器不会留到最终生产阶段，所以性能的微弱影响可以在此忽略不计。&lt;/li&gt;
+&lt;li&gt;Jetson上部署容器，以及nvidia-container-toolkit关系是什么，能用docker官网给出的&lt;a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository" target="_blank" rel="noopener"&gt;安装命令&lt;/a&gt;吗？（反正都是apt去做）为什么？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;带着这些问题，我决定跟着课程走。第一件事，就是选择什么镜像呢？&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;1. 打开 https://catalog.ngc.nvidia.com/
+ ↓
+2. 左侧筛选栏先勾 【Containers】 ← ⭐ 第一下就勾这个
+ ↓ （NGC 上还有 Models / Resources / Helm Charts / Collections，
+ ↓ 跟找镜像无关，勾掉之后页面立刻清爽）
+ ↓
+3. 搜索框输 &amp;#34;pytorch&amp;#34; ← ⭐ 只输容器名，永远不要输版本号
+ ↓
+4. 点进 【PyTorch】 那张卡片（因为rvm的模型用的就是pytorch）
+ ↓
+5. 点页面上的 【Tags】 标签页 ← ⭐ 关键就是这一下，tag 只在这里
+ ↓
+6. 在 tag 列表里找名字带 -igpu 的
+ ↓
+7. 有N个带-igpu的镜像，选择哪一个得看pytorch对应的cuda版本
+ a. ssh到jetson,输入&amp;#39;ls -lhat /usr/local/cuda-*&amp;#39;，此处我显示出是cuda-12.6。因此接下来就是要找到对应cuda12.6的pytorch-xx-igpu镜像
+ b. 打开 https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/
+ c. 左侧目录点 &amp;#34;PyTorch Release 24.12&amp;#34;
+ （或直接改 URL：.../rel-24-12.html ← 把年月换成我要查的那个版本）
+ d. 页面开头 &amp;#34;This container image contains...&amp;#34; 那段，看两行：
+ NVIDIA CUDA xxxx ← ⭐ 这个跟宿主比
+ PyTorch 2.6.yyyy
+ e. 如果不匹配，就继续回到b,寻找其他pytorch的版本，直到找到为止；
+ 如果已找到匹配，那就记下这个版本号，例如24.12
+
+8. 回到5的tags标签页，找到你要的标签，例如上面举例的24.12，然后用每行右边的 【Copy】 按钮取完整 pull 路径（别手打，容易出错）
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="第二件事-初始化开发环境"&gt;第二件事. 初始化开发环境&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#204a87"&gt;cd&lt;/span&gt; /workspace/rvm
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/PeterL1n/RobustVideoMatting.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#204a87"&gt;cd&lt;/span&gt; RobustVideoMatting.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#8f5902;font-style:italic"&gt;# 下预训练权重&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;wget https://github.com/PeterL1n/RobustVideoMatting/releases/download/v1.0.0/rvm_mobilenetv3.pth &lt;span style="color:#4e9a06"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -O /workspace/rvm/weights/rvm_mobilenetv3.pth
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#8f5902;font-style:italic"&gt;# 依赖&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip3 install &lt;span style="color:#000"&gt;numpy&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;==&lt;/span&gt;1.26.4 &lt;span style="color:#000"&gt;av&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;==&lt;/span&gt;12.3.0 &lt;span style="color:#000"&gt;pims&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;==&lt;/span&gt;0.7 &lt;span style="color:#000"&gt;slicerator&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;==&lt;/span&gt;1.1.0 &lt;span style="color:#000"&gt;imageio&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;==&lt;/span&gt;2.34.2 &lt;span style="color:#000"&gt;tqdm&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;==&lt;/span&gt;4.67.1 &lt;span style="color:#000"&gt;tifffile&lt;/span&gt;&lt;span style="color:#ce5c00;font-weight:bold"&gt;==&lt;/span&gt;2024.8.30 --proxy&lt;span style="color:#ce5c00;font-weight:bold"&gt;=&lt;/span&gt;&lt;span style="color:#4e9a06"&gt;&amp;#34;http://192.168.3.164:7890&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这些依赖都在我的docker of jetson里跑通了。&lt;/p&gt;</description></item></channel></rss>
