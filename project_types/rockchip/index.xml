@@ -89,6 +89,13 @@ RKNN · MPP · DMA Zero-Copy · NEON SIMD · ONNX Runtime · C++17 · CMake · C
 &lt;li&gt;&lt;strong&gt;概要：&lt;/strong&gt; 关键决策回顾、成功与弯路分析、可复用资产清单、技能成长总结。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;a href="./stage7-retrospective/"&gt;查看详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="chapter-8-jetson部署"&gt;&lt;strong&gt;Chapter 8: Jetson部署&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心问题：&lt;/strong&gt; &amp;ldquo;应为英伟达的cuda生态优势，RVM作者的benchmark都用的是RTX3090作为测试标杆，所以尝试在Jetson上去部署RVM&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;概要：&lt;/strong&gt; 部署的经过（含失败）、有价值的思考和BUG分析&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./section8.1-orin-nx-deployment"&gt;章节8.1：Orin NX 上给 RVM 测 FPS 基线 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;</description></item><item><title>RK3588平台BSP构建 - PCIe模块Bringup</title><link>https://potterwhite.github.io/portfolio/embedded-bsp/bringup-rk3588/</link><pubDate>Wed, 29 Jul 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/embedded-bsp/bringup-rk3588/</guid><description>&lt;h2 id="项目介绍"&gt;项目介绍&lt;/h2&gt;
 &lt;p&gt;该项目是基于Topeet北京迅为的定制版SDK(&lt;strong&gt;rk3588-linux_20250321.tar.xz&lt;/strong&gt;)进行&lt;strong&gt;内核&lt;/strong&gt;调试。&lt;/p&gt;
 &lt;p&gt;我的角色是BSP工程师，我的核心工作在于 &lt;strong&gt;Bring-up、设备树 (DTS) 精确配置、以及Linux内核驱动的问题定位及调试&lt;/strong&gt;。&lt;/p&gt;

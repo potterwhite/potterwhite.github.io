@@ -70,4 +70,11 @@ RKNN · MPP · DMA Zero-Copy · NEON SIMD · ONNX Runtime · C++17 · CMake · C
 &lt;li&gt;&lt;strong&gt;概要：&lt;/strong&gt; 关键决策回顾、成功与弯路分析、可复用资产清单、技能成长总结。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;a href="./stage7-retrospective/"&gt;查看详情 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="chapter-8-jetson部署"&gt;&lt;strong&gt;Chapter 8: Jetson部署&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心问题：&lt;/strong&gt; &amp;ldquo;应为英伟达的cuda生态优势，RVM作者的benchmark都用的是RTX3090作为测试标杆，所以尝试在Jetson上去部署RVM&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;概要：&lt;/strong&gt; 部署的经过（含失败）、有价值的思考和BUG分析&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="./section8.1-orin-nx-deployment"&gt;章节8.1：Orin NX 上给 RVM 测 FPS 基线 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr&gt;</description></item></channel></rss>
