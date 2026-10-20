@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI Agent on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/ai-agent/</link><description>Recent content in AI Agent on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 20 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/ai-agent/index.xml" rel="self" type="application/rss+xml"/><item><title>Bring-Up-Anything</title><link>https://potterwhite.github.io/portfolio/embedded-build-infrastructure/bring-up-anything/</link><pubDate>Tue, 20 Oct 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/embedded-build-infrastructure/bring-up-anything/</guid><description>&lt;h2 id="演示v010版"&gt;演示(v0.1.0版)&lt;/h2&gt;
+&lt;figure&gt;&lt;div class="video-wrapper" style="margin: auto; max-width: 800px;"&gt;&lt;video controls playsinline preload="metadata" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"&gt;&lt;source src="https://potterwhite.github.io/2026/bring-up-anything/v0.1.0-f1-exam-onetake.mp4" type="video/mp4"&gt;Your browser does not support the video tag.&lt;/video&gt;&lt;/div&gt;&lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);"&gt;闭环工作，一镜到底， 分 50 秒&lt;/figcaption&gt;&lt;/figure&gt;
+
+&lt;h2 id="特点面向agent"&gt;特点：面向Agent&lt;/h2&gt;
+&lt;p&gt;我一直在做嵌入式研发效能工具：编译环境（HarborPilot）、SDK 治理（SalvageOfSDK）。这一次，工具的服务对象从人换成了 AI——我把开发板的串口、SSH、交叉编译、烧写封装成一个 MCP 工具链，接给 AI。&lt;/p&gt;
+&lt;p&gt;Bring-Up-Anything 把嵌入式调试的物理通道——串口、SSH、交叉编译、烧写——封装成 8 个 MCP 工具挂到 Claude Code 上。
+配一份从我自己的 bring-up 方法论翻译来的调试 SOP(SOP只做通用化的规则提供）。
+因此，第一个版本的目标达成了：AI 拿到板子就能闭环干（一部分的）活：读状态、查日志、改 dts、编译、部署、验证，全程几乎不需要人为介入。&lt;/p&gt;
+&lt;h2 id="架构"&gt;架构&lt;/h2&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;+------------------------+ +-----------------------+ +------------------+
+| Server Docker | | Host（连接设备串口的主机）| | RK3588 目标板 |
+| Claude Code (Host) | MCP | ser2net :4000 | ttyUSB | |
+| ↕ stdio |=======&amp;gt;| ↑ |=======&amp;gt;| 调试串口 |
+| MCP Server (MCPServer)| ssh | ttyUSB0 ←────────────┼────────┤ |
++------------------------+ +-----------------------+ +------------------+
+ +-- 交叉编译（SDK 内核源码树，Docker 内）
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;关键架构决策：&lt;br&gt;
+【串口-“录音笔”】：&lt;strong&gt;串口采集进程独立于 MCP server 常驻&lt;/strong&gt;。MCP server 是 Claude Code 按需拉起的，没人调用时进程根本不在，而 panic / boot 日志稍纵即逝——录音笔 7×24 连 ser2net 落盘，其他工具要读串口的时候只读录音笔（包括崩溃前的最后输出）。&lt;/p&gt;</description></item></channel></rss>
