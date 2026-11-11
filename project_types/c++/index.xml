@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++ on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/c++/</link><description>Recent content in C++ on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 09 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/c++/index.xml" rel="self" type="application/rss+xml"/><item><title>Helmsman：端侧（SOC）AI 人像抠图 — 从模型到部署的全栈工程</title><link>https://potterwhite.github.io/portfolio/edge-ai/helmsman/</link><pubDate>Tue, 09 Jun 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/edge-ai/helmsman/</guid><description>&lt;h2 id="project-introduction"&gt;Project Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++ on Potter的个人笔记</title><link>https://potterwhite.github.io/project_types/c++/</link><description>Recent content in C++ on Potter的个人笔记</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Wed, 11 Nov 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://potterwhite.github.io/project_types/c++/index.xml" rel="self" type="application/rss+xml"/><item><title>Helmsman：端侧（SOC）AI 人像抠图 — 从模型到部署的全栈工程</title><link>https://potterwhite.github.io/portfolio/edge-ai/helmsman/</link><pubDate>Tue, 09 Jun 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/edge-ai/helmsman/</guid><description>&lt;h2 id="project-introduction"&gt;Project Introduction&lt;/h2&gt;
 &lt;!-- 填入：项目背景。为什么做端侧抠图？应用场景（视频会议虚拟背景、直播绿幕免抠、AR 特效）。目标硬件平台 RK3588S，目标帧率 30 FPS。--&gt;
 &lt;h2 id="my-role"&gt;My Role&lt;/h2&gt;
 &lt;!-- 填入：你的角色（Model Deployment Engineer），职责范围（模型手术 → ONNX 转换 → RKNN 量化 → C++ 推理流水线 → 性能优化）。强调是独立完成的全栈工作。--&gt;
@@ -77,4 +77,20 @@ RKNN · MPP · DMA Zero-Copy · NEON SIMD · ONNX Runtime · C++17 · CMake · C
 &lt;li&gt;&lt;strong&gt;概要：&lt;/strong&gt; 部署的经过（含失败）、有价值的思考和BUG分析&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;a href="./section8.1-orin-nx-deployment"&gt;章节8.1：Orin NX 上给 RVM 测 FPS 基线 »&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;hr&gt;</description></item></channel></rss>
+&lt;hr&gt;</description></item><item><title>SPIFlasher</title><link>https://potterwhite.github.io/portfolio/embedded-build-infrastructure/spiflasher/</link><pubDate>Wed, 11 Nov 2026 00:00:00 +0000</pubDate><guid>https://potterwhite.github.io/portfolio/embedded-build-infrastructure/spiflasher/</guid><description>&lt;h2 id="演示"&gt;演示&lt;/h2&gt;
+&lt;figure&gt;&lt;div class="video-wrapper" style="margin: auto; max-width: 800px;"&gt;&lt;video controls playsinline preload="metadata" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"&gt;&lt;source src="https://potterwhite.github.io/2026/spiflasher/spiflasher-demo.mp4" type="video/mp4"&gt;Your browser does not support the video tag.&lt;/video&gt;&lt;/div&gt;&lt;figcaption style="text-align: center; font-style: italic; margin-top: 0.5em; color: var(--td-sidebar-text-color);"&gt;板端实拍演示，一镜到底&lt;/figcaption&gt;&lt;/figure&gt;
+
+&lt;h2 id="特点在别人的系统里不碰别人的代码"&gt;特点：在别人的系统里，不碰别人的代码&lt;/h2&gt;
+&lt;p&gt;给板卡 FPGA 的配置 Flash 烧写新位流用的工装。不能改主线代码、不能打内核补丁，也没有厂商工装可用，整条烧写链路是从 spidev 和 GPIO sysfs 两个用户态接口逆向出来的。&lt;/p&gt;
+&lt;p&gt;成品是一个 55 KB 的单文件程序，动态依赖只有 libc，既是命令行工具，也是浏览器里的烧写服务，烧完强制整幅回读校验。&lt;/p&gt;
+&lt;p&gt;AI 是实现杠杆；问题定义、架构裁决和每道硬件验证闸门都由我自己把。&lt;/p&gt;
+&lt;h2 id="架构"&gt;架构&lt;/h2&gt;
+&lt;p&gt;【待补】&lt;/p&gt;
+&lt;h2 id="验收"&gt;验收&lt;/h2&gt;
+&lt;p&gt;【待补】&lt;/p&gt;
+&lt;h2 id="已知局限"&gt;已知局限&lt;/h2&gt;
+&lt;p&gt;【待补】&lt;/p&gt;
+&lt;h2 id="和其他案例的关系"&gt;和其他案例的关系&lt;/h2&gt;
+&lt;p&gt;【待补】&lt;/p&gt;
+&lt;h2 id="迭代计划"&gt;迭代计划&lt;/h2&gt;
+&lt;p&gt;【待补】&lt;/p&gt;</description></item></channel></rss>
