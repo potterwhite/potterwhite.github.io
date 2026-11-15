@@ -1,0 +1,381 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QML Options · PotterWhite</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>QML Options</h1><div class="article-meta"><time datetime="2024-08-02" class="mono">2024-08-02</time><a class="pill teal" href="/blog/categories/qt-development/">qt-development</a><a class="pill teal" href="/blog/categories/qml/">qml</a></div></header><div class="pw-prose"><p>理解你的需求，以下是 QML 中顶层容器的不同类型，以及它们适用于哪些场景：</p>
+<h1 id="顶层容器类型"><strong>顶层容器类型</strong></h1>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ApplicationWindow</span></span>
+<span class="line"><span>    用途：适用于创建应用程序的主窗口，带有内置的菜单栏和状态栏。</span></span>
+<span class="line"><span>    导入模块：QtQuick.Controls</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Window</span></span>
+<span class="line"><span>    用途：用于创建没有内置菜单栏和状态栏的窗口。可以手动添加所需的控件。</span></span>
+<span class="line"><span>    导入模块：QtQuick.Window</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Dialog</span></span>
+<span class="line"><span>    用途：用于创建对话框窗口，通常用于提示用户进行某些操作或输入信息。</span></span>
+<span class="line"><span>    导入模块：QtQuick.Controls</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Popup</span></span>
+<span class="line"><span>    用途：用于创建弹出窗口，可以用于上下文菜单、工具提示等。</span></span>
+<span class="line"><span>    导入模块：QtQuick.Controls</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Item</span></span>
+<span class="line"><span>    用途：最基本的可视化对象容器，不创建窗口，但可以作为其他元素的父容器。</span></span>
+<span class="line"><span>    导入模块：QtQuick</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Rectangle</span></span>
+<span class="line"><span>    用途：用于创建简单的矩形区域，常用于布局和装饰。</span></span>
+<span class="line"><span>    导入模块：QtQuick</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Application</span></span>
+<span class="line"><span>    用途：通常作为 QML 应用程序的根对象，管理整个应用程序的生命周期。</span></span>
+<span class="line"><span>    导入模块：QtQuick</span></span></code></pre>
+<p>示例代码</p>
+<p>以下是每个顶层容器的简单示例：</p>
+<h4 id="1-applicationwindow"><code>1. ApplicationWindow</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick 6.2</span></span>
+<span class="line"><span>import QtQuick.Controls 6.2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>ApplicationWindow {</span></span>
+<span class="line"><span>    visible: true</span></span>
+<span class="line"><span>    width: 800</span></span>
+<span class="line"><span>    height: 600</span></span>
+<span class="line"><span>    title: "ApplicationWindow Example"</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="2-window"><code>2. Window</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick 6.2</span></span>
+<span class="line"><span>import QtQuick.Window 6.2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Window {</span></span>
+<span class="line"><span>    visible: true</span></span>
+<span class="line"><span>    width: 800</span></span>
+<span class="line"><span>    height: 600</span></span>
+<span class="line"><span>    title: "Window Example"</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="3-dialog"><code>3. Dialog</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick 6.2</span></span>
+<span class="line"><span>import QtQuick.Controls 6.2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Dialog {</span></span>
+<span class="line"><span>    visible: true</span></span>
+<span class="line"><span>    width: 400</span></span>
+<span class="line"><span>    height: 300</span></span>
+<span class="line"><span>    title: "Dialog Example"</span></span>
+<span class="line"><span>    standardButtons: Dialog.Ok | Dialog.Cancel</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="4-popup"><code>4. Popup</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick 6.2</span></span>
+<span class="line"><span>import QtQuick.Controls 6.2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Popup {</span></span>
+<span class="line"><span>    visible: true</span></span>
+<span class="line"><span>    width: 200</span></span>
+<span class="line"><span>    height: 100</span></span>
+<span class="line"><span>    Text {</span></span>
+<span class="line"><span>        anchors.centerIn: parent</span></span>
+<span class="line"><span>        text: "Popup Example"</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="5-item"><code>5. Item</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick 6.2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Item {</span></span>
+<span class="line"><span>    width: 800</span></span>
+<span class="line"><span>    height: 600</span></span>
+<span class="line"><span>    Rectangle {</span></span>
+<span class="line"><span>        width: 100</span></span>
+<span class="line"><span>        height: 100</span></span>
+<span class="line"><span>        color: "blue"</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="6-rectangle"><code>6. Rectangle</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick 6.2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Rectangle {</span></span>
+<span class="line"><span>    width: 800</span></span>
+<span class="line"><span>    height: 600</span></span>
+<span class="line"><span>    color: "lightgray"</span></span>
+<span class="line"><span>    Text {</span></span>
+<span class="line"><span>        anchors.centerIn: parent</span></span>
+<span class="line"><span>        text: "Rectangle Example"</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="7-application"><code>7. Application</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick 6.2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Application {</span></span>
+<span class="line"><span>    id: app</span></span>
+<span class="line"><span>    Item {</span></span>
+<span class="line"><span>        width: 800</span></span>
+<span class="line"><span>        height: 600</span></span>
+<span class="line"><span>        Rectangle {</span></span>
+<span class="line"><span>            width: 100</span></span>
+<span class="line"><span>            height: 100</span></span>
+<span class="line"><span>            color: "blue"</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="顶层容器结构">顶层容器结构</h4>
+<p>顶层容器的结构通常如下：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Application 或 ApplicationWindow 或 Window 或 Dialog 或 Popup</span></span>
+<span class="line"><span>    子元素：Item, Rectangle, Text, Button, ListView 等各种 UI 元素</span></span></code></pre>
+<h4 id="示例">示例：</h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>ApplicationWindow {</span></span>
+<span class="line"><span>    visible: true</span></span>
+<span class="line"><span>    width: 800</span></span>
+<span class="line"><span>    height: 600</span></span>
+<span class="line"><span>    title: "App Structure Example"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    Rectangle {</span></span>
+<span class="line"><span>        width: parent.width</span></span>
+<span class="line"><span>        height: parent.height</span></span>
+<span class="line"><span>        color: "lightgray"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        Text {</span></span>
+<span class="line"><span>            anchors.centerIn: parent</span></span>
+<span class="line"><span>            text: "Hello, World!"</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>这些顶层容器类型及其结构可以根据具体需求选择和使用，从而满足不同类型的应用程序设计需求。</p>
+<h1 id="关键字property"><strong>关键字：Property</strong></h1>
+<p>让我们深入探讨一下 QML 中 <code>property</code> 的作用、外部访问的机制，以及如何决定属性是否暴露给外部。</p>
+<h3 id="1-qml-中的属性访问机制">1. <strong>QML 中的属性访问机制</strong></h3>
+<h4 id="内置属性如-heightwidth-等"><strong>内置属性（如 <code>height</code>、<code>width</code> 等）</strong></h4>
+<ul>
+<li>
+<p><strong>内置属性</strong>：QML 中的某些属性，如 <code>height</code>、<code>width</code>、<code>color</code> 等，是组件自带的内置属性，这些属性默认是对外暴露的。因此，父组件可以直接访问和设置这些属性。</p>
+</li>
+<li>
+<p><strong>访问方式</strong>：这些内置属性在定义组件时自动提供，可以直接通过组件的 <code>id</code> 在外部访问，例如：</p>
+</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="qml"><code><span class="line"><span>Rectangle {</span></span>
+<span class="line"><span>    id: rect</span></span>
+<span class="line"><span>    width: 100</span></span>
+<span class="line"><span>    height: 50</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Item {</span></span>
+<span class="line"><span>    width: rect.width  // 直接访问 rect 的 width 属性</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h3 id="2-property-的作用">2. <strong><code>property</code> 的作用</strong></h3>
+<h4 id="定义自定义属性"><strong>定义自定义属性</strong></h4>
+<ul>
+<li><strong>扩展属性</strong>：通过 <code>property</code>，你可以定义组件的自定义属性，这些属性不是组件的内置属性。<code>property</code> 使得这些自定义属性能够被外部访问和修改。例如，你可能会定义一个 <code>property</code> 来跟踪某个状态：</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="qml"><code><span class="line"><span>Rectangle {</span></span>
+<span class="line"><span>    id: rect</span></span>
+<span class="line"><span>    property int myCustomHeight: 100</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Item {</span></span>
+<span class="line"><span>    width: rect.myCustomHeight  // 访问自定义的 myCustomHeight 属性</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="绑定和初始值"><strong>绑定和初始值</strong></h4>
+<ul>
+<li><strong>属性绑定</strong>：<code>property</code> 可以与其他属性或表达式绑定，这使得属性之间能够自动更新。例如：</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="qml"><code><span class="line"><span>Rectangle {</span></span>
+<span class="line"><span>    id: rect</span></span>
+<span class="line"><span>    property int myCustomHeight: width / 2  // myCustomHeight 随着 width 的变化而变化</span></span>
+<span class="line"><span>    width: 200</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h4 id="暴露内部状态"><strong>暴露内部状态</strong></h4>
+<ul>
+<li><strong>状态管理</strong>：你可以通过 <code>property</code> 把组件的内部状态暴露给外部，从而实现更好的封装和模块化设计。例如，定义一个 <code>property</code> 来暴露内部的计算结果：</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="qml"><code><span class="line"><span>Rectangle {</span></span>
+<span class="line"><span>    id: rect</span></span>
+<span class="line"><span>    property real area: width * height  // 暴露矩形的面积</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h3 id="3-内部变量与-property-的区别">3. <strong>内部变量与 <code>property</code> 的区别</strong></h3>
+<ul>
+<li>
+<p><strong>局部变量</strong>：如果你只需要在组件内部使用某个值或状态，通常不会使用 <code>property</code>，而是使用局部变量或 JavaScript 变量。局部变量不会暴露给外部，也不会通过 <code>id</code> 访问到。</p>
+<ul>
+<li><strong>局部变量示例</strong>：
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="qml"><code><span class="line"><span>Rectangle {</span></span>
+<span class="line"><span>    id: rect</span></span>
+<span class="line"><span>    width: 100</span></span>
+<span class="line"><span>    height: 50</span></span>
+<span class="line"><span>    var internalValue = 200  // 只在这个组件内部可见的变量</span></span>
+<span class="line"><span>}</span></span></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>property</code> 的作用</strong>：<code>property</code> 主要用于定义和管理组件的外部可见状态或配置。通过 <code>property</code>，你可以把组件的某些内部状态暴露出来，供父组件或外部组件访问。</p>
+</li>
+</ul>
+<h3 id="4-总结property-的功能与外部访问">4. <strong>总结：<code>property</code> 的功能与外部访问</strong></h3>
+<ul>
+<li>
+<p><strong>外部访问</strong>：内置属性（如 <code>height</code>、<code>width</code>）默认是暴露给外部的，而通过 <code>property</code> 定义的属性也会暴露给外部。没有 <code>property</code> 修饰的局部变量则不会被外部访问到。</p>
+</li>
+<li>
+<p><strong><code>property</code> 的用途</strong>：<code>property</code> 主要用于定义组件的自定义属性、管理属性绑定、或暴露内部状态给外部。<code>property</code> 还允许你为自定义属性设置初始值，并支持动态绑定。</p>
+</li>
+<li>
+<p><strong>局部变量 vs <code>property</code></strong>：如果你不希望某个状态或值被外部访问，且只需要在组件内部使用，那么应使用局部变量或 JavaScript 变量，而不是 <code>property</code>。<code>property</code> 用于那些需要外部访问和管理的属性。</p>
+</li>
+</ul>
+<p>通过理解这些概念，你可以更好地设计和组织 QML 代码，确保组件之间的低耦合性和良好的封装性。</p>
+<h2 id="003singleton-单例对象">003.<strong>Singleton 单例对象</strong></h2>
+<h3 id="使用场景"><strong>使用场景</strong></h3>
+<ol>
+<li>
+<p>可以是要在外部动态的设置某一个程序的属性，让整个程序的其他组件都因此做出改变，可以用singleton</p>
+<p><a href="https://juejin.cn/post/6959740008240513037">QML Styling 及 Singleton 使用方法浅谈 - 掘金</a></p>
+</li>
+<li>
+<p>希望精简，模块不要反复被创建</p>
+</li>
+</ol>
+<h3 id="必要步骤在相应的qml文件的顶行写pragma-singleton"><strong>【必要步骤】在相应的qml文件的顶行写pragma Singleton</strong></h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>pragma Singleton</span></span></code></pre>
+<p><code>注意这条语句要写在import 语句之前</code></p>
+<h3 id="必要步骤需要在相应的cmakelisttxt里设置qt_qml_singleton_type-为true"><strong>【必要步骤】需要在相应的CMakeList.txt里设置QT_QML_SINGLETON_TYPE 为TRUE</strong></h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>set_source_files_properties(First_Color_Scheme.qml PROPERTIES</span></span>
+<span class="line"><span>    QT_QML_SINGLETON_TYPE TRUE</span></span>
+<span class="line"><span>)</span></span></code></pre>
+<ul>
+<li>
+<p>在哪一个CMakeList.txt呢？</p>
+<p>我的qml文件处在项目根目录下的一个叫content的文件夹中</p>
+<p>这个文件夹是专门存放所有qml文件的</p>
+<p>在content下有一个CMakeList.txt</p>
+<p>（不要放到项目根目录下的CMakeList.txt里面-因为放进去也没用）</p>
+</li>
+<li>
+<p>设置完会怎么样，请看build之后的目录下：</p>
+<p>build\6_5_3_MSVC2019_x64-Debug\qml\content\qmldir</p>
+</li>
+<li>
+<p>设置技巧</p>
+<p>本语句的位置不能低于qt6_add_qml_module（或qt_add_qml_module）</p>
+</li>
+</ul>
+<h3 id="必要步骤需要在相应的cmakelisttxt里创建单例模块singleton-module独立于其他qml模块"><strong>【必要步骤】需要在相应的CMakeList.txt里创建单例模块Singleton Module（独立于其他QML模块）</strong></h3>
+<ul>
+<li>CMakeLists.txt的相关代码</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>qt6_add_qml_module(singleton</span></span>
+<span class="line"><span>    URI "singleton"</span></span>
+<span class="line"><span>    VERSION 1.0</span></span>
+<span class="line"><span>    QML_FILES</span></span>
+<span class="line"><span>        Color/First_Color_Scheme.qml</span></span>
+<span class="line"><span>)</span></span>
+<span class="line"><span></span></span></code></pre>
+<p><code>这里的URI很重要，最后我们要调用的地方，都需要import，而import后面的模块名称就是看URI的。</code></p>
+<h4 id="为什么一定要再这里创建单例模块呢"><strong>为什么一定要再这里创建单例模块呢？</strong></h4>
+<p>按照微软的文档：</p>
+<p><img src="/2024/August/10/singleton.png" alt="singleton.png"></p>
+<p>我们就是需要去把它做成一个模块的</p>
+<h3 id="必要步骤调用singleton-object单例对象的办法"><strong>【必要步骤】调用singleton object（单例对象）的办法</strong></h3>
+<ul>
+<li>
+<p>不能用的办法1：创建它</p>
+<ul>
+<li>
+<p>代码</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>Second_TitleBar {</span></span>
+<span class="line"><span>    id: bID_Instance_Module_TitleBar</span></span>
+<span class="line"><span>    anchors.top: parent.top</span></span>
+<span class="line"><span>    width: parent.width</span></span>
+<span class="line"><span>}</span></span></code></pre>
+</li>
+<li>
+<p>例如这种方法，就是去创建一个单例对象，这样会提示错误</p>
+</li>
+<li>
+<p>错误信息</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>11:00:01: Starting C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe...</span></span>
+<span class="line"><span>DLL_PROCESS_ATTACH: The DLL has been attached to the process at 00007FF902D40000</span></span>
+<span class="line"><span>QML debugging is enabled. Only use this in a safe environment.</span></span>
+<span class="line"><span>Ext_CreateAudioControl called.</span></span>
+<span class="line"><span>ASCtl_Impl constructor called.</span></span>
+<span class="line"><span>QQmlApplicationEngine failed to load component</span></span>
+<span class="line"><span>qrc:/qt/qml/Main/main.qml:7:1: Type App unavailable</span></span>
+<span class="line"><span>qrc:/qt/qml/content/App.qml:54:1: Type VolumeMixer unavailable</span></span>
+<span class="line"><span>qrc:/qt/qml/content/VolumeMixer.qml:20:5: Composite Singleton Type Second_TitleBar is not creatable.</span></span>
+<span class="line"><span>DLL_PROCESS_DETACH: The DLL has been detached from the process at 00007FF902D40000</span></span>
+<span class="line"><span>11:00:01: C:\Code\ASCtl\PL\QtProj\build\6_5_3_MSVC2019_x64-Debug\ASCtl_UIApp.exe exited with code -1</span></span>
+<span class="line"><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>可能可以用的办法：把某个要作为单例的qml封装成一个module</p>
+<p>具体是在content/CMakeList.txt下，用qt6_add_qml_module去新建一个模块</p>
+<p>然后去import这个模块，例如import titlebar 1.0 / import controlpanel 1.0这样</p>
+<p>不过这个办法我也没有尝试过。</p>
+</li>
+<li>
+<p>需要注意：调用时要加入<code>Component.onCompleted: {</code></p>
+<p>已经在多处都看见这种做法了</p>
+<p><a href="https://qt.0voice.com/?id=5269">QML中如何实现一个单例-QT开发中文网</a></p>
+<p>可能谈到调用就是异步的。</p>
+</li>
+</ul>
+<h3 id="相关的帖子"><strong>相关的帖子</strong></h3>
+<p><a href="https://doc.qt.io/qt-6/qml-singleton.html">Singletons in QML | Qt QML 6.7.2</a></p>
+<p><a href="https://forum.qt.io/topic/129738/singleton-qml-failed-to-load-as-module/2">Singleton QML failed to load as module</a></p>
+<p><a href="http://imaginativethinking.ca/make-qml-component-singleton/">How to make a QML Component a Singleton?</a></p>
+<p><a href="https://blog.csdn.net/HyEISN/article/details/130600566">Qt 创建 单例/Singleton qml 文件_pragma singleton-CSDN博客</a></p>
+<h2 id="004-qml中的signal--slot">004. QML中的signal &#x26; slot</h2>
+<p>要点：</p>
+<ul>
+<li>1.信号要在本qml文件中的<code>顶层容器</code>中进行定义
+就算触发信号的位置是在本qml文件中嵌套的component里面，也都要在顶层容器中进行定义</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>rectangle{</span></span>
+<span class="line"><span>    ...</span></span>
+<span class="line"><span>    signal Sig_Name_XXX</span></span>
+<span class="line"><span>    ...</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<ul>
+<li>2.信号的使用必须加圆括号()，可以不必加分号；，否则会发不出去</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span></span></span>
+<span class="line"><span>signal Sig_Name_XXX()</span></span>
+<span class="line"><span></span></span></code></pre>
+<ul>
+<li>3.信号的传递必须一层一层的传上去（若你是一层一层的封装好模块的话）
+因为信号的接受者只能识别被它创建的那一个对象里面信号</li>
+</ul>
+<h2 id="container-image">container: Image</h2>
+<p>Property:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>sourceSize.width: </span></span>
+<span class="line"><span>sourceSize.height: </span></span></code></pre>
+<p>this property was used for recapture the source and made a new image internally.
+if image.width &#x26; image.height are illegal value(e.g,. 0), the sourceSize will have the original size of this picture.</p>
+<h2 id="005-enum-qtwindowtype--flags-qtwindowflags"><strong>005. enum Qt::WindowType &#x26; flags Qt::WindowFlags</strong></h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>    // flags: Qt.Window | Qt.CustomizeWindowHint</span></span>
+<span class="line"><span>    // flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    //设置无框的窗口</span></span>
+<span class="line"><span>    flags: Qt.Window | Qt.FramelessWindowHint </span></span>
+<span class="line"><span>    // flags: Qt.Window | Qt.CustomizeWindowHint | Qt.WindowTitleHint</span></span></code></pre>
+<p><a href="https://doc.qt.io/qt-6/qt.html#WindowType-enum">enum Qt::WindowType
+flags Qt::WindowFlags</a></p>
+<p>它的逻辑是首先判断是什么窗口类型，可选项有</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. Widget</span></span>
+<span class="line"><span>2. Window</span></span>
+<span class="line"><span>3. Dialog</span></span>
+<span class="line"><span>4. Sheet</span></span>
+<span class="line"><span>5. Drawer //outdated</span></span>
+<span class="line"><span>6. Popup</span></span>
+<span class="line"><span>7. Tool</span></span>
+<span class="line"><span>8. ToolTip</span></span>
+<span class="line"><span>9. SplashScreen</span></span>
+<span class="line"><span>10. SubWindow</span></span>
+<span class="line"><span>11. ForeignWindow</span></span>
+<span class="line"><span>12. CoverWindow</span></span></code></pre>
+<p>所以这12种是所有的<code>窗口类型</code></p>
+<p>选择完我要的窗口Window，之后，我就可以进一步选择<code>窗口标志</code></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>FramelessWindowHint</span></span>
+<span class="line"><span>CustomizeWindowHint</span></span></code></pre>
+<p>当然flag可是不止这两种，但是目前我就主要用到了这两种，所以其他的以后再补充啦哈哈</p>
+<p>第一种就是无边框的窗体</p>
+<p>第二种就是自定义的窗体</p>
+<p>第二种接下来还有许多options是配合它出现的，也就是说，CustomizeWindowHint只是一个开关</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

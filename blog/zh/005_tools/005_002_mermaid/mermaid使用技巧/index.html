@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mermaid使用技巧 · PotterWhite</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Mermaid使用技巧</h1><div class="article-meta"><time datetime="2024-07-17" class="mono">2024-07-17</time><a class="pill teal" href="/blog/categories/tools/">tools</a><a class="pill teal" href="/blog/categories/mermaid/">mermaid</a></div></header><div class="pw-prose"><details>
+<summary>001.how to set style patter(color etc.,) in mermaid</summary>
+<h6 id="a-single-node-setting-method"><strong>a. single node setting method</strong></h6>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="css"><code><span class="line"><span>style d fill:#6a0035,stroke:#333,stroke-width:1px</span></span></code></pre>
+<p>  like the css code above, the “d” node will be set to the following pattern as u said</p>
+<h6 id="b-multi-nodes-setting-method"><strong>b. multi nodes setting method</strong></h6>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="css"><code><span class="line"><span>#anything above#</span></span>
+<span class="line"><span>    c --> d{"1st_Key\nIMMDeviceEnumerator.\nEnumAudioEndpoints()"}:::css_keypoint</span></span>
+<span class="line"><span>    d --> |"((HRESULT)(hr)) &#x3C; 0"| e(Release Object of\nIMMDeviceEnumerator)</span></span>
+<span class="line"><span>    e --> z[end]</span></span>
+<span class="line"><span>    d --> |"((HRESULT)(hr)) >= 0"|f(Return \nIMMDeviceCollection)</span></span>
+<span class="line"><span>    f --> g("2nd_Key\nIMMDeviceCollection.\nGetCount()"):::css_keypoint</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>classDef css_keypoint fill:#6a0035,stroke:#333,stroke-width:1px</span></span></code></pre>
+<p>  now node “d” &#x26; “g” will be set to special css pattern</p>
+</details>
+<!-- ##################################################### -->
+<details>
+<summary>002. summary of all kinds of shapes in mermaid</summary>
+<h5 id="a-方形square"><strong>a. 方形（Square）</strong></h5>
+<p>Represents ordinary nodes or process steps.<br>
+Denoted by ”[]”.<br></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>A[Ordinary node or process]</span></span></code></pre>
+<h5 id="b-圆形round"><strong>b. 圆形（Round）</strong></h5>
+<p>Represents start or end points.<br>
+Denoted by ”()” .<br></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>A((Start or end))</span></span></code></pre>
+<h5 id="c-菱形diamond"><strong>c. 菱形（Diamond）</strong></h5>
+<p>Represents decision points or conditions.<br>
+Denoted by ”{}”.<br></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>A{Decision or condition}</span></span></code></pre>
+<h5 id="d-流程flowchart"><strong>d. 流程（Flowchart）</strong></h5>
+<p>Represents general flowchart nodes with specific shapes.<br></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>A>Flowchart node]</span></span></code></pre>
+<h5 id="e-矩形rectangle"><strong>e. 矩形（Rectangle）</strong></h5>
+<p>Represents emphasized nodes or specific operation steps.<br>
+Denoted by ”()” .<br></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>A(Rectangle node)</span></span></code></pre>
+</details>
+<!-- ##################################################### -->
+<details>
+<summary>003.how to show parentheses in mermaid</summary>
+<p>use <code>quotes</code> to embrace the parentheses</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>A0((start)) --> A{"CoCreateInstance()"\nCreate COM Object}</span></span></code></pre>
+</details>
+<!-- ##################################################### -->
+<h2 id="005-如何在markdown里面嵌入一个mermaid图常规方式无效"><strong>005. 如何在Markdown里面嵌入一个Mermaid图(常规方式无效)</strong></h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span>&#x3C;script type="module"></span></span>
+<span class="line"><span>    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';</span></span>
+<span class="line"><span>&#x3C;/script></span></span>
+<span class="line"><span></span></span></code></pre>
+<p>只要在要显示Mermaid图的md文档头部, 插入这句话,就可以正常显示mermaid啦.</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

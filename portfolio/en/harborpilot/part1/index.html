@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part 1: High-Level Design · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Part 1: High-Level Design</h1><div class="article-meta"><time datetime="2025-08-19" class="mono">2025-08-19</time><span class="pill teal">Infra</span></div></header><div class="pw-prose"><!-- ---
+title: "宏观设计篇：基于配置驱动的标准化开发环境架构"
+date: 2025-08-19T12:00:00+08:00
+draft: false
+tags: ["Docker", "DevOps", "Architecture", "Embedded", "Software Engineering"]
+--- -->
+<h2 id="1-background-and-problem-definition">1. Background and Problem Definition</h2>
+<p>In modern software engineering practices, especially in fields tightly coupled with hardware like embedded systems, standardizing the development environment is a fundamental and critical challenge. When team members perform cross-compilation for specific hardware platforms (e.g., <code>RK3568</code>, <code>RV1126</code>) on different operating systems (Windows, macOS, Linux), different versions of the same OS (Ubuntu 18.04, 20.04, 22.04, etc.), or even on the same OS version but with different gcc/python/glibc versions, environmental heterogeneity leads to a series of predictable engineering problems:</p>
+<ul>
+<li><strong>Inconsistent Artifacts:</strong> Due to differences in developers’ local toolchains and system library versions, builds may succeed in some environments but fail in others, or produce target files with inconsistent behavior.</li>
+<li><strong>High Initial Setup Cost:</strong> When new members join a project, they need to follow lengthy documentation to manually install and configure cross-compilers, specific versions of dependency libraries, and SDKs. This process often takes hours to days and is highly prone to errors.</li>
+<li><strong>Complex Maintenance:</strong> When the underlying SDK or toolchain needs an upgrade, it must be ensured that every team member updates their local environment synchronously. This lacks atomicity and consistency guarantees, increasing the burden of technical management.</li>
+<li><strong>Complex Code Version Control for critical SDKs:</strong> In embedded development, different products likely use different SoCs, resulting in several completely different sets of SDKs. If the SDK code for a SoC is packaged and sent to everyone, and the receiving developers unpack it, this process must be repeated for any new features. Even ignoring that a single SDK can take up 20GB~100GB of space, the time cost for the entire team and the strain on CPUs are unacceptable.</li>
+</ul>
+<p>To systematically solve the above problems, we designed and implemented a standardized development environment solution based on Docker. This article will focus on its top-level architectural design, particularly the core idea of being “configuration-driven.”</p>
+<h2 id="2-core-architecture-separation-of-configuration-and-build-logic">2. Core Architecture: Separation of Configuration and Build Logic</h2>
+<p>The cornerstone of this solution’s architecture is the <strong>Separation of Concerns</strong> principle, specifically manifested by decoupling the volatile <strong>Configuration</strong> from the relatively stable <strong>Build Logic</strong>.</p>
+<ul>
+<li>
+<p><strong>Build Logic:</strong> Refers to a set of instructions defining “how to build an environment.” In this project, it consists of multi-stage definitions in a <code>Dockerfile</code> and a series of Shell scripts called during the build process. This part represents the generic steps for building a usable environment and is highly reusable.</p>
+</li>
+<li>
+<p><strong>Environment Configuration:</strong> Refers to a set of parameters defining “what kind of environment to build.” These parameters include platform-specific SDK download URLs, cross-compiler toolchain version numbers, project source code paths, etc. They are variables in the build process and need to be managed externally.</p>
+</li>
+</ul>
+<p>To achieve this decoupling, we designed the following key components:</p>
+<h4 id="build-dev-envsh-unified-entrypoint-for-the-build-process"><code>build-dev-env.sh</code>: Unified Entrypoint for the Build Process</h4>
+<p>This script is the single entry point for the entire build system, shielding developers from the complexity of the underlying <code>docker build</code> command. Its core responsibilities include:</p>
+<ol>
+<li><strong>Parameter Parsing:</strong> Receives the target platform as an input parameter (e.g., <code>rk3568</code>).</li>
+<li><strong>Configuration Loading:</strong> Locates and loads the corresponding configuration file based on the input platform parameter.</li>
+<li><strong>Build Execution:</strong> Passes the loaded configuration as environment variables to the Docker build engine and starts the build process.</li>
+</ol>
+<p>This way, developers only need to focus on the target platform they want to build, without needing to understand the internal details of the build process.</p>
+<p>Usage Example</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span>./build-dev-env.sh rk3568</span></span></code></pre>
+<h4 id="configs-directory-centralized-configuration-management"><code>configs/</code> Directory: Centralized Configuration Management</h4>
+<p>This directory serves as the repository for all environment configuration parameters. Its internal structure further reflects the idea of layered configuration:</p>
+<ul>
+<li>
+<p><code>platform-independent/common.env</code>: This file defines global configurations applicable to all target platforms. For example, the internal Docker Registry address, global HTTP/HTTPS proxy settings, organization-wide Git user information, etc. By centrally managing these shared configurations, we avoid redundant definitions in multiple files and improve maintainability.</p>
+</li>
+<li>
+<p><code>platforms/*.env</code>: Each <code>.env</code> file in this directory corresponds to a specific hardware platform. For example, the <code>rk3568.env</code> file would contain parameters unique to that platform, such as <code>RK3568_SDK_URL</code> and <code>RK3568_GCC_VERSION</code>. This design makes adding support for new platforms extremely efficient—theoretically, it only requires adding a new configuration file in this directory without modifying any existing build scripts.</p>
+</li>
+</ul>
+<h4 id="architecture-overview-diagram">Architecture Overview Diagram</h4>
+<p>The following diagram shows the interaction and data flow between the components:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    subgraph "A. User Interface Layer"</span></span>
+<span class="line"><span>        A1[Developer executes: &#x3C;br/>./build-dev-env.sh rk3568]</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "B. Control &#x26; Configuration Layer"</span></span>
+<span class="line"><span>        B1("1. build-dev-env.sh parses 'rk3568'")</span></span>
+<span class="line"><span>        B2{"2. Configuration Loading"}</span></span>
+<span class="line"><span>        B2 --> B3[Global Config&#x3C;br/>common.env]</span></span>
+<span class="line"><span>        B2 --> B4[Platform-specific Config&#x3C;br/>rk3568.env]</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "C. Build Execution Layer (Docker Engine)"</span></span>
+<span class="line"><span>        C1("3. Docker build process starts")</span></span>
+<span class="line"><span>        C2[Dockerfile]</span></span>
+<span class="line"><span>        C3[Script Templates Initialized]</span></span>
+<span class="line"><span>        C1 --> C2 &#x26; C3</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "D. Output Artifact"</span></span>
+<span class="line"><span>        D1[Final Docker Image&#x3C;br/>dev-env:rk3568]</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    A1 --> B1 --> B2</span></span>
+<span class="line"><span>    B3 &#x26; B4 -- Environment Variables --> C1</span></span>
+<span class="line"><span>    C2 &#x26; C3 -- Build Instructions --> D1</span></span></code></pre>
+<h2 id="3-standardized-workflow-from-build-to-distribution">3. Standardized Workflow: From Build to Distribution</h2>
+<p>Based on the above architecture, we established a standardized workflow covering the entire lifecycle of the development environment:</p>
+<ol>
+<li>
+<p><strong>Image Build Phase:</strong> This phase is initiated by the <code>build-dev-env.sh</code> script. The script consolidates configurations from <code>common.env</code> and the platform-specific <code>.env</code> file to generate a highly optimized Docker image containing all necessary toolchains, SDKs, and dependency libraries, using Docker’s multi-stage builds (which will be detailed in a subsequent article).</p>
+</li>
+<li>
+<p><strong>Container Management Phase:</strong> To simplify interaction with Docker for end-users, we provide a client-side script (<code>project_handover/clientside/ubuntu/ubuntu_only_entrance.sh</code>) that wraps <code>docker-compose</code> commands. By executing this script, developers can conveniently create, start, stop, and enter the container’s shell environment, thus reducing their reliance on Docker knowledge.</p>
+</li>
+<li>
+<p><strong>Project Handover Phase:</strong> Considering scenarios like new member onboarding or offline development, the system provides an automated packaging script (<code>project_handover/scripts/archive_tarball.sh</code>). This script can package resources such as the client management script, necessary certificate files (<code>harbor.crt</code>), and documentation (<code>ReadMe.md</code>) into a single <code>tar.gz</code> archive. This ensures that the entry point and documentation for the development environment can be versioned and distributed atomically as a whole.</p>
+</li>
+</ol>
+<h2 id="4-conclusion">4. Conclusion</h2>
+<p>By implementing an architecture that separates configuration from build logic, we have successfully transformed a complex, error-prone manual process into an automated, reproducible system. This system not only significantly reduces the setup time for new environments but, more importantly, provides the team with a stable and consistent development baseline, laying a solid foundation for future Continuous Integration (CI) and Continuous Deployment (CD) practices.</p>
+<p>In the next article, we will delve into the technical details of the <strong>Image Build</strong> phase, including the application of Docker’s multi-stage build strategy and how to dynamically generate and configure scripts at build time using a templating mechanism.</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

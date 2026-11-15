@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cloud Desktop Tools to Replace RDP (PVE + Sunshine + Moonlight) · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Cloud Desktop Tools to Replace RDP (PVE + Sunshine + Moonlight)</h1><div class="article-meta"><time datetime="2025-12-01" class="mono">2025-12-01</time><span class="pill teal">devops</span></div></header><div class="pw-prose"><h2 id="what-is-this-talking-about"><strong>What-is-this-Talking-About</strong></h2>
+<p>This configuration sheet covers hardware infrastructure, virtual display solutions, performance optimization, and streaming settings, suitable for my <strong>AMD EPYC 7551 (Home)</strong> and <strong>Dual Xeon (Work)</strong> environments.</p>
+<h2 id="hardware-environment"><strong>Hardware Environment</strong></h2>
+<h4 id="homelab-configuration"><strong>Homelab Configuration</strong></h4>
+<ul>
+<li>CPU: AMD EPYC 7551 (Home)</li>
+<li>Motherboard: Supermicro H11SSL-i</li>
+<li>Graphics Card: NVIDIA GeForce GTX 1050 Ti (4GB)</li>
+</ul>
+<h4 id="work-server-configuration"><strong>Work Server Configuration</strong></h4>
+<ul>
+<li>CPU: Dual Xeon (Work)</li>
+<li>Motherboard: Generic X99 Chipset</li>
+<li>Graphics Card: The basic display card is only for PVE use. I don’t want to modify GPU passthrough settings during maintenance, so it is equivalent to having no graphics card.</li>
+</ul>
+<h2 id="requirements"><strong>Requirements</strong></h2>
+<p>There are many family members, and if everyone uses a laptop or PC, first of all:</p>
+<ul>
+<li>
+<ol>
+<li>The cost of purchasing computers is very high;</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>Secondly, the workload of software maintenance will be huge (need to isolate settings/reinstall systems on each computer);</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>Moreover, there is a demand for PPT and light design work at home, so both Mac and Win are rigid needs;</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>As an engineer, it is hard to accept that devices at home are not easy to use. For example: buying a game console or expensive graphics card (for gaming), it shouldn’t be limited to use on only one PC, where everyone who wants to play has to fight for that PC.</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>NAS, centralizing all family data storage, greatly reducing the risk of data loss, alleviating the heavy work of data backup, and the terrible cost of storage devices (hard drives are really expensive).</li>
+</ol>
+</li>
+</ul>
+<p>And the above points naturally lead to the idea of moving to the cloud, building a powerful Server within the home, where hardware can be purchased once and shared by everyone to the maximum extent.<br>
+(The same requirements apply within the company, because they all pass through my hands, so the handling solutions all use PVE. I won’t mention the WorkServer situation again here, assuming it defaults to the Homelab situation.)<br></p>
+<h2 id="troubles"><strong>Troubles</strong></h2>
+<p>When setting up the environment, I always used RDP to connect to VMs under HomeLab (installed with PVE) (including Ubuntu/Mac/Win10/Win11).<br>
+However, I found visible mouse drag lag. Although usable, it cannot meet the needs of designers. Not to mention remotely opening design software and Microsoft PowerPoint.<br></p>
+<h2 id="ultimate-effect"><strong>Ultimate Effect</strong></h2>
+<figure class="pw-figure">
+<video controls preload="metadata" playsinline src="/2025/pve/moonlight-connect-workserver-nogpu.mp4"></video>
+<figcaption>Ultimate Effect</figcaption>
+</figure>
+<hr>
+<h2 id="download"><strong>Download</strong></h2>
+<ul>
+<li><a href="https://moonlight-stream.org/">Best Entrance: Sunshine &#x26; Moonlight can both be downloaded here</a>
+<img src="/2025/pve/sunshine-moonlight-entrance.png" alt=""></li>
+</ul>
+<h2 id="functional-point-1-gpu-strategy">Functional Point 1. GPU Strategy</h2>
+<p>Core hardware solution to solve high Host latency and heavy stuttering feeling.</p>
+<ul>
+<li><img src="/2025/pve/moonlight-connect-stats.png" alt=""></li>
+</ul>
+<ul>
+<li><strong>Scheme A: General Virtualization (Recommended for EPYC/Xeon deployment)</strong>
+<ul>
+<li><mark>Not yet deployed, but vGPU is hugely attractive to me, and the power consumption is 50/75w, very suitable for home use, only P4’s VRAM is small, a fly in the ointment.</mark></li>
+<li><strong>Hardware</strong>: <strong>NVIDIA Tesla P4 (8GB)</strong> + <strong>3D printed air duct &#x26; high-speed fan</strong>.</li>
+<li><strong>Config</strong>: PVE installed with <code>vGPU_unlock</code> driver.</li>
+<li><strong>Allocation</strong>: Split into 4 <code>P4-2Q</code> (2GB VRAM) profiles, assigned to 4 VMs.</li>
+<li><em>Usage</em>: Smoothly run 1080P/60FPS desktop streaming, lightweight tasks.</li>
+</ul>
+</li>
+<li><strong>Scheme B: High Performance Passthrough (Existing Equipment)</strong>
+<ul>
+<li><mark>Deployed, and Host latency immediately dropped from 20ms<del>30ms to 0ms</del>5ms</mark></li>
+<li><strong>Hardware</strong>: <strong>GTX 1050 Ti (4GB)</strong>.</li>
+<li><strong>Config</strong>: PVE uses <strong>PCIe Passthrough</strong> mode for the main Windows VM.</li>
+<li><strong>Allocation</strong>: Exclusive.</li>
+<li><em>Usage</em>: AI introductory learning (CUDA), 4K video playback, light gaming.</li>
+</ul>
+</li>
+</ul>
+<h2 id="functional-point-2-virtual-display-solution-headless-display">Functional Point 2. Virtual Display Solution (Headless Display)</h2>
+<p>Solve black bars and resolution lock (1280x800) issues caused by lack of physical monitors.</p>
+<ul>
+<li><strong>Software</strong>: <strong><a href="https://github.com/roshkins/IddSampleDriver">IddSampleDriver</a></strong> (Virtual Display Driver).</li>
+<li><strong>Installation Steps</strong>:
+<ol>
+<li><strong>Permissions</strong>: Run <code>installCert.bat</code> with administrator privileges.</li>
+<li><strong>Add Hardware</strong>: Device Manager -> Action -> Add legacy hardware -> Manual list -> Display adapters -> Have Disk -> Select <code>IddSampleDriver.inf</code>.</li>
+</ol>
+</li>
+<li><strong>Settings (Windows Display Settings)</strong>:
+<ol>
+<li><strong>Resolution</strong>: Manually set to <strong>1920 x 1080</strong>.</li>
+<li><strong>Multi-screen Strategy</strong>: Select the virtual screen (usually Screen 2), set <strong>“Show only on 2”</strong>.</li>
+<li><strong>Cleanup</strong>: “Disconnect” extra virtual screens (3, 4, 5, 6) in settings.</li>
+</ol>
+</li>
+</ul>
+<h2 id="functional-point-3-windows-vm-deep-performance-optimization">Functional Point 3. Windows VM Deep Performance Optimization</h2>
+<p>Extreme optimization for Xeon/EPYC in <strong>No GPU / Software Decoding</strong> state to reduce Host Latency.</p>
+<ul>
+<li><strong>Visual Effects</strong>:
+<ul>
+<li><code>System Properties</code> -> <code>Advanced</code> -> <code>Performance</code> -> <strong>Adjust for best performance</strong> (Turn off all animation effects).</li>
+</ul>
+</li>
+<li><strong>Rollback Right-click Menu (Lower CPU Load)</strong>:
+<ul>
+<li>Run registry modification command in administrator terminal to restore Win10 style menu:
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span>reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve</span></span></code></pre>
+</li>
+<li><em>Action</em>: Restart VM after running to take effect.</li>
+</ul>
+</li>
+</ul>
+<h2 id="functional-point-4-streaming-service-settings-sunshine--moonlight">Functional Point 4. Streaming Service Settings (Sunshine &#x26; Moonlight)</h2>
+<p>Goal: Squeeze CPU software decoding performance or adapt to GPU hardware decoding under 1ms intranet latency.</p>
+<h3 id="server-side-sunshine-webui">Server Side (Sunshine WebUI)</h3>
+<ul>
+<li><strong>Location</strong>: <code>Configuration</code> -> <code>Advanced</code></li>
+<li><strong>No GPU (Xeon Current State)</strong>:
+<ul>
+<li><strong>Encoder</strong>: Software / x264</li>
+<li><strong>Software Preset</strong>: <strong>Ultrafast</strong> (Ultrafast mode, sacrificing image quality for low latency, Critical!)</li>
+<li><strong>Software Tune</strong>: Zerolatency</li>
+<li><strong>Threads</strong>: Manually set 8 or 16</li>
+</ul>
+</li>
+<li><strong>With GPU (P4/1050Ti)</strong>:
+<ul>
+<li><strong>Encoder</strong>: NVENC</li>
+<li><strong>Preset</strong>: P1 (Fastest) or P4 (Default)</li>
+</ul>
+</li>
+</ul>
+<h3 id="client-side-moonlight---ubuntu">Client Side (Moonlight - Ubuntu)</h3>
+<ul>
+<li><strong>Resolution/FPS</strong>:
+<ul>
+<li>No GPU: 1080p / <strong>30 FPS</strong> (Avoid stuttering)</li>
+<li>With GPU: 1080p / <strong>60 FPS</strong></li>
+</ul>
+</li>
+<li><strong>Bitrate</strong>: 10 Mbps - 15 Mbps (Reduce CPU encoding pressure)</li>
+<li><strong>V-Sync</strong>: <strong>Off</strong> (Off to reduce input latency)</li>
+<li><strong>Video Codec</strong>: <strong>H.264</strong> (Force use old encoding, reduce encoding/decoding pressure)</li>
+<li><strong>Input Settings</strong>:
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <strong>Optimize mouse for remote desktop instead of games</strong> (Enable mouse direct mapping, improve hand feel).</li>
+</ul>
+</li>
+</ul>
+<h2 id="functional-point-5-keyboardmouse-seamless-roaming--clipboard-kvm">Functional Point 5. Keyboard/Mouse Seamless Roaming &#x26; Clipboard (KVM)</h2>
+<p>Solve Moonlight mouse locking and clipboard desynchronization issues.<br>
+<mark>Actually, this point is optional. If purely using Thin Client for remote connection solutions, locking the mouse in the Server is the true usage. So tentatively keeping this functional point as a backup.</mark></p>
+<ul>
+<li><strong>Software</strong>: <strong>Barrier</strong> (or Input Leap).</li>
+<li><strong>Architecture</strong>:
+<ul>
+<li><strong>Server (Service Side)</strong>: Ubuntu Client (Has physical keyboard/mouse).</li>
+<li><strong>Client (Client Side)</strong>: Windows VM (Controlled Side).</li>
+</ul>
+</li>
+<li><strong>Configuration Steps</strong>:
+<ol>
+<li>Ubuntu side checks Server, drag in new screen in <code>Configure Server</code>, name it <code>win11-vm</code> (Must match Windows Side Screen Name).</li>
+<li>Windows side checks Client, fill in Ubuntu IP.</li>
+<li><strong>Effect</strong>: Mouse moves out of screen edge to automatically switch control, <strong>Clipboard Sharing</strong> (Text/Ctrl+C/V).</li>
+<li><strong>Cooperation</strong>: Release mouse lock (<code>Ctrl+Alt+Shift+Z</code>) in Moonlight or use fullscreen.</li>
+</ol>
+</li>
+</ul></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

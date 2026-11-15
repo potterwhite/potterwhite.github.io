@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RK3568平台千兆以太网控制器Bring-up与验证 · PotterWhite</title><meta name="description" content="基于YT8521SC的千兆以太网调试"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>RK3568平台千兆以太网控制器Bring-up与验证</h1><div class="article-meta"><time datetime="2025-07-25" class="mono">2025-07-25</time><span class="pill teal">BSP</span></div><p class="article-desc">基于YT8521SC的千兆以太网调试</p></header><div class="pw-prose"><ul>
+<li><strong>作者:</strong> Potter White</li>
+<li><strong>日期:</strong> 2025年7月</li>
+</ul>
+<h1 id="项目概述-project-overview"><strong>项目概述 (Project Overview)</strong></h1>
+<p><strong>背景 (Situation):</strong>
+在一个基于Rockchip RK3568 SoC的定制化产品开发项目中，我负责对板载的千兆以太网接口（GMAC1, <code>ethernet@fe010000</code>）进行初次的功能Bring-up。在初始BSP配置下，该网络接口未能被内核正确初始化，日志显示<code>Cannot attach to PHY</code>和<code>Failed to reset the dma</code>等错误。</p>
+<p><strong>我的职责与贡献 (My Role &#x26; Contributions):</strong>
+作为项目的BSP工程师，我负责诊断并解决此底层软硬件集成问题。我的主要工作包括：</p>
+<ul>
+<li><strong>执行了端到端的系统性排查</strong>，覆盖了从物理电路到内核驱动的全链路。</li>
+<li><strong>精确定位了问题根源</strong>，将其归因于设备树（DTS）中关于GMAC1的时钟树、引脚功能（pinctrl）配置与硬件设计不匹配。</li>
+<li><strong>主导并实施了设备树的修正方案</strong>，成功使能网络接口并确保其稳定运行。</li>
+<li><strong>通过<code>iperf</code>进行了性能验证</strong>，确认网络吞-吐量达到千兆以太网的设计标准。</li>
+<li><strong>将调试过程沉淀为一套标准作业程序 (SOP)</strong>，用于指导未来类似外设的Bring-up工作。</li>
+</ul>
+<hr>
+<h1 id="我的方法论嵌入式外设bring-up标准作业程序-sop"><strong>我的方法论：嵌入式外设Bring-up标准作业程序 (SOP)</strong></h1>
+<p>我总结了一套系统性的硬件Bring-up工作流。该流程将问题排查结构化，通过分阶段、多层次的验证，能够定位并解决从物理层到驱动层的部分复杂问题,并大量缩短调试时间。</p>
+<h3 id="第一部分标准化移植流程-standard-porting-workflow"><strong>第一部分：标准化移植流程 (Standard Porting Workflow)</strong></h3>
+<p>此流程用于在硬件设计已知且大概率正确, 且串口功能稳定可用的情况下，进行设备树（DTS）和phy驱动调试。</p>
+<ul>
+<li>感兴趣可以看我的日志: <a href="/blog/zh/linux/workflow-bringup-rk3568-gmac/">GMAC Bring Up Work Flow</a></li>
+</ul>
+<h3 id="第二部分异常诊断清单-troubleshooting-checklist"><strong>第二部分：异常诊断清单 (Troubleshooting Checklist)</strong></h3>
+<p>当标准化流程不成功，或怀疑硬件存在未知问题时，此清单提供了一个从物理层到控制层的系统性排查路径。</p>
+<ul>
+<li>感兴趣可以看我沉淀的方法论: <a href="/blog/zh/linux/bringup-methodology/">SoC 板级 Bring-up 工程手册</a></li>
+</ul>
+<h3 id="sop流程图">SOP流程图</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    %% === 定义与样式 ===</span></span>
+<span class="line"><span>    classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab;</span></span>
+<span class="line"><span>    classDef dark_debug fill:#4b3e58,color:white,stroke:#b8a3d3;</span></span>
+<span class="line"><span>    classDef dark_decision fill:#27ae60,color:white,stroke:#88d1a1;</span></span>
+<span class="line"><span>    classDef dark_result_ok fill:#16a085,color:white,stroke:#72d6c1;</span></span>
+<span class="line"><span>    classDef dark_result_fail fill:#c0392b,color:white,stroke:#e69a93;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === 主流程 (左侧) ===</span></span>
+<span class="line"><span>    subgraph "标准化移植流程 (Standard Porting Workflow)"</span></span>
+<span class="line"><span>        direction TB</span></span>
+<span class="line"><span>        S[&#x3C;b>开始&#x3C;/b>]:::dark_main</span></span>
+<span class="line"><span>        A[&#x3C;b>1. 硬件接口确认&#x3C;/b>&#x3C;br>GMAC0或GMAC1]:::dark_main</span></span>
+<span class="line"><span>        B[&#x3C;b>2. 时钟模式分析&#x3C;/b>&#x3C;br>25MHz与125MHz两种时钟的流向]:::dark_main</span></span>
+<span class="line"><span>        C[&#x3C;b>3. 设备树DTS适配&#x3C;/b>&#x3C;br>从瑞芯微的ModeConfig手册里节选正确dts配置]:::dark_main</span></span>
+<span class="line"><span>        D[&#x3C;b>4. 编译与验证&#x3C;/b>]:::dark_main</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        S --> A --> B --> C --> D</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === 决策点 (中央) ===</span></span>
+<span class="line"><span>    F{"&#x3C;div style='text-align:center'>&#x3C;i class='fa fa-question-circle'>&#x3C;/i> &#x3C;b>验证&#x3C;/b>&#x3C;br>网络是否正常工作?&#x3C;/div>"}:::dark_decision</span></span>
+<span class="line"><span>    D --> F</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === 诊断流程 (右侧) ===</span></span>
+<span class="line"><span>    subgraph "异常诊断锦囊 (Troubleshooting Checklist)"</span></span>
+<span class="line"><span>        direction TB</span></span>
+<span class="line"><span>        G["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-bolt'>&#x3C;/i> &#x3C;b>物理层健康检查 (L1)&#x3C;/b>&#x3C;br>- 电源 (Power Rails)&#x3C;br>- 复位信号 (Reset Signal)&#x3C;br>- 参考时钟 (Reference Clock)&#x3C;/div>"]:::dark_debug</span></span>
+<span class="line"><span>        H["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-bullseye'>&#x3C;/i> &#x3C;b>控制通路验证 (L2)&#x3C;/b>&#x3C;br>- U-Boot 'mii read'&#x3C;br>- Kernel 'sysfs' &#x3C;/div>"]:::dark_debug</span></span>
+<span class="line"><span>        I["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-cogs'>&#x3C;/i> &#x3C;b>关键逻辑审查 (Logic Review)&#x3C;/b>&#x3C;br>- 硬件模式 (Strapping Pins)&#x3C;br>- 时钟流向 (Clock Direction)&#x3C;/div>"]:::dark_debug</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        G --> H --> I</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === 成功/失败出口 ===</span></span>
+<span class="line"><span>    SUCCESS[&#x3C;b>&#x3C;i class='fa fa-check-circle'>&#x3C;/i> 成功&#x3C;/b>]:::dark_result_ok</span></span>
+<span class="line"><span>    FAILURE["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-undo'>&#x3C;/i> &#x3C;b>修正并迭代&#x3C;/b>&#x3C;br>根据诊断结果&#x3C;br>返回&#x3C;b>阶段3或4&#x3C;/b>&#x3C;br>重新适配DTS&#x3C;/div>"]:::dark_result_fail</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === 流程连接 ===</span></span>
+<span class="line"><span>    F -- "是 (Yes)" --> SUCCESS</span></span>
+<span class="line"><span>    F -- "否 (No)" --> G</span></span>
+<span class="line"><span>    I --> FAILURE</span></span>
+<span class="line"><span>    FAILURE -.-> C &#x26; D</span></span></code></pre>
+<hr>
+<h1 id="项目成果与验证-results--verification"><strong>项目成果与验证 (Results &#x26; Verification)</strong></h1>
+<p>遵循上述方法论，问题最终被精确定位并解决。通过对设备树的系统性修正，<code>dma reset</code>错误消失，网络接口成功初始化。</p>
+<p>为了验证功能的完整性和性能，我使用<code>iperf</code>工具进行了全面的网络吞吐量测试。测试结果表明，网络接口性能表现出色，完全达到了设计预期。</p>
+<h2 id="tcp-吞吐量测试-rk3568---pc"><strong>TCP 吞吐量测试 (RK3568 &#x3C;-> PC)</strong></h2>
+<ul>
+<li>
+<p><strong>上行 (RK3568 -> PC):</strong> <code>941 Mbits/sec</code>
+<img src="/2025/gmac-rk3568-bring-up/test-first-arm-tx.png" alt=""></p>
+</li>
+<li>
+<p><strong>下行 (PC -> RK3568):</strong> <code>928 Mbits/sec</code>
+<img src="/2025/gmac-rk3568-bring-up/test-first-arm-rx.png" alt=""></p>
+</li>
+</ul>
+<p><strong>结论:</strong> TCP吞吐量已达到千兆以太网的理论上限，证明数据通路高效且稳定。</p>
+<h2 id="udp-压力测试-rk3568---pc-1gbps"><strong>UDP 压力测试 (RK3568 &#x3C;-> PC, @1Gbps)</strong></h2>
+<ul>
+<li><strong>下行丢包率:</strong> <code>0.023%</code>
+<img src="/2025/gmac-rk3568-bring-up/test-second-arm-loss.png" alt="图3：UCP丢包率测试结果-ARM端"></li>
+</ul>
+<p><strong>结论:</strong> 在极限带宽压力下，丢包率极低，表明系统处理网络数据包的能力非常稳健。</p>
+<hr>
+<h1 id="技术栈与工具-tech-stack--tools"><strong>技术栈与工具 (Tech Stack &#x26; Tools)</strong></h1>
+<ul>
+<li><strong>硬件平台:</strong> Rockchip RK3568 SoC, YT8251SC 千兆以太网PHY芯片</li>
+<li><strong>软件环境:</strong> Linux Kernel 5.10, U-Boot, Buildroot</li>
+<li><strong>核心技术:</strong> Embedded Linux BSP, Device Tree (DTS), Kernel Drivers (stmmac), MDIO/RGMII Protocols</li>
+<li><strong>调试工具:</strong>
+<ul>
+<li><strong>硬件:</strong> 示波器, 万用表, 串口</li>
+<li><strong>软件:</strong> <code>dmesg</code>, <code>printk</code>, <code>sysfs</code> , <code>iperf</code>, <code>mii-tool</code></li>
+</ul>
+</li>
+</ul>
+<hr></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RK3568 Platform BSP Development and Bring-up · PotterWhite</title><meta name="description" content="A collection of low-level hardware bring-up, driver debugging, and system integration projects on the Rockchip RK3568 platform, covering key peripherals such as the display subsystem, gigabit ethernet, and MIPI bridge chips."><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>RK3568 Platform BSP Development and Bring-up</h1><p class="article-desc">A collection of low-level hardware bring-up, driver debugging, and system integration projects on the Rockchip RK3568 platform, covering key peripherals such as the display subsystem, gigabit ethernet, and MIPI bridge chips.</p></header><div class="pw-prose"><h2 id="project-introduction">Project Introduction</h2>
+<p>This project involves full board-level debugging based on Rockchip’s official SDK (<strong>rk356x_linux5.10_release_v1.6.0_20241220_sync20250611.tgz</strong>).</p>
+<p>My role is a BSP Engineer, and my core responsibilities include <strong>low-level hardware bring-up, precise Device Tree (DTS) configuration, and Linux kernel driver debugging</strong>.</p>
+<p>This portfolio showcases all the modules I brought up for this project on the RK3568 platform.</p>
+<p>For some of these modules, I have developed a set of <strong>Standard Operating Procedures (SOPs)</strong>. The goal is to help myself and the team to more systematically diagnose and resolve similar issues in the future, ensuring each module is functionally stable and meets its performance targets.</p>
+<hr>
+<h2 id="project-list">Project List</h2>
+<h3 id="1-rk3568-gmac-gigabit-ethernet-bring-up-and-performance-validation"><strong>1. RK3568 GMAC (Gigabit Ethernet) Bring-up and Performance Validation</strong></h3>
+<ul>
+<li><strong>Core Achievement:</strong> Pinpointed and resolved clock and pinctrl configuration errors in the DTS, successfully enabling the GMAC controller. Verified its throughput reached gigabit line-speed standards using iperf.</li>
+<li><strong><a href="/portfolio/en/bringup-rk3568/module-1-gmac/">Read Project Details »</a></strong></li>
+</ul>
+<hr>
+<h3 id="2-rk3568-display-subsystem-bring-up-and-multi-interface-debugging"><strong>2. RK3568 Display Subsystem Bring-up and Multi-Interface Debugging</strong></h3>
+<ul>
+<li><strong>Core Achievement:</strong> Systematically enabled LVDS, MIPI-DSI, and HDMI display interfaces, successfully sending a data stream to an FPGA and achieving a 1080p video output over the LVDS interface that exceeds official datasheet specifications.</li>
+<li><strong><a href="/portfolio/en/bringup-rk3568/module-2-display/">Read Project Details »</a></strong></li>
+</ul>
+<hr>
+<h3 id="3-rk3568-mipi-dsi-to-edp-bridge-chip-lt8911exb-bring-up"><strong>3. RK3568 MIPI-DSI to eDP Bridge Chip (LT8911EXB) Bring-up</strong></h3>
+<ul>
+<li><strong>Core Achievement:</strong> Resolved multi-layered issues ranging from the hardware RC reset circuit to the kernel driver loading mechanism. Successfully drove the LT8911EXB chip, establishing a complete display link from the SoC’s MIPI interface to the eDP screen.</li>
+<li><strong><a href="/portfolio/en/bringup-rk3568/module-3-lt8911exb/">Read Project Details »</a></strong></li>
+</ul>
+<hr>
+<h3 id="4-rk3568-usb-interface-bring-up"><strong>4. RK3568 USB Interface Bring-up</strong></h3>
+<ul>
+<li><strong>Core Achievement:</strong> To sort out the USB Device Tree nodes and hierarchical structure, and to optimally work around the problem of the OTG port being unable to recognize USB flash drives under existing hardware limitations.</li>
+<li><strong><a href="/portfolio/en/bringup-rk3568/module-4-usb/">Read Project Details »</a></strong></li>
+</ul>
+<hr>
+<h3 id="5-rk3568-quad-gsv2011-i2c-bring-up"><strong>5. RK3568 Quad GSV2011 (I2C) Bring-up</strong></h3>
+<ul>
+<li><strong>Core Achievement:</strong></li>
+<li><strong><a href="/portfolio/en/bringup-rk3568/module-5-gsv2011-i2c/">Read Project Details »</a></strong></li>
+</ul>
+<hr>
+<h3 id="6-rk3568-mipi-csi-bring-up"><strong>6. RK3568 MIPI CSI Bring-up</strong></h3>
+<ul>
+<li><strong>Core Achievement:</strong></li>
+<li><strong><a href="/portfolio/en/bringup-rk3568/module-6-csi/">Read Project Details »</a></strong></li>
+</ul>
+<hr>
+<h3 id="7-rk3568-i2s-bring-up"><strong>7. RK3568 I2S Bring-up</strong></h3>
+<ul>
+<li><strong>Core Achievement:</strong> Wrote the Device Tree source for the I2S subsystem to enable multiple ALSA devices based on the new board’s schematic, supporting the system’s audio applications.</li>
+<li><strong><a href="/portfolio/en/bringup-rk3568/module-7-i2s/">Read Project Details »</a></strong></li>
+</ul>
+<hr>
+<!-- Add new project summaries here --></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

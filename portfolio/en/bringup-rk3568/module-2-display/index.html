@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RK3568 Platform: Display Subsystem Bring-up and Multi-Interface Debugging · PotterWhite</title><meta name="description" content="Systematically debugging and enabling LVDS, MIPI-DSI, and HDMI display interfaces on the Rockchip RK3568 platform, achieving stable video stream integration with an FPGA and standard displays, and successfully outputting resolutions that exceed official datasheet specifications."><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>RK3568 Platform: Display Subsystem Bring-up and Multi-Interface Debugging</h1><div class="article-meta"><time datetime="2025-08-18" class="mono">2025-08-18</time><span class="pill teal">BSP</span></div><p class="article-desc">Systematically debugging and enabling LVDS, MIPI-DSI, and HDMI display interfaces on the Rockchip RK3568 platform, achieving stable video stream integration with an FPGA and standard displays, and successfully outputting resolutions that exceed official datasheet specifications.</p></header><div class="pw-prose"><ul>
+<li><strong>Author:</strong> Potter White</li>
+<li><strong>Date:</strong> August 2025</li>
+</ul>
+<h1 id="project-overview"><strong>Project Overview</strong></h1>
+<p><strong>Situation:</strong>
+In a custom project based on the Rockchip RK3568 SoC, the objective was to enable the LVDS, MIPI-DSI, and HDMI 2.0 display interfaces, either simultaneously or independently. The LVDS interface was required to output a 1920x1080@30Hz video stream to an FPGA, exceeding the SoC’s official datasheet specifications (max 1280x800). The HDMI and MIPI interfaces needed to bypass EDID detection and force a fixed 1080p@60Hz output. These data paths were unconfigured in the initial BSP, requiring a complete bring-up from scratch.</p>
+<p><strong>My Role &#x26; Contributions:</strong>
+As the project’s BSP engineer, I was solely responsible for the entire display subsystem bring-up and integration task. My core contribution was performing all configuration and debugging <strong>purely at the software level, driven by in-depth analysis of datasheets and kernel source code</strong>:</p>
+<ul>
+<li><strong>Conducted a deep-dive analysis and mapped the complete data flow</strong> of the RK3568 display subsystem, from Memory -> VOP -> Interface Controllers -> Combo PHY.</li>
+<li><strong>Led and executed the precise configuration of the Device Tree (DTS)</strong>, correctly setting up VOP routing, timing parameters, and PHY multiplexing for all three interfaces (LVDS, MIPI-DSI, HDMI).</li>
+<li><strong>Successfully drove the SoC’s physical layer (PHY) to output correct digital video signals</strong> through meticulous DTS configuration, laying a solid foundation for subsequent signal handshaking with the FPGA and initialization of HDMI displays.</li>
+<li><strong>Achieved stable video output exceeding official specifications</strong>, successfully delivering a 1920x1080@30Hz signal via the LVDS interface within the SoC’s clock frequency limits, which was successfully received and locked by the FPGA.</li>
+<li><strong>Distilled the entire debugging process into a Standard Operating Procedure (SOP)</strong> and technical documentation, providing a clear and efficient framework for all future display interface bring-up tasks for the team.</li>
+</ul>
+<hr>
+<h1 id="my-methodology-display-interface-debugging-sop"><strong>My Methodology: Display Interface Debugging SOP</strong></h1>
+<p>To systematically address complex “display bring-up” or “signal integration” challenges, I developed a four-phase SOP. This process breaks down the ambiguous debugging task into clear, verifiable steps, enabling rapid problem isolation between the SoC’s software configuration and the peer device (FPGA/display panel).</p>
+<h3 id="project-related-technical-documents"><strong>Project-Related Technical Documents</strong></h3>
+<ul>
+<li><strong>How-to: Display Interface Debugging Standard Operating Procedure (SOP)</strong>: Details the four critical phases, from information gathering to low-level validation.</li>
+<li><strong><a href="/blog/en/linux/how-to-force-hdmi-settings-on-rk3568/">How-to: Forcing HDMI Configuration on RK3568</a></strong>: Documents the process of forcing HDMI connection status and resolution via driver modification and DTS.</li>
+<li><strong><a href="/blog/en/linux/rockchip-display-subsystem-concepts/">Analysis of Key Concepts in the Rockchip Display Subsystem</a></strong>: Summarizes core concepts like VOP and DRM port routing.</li>
+<li><strong><a href="/blog/en/linux/lvds-bringup-data-flow-on-rk3568/">LVDS Bring-Up on RK3568: A Data Flow Study</a></strong>: Provides an in-depth analysis of the complete LVDS data path from memory to the physical pins.</li>
+</ul>
+<hr>
+<h1 id="results--verification"><strong>Results &#x26; Verification</strong></h1>
+<p>Following the SOP, I successfully enabled all target display interfaces on the RK3568. All configurations were verified through software utilities and feedback from the peer devices.</p>
+<h2 id="kernel-mode-validation-modetest"><strong>Kernel Mode Validation (modetest)</strong></h2>
+<p>The <code>modetest</code> utility confirmed that the kernel successfully created and applied the forced modes for each interface, bypassing EDID detection. Below are examples for each interface:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>Connectors:</span></span>
+<span class="line"><span>id      encoder status          name            size (mm)       modes   encoders</span></span>
+<span class="line"><span>172     171     connected       LVDS-1          0x0             1       171</span></span>
+<span class="line"><span>  modes:</span></span>
+<span class="line"><span>        index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot</span></span>
+<span class="line"><span>  #0 1920x1080 29.41 1920 1968 2000 2040 1080 1083 1088 1111 66660 flags: nhsync, nvsync; type: preferred, driver</span></span>
+<span class="line"><span>  ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>174     173     connected       HDMI-A-1        0x0             1       173</span></span>
+<span class="line"><span>  modes:</span></span>
+<span class="line"><span>        index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot</span></span>
+<span class="line"><span>  #0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred</span></span>
+<span class="line"><span>  ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>190     189     connected       DSI-1           68x121          1       189</span></span>
+<span class="line"><span>  modes:</span></span>
+<span class="line"><span>        index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot</span></span>
+<span class="line"><span>  #0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: nhsync, nvsync; type: preferred, driver</span></span>
+<span class="line"><span>  ...</span></span></code></pre>
+<p><strong>Conclusion:</strong> The kernel’s DRM framework operated as expected according to the DTS configuration, with correct <code>clock-frequency</code> and timing parameters loaded for all interfaces.</p>
+<h2 id="final-outcomes"><strong>Final Outcomes</strong></h2>
+<ul>
+<li><strong>Successful Bring-up of Multiple Interfaces:</strong> The LVDS, MIPI-DSI, and HDMI 2.0 interfaces were all capable of outputting video streams at their specified resolutions on demand.</li>
+<li><strong>Successful FPGA Integration:</strong> The FPGA development team confirmed stable reception of the 1920x1080@30Hz LVDS video stream from the RK3568, with no frame drops or screen corruption.</li>
+<li><strong>Exceeded Datasheet Specifications:</strong> This work validated that the RK3568’s LVDS interface is capable of outputting resolutions higher than officially specified, providing valuable data for future product designs, provided that clock constraints are met.</li>
+</ul>
+<hr>
+<h1 id="tech-stack--tools"><strong>Tech Stack &#x26; Tools</strong></h1>
+<ul>
+<li><strong>Hardware Platform:</strong> Rockchip RK3568 SoC, FPGA (as the receiver for all three interfaces)</li>
+<li><strong>Software Environment:</strong> Linux Kernel 5.10, U-Boot, Device Tree</li>
+<li><strong>Core Technologies:</strong> Embedded Linux BSP, DRM (Direct Rendering Manager), VOP2, LVDS/MIPI D-PHY Combo, HDMI 2.0, Device Tree (DTS)</li>
+<li><strong>Debugging Tools:</strong>
+<ul>
+<li><strong>Hardware:</strong> Serial Console</li>
+<li><strong>Software:</strong> <code>dmesg</code>, <code>sysfs</code>, <code>modetest</code>, Kernel source code review and analysis</li>
+</ul>
+</li>
+</ul>
+<hr></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

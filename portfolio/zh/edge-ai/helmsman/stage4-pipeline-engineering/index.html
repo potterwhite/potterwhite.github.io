@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter 4: C++ 推理流水线工程 · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Chapter 4: C++ 推理流水线工程</h1><div class="article-meta"><time datetime="2026-06-09" class="mono">2026-06-09</time><span class="pill teal">Edge AI</span></div></header><div class="pw-prose"><h3 id="chapter-4-engineering-a-production-grade-c-inference-pipeline"><strong>Chapter 4: Engineering a Production-Grade C++ Inference Pipeline</strong></h3>
+<table>
+<thead>
+<tr>
+<th align="left">Project Attribute</th>
+<th align="left">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Project Name</strong></td>
+<td align="left">Helmsman — C++ Inference Pipeline</td>
+</tr>
+<tr>
+<td align="left"><strong>Phase</strong></td>
+<td align="left">MR2 Phase-3 + Phase-5</td>
+</tr>
+<tr>
+<td align="left"><strong>Date</strong></td>
+<td align="left">2026-04-11 ~ 2026-04-18</td>
+</tr>
+<tr>
+<td align="left"><strong>Key Personnel</strong></td>
+<td align="left">Potter White</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="1-core-question"><strong>1. Core Question</strong></h3>
+<!-- 填入：如何设计一个可换引擎、可换预处理策略的端到端推理框架？-->
+<h3 id="2-architecture-nvi-pattern"><strong>2. Architecture: NVI Pattern</strong></h3>
+<!-- 填入：三层解耦架构（参考 PKB _DASHBOARD.md 附录 B）：
+
+```mermaid
+graph TD
+    A[Frontend] -->|TensorData| B[InferenceEngine]
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>B -->|vector&#x3C;TensorData>| C[Backend]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>subgraph Frontend</span></span>
+<span class="line"><span>    A1[Input Source] --> A2[Decoder]</span></span>
+<span class="line"><span>    A2 --> A3[Color Convert]</span></span>
+<span class="line"><span>    A3 --> A4[Preprocess]</span></span>
+<span class="line"><span>end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>subgraph InferenceEngine</span></span>
+<span class="line"><span>    B1[Inject States] --> B2[Quantize]</span></span>
+<span class="line"><span>    B2 --> B3[NPU Execute]</span></span>
+<span class="line"><span>    B3 --> B4[Dequantize]</span></span>
+<span class="line"><span>end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>subgraph Backend</span></span>
+<span class="line"><span>    C1[Postprocess] --> C2[Composite]</span></span>
+<span class="line"><span>end</span></span></code></pre>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span></span></span>
+<span class="line"><span>设计原则：</span></span>
+<span class="line"><span>- Preprocessor 只负责空间变换（resize, letterbox）</span></span>
+<span class="line"><span>- Engine 负责精度变换（normalize, quantize, dequantize）</span></span>
+<span class="line"><span>- Backend 负责数据提取 + 合成输出</span></span>
+<span class="line"><span>- 三者正交，互不依赖</span></span>
+<span class="line"><span>--></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### **3. Frontend: 4 Sub-Stages**</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;!-- 填入：4 个子阶段的说明（参考 PKB _DASHBOARD.md 附录 B §2）：</span></span>
+<span class="line"><span>1. Stage 01 Input Source：FFmpegInputSource，读取视频 packet</span></span>
+<span class="line"><span>2. Stage 02 Decoder：MppFrameDecoder，硬件解码 H.264/H.265</span></span>
+<span class="line"><span>3. Stage 03 Color Convert：RgaNv12ToBgr，RGA 硬件 NV12→BGR</span></span>
+<span class="line"><span>4. Stage 04 Preprocess：resize + letterbox → TensorData(float32 [0,255])</span></span>
+<span class="line"><span>--></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### **4. InferenceEngine: NVI + Factory Pattern**</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;!-- 填入：</span></span>
+<span class="line"><span>- NVI（Non-Virtual Interface）模式：Infer() 公开入口 → 注入状态 → DoInfer() 纯虚钩子 → 捕获状态</span></span>
+<span class="line"><span>- 工厂模式：make_engine() 根据 INFERENCE_BACKEND 配置创建不同引擎</span></span>
+<span class="line"><span>- 三路引擎：onnx | rknn-zerocopy | rknn-non-zerocopy</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>关键设计决策：为什么 Normalize + Quantize 放在 Engine 里？</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>| 引擎 | 输入量化方式 | 输出反量化方式 |</span></span>
+<span class="line"><span>|------|------------|--------------|</span></span>
+<span class="line"><span>| RKNN Zero-Copy | 手动：(pixel-127.5)/127.5/scale+zp 写入 DMA | 手动：(val-zp)*scale 从 DMA 读出 |</span></span>
+<span class="line"><span>| RKNN Non-Zero-Copy | rknn_inputs_set(pass_through=0) | rknn_outputs_get(want_float=1) |</span></span>
+<span class="line"><span>| ONNX Runtime | 模型内嵌 QDQ 节点 | 模型内嵌 QDQ 节点 |</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>如果把 normalize 放到 Preprocessor 里，换引擎就要改 Preprocessor → 违反"换引擎只需重新编译"的设计目标。</span></span>
+<span class="line"><span>--></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### **5. Multi-Model Support: MODNet + RVM**</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;!-- 填入：</span></span>
+<span class="line"><span>- MODNet：1-in/1-out，无状态</span></span>
+<span class="line"><span>- RVM：5-in/6-out，有递归状态（r1i~r4i 注入/捕获）</span></span>
+<span class="line"><span>- 设计：在旁边加新路，不改旧路（RecurrentStateManager）</span></span>
+<span class="line"><span>- 参考 PKB summarize-MR2-G0 Q4</span></span>
+<span class="line"><span>--></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### **6. Pipeline Modes: Sync → Double Buffer → Worker Thread**</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;!-- 填入：三种模式的演进：</span></span>
+<span class="line"><span>1. 同步模式：read → preprocess → infer → backend（串行）</span></span>
+<span class="line"><span>2. 双 buffer 流水线：std::async 预取第 N+1 帧 decode+preprocess 与第 N 帧推理并行</span></span>
+<span class="line"><span>3. 持久 Worker Thread：SingleSlotChannel&#x3C;T> + 持久 worker thread 替换 std::async-per-frame，零线程创建开销</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>参考 PKB log-MR2-P5-video-pipeline.md Block 5.2 + 5.4</span></span>
+<span class="line"><span>--></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### **7. Reusable Assets**</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>&#x3C;!-- 填入：表格</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>| 资产 | 说明 |</span></span>
+<span class="line"><span>|------|------|</span></span>
+<span class="line"><span>| NVI InferenceEngine 基类 | 可扩展到任意模型 |</span></span>
+<span class="line"><span>| 工厂模式 + 三路引擎 | 换引擎只需重新编译 |</span></span>
+<span class="line"><span>| RecurrentStateManager | RVM 递归状态管理 |</span></span>
+<span class="line"><span>| SingleSlotChannel&#x3C;T> | 生产者-消费者通道，零锁开销 |</span></span>
+<span class="line"><span>| ScopedTimer + StageAccumulator | 层级计时系统 |</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>--></span></span></code></pre></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

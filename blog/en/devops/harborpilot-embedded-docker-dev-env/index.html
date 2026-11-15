@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Building Reproducible Docker Dev Environments for Embedded Linux (RK3588, RV1126, RK3568) · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Building Reproducible Docker Dev Environments for Embedded Linux (RK3588, RV1126, RK3568)</h1><div class="article-meta"><time datetime="2026-03-28" class="mono">2026-03-28</time><span class="pill teal">devops</span><span class="pill teal">docker</span><span class="pill teal">embedded-linux</span></div></header><div class="pw-prose"><h1 id="building-reproducible-docker-dev-environments-for-embedded-linux">Building Reproducible Docker Dev Environments for Embedded Linux</h1>
+<h2 id="the-problem">The Problem</h2>
+<p>If you’re working with embedded Linux boards — RK3588, RK3588S, RV1126, RK3568, or similar
+Rockchip SoCs — you know the pain:</p>
+<ul>
+<li>Every developer on the team has a slightly different toolchain version installed</li>
+<li>Build results differ between machines (“it works on my Docker container”)</li>
+<li>Supporting Ubuntu 20.04, 22.04, and 24.04 simultaneously without breaking any of them</li>
+<li>Ports collide when you run containers for multiple chip families at the same time</li>
+<li>Pushing images to a private Harbor registry requires glue scripts nobody documents</li>
+</ul>
+<p>The standard answer is “containerise your dev environment” — but the container definitions
+themselves become a maintenance burden. You end up with 5 Dockerfiles that diverge over time.</p>
+<hr>
+<h2 id="the-solution-harborpilot">The Solution: HarborPilot</h2>
+<p><a href="https://github.com/potterwhite/HarborPilot">HarborPilot</a> is a fully scripted toolchain that
+automates the entire build-tag-push lifecycle for embedded Linux Docker dev environments.</p>
+<p>The key ideas:</p>
+<h3 id="1-one-monolithic-5-stage-dockerfile">1. One Monolithic 5-Stage Dockerfile</h3>
+<p>Instead of 5 separate Dockerfiles, there’s one:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Stage 1: base OS setup (apt sources, packages, user creation, locale)</span></span>
+<span class="line"><span>Stage 2: dev tools (cmake, gdb, CUDA, OpenCV, Node.js, Python)</span></span>
+<span class="line"><span>Stage 3: SDK initialisation (git init, symlinks, helper scripts)</span></span>
+<span class="line"><span>Stage 4: environment config (proxy, profile.d variables)</span></span>
+<span class="line"><span>Stage 5: workspace + entrypoint + tests</span></span></code></pre>
+<p>Platform-specific behaviour is controlled by <code>ARG</code>/<code>ENV</code> variables injected at build time —
+not by different Dockerfiles.</p>
+<h3 id="2-three-layer-config-inheritance">2. Three-Layer Config Inheritance</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Layer 1:  configs/defaults/*.env        ← global defaults (10 domain-scoped files)</span></span>
+<span class="line"><span>Layer 2:  configs/platform-independent/common.env  ← project version &#x26; constants</span></span>
+<span class="line"><span>Layer 3:  configs/platforms/&#x3C;name>.env  ← per-platform overrides only (≤20 lines)</span></span></code></pre>
+<p>A new platform file looks like this (real example for RK3568 Ubuntu 20.04):</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span># configs/platforms/rk3568-rk3568_ubuntu-20.04.env</span></span>
+<span class="line"><span>PRODUCT_NAME="rk3568-rk3568_ubuntu-20-04"</span></span>
+<span class="line"><span>CHIP_FAMILY="rk3568"</span></span>
+<span class="line"><span>CHIP_EXTRACT_NAME="rk3568"</span></span>
+<span class="line"><span>OS_VERSION="20.04"</span></span>
+<span class="line"><span>OS_VERSION_ID="20-04"</span></span>
+<span class="line"><span>PORT_SLOT=2</span></span>
+<span class="line"><span>HOST_VOLUME_DIR="/mnt/disk/volumes/rk3568-rk3568_ubuntu-20.04"</span></span>
+<span class="line"><span>HAS_PROXY=true</span></span>
+<span class="line"><span>HTTP_PROXY_IP="192.168.3.152"</span></span>
+<span class="line"><span>HTTPS_PROXY_IP="192.168.3.152"</span></span>
+<span class="line"><span>HAVE_GITLAB_SERVER=TRUE</span></span>
+<span class="line"><span>GITLAB_SERVER_IP="192.168.3.67"</span></span></code></pre>
+<p>That’s the entire file. Everything else inherits from the defaults.</p>
+<h3 id="3-port_slot-zero-port-conflicts">3. PORT_SLOT: Zero Port Conflicts</h3>
+<p>Running containers for RK3588 and RK3568 simultaneously? Set different <code>PORT_SLOT</code> values:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>PORT_SLOT=0 → SSH: 2109, GDB: 2345</span></span>
+<span class="line"><span>PORT_SLOT=1 → SSH: 2119, GDB: 2355</span></span>
+<span class="line"><span>PORT_SLOT=2 → SSH: 2129, GDB: 2365</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p>One integer drives all port mappings. No manual management, no collisions.</p>
+<hr>
+<h2 id="ubuntu-2404-support-three-specific-fixes">Ubuntu 24.04 Support: Three Specific Fixes</h2>
+<p>Ubuntu 24.04 breaks things that work fine on 20.04 and 22.04. HarborPilot handles them:</p>
+<h3 id="fix-1-deb822-apt-format">Fix 1: DEB822 apt format</h3>
+<p>Ubuntu 24.04 dropped the legacy <code>/etc/apt/sources.list</code> format. The China mirror replacement
+script detects the OS version and generates the correct format automatically:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>if [ "${OS_VERSION}" = "24.04" ]; then</span></span>
+<span class="line"><span>    # Write DEB822 format to /etc/apt/sources.list.d/ubuntu.sources</span></span>
+<span class="line"><span>else</span></span>
+<span class="line"><span>    # Write legacy format to /etc/apt/sources.list</span></span>
+<span class="line"><span>fi</span></span></code></pre>
+<h3 id="fix-2-uid-1000-pre-occupied">Fix 2: UID 1000 pre-occupied</h3>
+<p>On Ubuntu 24.04, UID 1000 is already taken by the default <code>ubuntu</code> user.
+<code>setup_base.sh</code> detects this and reassigns the existing UID before creating the dev user.</p>
+<h3 id="fix-3-pip-pep-668">Fix 3: pip PEP 668</h3>
+<p>Ubuntu 24.04 enforces PEP 668 (externally managed Python). pip installs now require:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>pip3 install --break-system-packages &#x3C;package></span></span></code></pre>
+<p>This is handled automatically via OS_VERSION conditionals in <code>install_dev_tools.sh</code>.</p>
+<hr>
+<h2 id="one-command-to-build-one-command-to-run">One Command to Build, One Command to Run</h2>
+<p><strong>Build:</strong></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>./harbor</span></span>
+<span class="line"><span># Interactive platform selection → build → tag → push → verify manifest digest</span></span></code></pre>
+<p><strong>Run on any Ubuntu host:</strong></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>./project_handover/clientside/ubuntu/ubuntu_only_entrance.sh start</span></span></code></pre>
+<p><strong>Create a new platform (non-interactive, CI-friendly):</strong></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>./scripts/create_platform.sh --non-interactive \</span></span>
+<span class="line"><span>    --name rk3566-debian12 --os debian --os-version 12 \</span></span>
+<span class="line"><span>    --harbor-ip 192.168.3.68 --port-slot 6</span></span></code></pre>
+<hr>
+<h2 id="supported-platforms">Supported Platforms</h2>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Ubuntu</th>
+<th>SSH Port</th>
+<th>GDB Port</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rk3588-rk3588s_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2109</td>
+<td>2345</td>
+<td>NVIDIA GPU supported</td>
+</tr>
+<tr>
+<td><code>rv1126-rv1126bp_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2119</td>
+<td>2355</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rk3568-rk3568_ubuntu-20.04</code></td>
+<td>20.04</td>
+<td>2129</td>
+<td>2365</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rv1126-rv1126_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2139</td>
+<td>2375</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rk3568-rk3568_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2149</td>
+<td>2385</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rk3588-rk3588s_ubuntu-24.04</code></td>
+<td>24.04</td>
+<td>2159</td>
+<td>2395</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="ai-agent-support">AI Agent Support</h2>
+<p>The <code>.env</code> config files are the intent layer — they’re plain text, human-readable,
+and can be read and modified by AI coding agents directly. The <code>docs/en/1-for-ai/</code>
+directory contains a full codebase map and working rules for AI agents.</p>
+<hr>
+<h2 id="github">GitHub</h2>
+<p>→ <a href="https://github.com/potterwhite/HarborPilot">github.com/potterwhite/HarborPilot</a></p>
+<p>MIT License. Contributions welcome.</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

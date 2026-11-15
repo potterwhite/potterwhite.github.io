@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RK3568平台USB OTG端口功能调试 · PotterWhite</title><meta name="description" content="验证调通USB部分的设备树代码，通过深入分析插拔的硬件原理，将配置方案优化为当前硬件条件下的最佳：即配置为该口为Host模式，砍掉了对主设备的连接支持，确保了产品功能的最大可用和稳定性。"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>RK3568平台USB OTG端口功能调试</h1><div class="article-meta"><time datetime="2025-10-15" class="mono">2025-10-15</time><span class="pill teal">BSP</span></div><p class="article-desc">验证调通USB部分的设备树代码，通过深入分析插拔的硬件原理，将配置方案优化为当前硬件条件下的最佳：即配置为该口为Host模式，砍掉了对主设备的连接支持，确保了产品功能的最大可用和稳定性。</p></header><div class="pw-prose"><h2 id="项目概述"><strong>项目概述</strong></h2>
+<p><strong>背景:</strong>
+在基于Rockchip RK3568的定制化项目中，基于公版SDK, 重新梳理板上的USB接口，并解决板载的USB 3.0 OTG (Type-A) 端口在默认BSP配置下，无法正常识别U盘等Host模式设备。</p>
+<p><strong>我的职责与贡献:</strong>
+作为项目的BSP工程师，我独立负责诊断并解决此USB功能性问题。我的核心贡献在于：</p>
+<ul>
+<li><strong>执行了系统性的问题排查</strong>，覆盖了从硬件原理图核对，功能确认，故障分析，到内核设备树（dts）代码编写调试和<code>sysfs</code>运行时状态分析以及性能基线测试的详细排查。</li>
+<li><strong>主导并实施了解决方案</strong>：根据产品的硬件原理图，验证两个USB-A口和一个USB-C口的工作情况。并通过修改设备树(DTS)，定下解决方案：将<code>usbdrd_dwc3</code>控制器的<code>dr_mode</code>由<code>"otg"</code>强制修改为<code>"host"</code>。</li>
+<li><strong>精确定位了问题根源</strong>：OTG端口的ID引脚在当前硬件设计下并不存在，导致控制器无法自动检测plug-in，因此无法切换Host/Device模式。</li>
+<li><strong>完成了性能与功能的完整验证</strong>，确保修改后的端口不仅能稳定识别设备，其数据传输速率也达到了USB 3.0标准。</li>
+<li><strong>将整个调试过程和技术分析</strong>沉淀为详细的技术文档，为未来类似问题提供了清晰的解决范例。</li>
+</ul>
+<hr>
+<h2 id="我的方法论嵌入式外设调试流程"><strong>我的方法论：嵌入式外设调试流程</strong></h2>
+<p>本次调试遵循了一套由表及里、从软件到硬件的标准化诊断流程：</p>
+<ol>
+<li>
+<p><strong>文档与电路功能分析:</strong></p>
+<ul>
+<li>研读RK3568 TRM，理解其USB子系统架构（2个USB3控制器、OHCI/EHCI控制器、Combo PHY等）。</li>
+<li>核对硬件原理图，确认OTG端口的物理连接，特别是ID和VBUS引脚。</li>
+<li>梳理两A（USB-A）一C（USB-C）的数据流走向</li>
+</ul>
+</li>
+<li>
+<p><strong>设备树(DTS)与驱动映射:</strong></p>
+<ul>
+<li>深入分析<code>rk3568.dtsi</code>等芯片级设备树文件，梳理<code>usbdrd30</code> (OTG)、<code>usbhost30</code> (Host)、<code>usb2phy</code>等核心节点之间的配置和关系。</li>
+<li>理清控制器与PHY之间的<code>phys</code>引用关系，并记录汇总成表格。</li>
+</ul>
+</li>
+<li>
+<p><strong>运行时状态诊断:</strong></p>
+<ul>
+<li>利用<code>sysfs</code>下的<code>extcon</code>接口 (<code>/sys/class/extcon/extcon0</code>)，实时查看内核感知的OTG端口状态（<code>USB-HOST=0</code>），印证了其未进入Host模式的猜想。</li>
+<li>回到硬件原理图，研究USB-A/mini/micro/C四种接口的插拔原理，寻找解决方案。</li>
+</ul>
+</li>
+<li>
+<p><strong>方案实施与验证:</strong></p>
+<ul>
+<li>在板级DTS中，创建<code>&#x26;usbdrd_dwc3</code>的覆盖节点，将其<code>dr_mode</code>强制设为<code>"host"</code>。</li>
+<li>重新编译并烧录固件，再次使用<code>hdparm</code>进行测试，验证问题已解决。</li>
+<li>SOC端USB作为主，则拒绝一切主设备的接入，由SOC端供电，因此，将固件升级（主设备典型应用）安排到外部按键方式触发进入Maskrom模式来进行</li>
+<li>系统成功加载后，该USB-A口则作为普通host口使用。</li>
+</ul>
+</li>
+<li>
+<p><strong>技术总结和文档输出:</strong></p>
+<ul>
+<li>仔细梳理<a href="/blog/zh/linux/bringup-methodology/">SoC 板级 Bring-up 工程手册</a>里的硬件分层数据流模型，在项目结尾终于成稿。</li>
+<li>更新 dts 调试的心得，一并沉淀进<a href="/blog/zh/linux/bringup-methodology/">SoC 板级 Bring-up 工程手册</a>的「从 dts 入手」一节</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="项目成果"><strong>项目成果</strong></h2>
+<ul>
+<li><strong>功能修复:</strong> OTG端口现可稳定识别U盘及其他USB Host设备。</li>
+<li><strong>性能达标:</strong> 修复后，使用<code>hdparm -t /dev/sda</code>测试，端口读取速度恢复至 <strong>~48MB/s</strong>，符合USB 3.0标准。</li>
+<li><strong>方案固化:</strong> 最终的DTS修改被合入产品代码库，成为该硬件的标准化配置。</li>
+<li><strong>文档沉淀:</strong> 完整的调试过程、代码分析和相关资料被整理归档。</li>
+</ul>
+<hr>
+<h2 id="技术栈与工具"><strong>技术栈与工具</strong></h2>
+<ul>
+<li><strong>硬件平台:</strong> Rockchip RK3568 SoC</li>
+<li><strong>软件环境:</strong> Linux Kernel 5.10, Buildroot</li>
+<li><strong>核心技术:</strong> Device Tree (DTS), USB 2.0/3.0 Subsystem, OTG, XHCI/EHCI/OHCI, Kernel <code>extcon</code> Framework</li>
+<li><strong>调试工具:</strong> <code>hdparm</code>, <code>sysfs</code>, dmesg, 串口调试</li>
+</ul>
+<hr></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

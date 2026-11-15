@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>音视频设备数据流分析 · PotterWhite</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>音视频设备数据流分析</h1><div class="article-meta"><time datetime="2024-08-29" class="mono">2024-08-29</time><a class="pill teal" href="/blog/categories/cpu/">cpu</a><a class="pill teal" href="/blog/categories/soc/">soc</a></div></header><div class="pw-prose"><h1 id="关键节点介绍">关键节点介绍</h1>
+<h3 id="input">Input:</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>HDMI/SDI Camera or PC Desktop Captured Video</span></span></code></pre>
+<h3 id="output">Output:</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>HDMI/SDI Monitor or PC Display</span></span></code></pre>
+<h3 id="主控芯片mpu">主控芯片：MPU</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Rockchip RK3568 </span></span>
+<span class="line"><span>NXP i.MX8M Plus</span></span></code></pre>
+<h3 id="encode-ip-module">Encode IP Module</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>FPGA(Field Programable Gate Array)</span></span>
+<span class="line"><span>ASIC(Application-Specific Integrated Circuit)</span></span>
+<span class="line"><span>    Standalone Encode Chip</span></span></code></pre>
+<h3 id="decode-ip-module">Decode IP Module</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ASIC</span></span>
+<span class="line"><span>    Standalone Decode Chip</span></span></code></pre>
+<hr>
+<h1 id="宏观层面的数据流走向把mpu看做一个黑盒blackbox"><strong>宏观层面的数据流走向</strong>（把MPU看做一个黑盒Blackbox）：</h1>
+<p>Input直接进入MPU，MPU将进来的数据进行编码，然后放进内存中</p>
+<p>从软件层面看，早期的Framebuffer方式显示，是开辟一块内存区，将编码后的数据进行解码，解码后的数据拷贝到特定的内存区中，
+相应的显示设备上就有了内存区域中的相关显示内容了。</p>
+<p>其实，这里还有非常重要的核心问题：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>为什么需要进行编码？</span></span></code></pre>
+<p>如果没有编码，就不需要解码，直接发到内存里，既显示速度快，又便宜。省去了编解码器，肯定有一定的成本下降。
+这个的确很重要，坦白说，我也没有系统的去研究过，所以为了聚焦本文的重点，也为了有尽可能权威的回答，我另外开一篇来说。</p>
+<p>本文主要是介绍宏观微观视角下的数据流走向。
+而接下来，我们就要进入微观层面了</p>
+<h1 id="微观层面的数据流走向进入mpu内部"><strong>微观层面的数据流走向（进入MPU内部）</strong></h1>
+<h2 id="simple-scene"><strong>Simple Scene</strong></h2>
+<p><img src="/2024/August/29/rk3568_block_diagram.png" alt="alt text"></p>
+<p><code>这里，特别看红色圈住的区域。</code></p>
+<p>这里面至少有GPU/Decoder/Encoder等7个模块，站在Soc(System On Chip)片上系统的角度来看，他们都是独立的<code>IP核心（Intellectual Property）</code></p>
+<p>IP的中文叫知识产权（至于这里为什么叫这么一个名字，是因为每一个IP都是设计好的，能够直接被拿来使用的，因此命名为知识产权。并非中文世界所认为的是一种无形资产而已）。</p>
+<p>关于IP所处的整个产业链的位置，我借鉴了抖音号(<code>ICshow</code>)，名为（<code>芯片工程师阿伟「芯片设计服务」</code>）的图。因为我认为，要了解一个新的术语，需要放在整个立体的产业结构中去看，这样最容易准确抓住它的定义，即便短期内没法下准定义，但是起码朦胧的认识已经有了。
+图如下
+<img src="/2024/August/29/chip_industry_structure.jpg" alt="alt text"></p>
+<p>也就是说MPU要对外实现编解码功能、图形渲染等图形处理单元的功能，是靠内部的IP来提供。</p>
+<p>MPU内部的IP Cores之间倚靠总线（总线的详细知识点后期我会进一步补充）进行连接。</p>
+<p>从ASIC的英文全称来看，它的定义是特殊应用的集成电路。因此，它最大的特点是：一旦制造出来，它的结构是不可以重新设计或调整的。正因为这样，我们可以把MPU当成一个大的ASIC。（RISC-V的特殊性，可扩展指令，在此，我们先把它剔除在该分类之外）</p>
+<p>在MPU这个ASIC里面，有众多的IP Cores。当Input有数据接入MPU，会先进行简单的图像处理（模拟信号转换成数字信号等）。然后送到VPU这个IP里面，VPU内部又有编码器和解码器以及缓存，可以对输入进来的信号进行编码，从RGB这样的显示格式转换成H.264这样的数字格式。</p>
+<p>编码后，会经过高速数据总线（AXI）传输到内存里。（因为高清HD甚至超高清UHD的视频传输，经过总线和内存，因此，<code>内存的带宽</code>和<code>总线的带宽</code>是重要的参数，是否会成为瓶颈，这里必须要关注。）</p>
+<p>之后，若需要显示在mpu的hdmi output interface上，还需要将已经编码的数据再次解码成为RGB或YUV这样的图像数据。
+也可以将编码后的数据透过ethernet或usb等interface发出去。</p>
+<h2 id="complex-scene"><strong>Complex Scene</strong></h2>
+<p>在一个更复杂的场景下，例如同时有16路camera接入mpu，这个时候，vpu本身的编码能力再强大，也无法进行实时的编码了。
+这个时候，就要考虑使用外接的编码器了。</p>
+<p>例如，使用某一些为16路（或者更多路数）的信号接入进行并行计算的ASIC，这些ASIC可以以低功耗、低延迟的效果进行加速的计算，进而取代mpu原先内置的vpu。
+或者还有第二种办法，就是用可编程逻辑门阵列，就是FPGA。它能够灵活的设计电路结构，为某一种算法适配其加速功能。不足之处是功耗大，而且功能较多，有文章说：FPGA是通用可编辑的芯片，冗余功能比较多。不管你怎么设计，都会多出来一些部件。
+详细的关于FPGA和ASIC的对比，请看Reference的文章<code>1.到底什么是ASIC和FPGA?</code></p>
+<h2 id="总结"><strong>总结</strong></h2>
+<p>从内部来看MPU，是必须的，这样才能深刻去查看研究data sheet里面的block diagram到底想要表达什么，有多少module。
+从SOC的角度看IP core，看总线，看ASIC，看FPGA，进而看GPU，NPU， CPU，似乎它是一条线，把这些零散的概念，串起来了。
+感谢上帝。</p>
+<hr>
+<h1 id="references"><strong>References</strong></h1>
+<p><a href="https://xueqiu.com/7282046183/273570315">1.到底什么是ASIC和FPGA?</a></p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

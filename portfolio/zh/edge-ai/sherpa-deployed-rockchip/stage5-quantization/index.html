@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第五章：嵌入式平台 (RV1126B) 流式 ASR 模型 (Zipformer) INT8 端到端量化与部署 · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>第五章：嵌入式平台 (RV1126B) 流式 ASR 模型 (Zipformer) INT8 端到端量化与部署</h1><div class="article-meta"><time datetime="2025-09-27" class="mono">2025-09-27</time><span class="pill teal">Edge AI</span></div></header><div class="pw-prose"><h3 id="项目复盘报告-v50-嵌入式平台-rv1126b-流式-asr-模型-zipformer-int8-端到端量化与部署"><strong>[项目复盘报告 V5.0] 嵌入式平台 (RV1126B) 流式 ASR 模型 (Zipformer) INT8 端到端量化与部署</strong></h3>
+<table>
+<thead>
+<tr>
+<th align="left">项目属性</th>
+<th align="left">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>项目名称</strong></td>
+<td align="left">第五部分：RV1126BP平台 Sherpa ASR RKNN量化</td>
+</tr>
+<tr>
+<td align="left"><strong>项目周期</strong></td>
+<td align="left">2025-08-21 ~ 2025-09-23</td>
+</tr>
+<tr>
+<td align="left">项目用时</td>
+<td align="left">40(约5人天)</td>
+</tr>
+<tr>
+<td align="left"><strong>复盘日期</strong></td>
+<td align="left">2025-09-27</td>
+</tr>
+<tr>
+<td align="left"><strong>核心人员</strong></td>
+<td align="left">Potter White</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="1-项目目标-project-objective"><strong>1. 项目目标 (Project Objective)</strong></h3>
+<p>为基于 Rockchip RV1126B SoC 的嵌入式设备，将一个 <code>FP32</code> 精度的流式 Zipformer ASR (Automatic Speech Recognition) ONNX 模型，转换为 <code>INT8</code> 精度的 RKNN 模型，并在 <code>sherpa-onnx</code> C++ 推理框架中完成部署与验证，以满足低延迟和低功耗的运行要求。</p>
+<h3 id="2-执行方法与流程-methodology--workflow"><strong>2. 执行方法与流程 (Methodology &#x26; Workflow)</strong></h3>
+<p>本项目采用了一套系统性的方法，覆盖从模型分析、运行时环境改造、量化数据生成到最终模型验证的全过程。</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    classDef main fill:#2c3e50,color:white,stroke:#8e9eab;</span></span>
+<span class="line"><span>    classDef task fill:#4b3e58,color:white,stroke:#b8a3d3;</span></span>
+<span class="line"><span>    classDef check fill:#27ae60,color:white,stroke:#88d1a1;</span></span>
+<span class="line"><span>    classDef fail fill:#c0392b,color:white,stroke:#e69a93;</span></span>
+<span class="line"><span>    classDef success fill:#16a085,color:white,stroke:#72d6c1;</span></span>
+<span class="line"><span>    classDef note fill:#f39c12,color:white,stroke:#f8c471;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    S[&#x3C;b>开始: FP32 ONNX 模型&#x3C;/b>]:::main</span></span>
+<span class="line"><span>    A["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>1. 初始模型分析与转换&#x3C;/b>&#x3C;br>- 使用预量化的 INT8 ONNX 模型进行直接转换&#x3C;/div>"]:::task</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% --- THIS IS THE MISSING LINE THAT FIXES THE CONNECTION ---</span></span>
+<span class="line"><span>    S --> A</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    A --> R1{"&#x3C;div style='text-align:center'>转换是否成功?&#x3C;/div>"}:::check</span></span>
+<span class="line"><span>    R1 -- "否: 存在 `DynamicQuantizeLinear` 算子" --> B</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    B["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>2. C++ 运行时适配&#x3C;/b>&#x3C;br>- 分析 `sherpa-onnx` RKNN 后端代码&#x3C;br>- 增加对 `RKNN_TENSOR_INT8` 类型的处理分支&#x3C;br>- 实现 INT8 输出到 FP32 的手动反量化逻辑&#x3C;/div>"]:::task</span></span>
+<span class="line"><span>    B --> C</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    C["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>3. 校准数据集迭代&#x3C;/b>&#x3C;br>&#x3C;b>3.1 (快照法):&#x3C;/b> 提取特征帧, 状态张量补零&#x3C;br>&#x3C;b>3.2 (流式模拟):&#x3C;/b> 使用 `onnxruntime` 模拟流式推理, 捕获真实的非零状态张量&#x3C;/div>"]:::task</span></span>
+<span class="line"><span>    C --> R2{"&#x3C;div style='text-align:center'>INT8 模型推理结果?&#x3C;/div>"}:::check</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    R2 -- "3.1 -> Garbled Output" --> C</span></span>
+<span class="line"><span>    R2 -- "3.2 (`interval=1`) -> &#x3C;b>First Success&#x3C;/b>" --> D</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    D["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>4. 量化策略调优&#x3C;/b>&#x3C;br>- &#x3C;b>算法:&#x3C;/b> 测试 `normal` (默认) 与 `kl_divergence` 算法&#x3C;br>- &#x3C;b>混合精度:&#x3C;/b> 尝试手动及自动混合量化&#x3C;/div>"]:::task</span></span>
+<span class="line"><span>    D --> E</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    E["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>5. 最终方案验证&#x3C;/b>&#x3C;br>- 对比不同策略下的模型精度与性能 (RTF)&#x3C;/div>"]:::task</span></span>
+<span class="line"><span>    E --> F[&#x3C;b>完成: 产出可部署的 INT8 RKNN 模型&#x3C;/b>]:::success</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "关键技术点"</span></span>
+<span class="line"><span>      K1[静态图 vs. 动态图]:::note</span></span>
+<span class="line"><span>      K2[有状态模型的校准]:::note</span></span>
+<span class="line"><span>      K3[量化算法内存分析]:::note</span></span>
+<span class="line"><span>      K4[混合精度量化]:::note</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    A --> K1</span></span>
+<span class="line"><span>    C --> K2</span></span>
+<span class="line"><span>    D --> K3 &#x26; K4</span></span></code></pre>
+<h3 id="3-工程实施细节与关键问题记录-implementation--key-findings"><strong>3. 工程实施细节与关键问题记录 (Implementation &#x26; Key Findings)</strong></h3>
+<h4 id="31-初始模型转换"><strong>3.1 初始模型转换</strong></h4>
+<ul>
+<li><strong>执行动作</strong>: 尝试使用 <code>rknn-toolkit2</code> 直接转换模型提供方发布的 <code>int8.onnx</code> 模型。</li>
+<li><strong>观察结果</strong>: 转换失败。工具链报错，指出模型中包含 <code>DynamicQuantizeLinear</code> 算子，该算子与 RKNN NPU 的静态图 (Static Graph) 计算模式不兼容。</li>
+<li><strong>采取措施</strong>: 确定了必须使用 <code>FP32</code> ONNX 模型作为输入源，并利用 <code>rknn-toolkit2</code> 自身的静态量化 (Static Quantization) 功能进行转换。</li>
+</ul>
+<h4 id="32-c-推理框架-sherpa-onnx-适配"><strong>3.2 C++ 推理框架 (sherpa-onnx) 适配</strong></h4>
+<ul>
+<li><strong>执行动作</strong>: 在使用 <code>FP32</code> 模型成功转换为 <code>INT8</code> RKNN 模型后，在 <code>sherpa-onnx</code> 中进行推理。</li>
+<li><strong>观察结果</strong>: 运行时报错，提示 <code>Unsupported tensor type: 2, INT8</code>。</li>
+<li><strong>采取措施</strong>:
+<ol>
+<li>修改了 <code>sherpa-onnx</code> 的 RKNN 后端 C++ 源码，在模型输入、输出及状态 (states) 处理逻辑中，增加了对 <code>RKNN_TENSOR_INT8</code> 数据类型的分支处理。</li>
+<li>在获取模型输出后，根据 <code>rknn_tensor_attr</code> 中的 <code>scale</code> 和 <code>zp</code> (zero_point) 参数，实现了手动的反量化 (Dequantization) 步骤，将 <code>INT8</code> 输出转换为后续解码逻辑所需的 <code>FP32</code> 数据。</li>
+</ol>
+</li>
+</ul>
+<h4 id="33-量化校准数据集的迭代与优化"><strong>3.3 量化校准数据集的迭代与优化</strong></h4>
+<p>此阶段是项目核心，通过多次迭代确定了有效的校准数据生成方案。</p>
+<ul>
+<li>
+<p><strong>迭代 1: 快照式数据集 (Snapshot Dataset)</strong></p>
+<ul>
+<li><strong>方法</strong>: 从音频中提取多个特征帧 (<code>x</code>) 作为校准样本，所有状态输入 (<code>cached_*</code> tensors) 均使用全零张量填充。</li>
+<li><strong>结果</strong>: 生成的 <code>INT8</code> 模型在推理时输出乱码或静默。</li>
+</ul>
+</li>
+<li>
+<p><strong>迭代 2: 精确特征提取 + 快照式数据集</strong></p>
+<ul>
+<li><strong>方法</strong>: 深入分析 <code>sherpa-onnx</code> 的 C++ 源码 (<code>features.h</code>)，在 Python 数据生成脚本中精确复现了其音频预处理流程，包括去直流偏置 (Remove DC Offset) 和预加重 (Pre-emphasis)。状态输入仍使用全零张量。</li>
+<li><strong>结果</strong>: 推理结果没有改善，证明状态张量的真实性是更关键的因素。</li>
+</ul>
+</li>
+<li>
+<p><strong>迭代 3: 模拟流式数据集 (Simulated Streaming Dataset)</strong></p>
+<ul>
+<li><strong>方法</strong>: 编写 Python 脚本，使用 <code>onnxruntime</code> 完整模拟 <code>sherpa-onnx</code> 的流式推理过程。在每个时间步 (<code>time step</code>)，将真实的特征帧 (<code>x</code>) 和由上一步 <code>onnxruntime</code> 计算出的真实非零状态 (<code>cached_*</code>) 作为一组完整的校准样本保存下来。</li>
+<li><strong>结果</strong>:
+<ul>
+<li>使用此方法生成的完整数据集 (<code>sampling_interval=1</code>) 进行量化后，模型<strong>首次成功输出完整、可读的识别结果</strong>，RTF (Real-Time Factor, 实时率) 约为 0.29。</li>
+<li>数据集体积巨大 (超过 100GB)，导致转换时间长达数小时。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="34-量化策略的进一步探索"><strong>3.4 量化策略的进一步探索</strong></h4>
+<p>基于第 3.3 节成功的 <code>interval=1</code> 数据集，进行了以下策略调优：</p>
+<ul>
+<li>
+<p><strong>量化算法</strong>:</p>
+<ul>
+<li><strong><code>normal</code> (默认)</strong>: 成功生成模型，结果如 3.3 所述。</li>
+<li><strong><code>kl_divergence</code></strong>: 在转换过程中，因内存消耗过大导致系统内存溢出 (Out of Memory, OOM) 而失败。分析表明，该算法需要一次性加载大量样本进行统计计算，与大规模数据集不兼容。</li>
+</ul>
+</li>
+<li>
+<p><strong>数据采样方法</strong>:</p>
+<ul>
+<li><strong>系统采样 (<code>sampling_interval > 1</code>) / 随机采样</strong>: 尝试通过采样减少数据集体积，以配合 <code>kl_divergence</code> 算法。</li>
+<li><strong>结果</strong>: 虽然转换可以成功，但生成的模型推理结果重新变为乱码。这表明 Zipformer 模型对校准数据中状态的<strong>时间连续性 (Temporal Continuity)</strong> 高度敏感。</li>
+</ul>
+</li>
+<li>
+<p><strong>混合精度量化 (Mixed-Precision Quantization)</strong>:</p>
+<ul>
+<li><strong>方法</strong>: 尝试使用 <code>rknn-toolkit2</code> 的手动及自动混合量化功能，将 <code>Softmax</code> 等对精度敏感的算子保留为 <code>FP16</code>。</li>
+<li><strong>结果</strong>: 手动混合未能显著改善精度，并引入了新的识别错误。自动混合生成的模型在运行时报错或输出乱码。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-项目成果与结论-results--conclusion"><strong>4. 项目成果与结论 (Results &#x26; Conclusion)</strong></h3>
+<ul>
+<li>
+<p><strong>最终交付成果</strong>:</p>
+<ol>
+<li>一个可在 RV1126B 平台上稳定运行的 <code>INT8</code> RKNN ASR 模型，RTF 达到 <strong>0.29</strong>，实现了从 <code>FP32</code> 到 <code>INT8</code> 的成功部署。</li>
+<li>一套经过验证的、针对流式有状态 (stateful) 模型的校准数据集生成脚本 (<code>09_generate_calibration_dataset.py</code>)，该脚本通过模拟流式推理来保证状态张量的真实性和连续性。</li>
+</ol>
+</li>
+<li>
+<p><strong>工程结论</strong>:</p>
+<ol>
+<li>对于此 Zipformer 模型，校准数据的<strong>状态真实性与时间连续性</strong>是量化成功的决定性因素，其重要性高于特征提取的微小差异。</li>
+<li><code>rknn-toolkit2</code> 的 <code>kl_divergence</code> 等统计型量化算法，在处理大规模、高维度的连续数据集时存在内存限制。</li>
+<li>在当前工具链和模型架构下，使用完整的流式模拟数据集配合 <code>normal</code> 量化算法，是在各项约束（精度、性能、转换可行性）之间取得的最佳工程方案。</li>
+</ol>
+</li>
+</ul></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

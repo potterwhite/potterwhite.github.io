@@ -1,0 +1,681 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>不靠猜：如何用 TRM 推导出 PCIe 模块的问题 · PotterWhite</title><meta name="description" content="一次 RK3588 PCIe bring-up 的真实调试时间线：从一条 readl() hang 出发，靠 仔细抠TRM手绘系统结构图 + 内核代码 + 启动串口信息 交叉验证，断定模块的问题来自硬件，并整理出自己的Bringup方法论。"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>不靠猜：如何用 TRM 推导出 PCIe 模块的问题</h1><div class="article-meta"><time datetime="2026-07-29" class="mono">2026-07-29</time><a class="pill teal" href="/blog/categories/linux/">linux</a><a class="pill teal" href="/blog/categories/bsp/">bsp</a><a class="pill teal" href="/blog/categories/pcie/">pcie</a></div><p class="article-desc">一次 RK3588 PCIe bring-up 的真实调试时间线：从一条 readl() hang 出发，靠 仔细抠TRM手绘系统结构图 + 内核代码 + 启动串口信息 交叉验证，断定模块的问题来自硬件，并整理出自己的Bringup方法论。</p></header><div class="pw-prose"><blockquote>
+<p>这是我在 RK3588 上做 PCIe 3.0 bring-up 时的一段真实调试经过。调试的结果是<strong>硬件出问题</strong>，对我来说，这比把模块调通更有意义，因此出错时自己被倒逼反复的死抠每一个路径上遇到的技术细节，直到完成，比起轻松的调通，其实我对rk3588的pcie模块理解得更深。重要的是：整个过程里，我每一步都拿得出证据，说清楚”卡在哪、为什么卡、下一条路该往哪走”。</p>
+<p>这篇文章的前 70% 是第一人称的时间线复盘（我怎么一步步逼近根因、走过哪些弯路），后 30% 是我从这次经历里提炼出的反思。文末链到我沉淀的 <a href="/blog/zh/linux/bringup-methodology/">SoC 板级 Bring-up 工程手册</a>——这篇 PCIe 案例，就是那套方法在最深一层的实战。</p>
+</blockquote>
+<h2 id="0-引子cpu7-上的沉默">0. 引子：CPU7 上的沉默</h2>
+<p>最初的sdk里，pcie30phy的mode就是NANBNB，即不聚合，port0和port1的2Lane不单独分开，乃是合并为一个独立的2Lanes通道使用。且pcie3x4是打开的。
+但是，一旦我修改了dts里的配置，板端起 PCIe 驱动之后，CPU7 的 <code>rk-pcie</code> kthread 触发 RCU stall，在此状态下，内核其实并未直接Panic卡死，每几十秒就会大段的打印cpu的信息, 这着实吓到我了，心想怎么样也不应该连bash都进不去吧。</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:</span></span>
+<span class="line"><span>        7-....: (1 GPs behind) idle: 1c0</span></span>
+<span class="line"><span>rcu: blocking rk-pcie thread on readl(dbi_base + 0x8bc)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[   63.970433] CPU7 online:1</span></span>
+<span class="line"><span>[   63.970443]  EL2(NS) PC: &#x3C;0xffffffc00874c2c4> dw_pcie_read+0x44/0xc0</span></span></code></pre>
+<p>起初看到这样的东西，一头雾水，但求助AI,很快就直到核心的信息是告诉我们cpu7上的任务卡住了：也就是 “ dw_pcie_read+0x44/0xc0”</p>
+<h2 id="1-第一步找出dw_pcie_read是被谁调用">1. 第一步：找出dw_pcie_read()是被谁调用？</h2>
+<p>我的第一个任务就是去搞清楚，是谁调用了dw_pcie_read()函数，透过全篇kernel的搜索，写下了它的调用栈：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>rk3588-linux_20250321/kernel/drivers/pci/controller/dwc/pcie-designware.c</span></span>
+<span class="line"><span>int dw_pcie_read(void __iomem *addr, int size, u32 *val)</span></span>
+<span class="line"><span>       ↓</span></span>
+<span class="line"><span>rk3588-linux_20250321/kernel/drivers/pci/controller/dwc/pcie-dw-rockchip.c</span></span>
+<span class="line"><span>static u32 rk_pcie_readl_atu(struct dw_pcie *pci, u32 reg)</span></span>
+<span class="line"><span>↓</span></span></code></pre>
+<ul>
+<li>enter branch A:</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>static u32 rk_pcie_readl_ob_unroll(struct dw_pcie *pci, u32 index, u32 reg)</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>rk_pcie_prog_outbound_atu_unroll()</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>static void rk_pcie_prog_outbound_atu(struct dw_pcie *pci, int index,int type, u64 cpu_addr, u64 pci_addr, u32 size)</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>static int rk_pcie_ep_outbound_atu(struct rk_pcie *rk_pcie,phys_addr_t phys_addr, u64 pci_addr,size_t size)</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>static int rk_pcie_ep_atu_init(struct rk_pcie *rk_pcie)</span></span>
+<span class="line"><span></span></span></code></pre>
+<ul>
+<li>enter branch B:</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>static u32 rk_pcie_readl_ib_unroll(struct dw_pcie *pci, u32 index, u32 reg)</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>rk_pcie_prog_inbound_atu_unroll()</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>rk_pcie_prog_inbound_atu()</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>rk_pcie_ep_inbound_atu()</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>rk_pcie_ep_atu_init()</span></span></code></pre>
+<ul>
+<li>branch A merged with Branch B</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>↓</span></span>
+<span class="line"><span>(rockchip_dw_pcie_resume) 或</span></span>
+<span class="line"><span>static int rk_pcie_add_ep(struct rk_pcie *rk_pcie)</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>static int rk_pcie_really_probe(void *p)</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>static int rk_pcie_probe(struct platform_device *pdev)</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>static struct platform_driver rk_plat_pcie_driver = {</span></span>
+<span class="line"><span>	.driver = {</span></span>
+<span class="line"><span>		.name = "rk-pcie",</span></span>
+<span class="line"><span>		.of_match_table = rk_pcie_of_match,</span></span>
+<span class="line"><span>		.suppress_bind_attrs = true,</span></span>
+<span class="line"><span>		.pm = &#x26;rockchip_dw_pcie_pm_ops,</span></span>
+<span class="line"><span>	},</span></span>
+<span class="line"><span>	.probe = rk_pcie_probe,</span></span>
+<span class="line"><span>};</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>追到最后的rk_plat_pcie_driver我已经完全清楚了。就是在pcie设备进行probe的阶段，发生的问题。
+虽然对内核并不算很熟悉，但是内核里的驱动正是靠这种塞满函数指针的结构体变量来进行注册的。</p>
+<h2 id="2-第二步找出dw_pcie_read具体做了什么">2. 第二步：找出dw_pcie_read()具体做了什么？</h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>int dw_pcie_read(void __iomem *addr, int size, u32 *val)</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>	// int seq = atomic_inc_return(&#x26;dw_pcie_read_seq);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	// /* +++PCIE_HANG_DEBUG+++ before the actual read -- if the readl</span></span>
+<span class="line"><span>	//  * below hangs, the LAST printed "BEFORE" line is the offender. */</span></span>
+<span class="line"><span>	// pr_info("+++PCIE_HANG_DEBUG+++[%05d] dw_pcie_read BEFORE addr=0x%p size=%d\n",</span></span>
+<span class="line"><span>	// 	seq, addr, size);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	if (!IS_ALIGNED((uintptr_t)addr, size)) {</span></span>
+<span class="line"><span>		*val = 0;</span></span>
+<span class="line"><span>		return PCIBIOS_BAD_REGISTER_NUMBER;</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	if (size == 4) {</span></span>
+<span class="line"><span>		*val = readl(addr);</span></span>
+<span class="line"><span>	} else if (size == 2) {</span></span>
+<span class="line"><span>		*val = readw(addr);</span></span>
+<span class="line"><span>	} else if (size == 1) {</span></span>
+<span class="line"><span>		*val = readb(addr);</span></span>
+<span class="line"><span>	} else {</span></span>
+<span class="line"><span>		*val = 0;</span></span>
+<span class="line"><span>		return PCIBIOS_BAD_REGISTER_NUMBER;</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	// /* +++PCIE_HANG_DEBUG+++ after the read returned -- if you see lots of</span></span>
+<span class="line"><span>	//  * BEFORE lines but no AFTER lines for the same seq number, the read</span></span>
+<span class="line"><span>	//  * that hung is the one whose AFTER never printed. */</span></span>
+<span class="line"><span>	// pr_info("+++PCIE_HANG_DEBUG+++[%05d] dw_pcie_read AFTER  addr=0x%p size=%d val=0x%x\n",</span></span>
+<span class="line"><span>	// 	seq, addr, size, *val);</span></span>
+<span class="line"><span>	return PCIBIOS_SUCCESSFUL;</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span>EXPORT_SYMBOL_GPL(dw_pcie_read);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>arch/arm64/include/asm/io.h</span></span>
+<span class="line"><span>/*</span></span>
+<span class="line"><span> * I/O memory access primitives. Reads are ordered relative to any</span></span>
+<span class="line"><span> * following Normal memory access. Writes are ordered relative to any prior</span></span>
+<span class="line"><span> * Normal memory access.</span></span>
+<span class="line"><span> */</span></span>
+<span class="line"><span>#define readb(c)		({ u8  __v = readb_relaxed(c); __iormb(__v); __v; })</span></span>
+<span class="line"><span>#define readw(c)		({ u16 __v = readw_relaxed(c); __iormb(__v); __v; })</span></span>
+<span class="line"><span>#define readl(c)		({ u32 __v = readl_relaxed(c); __iormb(__v); __v; })</span></span>
+<span class="line"><span>#define readq(c)		({ u64 __v = readq_relaxed(c); __iormb(__v); __v; })</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>#define writeb(v,c)		({ __iowmb(); writeb_relaxed((v),(c)); })</span></span>
+<span class="line"><span>#define writew(v,c)		({ __iowmb(); writew_relaxed((v),(c)); })</span></span>
+<span class="line"><span>#define writel(v,c)		({ __iowmb(); writel_relaxed((v),(c)); })</span></span>
+<span class="line"><span>#define writeq(v,c)		({ __iowmb(); writeq_relaxed((v),(c)); })</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>/*</span></span>
+<span class="line"><span> * Relaxed I/O memory access primitives. These follow the Device memory</span></span>
+<span class="line"><span> * ordering rules but do not guarantee any ordering relative to Normal memory</span></span>
+<span class="line"><span> * accesses.</span></span>
+<span class="line"><span> */</span></span>
+<span class="line"><span>#define readb_relaxed(c)	({ u8  __r = __raw_readb(c); __r; })</span></span>
+<span class="line"><span>#define readw_relaxed(c)	({ u16 __r = le16_to_cpu((__force __le16)__raw_readw(c)); __r; })</span></span>
+<span class="line"><span>#define readl_relaxed(c)	({ u32 __r = le32_to_cpu((__force __le32)__raw_readl(c)); __r; })</span></span>
+<span class="line"><span>#define readq_relaxed(c)	({ u64 __r = le64_to_cpu((__force __le64)__raw_readq(c)); __r; })</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>#define writeb_relaxed(v,c)	((void)__raw_writeb((v),(c)))</span></span>
+<span class="line"><span>#define writew_relaxed(v,c)	((void)__raw_writew((__force u16)cpu_to_le16(v),(c)))</span></span>
+<span class="line"><span>#define writel_relaxed(v,c)	((void)__raw_writel((__force u32)cpu_to_le32(v),(c)))</span></span>
+<span class="line"><span>#define writeq_relaxed(v,c)	((void)__raw_writeq((__force u64)cpu_to_le64(v),(c)))</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>#define __raw_readl __raw_readl</span></span>
+<span class="line"><span>static __always_inline u32 __raw_readl(const volatile void __iomem *addr)</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>	u32 val;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	log_read_mmio(32, addr);</span></span>
+<span class="line"><span>	asm volatile(ALTERNATIVE("ldr %w0, [%1]",</span></span>
+<span class="line"><span>				 "ldar %w0, [%1]",</span></span>
+<span class="line"><span>				 ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE)</span></span>
+<span class="line"><span>		     : "=r" (val) : "r" (addr));</span></span>
+<span class="line"><span>	log_post_read_mmio(val, 32, addr);</span></span>
+<span class="line"><span>	return val;</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>一步步追到这里，核心就是这段汇编代码：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>	asm volatile(ALTERNATIVE("ldr %w0, [%1]",</span></span>
+<span class="line"><span>				 "ldar %w0, [%1]",</span></span>
+<span class="line"><span>				 ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE)</span></span>
+<span class="line"><span>		     : "=r" (val) : "r" (addr));</span></span></code></pre>
+<h2 id="3-第三步继续把-readl-追到底搞清这句汇编为什么会是最后一句代码">3. 第三步：继续把 readl 追到底，搞清这句汇编为什么会是最后一句代码</h2>
+<p>我的第一反应是：<code>readl</code> 怎么会挂？要回答，就得把它一路追到最底层。</p>
+<p>RCU stall log 里的 <code>dw_pcie_read+0x44/0xc0</code>，那个 <code>+0x44</code> 就是这条 <code>ldr</code> 的指令偏移。</p>
+<p>按照现象来反推，应该是CPU 发起的这个ldr 0x44估计是一直没有返回。所以才导致了kthread持续挂起cpu。
+我当时在这里兜了非常久，那这个0x44是什么呢？</p>
+<h3 id="0x44-到底是什么"><code>+0x44</code> 到底是什么？</h3>
+<p><strong>第一步：<code>+0x44</code> 不是地址，是指令偏移。</strong></p>
+<p><code>dw_pcie_read+0x44/0xc0</code> 的读法是：函数 <code>dw_pcie_read</code> 总长 <code>0xc0</code> 字节，PC 现在停在<strong>函数入口往后第 <code>0x44</code> 字节的那条指令上</strong>。它回答的是”卡在哪一条指令”，<strong>不是”读的是哪个地址”</strong>。我之前一直把 <code>0x44</code> 当成被读的地址，这是根本的误解。</p>
+<p>把这个函数用交叉编译器反汇编出来（<code>aarch64-...-objdump -d pcie-designware.o</code>），偏移 <code>0x44</code> 处清清楚楚：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>  ffffffc00874c29c:	7100103f 	cmp	w1, #0x4                                   // size == 4 ?</span></span>
+<span class="line"><span>  ffffffc00874c2a0:	54000120 	b.eq	ffffffc00874c2c4 &#x3C;dw_pcie_read+0x44>       // 是 → 跳到 0x44 走 readl 分支</span></span>
+<span class="line"><span>  ...</span></span>
+<span class="line"><span>  ffffffc00874c2c4:	b9400001 	ldr	w1, [x0]      // ★ +0x44 就是这一条：从 x0 指向的地址读 32 bit</span></span>
+<span class="line"><span>  ffffffc00874c2c8:	d50331bf 	dmb	oshld</span></span>
+<span class="line"><span>  ffffffc00874c2cc:	2a0103e0 	mov	w0, w1</span></span>
+<span class="line"><span>  ffffffc00874c2d0:	ca000000 	eor	x0, x0, x0</span></span>
+<span class="line"><span>  ffffffc00874c2d4:	b5000000 	cbnz	x0, ffffffc00874c2d4 &#x3C;dw_pcie_read+0x54></span></span>
+<span class="line"><span>  ffffffc00874c2d8:	52800000 	mov	w0, #0x0                   	// #0</span></span>
+<span class="line"><span>  ffffffc00874c2dc:	d50323bf 	autiasp</span></span>
+<span class="line"><span>  ffffffc00874c2e0:	b9000041 	str	w1, [x2]</span></span>
+<span class="line"><span>  ffffffc00874c2e4:	d65f03c0 	ret</span></span></code></pre>
+<p><code>+0x44</code> 就是 <code>ldr w1, [x0]</code>。<strong>被读的地址在寄存器 x0 里，不是 0x44。</strong> <code>x0</code> 是函数第一个参数 <code>addr</code>。</p>
+<p><strong>第二步：凭什么说 x0（也就是 <code>addr</code>）指向的是外设，而不是普通内存？</strong></p>
+<p>看函数签名：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>int dw_pcie_read(void __iomem *addr, int size, u32 *val)</span></span></code></pre>
+<ul>
+<li><strong>__iomem</strong>
+<code>void __iomem *</code> 是内核对 MMIO 指针的强制类型标注。整个内核里，带 <code>__iomem</code> 的指针只指向一种东西：<strong><code>ioremap()</code> 出来的外设寄存器映射地址</strong>，其页表属性是 Device-nGnRE，不是 Normal memory。普通 RAM 指针是 <code>void *</code>，永远不带 <code>__iomem</code>。所以从类型系统就能断定：这条 <code>ldr</code> 打的是一笔 <strong>Device memory 事务</strong>，走 AXI 总线去够某个 slave 端口，而不是去 DRAM。
+其实调试的时候，我当时还没有进行硬件框图的学习（即下面的 “回到 TRM，找 PHY 时钟域的架构依据”）时，其实并不理解AXI master/ AXI slave/ DBI slave/ APB的具体意思是什么。</li>
+</ul>
+<p><strong>这解释了那个最要命的而且一直在我心里总感觉哪里不对又问不出来的疑问——“CPU 查自己的内存，为什么会永不返回？”</strong> 因为它查的<strong>根本不是内存</strong>。DRAM 由 memory controller 兜底，永远会回话；而一个 MMIO 地址背后是一颗外设，外设的时钟一旦停摆，它就不回 AXI response。叠上两条协议事实，<code>ldr</code> 就永远等下去：</p>
+<ul>
+<li><strong>AXI 协议层没有 timeout</strong>：slave 不返回 Read Response，事务就一直挂着（AMBA AXI Spec, IHI 0022，文档入口 <code>https://developer.arm.com/documentation/ihi0022/latest/</code>）</li>
+<li><strong>ARMv8 对 Device-nGnRE 的 load 语义就是死等到完成</strong>（Arm ARM, DDI 0487，文档入口 <code>https://developer.arm.com/documentation/ddi0487/latest/</code>）</li>
+</ul>
+<blockquote>
+<p><strong>关于引用的诚实说明。</strong> 上面这两条底层原理（AXI 无事务级 timeout、Device-nGnRE load 语义是阻塞到完成）在工程上是常识、也是这次 hang 的机制根据；但我根据AI给出的信息和搜索引擎搜到的说法都还没有办法核准这处的标准内容。</p>
+</blockquote>
+<p><strong>第三步（诚实的边界）：光凭这一行 log，能不能断定就是 DBI？—— 不能。</strong></p>
+<p><code>dw_pcie_read</code> 是个通用叶子函数，内核里调用它的<strong>不止 DBI 一家</strong>。搜一遍就知道，至少还有 ATU：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>// pcie-designware.c</span></span>
+<span class="line"><span>dw_pcie_read_dbi():   ret = dw_pcie_read(pci->dbi_base + reg, size, &#x26;val);  // DBI</span></span>
+<span class="line"><span>dw_pcie_readl_atu():  ret = dw_pcie_read(pci->atu_base + reg, 4,   &#x26;val);  // ATU</span></span></code></pre>
+<p>而这里也让我疑惑了非常久，到底是谁调用它？太乱了。后来还是读到一句后面的代码才稍微站住脚（详见下面分析）</p>
+<p><code>dw_pcie_read+0x44/0xc0</code> 这行 stall log 里，只有函数符号和指令偏移，<strong>没有 x0 的值</strong>，所以单看这一行，我只能推到”卡在一次外设 MMIO 读上”，<strong>推不出</strong>具体是 DBI 还是 ATU 的地址。之前直接写”0x44 是 dbi 的地址”，是我把结论提前了、证据不足。</p>
+<p>要区分 DBI 还是 ATU，得靠<strong>别的证据</strong>，不是这行 log：</p>
+<ol>
+<li>
+<p><strong>调用栈——但我这次恰恰没有。</strong> 理论上，如果 stall 时能拿到完整的函数调用栈（一层层 <code>caller → callee</code> 展开），看 <code>dw_pcie_read</code> 的上一跳是 <code>dw_pcie_read_dbi</code> 还是 <code>dw_pcie_readl_atu</code>，就能直接分开。<strong>但我实测拿到的 RCU stall log 根本没有这个。</strong> 它是 “detected stalls on CPUs” 模式，给每颗 CPU 只 dump 当前那一条 PC：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[   63.970443]  EL2(NS) PC: &#x3C;0xffffffc00874c2c4> dw_pcie_read+0x44/0xc0</span></span></code></pre>
+<p>就这一行——只有 PC 停在哪条指令，<strong>没有上一跳、没有栈帧</strong>。所以想靠”看 caller”来分辨 DBI/ATU，这条路在我的 log 上是断的。这也正是我不得不走下面第 2 条的原因。</p>
+</li>
+<li>
+<p><strong>自己插 printk</strong> 既然 log 不给 caller，就可以在 <code>rk_pcie_readl_atu()</code> 和 DBI 读路径上各插一对 <code>+++PCIE_HANG_DEBUG+++</code> 的 ENTER/EXIT，靠”有 ENTER 无 EXIT”精确定位卡在哪条路径上。</p>
+</li>
+<li>
+<p><strong>地址空间关系（这里是我依据的内容）</strong>：顺带值得一提，RK 驱动里 <code>atu_base = dbi_base + DEFAULT_DBI_ATU_OFFSET</code>（<code>0x3 &#x3C;&#x3C; 20</code>），ATU 本身就是 DBI 空间里的一段偏移——两者物理上是同一块控制器寄存器区，都在 PHY 的 <code>core_clk</code> 域后面。所以就算一时分不清是 DBI 还是 ATU，<strong>“根因指向 PHY 时钟域”这个方向依然成立</strong>；要精确到寄存器，才需要上面 1、2 两条证据。</p>
+</li>
+</ol>
+<p>小结这一段的逻辑链：<code>+0x44</code>（指令偏移）→ <code>ldr w1,[x0]</code>（反汇编铁证）→ <code>x0=addr</code> 且类型是 <code>void __iomem *</code>（外设 MMIO，非内存）→ Device-nGnRE + AXI 无 timeout（永不返回的机制）→ ATU是DBI空间里的一段偏移，即可以当成就是DBI没有回应。因此，逻辑链条算是闭环了。</p>
+<h2 id="4-第四步锁定-dbi-之后先搞清-dbi-到底是什么拆-trm-1131-的四句话">4. 第四步：锁定 DBI 之后，先搞清 DBI 到底是什么——拆 TRM 11.3.1 的四句话</h2>
+<blockquote>
+<p>这一段是我<strong>真实的思考路径</strong>。上一节把现象推到了”卡在一次 DBI 的 MMIO 读上”，但说老实话，那时候我对 DBI 只有个模糊印象。所以我没急着往下猜，而是回头翻 TRM，想先把”DBI 在这颗 controller 里到底是个什么东西、处在什么位置”搞清楚。真正让我豁然开朗的，是 TRM Part 2 Ch.11.3.1 的四句话。</p>
+</blockquote>
+<p>controller 对外一共就 4 个端口。TRM 11.3.1一句话给了清单：</p>
+<blockquote>
+<p>“Application Interface comprises with <strong>four standard interfaces: one AXI master interface, two AXI slave interface and one APB interface</strong>.”</p>
+</blockquote>
+<p>紧接着 line 20107 用四句话，一句定义一个端口。我把这四句逐句抄下来，每句配一张图——<strong>把抽象的英文，变成”数据从哪进、到哪去、过不过 PHY”的物理路径</strong>。</p>
+<h3 id="句-1--axi-master--ep-把数据写进-host-内存">句 1 · AXI master —— EP 把数据写进 host 内存</h3>
+<blockquote>
+<p>“The AXI master interfaces enable a remote PCIe device to read and write to an AXI slave (in System Interface) connected to the AXI bridge.”</p>
+</blockquote>
+<p>从 EP 到 host DRAM，我把它拆成 7 段线性旅程，每段标注”协议 + 实体”：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>         ① TLP 协议               ② PCIe 电气               ③ PIPE 接口                ④ Controller 内部 4 步</span></span>
+<span class="line"><span>  ┌──────────────────┐      ┌────────────────┐       ┌───────────────────┐       ┌────────────────────────────────────┐</span></span>
+<span class="line"><span>  │   EP / FPGA      │      │  PCIe wire     │       │  PCIe 3.0 PHY     │       │  PCIe Controller (fe150000)        │</span></span>
+<span class="line"><span>  │   PCIe IP core   │─────►│  (SerDes 差分) │──────► │  (PMA + PCS)      │──────►│                                    │</span></span>
+<span class="line"><span>  │                  │      │                │       │                   │       │  ④a RADM 收 TLP, 解析 header       │</span></span>
+<span class="line"><span>  │   组装 MWr TLP   │ PCIe │  PCIe NRZ /    │  PCIe  │  CDR + 8b/10b 解码│  PIPE  │  ④b iATU 翻译 PCIe→SoC AXI 地址    │</span></span>
+<span class="line"><span>  │   含 header +    │ 物理 │  PAM-4 +        │  数字  │  → PIPE 并行信号   │  协议  │  ④c AXI Bridge 生成 AW/AR/W 事务    │</span></span>
+<span class="line"><span>  │   data payload   │      │  8b/10b /      │       │  (TX/RXData,      │       │  ④d AXI Master port 发出           │</span></span>
+<span class="line"><span>  │                  │      │  128b/130b 编码 │       │  PHYStatus, etc.) │       │                                    │</span></span>
+<span class="line"><span>  └──────────────────┘      └────────────────┘       └───────────────────┘       └────────────────┬───────────────────┘</span></span>
+<span class="line"><span>                                                                                                       │ ⑤ AXI 协议 (PCIe Ctrl → Interconn)</span></span>
+<span class="line"><span>                                                                                                       ▼</span></span>
+<span class="line"><span>                                                                              ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span></span>
+<span class="line"><span>                                                                              │ Interconnect 内  │ ← 独立 IP (TRM Ch.1)</span></span>
+<span class="line"><span>                                                                              │ 部: PCIe Master  │</span></span>
+<span class="line"><span>                                                                              │ BIU + crossbar + │</span></span>
+<span class="line"><span>                                                                              │ 4× DDR Scheduler │</span></span>
+<span class="line"><span>                                                                              │ (IP 内部组件)    │</span></span>
+<span class="line"><span>                                                                              ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span></span>
+<span class="line"><span>                                                                                                       │ ⑥ AXI 协议 (Interconn BIU → AXI slave)</span></span>
+<span class="line"><span>                                                                                                       ▼</span></span>
+<span class="line"><span>                                                                              ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span></span>
+<span class="line"><span>                                                                              │ AXI slave        │ ← 独立 IP, 不是 Interconnect 一部分</span></span>
+<span class="line"><span>                                                                              │ (in System I/F)  │   TRM 句 1 里 "AXI slave (in</span></span>
+<span class="line"><span>                                                                              │ = DDR Ctrl in    │   System Interface)" 指的就是它</span></span>
+<span class="line"><span>                                                                              │ 99% PCIe case)   │</span></span>
+<span class="line"><span>                                                                              │ ⑦ 内部: DDRC +   │</span></span>
+<span class="line"><span>                                                                              │ DDR PHY → DRAM   │</span></span>
+<span class="line"><span>                                                                              │ chips            │</span></span>
+<span class="line"><span>                                                                              ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span></span></code></pre>
+<p>重点：这是<strong>一条直链、零分叉</strong>，每个方框都是一个独立 IP 块（独立寄存器空间 / 时钟 / 复位）。数据方向 EP → host DDR，全程过 PHY、过 wire，Controller 对外这一段走 <code>mstr_aclk</code>（来自 SoC CRU）。</p>
+<p>图里的编号，就是数据流过的先后段落：</p>
+<ul>
+<li><strong>① TLP 协议</strong>：EP / FPGA 的 PCIe IP core 把数据组装成 MWr TLP（含 header + data payload）</li>
+<li><strong>② PCIe 电气</strong>：TLP 上 PCIe wire，SerDes 差分信号（NRZ / PAM-4 + 8b/10b / 128b/130b 编码）</li>
+<li><strong>③ PIPE 接口</strong>：PCIe 3.0 PHY（PMA+PCS）做 CDR + 解码，把模拟差分还原成 PIPE 并行数字信号</li>
+<li><strong>④ Controller 内部 4 步</strong>：进 controller 后的翻译流水线——
+<ul>
+<li><strong>④a</strong> RADM 收 TLP、解析 header</li>
+<li><strong>④b</strong> iATU 把 PCIe 地址翻译成 SoC AXI 地址</li>
+<li><strong>④c</strong> AXI Bridge 生成 AW/AR/W 事务</li>
+<li><strong>④d</strong> AXI Master port 把事务发出去</li>
+</ul>
+</li>
+<li><strong>⑤ / ⑥ AXI 协议</strong>：两个不同的 AXI 实例——⑤ 是 PCIe Ctrl → Interconnect 入口，⑥ 是 Interconnect BIU → AXI slave</li>
+<li><strong>⑦ DDRC → DRAM</strong>：AXI slave（99% 是 DDR Controller）内部 DDRC + DDR PHY 最终写进 DRAM chips</li>
+</ul>
+<h3 id="句-2--axi-slave-outbound--cpu-把数据写给-ep">句 2 · AXI slave “outbound” —— CPU 把数据写给 EP</h3>
+<blockquote>
+<p>“The AXI link slave interface enables an AXI master (in System Interface) to read and write through the AXI bridge to a remote PCIe device.”</p>
+</blockquote>
+<p>方向跟句 1 相反（CPU → EP），走的物理连接大部分是同一条 PCIe wire，只是软件视角反过来：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    (1) AXI master      (2) AXI 协议        (3) Controller 内部 4 步             (4) PIPE 协议</span></span>
+<span class="line"><span>       (SoC 端)         (CPU→Pcie 端口)     (AXI→TLP 翻译, 跟句1反向)            (Ctlr→PHY)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>   ┌────────────┐    ┌────────────┐    ┌──────────────────────┐    ┌────────────┐    ┌────────────┐    ┌────────────┐</span></span>
+<span class="line"><span>   │ SoC CPU    │    │ SoC Fabric │    │ PCIe Controller      │    │ PCIe 3.0   │    │ PCIe wire  │    │ EP PCIe IP │</span></span>
+<span class="line"><span>   │ (AXI       │═══►│ (AXI 协议)  │═══►│ (fe150000)            │═══►│ PHY        │═══►│ (SerDes    │═══►│ core        │</span></span>
+<span class="line"><span>   │  master)   │    │            │    │                       │    │ (PMA+PCS)  │    │  差分对)    │    │ (FPGA 内部) │</span></span>
+<span class="line"><span>   │            │    │ 路由到 PCIe │    │ 3a AXI slave outbound │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   │ 写         │    │ AXI slave   │    │ 端口接收              │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   │ 0xF0000000 │    │ outbound    │    │ 3b iATU outbound      │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   │ + 偏移      │    │ 端口        │    │ AXI addr → PCIe addr  │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   │ (outbound  │    │             │    │ 3c AXI Bridge 拆      │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   │  window)   │    │             │    │ AXI 字段              │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   │            │    │             │    │ 3d XADM 组 TLP        │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   │            │    │             │    │ (MWr header + data)   │    │            │    │            │    │             │</span></span>
+<span class="line"><span>   └────────────┘    └────────────┘    └──────────────────────┘    └────────────┘    └────────────┘    └────────────┘</span></span></code></pre>
+<p>跟句 1 结构对称、方向相反：句 1 收包用 RADM，句 2 发包用 XADM。数据方向 CPU → EP，同样过 PHY、过 wire，端口走 <code>slv_aclk</code>（来自 SoC CRU）。</p>
+<p>图里的编号（顶部 (1)<del>(4) 是大段，Controller 内部再拆 3a</del>3d）：</p>
+<ul>
+<li><strong>(1) AXI master（SoC 端）</strong>：CPU 执行 <code>str</code> 指令，目标地址落在 outbound window，SoC AXI master 把它发出去</li>
+<li><strong>(2) AXI 协议</strong>：SoC fabric 把事务路由到 PCIe 的 AXI slave outbound 端口</li>
+<li><strong>(3) Controller 内部 4 步</strong>（AXI→TLP 翻译，跟句 1 反向）——
+<ul>
+<li><strong>3a</strong> AXI slave outbound 端口接收 5 通道 AXI 信号</li>
+<li><strong>3b</strong> iATU outbound：AXI 地址 → PCIe 地址（跟句 1 的 inbound 方向相反）</li>
+<li><strong>3c</strong> AXI Bridge 拆出 AXI 字段</li>
+<li><strong>3d</strong> XADM 把字段组装成 MWr TLP（header + data）</li>
+</ul>
+</li>
+<li><strong>(4) PIPE 协议</strong>：Controller 把 TLP 切成 PIPE 并行信号交给 PHY，再经 PHY → PCIe wire → EP</li>
+</ul>
+<h3 id="句-3--dbi-slave--cpu-戳-controller-自己的寄存器--我就卡在这">句 3 · DBI slave —— CPU 戳 controller 自己的寄存器 ★ 我就卡在这</h3>
+<blockquote>
+<p>“The DBI slave enables an AXI master (in System Interface) to access the controller’s registers.”</p>
+</blockquote>
+<p>这条路径的最大特点：<strong>数据完全不经过 PCIe wire，留在 SoC 内部</strong>——</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   (1) SoC CPU           (2) SoC fabric         (3) PCIe Controller                  (4) 跨时钟域边界</span></span>
+<span class="line"><span>      (AXI master)          (AXI 协议)             DBI slave port                       (条件性, 详见下图)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>   ┌─────────────┐    ┌──────────────┐    ┌───────────────────────┐    ┌──────────────────────┐</span></span>
+<span class="line"><span>   │ SoC CPU     │    │ SoC Fabric   │    │ PCIe Controller        │    │ 内部访问 core 寄存器时 │</span></span>
+<span class="line"><span>   │ (AXI master)│═══►│ (AXI 协议)    │═══►│ (fe150000)              │═══►│ 需要穿过 core_clk 边界  │</span></span>
+<span class="line"><span>   │             │    │               │    │                         │    │ (core_clk 来自 PHY)     │</span></span>
+<span class="line"><span>   │ 写          │    │ 路由到 PCIe    │    │ 3a AXI slave DBI port   │    │                         │</span></span>
+<span class="line"><span>   │ 0xF5000000  │    │ DBI slave 端口 │    │ (dbi_aclk 域) 接收      │    │  如果 phy_ready=0:       │</span></span>
+<span class="line"><span>   │ + 偏移      │    │               │    │ 3b CDM 寄存器堆查找     │    │  AXI 请求 HOLD 等 PHY    │</span></span>
+<span class="line"><span>   │ (DBI window │    │               │    │ (Standard PCIe config + │    │                         │</span></span>
+<span class="line"><span>   │  4MB)       │    │               │    │  Port Logic registers)  │    │  [这就是 hang            │</span></span>
+<span class="line"><span>   │             │    │               │    │ 3c 寄存器读/写          │    │   的架构根因]            │</span></span>
+<span class="line"><span>   │             │    │               │    │ 3d 把数据返回 CPU       │    │                         │</span></span>
+<span class="line"><span>   └─────────────┘    └──────────────┘    └───────────────────────┘    └──────────────────────┘</span></span></code></pre>
+<p>跟句 1 / 句 2 的最大区别：<strong>没有 PHY、没有 PCIe wire、没有 EP——数据不经过 PCIe 线，终点是 Controller 内部的 CDM 寄存器</strong>。</p>
+<p>图里的编号：</p>
+<ul>
+<li><strong>(1) SoC CPU（AXI master）</strong>：CPU 执行 <code>ldr</code>，目标地址落在 DBI window</li>
+<li><strong>(2) SoC fabric</strong>：跟句 2 同一条 fabric，但路由目标是 DBI slave（不是 outbound slave）</li>
+<li><strong>(3) DBI slave port</strong>（<code>dbi_aclk</code> 域）——
+<ul>
+<li><strong>3a</strong> AXI slave DBI 端口接收</li>
+<li><strong>3b</strong> CDM 寄存器堆查找（Standard PCIe config + Port Logic 寄存器）</li>
+<li><strong>3c</strong> 寄存器读/写</li>
+<li><strong>3d</strong> 把数据返回 CPU</li>
+</ul>
+</li>
+<li><strong>(4) 跨时钟域边界</strong>：条件性的一步——只有当 3c 访问的寄存器落在 core 域时才发生，见下图放大</li>
+</ul>
+<p>但要命的是：如果读的是 core 域寄存器（比如 <code>0x8bc</code>），第 (4) 步这条路会跨进 PHY 的 <code>core_clk</code> 域。把那一步单独放大来看——</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   ┌─────────────── dbi_aclk 域 (SoC CRU, 不依赖 PHY) ──────────────┐</span></span>
+<span class="line"><span>   │                                                                 │</span></span>
+<span class="line"><span>   │  CPU AXI master → AXI slave DBI port (3a)                      │</span></span>
+<span class="line"><span>   │       │                                                         │</span></span>
+<span class="line"><span>   │       ▼                                                         │</span></span>
+<span class="line"><span>   │  CDM 寄存器查找 (3b)                                            │</span></span>
+<span class="line"><span>   │       │                                                         │</span></span>
+<span class="line"><span>   │       ▼                                                         │</span></span>
+<span class="line"><span>   │  寄存器读/写 (3c) — 如果访问的寄存器**完全在 dbi_aclk 域内**     │</span></span>
+<span class="line"><span>   │       │           → 立即返回, 不需要等 PHY                       │</span></span>
+<span class="line"><span>   │       │                                                         │</span></span>
+<span class="line"><span>   │       ▼                                                         │</span></span>
+<span class="line"><span>   │  寄存器读/写 (3c) — 如果访问的寄存器**跨进 core_clk 域**          │</span></span>
+<span class="line"><span>   │       │           (比如 0x8bc MISC_CONTROL_1_OFF 等 core 寄存器) │</span></span>
+<span class="line"><span>   │       ▼                                                         │</span></span>
+<span class="line"><span>   │  ════════════════ 跨时钟域边界 (CDC) ═══════════════════         │</span></span>
+<span class="line"><span>   │       │                                                         │</span></span>
+<span class="line"><span>   └───────┼─────────────────────────────────────────────────────────┘</span></span>
+<span class="line"><span>           │</span></span>
+<span class="line"><span>           ▼</span></span>
+<span class="line"><span>   ┌─────────────── core_clk 域 (来自 PHY pipe_clk) ─────────────────┐</span></span>
+<span class="line"><span>   │                                                                 │</span></span>
+<span class="line"><span>   │  core 域寄存器访问                                               │</span></span>
+<span class="line"><span>   │       │                                                         │</span></span>
+<span class="line"><span>   │       ▼                                                         │</span></span>
+<span class="line"><span>   │  PHY ready? ─── 否 ──► HOLD, 永远等                            │</span></span>
+<span class="line"><span>   │       │                                                         │</span></span>
+<span class="line"><span>   │      是                                                         │</span></span>
+<span class="line"><span>   │       ▼                                                         │</span></span>
+<span class="line"><span>   │  寄存器访问完成, 返回 dbi_aclk 域                               │</span></span>
+<span class="line"><span>   │                                                                 │</span></span>
+<span class="line"><span>   └─────────────────────────────────────────────────────────────────┘</span></span></code></pre>
+<p>这张图正是我 hang 的架构根因：DBI 端口本身在 <code>dbi_aclk</code>（SoC CRU）域，但一旦访问的寄存器落在 <code>core_clk</code>（PHY pipe_clk）域，PHY 没 ready 就会被 HOLD、永远等。</p>
+<h3 id="句-4--apb-slave-client--cpu-戳-rk-自家胶水寄存器">句 4 · APB slave “Client” —— CPU 戳 RK 自家胶水寄存器</h3>
+<blockquote>
+<p>“The APB enables Application to access the Client registers.”</p>
+</blockquote>
+<p>这是四条路里最简单的一条，也是我后来的<strong>对照组</strong>——4 段就到终点，完全不依赖 PHY：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>   (1) SoC CPU          (2) SoC APB fabric       (3) PCIe Controller            (4) Client registers</span></span>
+<span class="line"><span>      (APB master)          (APB 协议)              APB slave port                  (Client Logic)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>   ┌─────────────┐    ┌──────────────┐    ┌─────────────────────┐    ┌──────────────────────┐</span></span>
+<span class="line"><span>   │ SoC CPU     │    │ SoC Fabric   │    │ PCIe Controller      │    │ Client Logic          │</span></span>
+<span class="line"><span>   │ (APB master)│═══►│ (APB 协议)    │═══►│ (fe150000)            │═══►│ (RK 自家胶水)          │</span></span>
+<span class="line"><span>   │             │    │               │    │                       │    │                       │</span></span>
+<span class="line"><span>   │ 写           │    │ 路由到 PCIe  │    │ 3a APB slave port     │    │ 0x000 GENERAL_CON     │</span></span>
+<span class="line"><span>   │ 0xFE150000  │    │ APB slave    │    │ (apb_clk 域)         │    │ 0x300 LTSSM_STATUS    │</span></span>
+<span class="line"><span>   │ + 偏移      │    │ 端口         │    │ 3b APB 译码           │    │ 0x800 CLIENT_VER      │</span></span>
+<span class="line"><span>   │ (APB window │    │              │    │ (找对应寄存器)        │    │ 中断 mask / PHY reset │</span></span>
+<span class="line"><span>   │  64KB)      │    │              │    │ 3c 寄存器读/写        │    │                       │</span></span>
+<span class="line"><span>   │             │    │              │    │ 3d 数据返回           │    │                       │</span></span>
+<span class="line"><span>   └─────────────┘    └──────────────┘    └─────────────────────┘    └──────────────────────┘</span></span></code></pre>
+<p>跟句 3（DBI）的本质区别只有一处：<strong>APB 完全待在 SoC 的 <code>apb_clk</code>（= <code>PCLK_PCIE_4L</code>）域里，从头到尾不跨进 <code>core_clk</code>，PHY ready 不 ready 跟它无关</strong>。这就是为什么后面那个实验里，4 条 APB 读能在 37 微秒内全部返回，而紧接着的 DBI 读一片沉默。</p>
+<p>图里的编号：</p>
+<ul>
+<li><strong>(1) SoC CPU（APB master）</strong>：CPU 通过 APB 总线读 <code>0xFE150000 + offset</code>；APB 比 AXI 简单得多——单拍、无 burst、无 outstanding</li>
+<li><strong>(2) SoC APB fabric</strong>：APB 总线路由到 PCIe 的 APB slave 端口</li>
+<li><strong>(3) APB slave port</strong>（<code>apb_clk</code> 域）
+<ul>
+<li><strong>3a</strong> APB slave 端口接收</li>
+<li><strong>3b</strong> APB 译码（找对应寄存器）</li>
+<li><strong>3c</strong> 寄存器读/写</li>
+<li><strong>3d</strong> 数据返回</li>
+</ul>
+</li>
+<li><strong>(4) Client registers</strong>：终点是 RK 自家胶水寄存器（GENERAL_CON / LTSSM_STATUS / CLIENT_VER / 中断 mask / PHY reset 等）</li>
+</ul>
+<h3 id="四张图拼到一起">四张图拼到一起</h3>
+<p>到这里，我才有了拍大腿的酣畅感：</p>
+<ul>
+<li>所以DBI就是AXI slave，走的就是AXI总线。</li>
+<li>应该把他们当成四个门，每个门都是独立的，要做任何一件事情都只能走那个IP固化的时候就定好的“门”，决不能混用。</li>
+<li>DBI就主管CPU（走AXI master端口）访问控制器内部的寄存器。</li>
+</ul>
+<p>可是现在，我又陷入了迷惑，因为AI建议我做一次APB的寄存器的读取，因为它怀疑APB没有问题，而DBI读取有问题，至于原因就先不说，先做实验。</p>
+<h2 id="5-第五步一个起初认为没有必要做的实验apb-通dbi-挂">5. 第五步：一个起初认为没有必要做的实验——APB 通，DBI 挂</h2>
+<p>于是我让AI加了个探测函数，在 DBI 访问之前先读 4 个 APB 寄存器，每个读的前后各打一条 BEFORE/AFTER printk——一旦哪个卡住，靠”有 BEFORE 无 AFTER”就能精确定位。实测 log：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[3.981072] probe_apb_snapshot() ENTER</span></span>
+<span class="line"><span>[3.981082] apb_snapshot LTSSM_STATUS   val=0x00000000 ltssm_state=0x0</span></span>
+<span class="line"><span>[3.981089] apb_snapshot CLIENT_VER     val=0x00050610</span></span>
+<span class="line"><span>[3.981098] apb_snapshot GENERAL_CON    val=0x00000000 app_ltssm_enable=0</span></span>
+<span class="line"><span>[3.981105] apb_snapshot LOCAL_CRU_CTRL val=0x00000000</span></span>
+<span class="line"><span>[3.981109] probe_apb_snapshot() EXIT (all 4 APB reads returned)</span></span>
+<span class="line"><span>[3.981114] dw_pcie_dbi_ro_wr_en() BEFORE_READL reg=0x8bc</span></span>
+<span class="line"><span>[之后无任何后续 log —— 挂死]</span></span></code></pre>
+<p><strong>这是整个调试里最关键的一步。</strong> 4 条 APB 读全部返回，耗时 37 μs；紧接着 DBI 的 <code>readl(0x8bc)</code> 之后一片沉默。两个数字尤其有说服力：</p>
+<ul>
+<li><code>CLIENT_VER = 0x00050610</code> —— 跟 TRM 文档完全一致，说明控制器 IP 版本对、APB slave 硬件完全正常</li>
+<li>APB 全通、DBI 独挂 —— <strong>假设 A 被彻底排除</strong></li>
+</ul>
+<p>排除掉的东西列一列，才看得出这一步的价值：不是 PD_PCIE、不是 apb_clk、不是 wrapper AXI 层、不是 SCMI/M0 firmware、不是 DWC IP 版本。<strong>打击面从”整个 PCIe 子系统”收窄到了”PHY 时钟域”这一小块。</strong></p>
+<p>一个 30 分钟写完、烧录一次的实验（4 条 printk），就把”PHY 层<strong>可能</strong>有问题”的猜测，变成了”PHY 层<strong>必然</strong>有问题”的证据。</p>
+<p>但是我还是不认为完整了，因为还没解释为什么DBI有问题，APB就没问题呢？这就是牵扯到很麻烦的时钟域（Clock Domain）。</p>
+<h2 id="6-第六步回到-trm找-phy-时钟域的架构依据">6. 第六步：回到 TRM，找 PHY 时钟域的架构依据</h2>
+<p>有了实验证据，我才回头认真读 TRM——这时候读，是带着明确问题去读，不是漫无目的地啃。</p>
+<p>我要回答的问题很具体：<strong>为什么”CPU 通过 DBI 读一个控制器寄存器”这件事，会失败，而且AI认为这原因是跟 PHY 的时钟有关系？</strong> 直觉上 DBI 就是一条本地总线，CPU 戳寄存器而已，凭什么要等 PHY？下面这条链，我一环一环用我找到的 TRM 原文接起来——每一句都是直接截取。</p>
+<p><strong>环 1 —— 控制器分成 “RAW core” 和 “glue logic” 两块，“core” 是 TRM 自己的词。</strong></p>
+<blockquote>
+<p><strong>TRM 11.3</strong>：“Each Controller consists of <strong>RAW core</strong> and some application glue logic, like <strong>Client</strong> and CLK/RST block. The RAW core implements of the PCIe protocol and mode-specific features, including several AXI bus interface, <strong>RADM/XADM/CDM/eDMA/PMC/CXPL</strong>.”</p>
+</blockquote>
+<p>所以TRM 把一个控制器实例拆成 <strong>RAW core</strong>（跑 PCIe 协议的那堆模块，含 CDM）和 <strong>Client 等 glue logic</strong> 两部分。记住这个二分，后面全靠它。</p>
+<p><strong>环 2 —— DBI 访问的目标区，TRM 命名为 <code>CoreRegister</code>；APB 访问的是 <code>ClientRegister</code>。</strong></p>
+<p>这是最关键、也最容易被一句”DBI 就是访问控制器寄存器”糊弄过去的一环。</p>
+<p>TRM 的内部地址映射表里，每个控制器实例列了三段空间，<code>Device</code> 那一列写死了它们各自的类型：</p>
+<p><img src="/2026/rk3588-pcie-bringup/trm-11-4-1-table-11-1-dbi-coreregister-apb-clientregister.png" alt="TRM 11.4.1 Table 11-1：DBI 段 Device=CoreRegister，APB 段 Device=ClientRegister"></p>
+<blockquote>
+<p><strong>TRM 11.4.1 Table 11-1</strong> 逐字摘录关键三行：</p>
+<table>
+<thead>
+<tr>
+<th>Base Address</th>
+<th>Name</th>
+<th>Device</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0xF5000000</code></td>
+<td>PCIe3_4L_<strong>DBI</strong></td>
+<td><strong>CoreRegister</strong></td>
+</tr>
+<tr>
+<td><code>0xF0000000</code></td>
+<td>PCIe3_4L_S</td>
+<td>PCIeOutboundMemory</td>
+</tr>
+<tr>
+<td><code>0xFE150000</code></td>
+<td>PCIe3_4L_<strong>APB</strong></td>
+<td><strong>ClientRegister</strong></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>看清楚：<strong>DBI 那段空间的设备类型，TRM 直接标成 <code>CoreRegister</code>；APB 那段标成 <code>ClientRegister</code>。</strong> 对上环 1 的二分——DBI 打到的正是 RAW core，APB 打到的是 Client glue logic。所以”DBI → core”不是等价代换，是 TRM 地址表的原话。（另外几个实例 Table 11-2~11-5 完全同构，不再列。）</p>
+<p>再补一句 DBI 的定义，这里变着法儿的告诉读者，DBI就是用来做”本地 CPU 访问寄存器”，如果远程RC访问就不叫DBI了：</p>
+<blockquote>
+<p><strong>TRM 11.4</strong>：“PCIe Registers can be accessed by either <strong>local CPU through AXI DBI bus</strong> or remote RC device through PCIe link… The way through local CPU will be mentioned as ‘<strong>DBI</strong>’.”</p>
+</blockquote>
+<p>所以，当AI扒出这处的原话时，我都震惊了，虽然难以置信，但是似乎应该不会牵强附会的，寄存器这里的Core和后来时钟域里的Core以及DBI所访问的CPU寄存器应该都是指着同一个对象来说的。<strong>这里是逻辑重要的衔接点</strong>。</p>
+<p><strong>环 3 —— <code>core_clk</code> 就是”the controller clock”，而它由 PHY 生成。</strong></p>
+<p>RAW core 跑在什么时钟上？TRM 把 <code>core_clk</code> 直接定义成”控制器时钟”，并说它来自 PHY：</p>
+<blockquote>
+<p><strong>TRM 11.6.1.1</strong>：“<strong>Core function clock</strong> is derived from the PIPE interface clock output from the PCIe PHY.”
+<strong>TRM（RADM 一节）</strong>：“The RADM clock is a gated version of <strong>the controller clock, core_clk</strong>.”</p>
+</blockquote>
+<p><img src="/2026/rk3588-pcie-bringup/trm-11-6-1-1-table-11-16-clock-overview.png" alt="TRM 11.6.1.1 Table 11-16：core_clk 来自 PHY PLL，dbi_aclk/apb_clk 来自 SoC"></p>
+<blockquote>
+<p><strong>TRM 11.6.1.1 Table 11-16</strong> 逐字摘录关键三行：</p>
+<table>
+<thead>
+<tr>
+<th>Clock Name</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pclk/core_clk/pipe_clk</code></td>
+<td><strong>PIPE and Core clock from PHY PLL generated</strong></td>
+</tr>
+<tr>
+<td><code>dbi aclk</code></td>
+<td>DBI AXI slave clock</td>
+</tr>
+<tr>
+<td><code>apb_clk</code></td>
+<td>APB slave clock for Client</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p><strong>环 4 —— 端口自己的时钟（<code>dbi_aclk</code>/<code>apb_clk</code>）来自 SoC，不是 PHY。</strong></p>
+<p>这一环用来堵死一个常见误解——“DBI 挂是因为 DBI 的时钟没了”。不是。DBI 端口时钟好好的：</p>
+<blockquote>
+<p><strong>TRM 11.6.1.1</strong>：“The <strong>system bus clock is generated from SOC main PLL</strong> internally…”</p>
+</blockquote>
+<p>配合环 3 的 Table 11-16：<code>dbi_aclk</code>/<code>apb_clk</code> 是 system bus clock（SoC CRU 出的），跟 PHY 没关系。<strong>所以 DBI 依赖 PHY 的地方，不在端口时钟，而在它要访问的目标——core 寄存器所在的 <code>core_clk</code> 域。</strong> 一句话概括：不是”DBI 的时钟依赖 PHY”，而是”DBI 访问的目标（core 域寄存器）依赖 PHY”。</p>
+<p><strong>环 5 —— PHY 没 ready 时，经 AXI slave 访问 core 会被 hold。</strong></p>
+<blockquote>
+<p><strong>TRM 11.6.1.1</strong>：“After power up, if the PHY is not ready(phystatus is not de-assert), <strong>accessing the core through AXI slave will be held until it is ready</strong>.”
+<strong>TRM 11.6.1.1</strong>：“The PCIe link Training and transaction is <strong>completely dependent upon availability of this clock</strong>. Application should not initiate transactions before ensuring that the PHY PLL is locked.”</p>
+</blockquote>
+<p><strong>环 6（唯一的推断，不是逐字原文）—— 被 hold 的”AXI slave”涵盖 DBI 这条路。</strong></p>
+<p>必须诚实：line 23853 字面写的是”the core through <strong>AXI slave</strong>”，<strong>它没有逐字写 “DBI”</strong>。而控制器有两个 AXI slave：</p>
+<blockquote>
+<p><strong>TRM 11.3.1</strong>：“…four standard interfaces: one AXI master interface, <strong>two AXI slave interface</strong> and one APB interface.”
+<strong>TRM 11.3.1</strong>：“The AXI <strong>link slave</strong> interface enables an AXI master… to read and write through the AXI bridge to a <strong>remote PCIe device</strong>. <strong>The DBI slave</strong> enables an AXI master… to access the <strong>controller’s registers</strong>.”</p>
+</blockquote>
+<p>两个 AXI slave 里，一个是 link slave（出站到远端 PCIe 设备，过 wire，依赖 PHY 是显然的），另一个是 DBI（目标就是环 2 里 TRM 命名的 <code>CoreRegister</code>）。23853 说被 hold 的是”the core”，而目标叫 “Core” 的 AXI slave 只有 DBI。<strong>所以”经 DBI 访问 core 寄存器会被 hold”，是把环 2 + 环 5 接起来的推断——强，但 TRM 没有单独写一句 “DBI will be held”。这是全链条唯一需要我自己接一下逻辑的地方。</strong></p>
+<hr>
+<p><strong>六环接完，结论就站得住了</strong>：CPU 通过 DBI 读 <code>0x8bc</code> 这类寄存器（环 2/3：它落在 <code>CoreRegister</code> / <code>core_clk</code> 域）→ <code>core_clk</code> 由 PHY 的 PIPE clock 派生（环 3）→ 端口时钟 <code>dbi_aclk</code> 虽在（环 4），但访问要跨进 <code>core_clk</code> 域 → PHY 没 ready，这笔访问被 held、永不返回（环 5/6）。对应到最底层，就是那条 <code>ldr</code> 因为 AXI slave 不回 response 而永远停在那里。</p>
+<p><strong>以下是ai的搜索和分析，我无法立刻验证，但选择记录下来：</strong>
+再看 SDK 的 PHY 驱动，问题就很显眼了：<code>rockchip_p3phy_rk3588_init()</code> <strong>只 poll 了 <code>SRAM_INIT_DONE</code>（bit 0），函数体里没有任何 PLL-lock 相关的等待</strong>。而 TRM Ch.11.6.2.1 Step 8 明确要求：“Delay some time or wait PLL lock if the PLL lock flag is accessible”。<strong>SDK 代码违反了这一步。</strong></p>
+<blockquote>
+<p><strong>诚实的边界</strong> TRM 说访问会被 “held”，但<strong>没有描述内部实现机制</strong>（异步 FIFO / 握手门控 / clock gating 都可能）。Synopsys 的 DWC Databook 是 NDA，我没有渠道。所以我的证据链只推到”held until PHY ready”这一层为止——这已经足够指导下一步（补 PLL lock 等待），我没有必要往更深的内部机制去猜。<strong>知道自己的证据到哪为止，和知道结论本身一样重要。</strong></p>
+</blockquote>
+<h3 id="总结四个端口的时钟域对照">总结：四个端口的时钟域对照</h3>
+<p>各有各的时钟域、各有各的数据终点、过不过 PHY 也各不相同。端口时钟出处见 <strong>TRM 11.6.1.1 Table 11-16</strong>，数据终点的寄存器归属见 <strong>TRM 11.4.1 Table 11-1</strong>（DBI 段 <code>Device=CoreRegister</code>、APB 段 <code>Device=ClientRegister</code>）——这两张表上面环 2、环 3 已逐字引：</p>
+<table>
+<thead>
+<tr>
+<th>端口</th>
+<th>句</th>
+<th>数据终点</th>
+<th align="center">过 PCIe wire？</th>
+<th>端口时钟域</th>
+<th align="center">依赖 PHY？</th>
+<th>PHY 没 ready 时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① AXI master</td>
+<td>句1</td>
+<td>SoC DDR</td>
+<td align="center">是</td>
+<td><code>mstr_aclk</code>（CRU）</td>
+<td align="center">是</td>
+<td>数据进不来</td>
+</tr>
+<tr>
+<td>② AXI slave outbound</td>
+<td>句2</td>
+<td>远端 EP</td>
+<td align="center">是</td>
+<td><code>slv_aclk</code>（CRU）</td>
+<td align="center">是</td>
+<td>TLP 发不出</td>
+</tr>
+<tr>
+<td>③ <strong>AXI slave DBI</strong></td>
+<td>句3</td>
+<td>controller 的 <code>CoreRegister</code> 区（RAW core，含 CDM）</td>
+<td align="center">否</td>
+<td>端口 <code>dbi_aclk</code>（CRU）；<strong>但目标寄存器在 <code>core_clk</code>（PHY）域</strong></td>
+<td align="center"><strong>是（藏在目标侧）</strong></td>
+<td><strong>访问 core 寄存器 HOLD，永不返回</strong></td>
+</tr>
+<tr>
+<td>④ APB slave Client</td>
+<td>句4</td>
+<td>controller 的 <code>ClientRegister</code> 区（Client glue）</td>
+<td align="center">否</td>
+<td><code>apb_clk = PCLK_PCIE_4L</code>（CRU）</td>
+<td align="center"><strong>否</strong></td>
+<td><strong>完全正常</strong></td>
+</tr>
+</tbody>
+</table>
+<p>③ 那一行要特别说清楚，免得被误读成”DBI 的时钟依赖 PHY”：<strong>DBI 端口自己的时钟 <code>dbi_aclk</code> 来自 SoC CRU，好好的；依赖 PHY 的是它要访问的目标——<code>CoreRegister</code> 落在 <code>core_clk</code> 域，而 <code>core_clk</code> 由 PHY 的 PIPE clock 派生。</strong> 依赖藏在目标侧，不在端口侧。</p>
+<p>这张表里，③ 和 ④ 是我最在意的一对：<strong>它俩结构几乎一样——都是”CPU 戳 controller 自己”、数据都不出 SoC、都不过 wire。唯一的区别是 ③ DBI 访问 core 寄存器时，寄存器所在的时钟域乃是受到 PHY 时钟影响 的 <code>core_clk</code> 域，而 ④ APB 完全待在 SoC 的 <code>apb_clk</code> 域里，从头到尾不碰 PHY。</strong></p>
+<p>到这里，我手里就有了一个<strong>天然的对照组</strong>：DBI 和 APB 只差一个”跨不跨 PHY 时钟域”。要是 DBI 挂、APB 通，就能把故障死死钉在 PHY 时钟域上——不是电源、不是 wrapper、不是 APB 域本身。<strong>这个”四句话 → 四端口独立”的架构认识是认知的框架，让我反复思考了很久，反复查找，反复验证。</strong></p>
+<h2 id="7-第七步先查最靠前的一层电源域">7. 第七步：先查最靠前的一层——电源域</h2>
+<p>其实做到这里的时候，还是有些凌乱的，虽然踉踉跄跄找到了整条出错的脉络。但在发现自己自始至终没有检查过电源的时候，还是非常吃惊的，自己在调试这种高速的总线信号的时候，竟然完全不知道如何去查电源，好像所有注意力都集中在18根差分的数据Rx Tx线和4根差分参考时钟线上。</p>
+<p>因此，便试着去确认到底，电源开了没有。
+于是我查了一下：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>$ cat /sys/kernel/debug/pm_genpd/pm_genpd_summary</span></span>
+<span class="line"><span>pcie                            off-0</span></span></code></pre>
+<p><code>off-0</code> = 电源域关着，refcount 0。一查代码，SDK 的 <code>pcie-dw-rockchip.c</code> <strong>完全没有任何 <code>pm_runtime_*</code> 调用</strong>，而设备树声明了 <code>power-domains</code>。Linux GenPD 是显式引用计数模型：没人 <code>pm_runtime_get</code>，它就一直 off。</p>
+<p>我请AI帮忙补上了 <code>pm_runtime_enable</code> + <code>pm_runtime_get_sync</code>。结果：电源域上电了，<strong>但 <code>readl(0x8bc)</code> 依然 hang。</strong></p>
+<p>虽然我这里这么做了，但是内心里总是认为，或许RK原版的驱动人家这么写，不一定是电源没上的原因。不过，还是抱着试一试的心态，让AI做了一些修补。
+开了之后依然还是RCU Stall，于是这一块我就放下了，继续去查其他原因。
+不过也让我稍微的有了那么一些想法。要去动一动内核，按照TRM和Datasheet,既然人家内核和驱动都开源了，那我们也可以来改一改。</p>
+<blockquote>
+<p><strong>走过的弯路，但不算白走。</strong> 后来发现真正的病根在时钟不在电源，但”电源必须先开”这一条依然是对的——只是不够。</p>
+</blockquote>
+<h2 id="8-第八步一条看似可行的路怎么被我不烧板就否决了">8. 第八步：一条看似可行的路，怎么被我”不烧板”就否决了</h2>
+<p>顺着”PHY 缺时钟”往下，尝试向RK原厂求证，Port0/1的时钟和电源部分的要求，而对方给的回答很坚决，必须要同时启用Port0/1的100M时钟和电源。
+可是我从硬件同事处得到的结果是：Port1不需要时钟，共用Port0的。
+因此，跟我的检查结果几乎是完全对上的：pcie3x4 的 PHY 缺 refclk。
+但我同时在思考一件事：能不能用 SoC <strong>内部</strong> 100MHz（走 <code>ref_alt_clk</code>）替代外部时钟？</p>
+<p>我没有急着照着烧板，而是先纯读源码 + 一份已有的 <code>clk_summary</code> 做了三路交叉验证：</p>
+<p><strong>证据①（源码）</strong>：那 4 个 <code>REF_ALT</code> 时钟的宏是 <code>GATE(...)</code> 不是 <code>COMPOSITE(...)</code>——<strong>只有开关，没有分频器</strong>，parent 写死 <code>"ppll"</code>。所以它们的频率<strong>恒等于 PPLL</strong>，你无法把它单独设成 100M。</p>
+<p><strong>证据②（对照）</strong>：作为对比，combo PHY 用的是 <code>COMPOSITE_NOMUX(... 0, 6, ...)</code>，<strong>自带 6-bit 分频器</strong>（1100M ÷ 11 = 100M）。这才是 Rockchip 官方的正规设计：高频 PLL + 独立分频。pcie3x4 的 REF_ALT 偏偏缺这一层。</p>
+<p><strong>证据③（PLL rate 表）</strong>：<code>rk3588_pll_rates[]</code> 全表最低只到 96M，<strong>根本没有 100M 这一档</strong>。就算硬拉 PPLL，也退到 96M——超出 PCIe ±300ppm 容差，PHY 照样锁不住。</p>
+<p><strong>证据④（板端 clk_summary）</strong>：PPLL 下游同时挂着 <code>aclk_sata2=396M</code>、<code>aclk_usb3otg=300M</code> 且都在用。<strong>拉低 PPLL 会连锁把 SATA/USB3 总线一起搞崩。</strong></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>pll_ppll                       1  1  0  1100000000</span></span>
+<span class="line"><span>   ppll                        2  2  0  1100000000</span></span>
+<span class="line"><span>      clk_ref_pipe_phy0_pll_src 1 1 0   100000000   ← combo PHY 靠分频拿到 100M</span></span>
+<span class="line"><span>            aclk_sata2          1  1  0   396000000  ← ★ 同在 ppll 树下，正在用</span></span>
+<span class="line"><span>            aclk_usb3otg0       1  2  0   300000000  ← ★</span></span></code></pre>
+<p><strong>证据⑤（决定性铁证）</strong>：直接看那 4 个 pcie3x4 的 ref_alt gate 实测频率：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>clk_phy0_ref_alt_p     0   0   0   1100000000   ← rate=1100M 不是 100M；enable=0 没人用</span></span>
+<span class="line"><span>clk_phy0_ref_alt_m     0   0   0   1100000000</span></span>
+<span class="line"><span>clk_phy1_ref_alt_p     0   0   0   1100000000</span></span>
+<span class="line"><span>clk_phy1_ref_alt_m     0   0   0   1100000000</span></span></code></pre>
+<p><code>rate=1100M</code> 就地验证了证据①（无分频器，输出等于 PPLL）；<code>enable=0</code> 说明<strong>官方 DT 根本没把 pcie3x4 接到这条内部 refclk 上</strong>——Rockchip 对 pcie3x4 的设计就是走<strong>外部 pad 时钟</strong>（<code>ref_use_pad=1</code> 是复位默认）。这条内部路径是 silicon 留了 mux、但 CRU 侧没配好 100M 源的<strong>半成品</strong>。</p>
+<p>三段论钉死：内部 refclk 要 100M，只能靠拉低整颗 PPLL；但 PLL 表无 100M 档，且 PPLL 还要供 SATA/USB3 的高频总线——<strong>两个频率要求互斥，这条路结构性不可行。</strong></p>
+<blockquote>
+<p>靠读三处源码 + 一份已有 log，我把这个看起来完全可行的尝试判了死刑。方向就此中断，内部时钟不行不是SOC不允许，而是RK的驱动自始自终没打算让我们这么做，所以即便要完全配置起来，要涉及的模块将会是USB/SATA/GMAC(combophy)等多处。因此，只能相信原厂的信息，只能外界100M时钟，而且两个Port都需要。</p>
+</blockquote>
+<hr>
+<h2 id="9-反思这次调试到底教会了我什么">9. 反思：这次调试到底教会了我什么</h2>
+<p>链路最终没在我手里调通，卡在”外部时钟芯片”这一步交接了出去。但回头看，这次的过程已经是大大成功了，因为我有机会遍历整个pcie的驱动调用栈和硬件架构图并将所有设想逐一的上板验证，这种经历，比单纯只是”调通一个 PCIe”更值钱。</p>
+<h3 id="依然有很大的未探测区域">依然有很大的“未探测区域”</h3>
+<p>例如对每一个时钟的信息和作用（在drivers/clk/rockchip/clk-rk3588.c），我几乎都不熟悉，可以猜到，但是仅限于猜。</p>
+<p>pcie的原理，ATU/MSIx/outbound/inbound只是浮于表面的理解，完全谈不上掌握，更别说我要故意抠一些细节，例如outbound/inbound的位数在何时有影响，dts里常见16/8位，何时会不够用？
+这是一件遗憾的事情，但也是嵌入式的魅力，嵌入式不是一种技术，不是一套技术栈，甚至都不仅是一个行业，它是一种产品形态，一种非标设备定制化的产品形态，任何符合这个形态的，都有嵌入式开发的身影。</p>
+<p>这也让我思考：尽自己的努力没有错，但方式一定要对，随时保持宏观全局的视角看问题，看手中的调试工作，尤其是AI来了之后，信息密度远胜于从前，比我刚参加工作时信息量大得多的多，开发效率也提升得多得多，但是那种本质仍然没有改变，随时保持冷静和宏观把握，是秘诀。</p>
+<h3 id="精华不是调通是找到整条事情的脉络">精华不是”调通”，是找到整条事情的脉络</h3>
+<p>如果我只是碰运气试出某个 magic 的初始化顺序让它通了，却说不清为什么——那没有意义。反过来，我虽然没调通，但我能拿出一条完整的证据链：hang 在 DBI 的 core 寄存器访问 → 因为 <code>core_clk</code> 依赖 PHY PLL → PHY 驱动没等 PLL lock → 内部时钟路线结构性不可行 → 只能走外部时钟。<strong>这条脉络本身，就是交付物。</strong> 接手的人不用从头再猜一遍。</p>
+<p>尤其是<strong>失败的时候</strong>最考验这个。成功了大家都默认自己做得对；失败了，多数人是找到一个显眼的报错就一拥而上，指认它是根因。但内核层层封装、控制器又套了厂商 wrapper，一层层调用——单拿一个显眼的错误就说找到了根源，是不牢靠的。这次我逼自己每一步都做到”可证伪”：APB 对照实验、clk_summary 铁证，都是为了不靠”我觉得”。</p>
+<h3 id="bring-up-的根本矛盾有限的时间-vs-无限的打击面">bring-up 的根本矛盾：有限的时间 vs 无限的打击面</h3>
+<p>bring-up 永远很赶。不是没有时间预算，而是你面对的可能是 3500 万行内核里的<strong>任何</strong>一个问题，而你不可能现场把内核学精通了再回来调。所以最重要的能力不是”懂得多”，是<strong>缩小打击面</strong>：</p>
+<ul>
+<li><strong>缺席即证据</strong>——“有 BEFORE 无 AFTER”锁定了 hang 的位置；“ref_alt gate 的 enable=0”证明了官方从不走内部时钟。我学会了不只盯”log 显示了什么”，也盯”该显示却没显示什么”。</li>
+<li><strong>两个相邻端口互为对照</strong>——DBI 和 APB 结构几乎一样、只差一个时钟域，这个”几乎一样”正是它们能互为判别器的前提。找对照物，是收窄打击面最快的手段。</li>
+<li><strong>有寄存器 ≠ 能用</strong>——<code>ref_use_pad</code> 这个 mux 确实存在，容易让人以为”切一下就行”；但 CRU 侧没配好可用的源。分清”芯片能力”和”BSP 完成度”，省掉了一整条白烧板的路。</li>
+</ul>
+<p>这三条判据，已经脱离了 PCIe 本身。它们连同我”先扫盲协议 → 从 dts 入手 → 对照原理图 → 抓 log → 读 TRM 架构 → 抠 IP 子通路”的整条主线，一起沉淀成了我自己的一套方法：</p>
+<blockquote>
+<p><strong>→ <a href="/blog/zh/linux/bringup-methodology/">SoC 板级 Bring-up 工程手册</a></strong></p>
+<p>这次 PCIe 调试，就是那套方法在”第 7 步·专项定位 IP 子通路”这一层的完整实战。</p>
+</blockquote>
+<hr>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><strong>RK3588 TRM Part 2</strong> Ch.11.3.1 / Ch.11.6.1.1 / Ch.11.6.2.1</li>
+<li><strong>PCI-SIG</strong>：Vendor ID <code>0x1d87</code> = Rockchip（公开）</li>
+<li><strong>Linux kernel</strong> <code>drivers/pci/controller/dwc/pcie-dw-rockchip.c</code>（RK glue）、<code>pcie-designware.c</code></li>
+<li><strong>Linux kernel</strong> <code>drivers/phy/rockchip/phy-rockchip-snps-pcie3.c</code>（PHY driver）、<code>drivers/clk/rockchip/clk-rk3588.c</code></li>
+<li><strong>ARM AMBA AXI Protocol Spec</strong> IHI 0022 §A3.1.3</li>
+<li><strong>Arm Architecture Reference Manual</strong> DDI 0487 §B2.3</li>
+</ul></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

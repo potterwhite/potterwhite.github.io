@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight） · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>云桌面之取代RDP的工具（PVE + Sunshine + Moonlight）</h1><div class="article-meta"><time datetime="2025-12-01" class="mono">2025-12-01</time><a class="pill teal" href="/blog/categories/devops/">devops</a></div></header><div class="pw-prose"><h2 id="what-is-this-talking-about"><strong>What-is-this-Talking-About</strong></h2>
+<p>这份配置单涵盖了硬件基础设施、虚拟化显示方案、性能优化及串流设置，适用于我的 <strong>AMD EPYC 7551 (Home)</strong> 和 <strong>Dual Xeon (Work)</strong> 环境。</p>
+<h2 id="硬件环境"><strong>硬件环境</strong></h2>
+<h4 id="homelab配置"><strong>Homelab配置</strong></h4>
+<ul>
+<li>CPU: AMD EPYC 7551 (Home)</li>
+<li>主板：Supermicro H11SSL-i</li>
+<li>显卡：NVIDIA GeForce GTX 1050 Ti (4GB)</li>
+</ul>
+<h4 id="work-server配置"><strong>Work Server配置</strong></h4>
+<ul>
+<li>CPU: Dual Xeon (Work)</li>
+<li>主板：白牌X99芯片组</li>
+<li>显卡：亮机卡只能给PVE使用，不希望维护时还要修改显卡直通配置，所以等同于无显卡</li>
+</ul>
+<h2 id="需求"><strong>需求</strong></h2>
+<p>家庭成员多，而且如果每个人使用一台笔记本或PC，首先</p>
+<ul>
+<li>
+<ol>
+<li>购买计算机的费用就很高；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>其次软件维护的工作量将会很大（需要孤立的去设置每一台计算机上的软件/重装系统等）；</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>而且家中有做PPT和轻度设计的需求，所以Mac和Win都是刚需；</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>作为一名工程师，很难接受家里的设备不好用的局面。例如：买一台游戏机或买一张很贵的显卡（打游戏用），总不能只能在一台PC上使用，要打游戏的人就都抢这台PC吧。</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>NAS,把全家的资料都集中存储，极大减少资料丢失的风险，减轻资料备份的繁重工作，还有可怕的存储设备的费用（硬盘真贵啊）。</li>
+</ol>
+</li>
+</ul>
+<p>而上述这些点，就自然而然想到上云，家庭内建立一台强大的服务器Server, 硬件能够一次购买，最大化被所有人共享。<br>
+(同样的需求在公司内部也一样，因为都经我的手，所以处理方案都是用PVE，再此就不再提WorkServer的情况，默认与Homelab情况一致。)<br></p>
+<h2 id="困扰"><strong>困扰</strong></h2>
+<p>搭建环境时，一直用RDP来连接HomeLab（安装了PVE）下的VM（有Ubuntu/Mac/Win10/Win11）。<br>
+但是发现鼠标肉眼可见的拖拽卡顿，虽然能用，但满足不了设计师的需求。更别说要远程打开设计软件和Microsoft PowerPoint了。<br></p>
+<h2 id="最终效果"><strong>最终效果</strong></h2>
+<figure class="pw-figure">
+<video controls preload="metadata" playsinline src="/2025/pve/moonlight-connect-workserver-nogpu.mp4"></video>
+<figcaption>最终效果</figcaption>
+</figure>
+<hr>
+<h2 id="下载"><strong>下载</strong></h2>
+<ul>
+<li><a href="https://moonlight-stream.org/">最佳入口：Sunshine&#x26;Moonlight在这里都可以下载到</a>
+<img src="/2025/pve/sunshine-moonlight-entrance.png" alt=""></li>
+</ul>
+<h2 id="功能点1-显卡策略-gpu-strategy">功能点1. 显卡策略 (GPU Strategy)</h2>
+<p>解决 Host latency 高、顿挫感重的核心硬件方案。</p>
+<ul>
+<li><img src="/2025/pve/moonlight-connect-stats.png" alt=""></li>
+</ul>
+<ul>
+<li><strong>方案 A：通用虚拟化 (推荐 EPYC/Xeon 部署)</strong>
+<ul>
+<li><mark>尚未部署，但是vGPU对我是有巨大的吸引力，而且功耗是50/75w，太适合家用了，只是P4的显存少，美中不足。</mark></li>
+<li><strong>硬件</strong>：<strong>NVIDIA Tesla P4 (8GB)</strong> + <strong>3D打印导风罩 &#x26; 暴力风扇</strong>。</li>
+<li><strong>配置</strong>：PVE 安装 <code>vGPU_unlock</code> 驱动。</li>
+<li><strong>分配</strong>：切分为 4 个 <code>P4-2Q</code> (2GB显存) profile，分配给 4 个 VM。</li>
+<li><em>用途</em>：流畅运行 1080P/60FPS 桌面串流、轻量级任务。</li>
+</ul>
+</li>
+<li><strong>方案 B：高性能直通 (现有设备)</strong>
+<ul>
+<li><mark>已部署，且Host latency立刻从20ms～30ms降低到0ms~5ms</mark></li>
+<li><strong>硬件</strong>：<strong>GTX 1050 Ti (4GB)</strong>。</li>
+<li><strong>配置</strong>：PVE 使用 <strong>PCIe Passthrough (直通)</strong> 模式给主力 Windows VM。</li>
+<li><strong>分配</strong>：独占。</li>
+<li><em>用途</em>：AI 入门学习 (CUDA)、4K 视频播放、轻度游戏。</li>
+</ul>
+</li>
+</ul>
+<h2 id="功能点2-虚拟显示解决方案-headless-display">功能点2. 虚拟显示解决方案 (Headless Display)</h2>
+<p>解决无物理显示器导致的黑边、分辨率锁定 (1280x800) 问题。</p>
+<ul>
+<li><strong>软件</strong>：<strong><a href="https://github.com/roshkins/IddSampleDriver">IddSampleDriver</a></strong> (虚拟显示器驱动)。</li>
+<li><strong>安装步骤</strong>：
+<ol>
+<li><strong>权限</strong>：使用管理员权限运行 <code>installCert.bat</code>。</li>
+<li><strong>添加硬件</strong>：设备管理器 -> 操作 -> 添加过时硬件 -> 手动列表 -> 显示适配器 -> 从磁盘安装 -> 选择 <code>IddSampleDriver.inf</code>。</li>
+</ol>
+</li>
+<li><strong>设置 (Windows Display Settings)</strong>：
+<ol>
+<li><strong>分辨率</strong>：手动设置为 <strong>1920 x 1080</strong>。</li>
+<li><strong>多屏策略</strong>：选中虚拟屏幕（通常是 Screen 2），设置 <strong>“Show only on 2” (仅在 2 上显示)</strong>。</li>
+<li><strong>清理</strong>：在设置中 “Disconnect” (断开) 多余的虚拟屏幕 (3, 4, 5, 6)。</li>
+</ol>
+</li>
+</ul>
+<h2 id="功能点3-windows-vm-性能深度优化">功能点3. Windows VM 性能深度优化</h2>
+<p>针对 Xeon/EPYC 在<strong>无 GPU / 软解</strong>状态下的极限优化，降低 Host Latency。</p>
+<ul>
+<li><strong>视觉效果</strong>：
+<ul>
+<li><code>System Properties</code> -> <code>Advanced</code> -> <code>Performance</code> -> <strong>Adjust for best performance</strong> (关闭所有动画特效)。</li>
+</ul>
+</li>
+<li><strong>右键菜单回滚 (降 CPU 负载)</strong>：
+<ul>
+<li>使用管理员终端运行注册表修改命令，恢复 Win10 风格菜单：
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span>reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve</span></span></code></pre>
+</li>
+<li><em>操作</em>：运行后重启 VM 生效。</li>
+</ul>
+</li>
+</ul>
+<h2 id="功能点4-串流服务设置-sunshine--moonlight">功能点4. 串流服务设置 (Sunshine &#x26; Moonlight)</h2>
+<p>目标：在 1ms 内网延迟下，压榨 CPU 软解性能，或适配 GPU 硬解。</p>
+<h3 id="服务端-sunshine-webui">服务端 (Sunshine WebUI)</h3>
+<ul>
+<li><strong>位置</strong>：<code>Configuration</code> -> <code>Advanced</code></li>
+<li><strong>无 GPU (Xeon 当前状态)</strong>：
+<ul>
+<li><strong>Encoder</strong>: Software / x264</li>
+<li><strong>Software Preset</strong>: <strong>Ultrafast</strong> (极速模式，牺牲画质换取低延迟，关键！)</li>
+<li><strong>Software Tune</strong>: Zerolatency</li>
+<li><strong>Threads</strong>: 手动设置 8 或 16</li>
+</ul>
+</li>
+<li><strong>有 GPU (P4/1050Ti)</strong>：
+<ul>
+<li><strong>Encoder</strong>: NVENC</li>
+<li><strong>Preset</strong>: P1 (Fastest) 或 P4 (Default)</li>
+</ul>
+</li>
+</ul>
+<h3 id="客户端-moonlight---ubuntu">客户端 (Moonlight - Ubuntu)</h3>
+<ul>
+<li><strong>Resolution/FPS</strong>:
+<ul>
+<li>无 GPU：1080p / <strong>30 FPS</strong> (避免卡顿)</li>
+<li>有 GPU：1080p / <strong>60 FPS</strong></li>
+</ul>
+</li>
+<li><strong>Bitrate</strong>: 10 Mbps - 15 Mbps (降低 CPU 编码压力)</li>
+<li><strong>V-Sync</strong>: <strong>Off</strong> (关闭以降低输入延迟)</li>
+<li><strong>Video Codec</strong>: <strong>H.264</strong> (强制使用旧编码，降低编解码压力)</li>
+<li><strong>Input Settings</strong>:
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <strong>Optimize mouse for remote desktop instead of games</strong> (开启鼠标直接映射，提升手感)。</li>
+</ul>
+</li>
+</ul>
+<h2 id="功能点5-键鼠无缝漫游与剪贴板-kvm">功能点5. 键鼠无缝漫游与剪贴板 (KVM)</h2>
+<p>解决 Moonlight 鼠标锁定及剪贴板不同步问题。<br>
+<mark>其实，这一点可有可无，如果纯Thin Client做远程连接的方案，鼠标锁在Server里才是真正的用法。所以姑且将该功能点留做备份。</mark></p>
+<ul>
+<li><strong>软件</strong>：<strong>Barrier</strong> (或 Input Leap)。</li>
+<li><strong>架构</strong>：
+<ul>
+<li><strong>Server (服务端)</strong>：Ubuntu Client (有物理键鼠)。</li>
+<li><strong>Client (客户端)</strong>：Windows VM (被控端)。</li>
+</ul>
+</li>
+<li><strong>配置步骤</strong>：
+<ol>
+<li>Ubuntu 端勾选 Server，<code>Configure Server</code> 中拖入新屏幕，命名为 <code>win11-vm</code> (需与 Windows 端 Screen Name 一致)。</li>
+<li>Windows 端勾选 Client，填入 Ubuntu IP。</li>
+<li><strong>效果</strong>：鼠标移出屏幕边缘自动切换控制权，<strong>剪贴板共享</strong> (文本/Ctrl+C/V)。</li>
+<li><strong>配合</strong>：Moonlight 中解除鼠标锁定 (<code>Ctrl+Alt+Shift+Z</code>) 或全屏使用。</li>
+</ol>
+</li>
+</ul></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Remote Access (Secure) to Home Computer - (OpenWRT+No-IP+WireGuard) · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Remote Access (Secure) to Home Computer - (OpenWRT+No-IP+WireGuard)</h1><div class="article-meta"><time datetime="2025-11-27" class="mono">2025-11-27</time><span class="pill teal">devops</span></div></header><div class="pw-prose"><h2 id="what-is-this-talking-about"><strong>What-is-this-Talking-About</strong></h2>
+<p>This is a set of my working notes, barely polished. AI helped me organize my thought process and trial attempts, including the detours and final solutions, into a document format.<br>
+Actually, ever since I started my blog on Github Pages, I have naturally and happily added an extra step to my workflow: moving records from Obsidian into my Github Blog.</p>
+<p><strong>Environment:</strong> OpenWrt 23.05
+<strong>Goal:</strong> Enable external access to internal network resources via WireGuard, ensuring automatic synchronization when the public IP changes.</p>
+<hr>
+<h2 id="requirements"><strong>Requirements</strong></h2>
+<p>To implement remote access to the intranet, two things are mandatory:</p>
+<ul>
+<li>
+<ol>
+<li>Our ISP must provide a public IP for our broadband (dynamic is fine), and the main router must obtain this public IP directly as the WAN address, avoiding multiple routing layers caused by optical modem NAT forwarding.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>We need a domain name that can be bound to our public IP.</li>
+</ol>
+</li>
+</ul>
+<h2 id="part-1-review-and-retrospective-of-the-ddns-phase">Part 1: Review and Retrospective of the DDNS Phase</h2>
+<h4 id="1-encountered-bug-failure-point">1. Encountered Bug (Failure Point)</h4>
+<ul>
+<li><strong>Phenomenon:</strong> Clicking “Update DDns Services List” forever displays <code>NO_LIST</code>, making it impossible to select <code>no-ip.com</code> from the dropdown menu.</li>
+</ul>
+<ul>
+<li><img src="/2025/openwrt/openwrt-ddns.png" alt=""></li>
+</ul>
+<ul>
+<li><strong>Root Cause (Speculation):</strong>
+<ul>
+<li>The OpenWrt firmware, due to being stripped-down or network issues, lacks HTTPS root certificates (<code>ca-certificates</code>).</li>
+<li>Or the router’s DNS is not yet configured properly, failing to resolve the server address for the download list.</li>
+<li>This causes <code>wget</code> or <code>curl</code> commands to fail when downloading service provider data packets from official OpenWrt sources.</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-workaround">2. Workaround</h4>
+<ul>
+<li><strong>What we did:</strong> We abandoned the “rely on preset list” automation path and switched to “manual mode” (Custom Mode).</li>
+<li><strong>Key Actions:</strong>
+<ul>
+<li><img src="/2025/openwrt/ddns-ipv4.png" alt=""></li>
+</ul>
+<ol>
+<li>Set the service provider to <code>-- custom --</code>.</li>
+<li>Manually constructed the No-IP API update link: <code>http://[USERNAME]:[PASSWORD]@dynupdate.no-ip.com...</code></li>
+<li><strong>Critical Fix:</strong> Considering potential certificate issues, we used <code>http://</code> instead of <code>https://</code> and unchecked “Use HTTP Secure” to ensure a successful handshake even in an imperfect certificate environment.</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-lessons-learned">3. Lessons Learned</h4>
+<p>In OpenWrt, <strong>the “Preset List” is just a convenient shortcut, not a necessity.</strong> As long as you know the provider’s API format, using Custom Mode is often faster and more direct than patching the system environment (installing certificates, troubleshooting network).</p>
+<h2 id="part-2-wireguard-server-configuration">Part 2: WireGuard Server Configuration</h2>
+<h3 id="1-interface-settings">1. Interface Settings</h3>
+<ul>
+<li><img src="/2025/openwrt/wg0.png" alt=""></li>
+</ul>
+<ul>
+<li><strong>Name:</strong> <code>wg0</code></li>
+<li><strong>Private Key:</strong> Click Generate to create one. (<strong>Note:</strong> Do NOT click this button again afterwards, or all paired clients will become invalid).</li>
+<li><strong>Listen Port:</strong> <code>51820</code></li>
+<li><strong>IP Address:</strong> <code>10.0.10.1/24</code> (VPN dedicated subnet)</li>
+</ul>
+<h3 id="2-firewall-settings---key-pitfall">2. Firewall Settings - <em>Key Pitfall</em></h3>
+<p>This is the place most easily overlooked, leading to “connection failure”. Configuration is required in two places:</p>
+<p><strong>A. Zone Settings:</strong></p>
+<ul>
+<li><img src="/2025/openwrt/firewall-zone-setting.png" alt=""></li>
+</ul>
+<ul>
+<li>Create a zone named <code>vpn</code> containing the <code>wg0</code> interface.</li>
+<li><strong>Input/Output/Forward:</strong> Set all to <code>Accept</code>.</li>
+<li><strong>Masquerading:</strong> Must be checked (prevents return routing issues for intranet devices).</li>
+<li><strong>MSS clamping:</strong> Recommended to check (solves issues with some webpages not loading).</li>
+<li><strong>Forwarding:</strong> Must allow forwarding to <code>wan</code> (internet access) and <code>lan</code> (intranet access).</li>
+</ul>
+<p><strong>B. Traffic Rules - <em>Opening the Door</em>:</strong></p>
+<ul>
+<li><img src="/2025/openwrt/traffic-rule.png" alt="">
+If this rule is missing, external traffic will be blocked directly.</li>
+</ul>
+<ul>
+<li><strong>Protocol:</strong> UDP</li>
+<li><strong>Source Zone:</strong> WAN</li>
+<li><strong>Destination Zone:</strong> <strong>Device (Input)</strong>  &#x3C;— <em>Note: it is Device, not LAN</em></li>
+<li><strong>Destination Port:</strong> 51820</li>
+<li><strong>Action:</strong> Accept</li>
+</ul>
+<hr>
+<h2 id="part-3-client-peer-configuration-and-troubleshooting-retrospective">Part 3: Client (Peer) Configuration and Troubleshooting Retrospective</h2>
+<h3 id="1-standard-process-for-adding-a-peer">1. Standard Process for Adding a Peer</h3>
+<ul>
+<li><img src="/2025/openwrt/peer-single-config.png" alt="">
+When adding a client in the OpenWrt interface, follow these specifications, otherwise it won’t connect:</li>
+</ul>
+<ul>
+<li><strong>Public/Private Key:</strong> Click Generate when creating a new Peer.</li>
+<li><strong>Allowed IPs:</strong> Assign a static IP, e.g., <code>10.0.10.5/32</code>. <strong>Note:</strong> You must press Enter or click the green <code>+</code> sign after typing to turn it into a gray capsule shape; otherwise, saving is invalid.</li>
+<li><strong>Route Allowed IPs:</strong> <strong>Must be checked</strong> (otherwise the routing table won’t take effect).</li>
+<li><strong>Persistent Keep Alive:</strong> <strong>Must be 25</strong> (solves the issue of stream dropping after a few minutes in NAT environments).</li>
+</ul>
+<h3 id="2-traps-and-fixes-when-generating-qr-codes">2. “Traps” and Fixes when Generating QR Codes</h3>
+<p>When clicking “Generate configuration” to create a QR code, two major pitfalls were encountered:</p>
+<ul>
+<li><img src="/2025/openwrt/peer-qrcode.png" alt=""></li>
+</ul>
+<ul>
+<li>
+<p><strong>Trap 1: Endpoint Format Error</strong></p>
+<ul>
+<li><em>Phenomenon:</em> Entering <code>domain:51820</code> in the Endpoint field causes OpenWrt to report “Invalid hostname” and fails to generate.</li>
+<li><em>Solution:</em> Enter only the pure domain <code>xxxx.ddns.net</code> when generating, then create the QR code.</li>
+<li><em>Remedy:</em> After scanning with the phone, you must manually edit the configuration and append <strong><code>:51820</code></strong> after the Endpoint domain.</li>
+</ul>
+</li>
+<li>
+<p><strong>Trap 2: Handshake Failure Caused by DNS (Metaphysical but Real)</strong></p>
+<ul>
+<li><em>Phenomenon:</em> If DNS is set to <code>192.168.0.1</code>, connection cannot be established under 5G network; if set to <code>8.8.8.8</code>, occasional slow connection occurs.</li>
+<li><em>Final Solution:</em> <strong>Leave the DNS field blank when generating the QR code (or clear it directly on the phone).</strong></li>
+<li><em>Principle:</em> Leaving it blank uses the phone carrier’s DNS to resolve the domain, resulting in the fastest handshake speed. Once the connection is established, intranet access is unaffected.</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-multi-device-management-logic">3. Multi-Device Management Logic</h3>
+<ul>
+<li><img src="/2025/openwrt/wg0-peers-list.png" alt=""></li>
+</ul>
+<ul>
+<li><strong>Misconception:</strong> Attempted to assign multiple IPs (<code>.2</code>, <code>.3</code>) to a single Peer for sharing among multiple devices.</li>
+<li><strong>Conclusion:</strong> <strong>Not feasible.</strong> WireGuard relies on public keys for identity verification. Sharing the same private key/configuration across multiple devices causes “route flapping” and kicking each other offline.</li>
+<li><strong>Correct Approach:</strong> One device = One Peer = One independent IP. If there are 10 devices, 10 Peers must be created (Phone1, Phone2, Laptop…).</li>
+</ul>
+<hr>
+<h2 id="part-4-maintenance-memo-blood-and-tears-experience">Part 4: Maintenance Memo (Blood and Tears Experience)</h2>
+<ol>
+<li>
+<p><strong>About Key Updates:</strong>
+The <strong>“Generate new key pair”</strong> button in the <code>wg0</code> interface main screen (General Settings) is a <strong>self-destruct button</strong>. Once clicked and saved by mistake, the router’s public key changes, and all distributed phone clients will disconnect and must rescan the code.
+<strong>Operating Principle:</strong> Unless resetting for security, never click this button.</p>
+</li>
+<li>
+<p><strong>About Configuration Activation:</strong>
+After adding a new Peer, if the phone cannot complete the handshake (no data received) after scanning, do not obsess over the configuration.
+<strong>Action:</strong> Go to the Interfaces list, execute <strong>Stop -> (wait 3 seconds) -> Start</strong> on <code>wg0</code>. This forces a refresh of the Peer list in memory.</p>
+</li>
+<li>
+<p><strong>Current Topology:</strong></p>
+<ul>
+<li>Router IP: 10.0.10.1</li>
+<li>Phone2 (Peer 1): 10.0.10.3 (Normal)</li>
+<li>Phone3 (Peer 2): 10.0.10.5 (DNS left blank, Normal)</li>
+</ul>
+</li>
+</ol></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

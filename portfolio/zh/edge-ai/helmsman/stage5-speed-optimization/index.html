@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter 5: 打破速度极限 — DMA Zero-Copy、MPP 硬解与 NEON SIMD · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Chapter 5: 打破速度极限 — DMA Zero-Copy、MPP 硬解与 NEON SIMD</h1><div class="article-meta"><time datetime="2026-06-09" class="mono">2026-06-09</time><span class="pill teal">Edge AI</span></div></header><div class="pw-prose"><h3 id="chapter-5-breaking-the-speed-limit"><strong>Chapter 5: Breaking the Speed Limit</strong></h3>
+<table>
+<thead>
+<tr>
+<th align="left">Project Attribute</th>
+<th align="left">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Project Name</strong></td>
+<td align="left">Helmsman — Speed Optimization</td>
+</tr>
+<tr>
+<td align="left"><strong>Phase</strong></td>
+<td align="left">MR2 Phase-5</td>
+</tr>
+<tr>
+<td align="left"><strong>Date</strong></td>
+<td align="left">2026-04-15 ~ 2026-06-08</td>
+</tr>
+<tr>
+<td align="left"><strong>Key Personnel</strong></td>
+<td align="left">Potter White</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="1-core-question"><strong>1. Core Question</strong></h3>
+<!-- 填入：从 6.9 FPS 到 20.91 FPS，瓶颈在哪里？每次优化的收益是多少？-->
+<h3 id="2-baseline-profiling"><strong>2. Baseline Profiling</strong></h3>
+<!-- 填入：层级计时系统（ScopedTimer + StageAccumulator）的定位结果：
+
+| 阶段 | avg (ms) | 占 mainloop |
+|------|----------|-------------|
+| frontend | 10.71 | 10.5% |
+| execute_npu | 52.14 | 53.6% |
+| backend | 30.94 | 30.4% |
+| **mainloop** | **97.1** | **100%** |
+
+结论：execute_npu 是绝对瓶颈（53.6%），但 backend 也有 30.4% 的优化空间。
+-->
+<h3 id="3-fps-演进历程"><strong>3. FPS 演进历程</strong></h3>
+<!-- 填入：表格（参考 PKB summarize-MR2-ending.md §5.1）：
+
+| 里程碑 | FPS | 关键变化 |
+|--------|-----|---------|
+| s1 基线 | **6.9** | 全分辨率 float32 CPU |
+| s4b | **10.6** | 模型分辨率 uint8 composite |
+| s5.3 | **12.7** | RGA 硬件 resize（-63%/-64%）|
+| s6 | **20.91** | DMA zero-copy 输出（-80% composite）|
+
+建议用 Mermaid 画一个折线图或柱状图。
+-->
+<h3 id="4-dma-zero-copy--单次最大-fps-提升"><strong>4. DMA Zero-Copy — 单次最大 FPS 提升</strong></h3>
+<!-- 填入：（参考 PKB summarize-MR2-ending.md §3.2）
+
+**问题**：VideoWriter 输出到文件，每帧 39ms I/O 开销。
+
+**方案**：
+1. 构建 DmaKit 库（RAII 封装 /dev/dma_heap/system ioctl）
+2. RKNN Zero-Copy Engine：5-input/6-output 多 tensor，DMA fd 输出
+3. compositeToDma() 替代 VideoWriter，直接写入 DMA buffer
+
+**结果**：FPS 12.7 → 20.91（+64.6%），composite: 49ms → 9.7ms（-80%）
+
+**为什么 DMA Zero-Copy 有效？**
+- 传统路径：NPU output → CPU memcpy → 文件写入（39ms）
+- Zero-Copy 路径：NPU output 直接在 DMA buffer 中，零拷贝（9.7ms）
+-->
+<h3 id="5-mpp-硬解调试--五层-bug-剥洋葱"><strong>5. MPP 硬解调试 — 五层 Bug 剥洋葱</strong></h3>
+<!-- 填入：（参考 PKB summarize-MR2-ending.md §3.4）
+
+集成 Rockchip MPP 硬件 H.264 解码，连续踩中五个非显而易见的 Bug：
+
+1. **MPP_ERR_BUFFER_FULL（-1012）**：buffer 满时当前 packet 永久丢失
+2. **解码器无 Flush 方法**：241/363 帧提前终止
+3. **AVCC vs Annex B 格式不匹配**：MP4 容器 vs MPP 期望
+4. **3 帧绿色循环**：packet 丢失导致 MPP 内部 3 帧环形缓冲区循环旧帧
+5. **RGA !src.data 检查**：在 ToRgaBuffer() 之前，拒绝纯 DMA fd 描述符
+
+每一层 bug 的发现都是上一层修复后才能看到的 —— 这就是"剥洋葱"。
+-->
+<h3 id="6-neon-simd--精确到-001ms-的-profiling"><strong>6. NEON SIMD — 精确到 0.01ms 的 Profiling</strong></h3>
+<!-- 填入：（参考 PKB summarize-MR2-ending.md §3.5）
+
+- 先测量：write_input_buffers 仅 1.3ms（2.4% of infer），src 占 0.814ms，cache flush 仅 0.07ms
+- 再优化：vcvt_f16_f32 / vcvt_f32_f16 intrinsics，write 1.3ms → 0.45ms（2.93× 加速）
+- **结论：NEON 完美工作，但 write 不是瓶颈（execute_npu 52ms 占 93.7%）**
+- 价值：精确 profiling 杀死了多个无效优化方向，NEON 库本身可复用
+-->
+<h3 id="7-librknnrtso-白盒分析"><strong>7. librknnrt.so 白盒分析</strong></h3>
+<!-- 填入：（参考 PKB summarize-MR2-ending.md §3.3）
+
+通过开源内核驱动（rknpu_job.c）+ NVDLA 架构文档 + SDK 文档，逆向闭源 runtime 行为。
+
+找出 RKNN 比理论慢 4000× 的五个根因：
+1. 中断驱动逐算子调度（每个算子 50-500μs CPU 开销）
+2. RK3588 无 NPU 专用 SRAM（RK3576 有 1MB NBUF）
+3. 算子融合仅 2-3 层 vs TensorRT 10+
+4. GRU 不支持多核并行
+5. I/O 用标量循环无 NEON（后被我们修复）
+
+这些发现定量地解释了 RKNN 的性能天花板。
+-->
+<h3 id="8-reusable-assets"><strong>8. Reusable Assets</strong></h3>
+<!-- 填入：表格
+
+| 资产 | 说明 |
+|------|------|
+| DmaKit 库 | RAII DMA buffer 分配 |
+| NEON SIMD 库 | FP32↔FP16 转换，2.9× 加速，header-only |
+| MppDecoder | H.264 硬件解码，dmabuf fd 输出 |
+| RGA resize 集成 | Meyer's Singleton，4 硬件核心，线程安全 |
+| ScopedTimer + StageAccumulator | 层级计时系统 |
+
+--></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

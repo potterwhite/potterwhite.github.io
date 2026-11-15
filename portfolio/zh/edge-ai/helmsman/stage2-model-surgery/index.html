@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter 2: 网络手术 — IBNorm→BatchNorm 与 ONNX 导出 · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Chapter 2: 网络手术 — IBNorm→BatchNorm 与 ONNX 导出</h1><div class="article-meta"><time datetime="2026-06-09" class="mono">2026-06-09</time><span class="pill teal">Edge AI</span></div></header><div class="pw-prose"><h3 id="chapter-2-network-surgery--ibnorm-to-batchnorm"><strong>Chapter 2: Network Surgery — IBNorm to BatchNorm</strong></h3>
+<table>
+<thead>
+<tr>
+<th align="left">Project Attribute</th>
+<th align="left">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Project Name</strong></td>
+<td align="left">Helmsman — Round 1 Model Surgery</td>
+</tr>
+<tr>
+<td align="left"><strong>Phase</strong></td>
+<td align="left">MR1 Phase-1</td>
+</tr>
+<tr>
+<td align="left"><strong>Date</strong></td>
+<td align="left">2026-03-12 ~ 2026-03-19</td>
+</tr>
+<tr>
+<td align="left"><strong>Key Personnel</strong></td>
+<td align="left">Potter White</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="1-core-question"><strong>1. Core Question</strong></h3>
+<!-- 填入：为什么 InstanceNorm 导致 NPU 量化崩溃？如何在不重训整个模型的情况下替换它？-->
+<h3 id="2-problem-discovery"><strong>2. Problem Discovery</strong></h3>
+<!-- 填入：
+- 现象：RKNN FP16 推理时发现 InstanceNorm 导致 NPU 反复 fallback 到 CPU
+- 量化后 matte 出现大面积白斑噪声
+- 参考 PKB：log-DR1-RKNN-pre-T2.3-ibNorm.md
+-->
+<h3 id="3-root-cause-analysis"><strong>3. Root Cause Analysis</strong></h3>
+<!-- 填入：InstanceNorm 的数学分析（参考 PKB summarize-MR2-G0 Q1）：
+
+IN 的计算公式：
+```
+μ[n,c] = mean over H,W of x[n,c,h,w]
+σ[n,c] = std  over H,W of x[n,c,h,w]
+y = (x - μ) / (σ + ε)
+```
+
+关键矛盾：
+- INT8 量化需要一个固定的 scale：`q = round(x / scale)`
+- 但 IN 的统计量 μ,σ 随输入动态变化
+- 单个固定 scale 无法覆盖 IN 内部的动态范围 → 精度崩溃
+
+对比 BatchNorm：
+- BN 的 running_mean、running_var 训练后是固定常数
+- 量化工具可以精确确定 scale → INT8 无障碍
+
+附一个对比表：
+
+| | InstanceNorm | BatchNorm |
+|---|---|---|
+| 统计量 | 每张图、每通道动态计算 | 训练后固定常数 |
+| INT8 可行性 | ❌ 动态范围无法覆盖 | ✅ scale 精确 |
+| NPU 兼容性 | ❌ 反复 fallback CPU | ✅ 原生支持 |
+
+-->
+<h3 id="4-solution-bn-surgery"><strong>4. Solution: BN Surgery</strong></h3>
+<!-- 填入：
+- 方法：逐层替换 IBNorm → BatchNorm（网络外科手术）
+- 训练：P3M-10k 数据集 15 轮微调
+- 结果：Val L1 = 0.0086
+- 参考 PKB：log-MR1-B1.1-architecture-hack.md、log-MR1-B1.2-finetuning.md
+-->
+<h3 id="5-onnx-export--踩坑记录"><strong>5. ONNX Export — 踩坑记录</strong></h3>
+<!-- 填入：4 次失败的过程（参考 PKB log-MR1-B1.4-onnx-export.md）：
+1. Python 环境 bug（依赖冲突）
+2. opset 版本选择（opset 11 vs 12）
+3. 动态 shape 处理
+4. 最终成功导出 25MB ONNX
+-->
+<h3 id="6-validation"><strong>6. Validation</strong></h3>
+<!-- 填入：
+- C++ 推理语义正确（无白斑）
+- 发丝模糊可由 Guided Filter 恢复
+- 决策：跳过蒸馏，提前做 GF 后处理
+- 参考 PKB：log-MR1-B1.4-pureBN-vs-IBNorm.md
+-->
+<h3 id="7-key-insight"><strong>7. Key Insight</strong></h3>
+<!-- 填入：这一章的核心收获。比如："不绕过问题，而是从根本上解决" 的工程态度。BN 手术虽然看起来是个 workaround，但实际上是从数学层面理解了问题的本质后做出的正确决策。--></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

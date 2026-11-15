@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part 2: Image Build Deep Dive · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Part 2: Image Build Deep Dive</h1><div class="article-meta"><time datetime="2025-08-19" class="mono">2025-08-19</time><span class="pill teal">Infra</span></div></header><div class="pw-prose"><!-- ---
+title: "镜像构建篇：Docker 多阶段构建与动态脚本生成技术解析"
+date: 2025-08-19T14:00:00+08:00
+draft: false
+tags: ["Docker", "Dockerfile", "Build Optimization", "Shell Scripting", "DevOps"]
+--- -->
+<h2 id="1-introduction">1. Introduction</h2>
+<p>In the first article of this series, we explained the high-level architecture for building a standardized development environment based on the “configuration-driven” idea. This article will dive into the execution core of this architecture—the image build phase—and detail how we leverage Docker’s Multi-stage Builds strategy combined with dynamic script generation techniques to create a development environment image that is both feature-complete and highly optimized.</p>
+<h2 id="2-application-of-multi-stage-build-strategy">2. Application of Multi-stage Build Strategy</h2>
+<p>To achieve modularity, maintainability, and maximum efficiency in the build process, we adopted a finely layered multi-stage build strategy. The <code>Dockerfile</code> is divided into five independent, purpose-driven stages. This methodology brings the following key engineering advantages:</p>
+<ul>
+<li><strong>Reduced Final Image Size:</strong> Only the artifacts from the final stage are kept in the final image. Dependencies needed only during the build process, such as compilation tools, intermediate products, and temporary files, can be safely left behind in earlier stages, thus preventing a bloated final image.</li>
+<li><strong>Improved Build Cache Utilization:</strong> Docker caches the result of each build stage. By placing less frequently changed layers (like base OS packages) at the beginning and more frequently changed layers (like application code or SDKs) at the end, we can maximize cache utilization and significantly speed up subsequent builds.</li>
+<li><strong>Enhanced Maintainability &#x26; Clarity:</strong> Each stage has a single responsibility (e.g., installing base tools, installing the SDK), which makes the <code>Dockerfile</code> structure clearer and easier to understand and maintain.</li>
+</ul>
+<h3 id="21-detailed-breakdown-of-build-stages">2.1 Detailed Breakdown of Build Stages</h3>
+<p>Our <code>Dockerfile</code> is logically divided into the following five stages:</p>
+<h4 id="stage-1-base---base-environment-layer">Stage 1: <code>base</code> - Base Environment Layer</h4>
+<p>This stage is responsible for defining the operating system base and performing initial package manager configuration.</p>
+<ul>
+<li><strong>Responsibilities</strong>:
+<ul>
+<li>Specify a stable base image (e.g., <code>ubuntu:20.04</code>).</li>
+<li>Configure <code>APT</code> software sources (<code>sources.list</code>), which can be pointed to an internal mirror based on the configuration in <code>common.env</code> to accelerate downloads and adapt to offline environments.</li>
+<li>Install a minimal set of core system dependencies.</li>
+</ul>
+</li>
+<li><strong>Artifacts</strong>: An environment with a base operating system and a configured package manager.</li>
+</ul>
+<h4 id="stage-2-tools---common-tools-layer">Stage 2: <code>tools</code> - Common Tools Layer</h4>
+<p>This stage builds on the previous one by installing development tools that are common to all platforms and do not change frequently with the project.</p>
+<ul>
+<li><strong>Responsibilities</strong>:
+<ul>
+<li>Install standard development tools like <code>git</code>, <code>vim</code>, <code>ssh</code>, <code>distcc</code>.</li>
+<li>Install a specific version of <code>gcc</code> (as shown in <code>offline_toolchain/gcc/install_gcc.sh</code>) as part of the base compiler or system toolchain.</li>
+</ul>
+</li>
+<li><strong>Artifacts</strong>: An environment integrated with a common set of development tools. Since the versions of these tools are relatively stable, this stage has a very high cache hit rate.</li>
+</ul>
+<h4 id="stage-3-sdk---platform-specific-software-development-kit-layer">Stage 3: <code>sdk</code> - Platform-Specific Software Development Kit Layer</h4>
+<p>This is the core stage where platform differences are manifested. It is responsible for installing the cross-compilation toolchain and SDK specific to the target hardware.</p>
+<ul>
+<li><strong>Responsibilities</strong>:
+<ul>
+<li>Inherit from the <code>base</code> stage.</li>
+<li>Receive platform-specific variables (like <code>SDK_URL</code>) from the <code>.env</code> file via the <code>ARG</code> instruction.</li>
+<li>Execute a script (e.g., <code>install_sdk.sh_template</code>) to download, extract, and install the platform-specific SDK.</li>
+</ul>
+</li>
+<li><strong>Artifacts</strong>: An environment with cross-compilation capabilities for a specific platform.</li>
+</ul>
+<h4 id="stage-4-config---environment-configuration-layer">Stage 4: <code>config</code> - Environment Configuration Layer</h4>
+<p>This stage is responsible for the final configuration and personalization of the development environment.</p>
+<ul>
+<li><strong>Responsibilities</strong>:
+<ul>
+<li>Configure <code>git-lfs</code> tracking rules (<code>gitlfs_tracker.sh</code>).</li>
+<li>Generate and configure network proxy scripts based on a template (<code>proxy.sh_template</code>).</li>
+<li>Execute other environment initialization scripts (<code>configure_env.sh</code>).</li>
+</ul>
+</li>
+<li><strong>Artifacts</strong>: A fully configured development environment, ready for finalization.</li>
+</ul>
+<h4 id="stage-5-final---final-artifact-layer">Stage 5: <code>final</code> - Final Artifact Layer</h4>
+<p>This is the last stage, aiming to create a clean, lightweight, and ready-to-use final image.</p>
+<ul>
+<li><strong>Responsibilities</strong>:
+<ul>
+<li><code>COPY</code> all necessary filesystem content from the previous stage (<code>config</code>).</li>
+<li>Clean up all unnecessary build caches and temporary files.</li>
+<li>Set the container’s default user, working directory (<code>WORKDIR</code>), and entry point (<code>ENTRYPOINT</code>).</li>
+</ul>
+</li>
+<li><strong>Artifacts</strong>: The final <code>dev-env:${PLATFORM}</code> image distributed to developers.</li>
+</ul>
+<h2 id="3-core-technique-build-time-dynamic-script-generation">3. Core Technique: Build-time Dynamic Script Generation</h2>
+<p>To enable the build logic to respond to external configurations, we extensively use a technique of generating scripts dynamically at build-time. The core of this is using template files (with a <code>_template</code> suffix) and environment variable injection.</p>
+<h3 id="31-implementation-mechanism">3.1 Implementation Mechanism</h3>
+<p>The workflow of this mechanism is as follows:</p>
+<ol>
+<li>
+<p><strong>Define Template Files</strong>: In the codebase, we create shell script templates containing placeholders, such as <code>install_sdk.sh_template</code>. These placeholders typically follow the shell environment variable format, like <code>${PLATFORM_SDK_URL}</code>.</p>
+<p><code>install_sdk.sh_template</code> (Conceptual Example)</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="shell"><code><span class="line"><span>#!/bin/bash</span></span>
+<span class="line"><span>set -e</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>echo "Downloading SDK from: ${PLATFORM_SDK_URL}"</span></span>
+<span class="line"><span>wget -q -O /opt/sdk.tar.gz "${PLATFORM_SDK_URL}"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>echo "Installing SDK..."</span></span>
+<span class="line"><span>tar -xzf /opt/sdk.tar.gz -C /opt/</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Further setup steps...</span></span></code></pre>
+</li>
+<li>
+<p><strong>Environment Variable Injection</strong>: When executing the <code>docker build</code> command, the <code>build-dev-env.sh</code> script injects variables read from the <code>.env</code> file into the build environment using the <code>--build-arg</code> parameter.</p>
+</li>
+<li>
+<p><strong>Dynamic Rendering and Execution</strong>: In a <code>Dockerfile</code> <code>RUN</code> instruction, we perform a simple rendering process to convert the template file into an executable script, which is then executed immediately.</p>
+<p><code>Dockerfile</code> (Conceptual Example in Stage 3)</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span>ARG PLATFORM_SDK_URL</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>COPY docker/dev-env-clientside/stage_3_sdk/scripts/install_sdk.sh_template /tmp/</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>RUN envsubst &#x3C; /tmp/install_sdk.sh_template > /tmp/install_sdk.sh &#x26;&#x26; \</span></span>
+<span class="line"><span>    chmod +x /tmp/install_sdk.sh &#x26;&#x26; \</span></span>
+<span class="line"><span>    /tmp/install_sdk.sh</span></span></code></pre>
+<ul>
+<li>We use the <code>envsubst</code> tool (a standard GNU Gettext utility), which replaces strings in the <code>${VAR}</code> format in the input stream with the values of the current environment variables.</li>
+<li>This renders the final <code>install_sdk.sh</code> script.</li>
+<li>We then give it execute permissions and run it.</li>
+</ul>
+</li>
+</ol>
+<h3 id="32-advantages">3.2 Advantages</h3>
+<p>This dynamic generation mechanism is a direct manifestation of the “configuration-driven” idea in the build process, and it brings significant benefits:</p>
+<ul>
+<li><strong>Logic Reuse</strong>: We can write logically identical template scripts for different platforms, achieving different behaviors simply through different configuration inputs. This avoids writing nearly identical scripts for each platform.</li>
+<li><strong>Readability and Security</strong>: Configuration values (like URLs, version numbers) are clearly kept in <code>.env</code> files instead of being hardcoded in the <code>Dockerfile</code> or scripts. This makes configuration review and modification easier and also avoids exposing sensitive information (like private repository addresses) directly in the <code>Dockerfile</code>.</li>
+</ul>
+<h2 id="4-conclusion">4. Conclusion</h2>
+<p>By combining Docker’s multi-stage builds with build-time dynamic script generation, we have implemented a highly modular, cacheable, and dynamically configurable image build process. This process not only ensures that the build artifacts are lean and efficient but, more importantly, provides the entire standardized development environment system with powerful flexibility and extensibility.</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

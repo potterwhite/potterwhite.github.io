@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ASIO · PotterWhite</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>ASIO</h1><div class="article-meta"><time datetime="2024-07-31" class="mono">2024-07-31</time><a class="pill teal" href="/blog/categories/windows/">windows</a></div></header><div class="pw-prose"><h2 id="a-introduction"><strong>A. Introduction</strong></h2>
+<p>其实张佩的文章已经写得很详细了，但是如果没有任何概念的时候，还是会被众多的经典概念绕晕。 所以我的方法是：先去steinberg的forum去看一些英文原版的介绍， 然后去下载asio 的sdk下来看文档，看代码，跑代码 下载cubase下来，验证asio驱动。</p>
+<h2 id="b-concepts"><strong>B. Concepts</strong></h2>
+<h3 id="a-structure-各层的结构">a. Structure 各层的结构</h3>
+<h4 id="1应用程序">1.应用程序</h4>
+<p>（cubase、dorico、nuendo、wavelab等都是被明确指出需要ASIO driver的）</p>
+<h4 id="2操作系统-用户空间-windows">2.操作系统-用户空间-windows</h4>
+<p>windows驱动</p>
+<p>Steinberg built-in ASIO Driver（win10 x64 &#x26; win11 only）</p>
+<p>早期是Generic Low Latency ASIO Driver</p>
+<p>第三方的ASIO4ALL- from Michael Tippach</p>
+<h4 id="3操作系统-内核空间-windows">3.操作系统-内核空间-windows</h4>
+<h4 id="4硬件层">4.硬件层</h4>
+<p>ASIO是需要声卡硬件支持的 其实关于这一点，暂时还没有确定的答案，硬件上做什么样特殊的处理吗？ 但是走到操作系统的内核空间层，windows内核需要为ASIO这样一个第三方的公司定制一些特殊的模块，就像Linux那样，驱动目录下有各个不同厂商单独的文件夹。 从理论上来看，当然是可能的。但是好像还没有看到ASIO有任何这方面的资料。 如果在内核空间，所有的驱动模块都是通用的，即与AC97、Realtek等声卡所调用的驱动模块是完全一致的，那么ASIO就并不需要硬件支持了。 用另一个方式来说，ASIO的特殊之处是在用户空间的驱动里，不论是WDM还是其他windows的库，ASIO推出一套标准，用不同的方法去调用内核空间给用户空间的API。 它只是在用不同的方式或逻辑调用相同的内核API，与内核通信而已。</p>
+<h2 id="c-asio-sdk"><strong>C. ASIO SDK</strong></h2>
+<h3 id="a-asio-api试图提供的性能from-asio-sdk-23">a. ASIO API试图提供的性能(From ASIO SDK 2.3)</h3>
+<h4 id="1high-data-throughput"><code>1.High data throughput</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>PCI </span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>firewire</span></span></code></pre>
+<h4 id="2synchronization"><code>2.synchronization</code></h4>
+<h4 id="3low-latency"><code>3.low latency</code></h4>
+<h4 id="4extensibility-on-the-audio-hardware-"><code>4.extensibility on the audio hardware </code></h4>
+<h4 id="5no-limitation-on-the-number-of-io-channels-"><code>5.no limitation on the number of i/o channels </code></h4>
+<h4 id="6no-limitation-on-the-sample-rate"><code>6.no limitation on the sample rate</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>32khz</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>96khz</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>higher</span></span></code></pre>
+<h4 id="7no-limitation-on-sample-format"><code>7.no limitation on sample format</code></h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>16</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>24</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>32 bit</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>32/64 bit floating point formats</span></span></code></pre>
+<h2 id="d-conclusion"><strong>D. Conclusion</strong></h2>
+<p>今天一天，到下午四点的时候，终于用cubase试验了自己修改过的asio driver。</p>
+<p>虽然看起来很简单，但是其实是要仔细的去看asio sdk 2.3的整个包里面的文档。</p>
+<p>市面上对于asio驱动、支持asio声卡、asio 硬件等概念的介绍并没有特别有针对性的。</p>
+<p>asio应该理解为一种协议，cubase这类的软件都只识别这种协议的音频设备。</p>
+<p>它并没有太神奇的地方，就是在软件层面的一种封装罢了。</p>
+<h2 id="e-appendix"><strong>E. Appendix</strong></h2>
+<p><a href="https://zhuanlan.zhihu.com/p/518363836">01. [***]在逃技术百晓声-ASIO、WDM和MME驱动的区别(一个比较简练的介绍)</a></p>
+<p><a href="https://potterwhite.github.io/blog/2024/07/31/asio/info@steinberg.de">02. [**]Steinberg Email:info@steinberg.de</a></p>
+<p><a href="https://forums.steinberg.net/c/developer/103/none?_gl=1*107pk2r*_gcl_au*MjI0MDkyMTc2LjE3MjE5ODY2MDQ.">03. [***]Steinberg Forum</a></p>
+<p><a href="https://debug.fanzheng.org/post/use-cubase-without-independent-sound-card.html">04. [**]无独立声卡玩转Cubase</a></p>
+<p><a href="https://blog.csdn.net/blog_index/article/details/2537080?spm=1001.2014.3001.5502">05. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南</a></p>
+<p><a href="https://blog.csdn.net/blog_index/article/details/5411694?spm=1001.2014.3001.5502">06. [仔细的介绍 *****]张佩的文章-ASIO音频驱动开发指南 2.0</a></p>
+<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/17863730844946-Steinberg-built-in-ASIO-Driver-information-download">07. Steinberg built-in ASIO Driver: information &#x26; download</a></p>
+<p><a href="https://helpcenter.steinberg.de/hc/en-us/articles/206111444-Audio-card-latency">08. Audio card latency</a></p>
+<p><a href="https://www.buckhorn.com.cn/index.php/support-zh/tech-doc-zh/43-asio-infrastructure-zh">09. 跳羚科技 - Buckhorn之音频asio驱动开发</a></p>
+<p><a href="http://www.cymount.com/news/shownews.php?id=66">10. 什么是 ASIO 声卡驱动？</a></p>
+<p><a href="http://www.cymount.com/news/shownews.php?id=80">11. WASAPI介绍</a></p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>
