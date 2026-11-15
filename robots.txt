@@ -1,1 +1,6 @@
 User-agent: *
+Allow: /
+
+# hidden 页（神学/新闻 8 篇）不靠这里屏蔽，而靠页面内 noindex meta；
+# Disallow 只会挡住爬虫抓取、反而让 noindex 失效。
+Sitemap: https://potterwhite.github.io/sitemap-index.xml

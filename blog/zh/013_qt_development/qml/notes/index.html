@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>qml notes · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>qml notes</h1><div class="article-meta"><time datetime="2024-08-10" class="mono">2024-08-10</time><a class="pill teal" href="/blog/categories/qt/">qt</a><a class="pill teal" href="/blog/categories/qml/">qml</a></div></header><div class="pw-prose"><h2 id="001-expose-propertiesproperty-alias-">001. **[Expose Properties]property alias **</h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>property alias ${EXTERNAL_SHARED_ID}: ${INNER_ID}</span></span></code></pre>
+<p>if we have this statement in sub-qml files, the qml file who invoke current sub-qml file could access these or this component whose id is ${EXTERNAL_SHARED_ID}</p>
+<h2 id="002-qml的模块化">002. <strong>QML的模块化</strong></h2>
+<p>case：<strong>我要如何在子文件a.qml里面去访问子文件b.qml里面的某一个属性，例如height？</strong></p>
+<p><code>solutionA</code>:</p>
+<p>透过父文件进行指定，父文件在创建a和b两个对象的实例的时候，就可以指定他们的height；
+至于如果要指定的还不是height这种属性，而是比较难访问的属性，怎么办呢？就得看看其他办法。</p>
+<p><code>solutionB</code>:
+用信号槽的方式
+这种方式是qt的原生自带的技术</p>
+<p><code>solutionC</code>:
+用property
+在 QML 中，你可以在子文件（例如 Background.qml 和 Buttons.qml）中定义 property，用来暴露组件的某些属性，如 height，以便在父组件中访问这些属性。</p>
+<h2 id="003-debug-qtguiimageio-libpng-warning-iccp-known-incorrect-srgb-profile">003. Debug: qt.gui.imageio: libpng warning: iCCP: known incorrect sRGB profile</h2>
+<p><a href="https://bbs.archlinux.org/viewtopic.php?pid=1269845#p1269845">Post about the reason of this warning</a></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>It's because libpng 1.6 does more checking of the pngs, and one or more of the png files used has an old sRGB profile. </span></span>
+<span class="line"><span>It's supposed to just be a warning, are you sure this is what's causing the build failure? </span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>If so, you may need to replace the sRGB profile yourself or get upstream to do it.</span></span></code></pre>
+<h2 id="004-取整怎么做">004. 取整怎么做？</h2>
+<p>在 QML 中，你可以使用 Math.floor()、Math.ceil() 或 Math.round() 函数来对带小数的数值进行取整操作：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>    Math.floor(value): 返回不大于 value 的最大整数，即向下取整。</span></span>
+<span class="line"><span>    Math.ceil(value): 返回不小于 value 的最小整数，即向上取整。</span></span>
+<span class="line"><span>    Math.round(value): 返回四舍五入后的整数。</span></span></code></pre>
+<h2 id="005-要点">005. 要点</h2>
+<p>函数不能以大写字母开头</p>
+<h2 id="006-startsystemmove的逻辑"><strong>006. startSystemMove()的逻辑</strong></h2>
+<p><a href="https://doc.qt.io/qt-6/qwindow.html#startSystemMove">startSystemMove</a> is designed to send a system signal to the entrance of window moving model</p>
+<p>what gpt4o said:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>startSystemMove 是一个在某些框架或平台中使用的函数，通常用于启动窗口的移动操作。这个函数的具体实现和行为可能会因平台或框架的不同而有所差异。以下是一个典型的解释和行为描述，通常适用于 Windows 平台和基于 Qt 框架的环境：</span></span>
+<span class="line"><span>startSystemMove 函数的详细解析</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>startSystemMove 通常是用来处理用户拖动窗口的情况。当用户按下鼠标左键并拖动窗口的非客户区（例如标题栏）时，系统会自动启动窗口的移动操作。startSystemMove 函数一般用于在自定义标题栏或无边框窗口中模拟这种行为。</span></span></code></pre>
+<h3 id="problem"><strong>problem</strong></h3>
+<p>when i clicked left button of my mouse, the code will trigger <em><strong>vp_window_id.startSystemMove()</strong></em> for supporting window`s moving function.</p>
+<p>so i wrote it like below</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>onPressed: {</span></span>
+<span class="line"><span>    if(SingletonModule.IfOnlyMouseLeftButtonPressed(titleMouseArea)){</span></span>
+<span class="line"><span>        vp_window_id.startSystemMove()</span></span>
+<span class="line"><span>        </span></span>
+<span class="line"><span>    }else if(SingletonModule.IfOnlyMouseRightButtonPressed(titleMouseArea)){</span></span>
+<span class="line"><span>        console.log("right")</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>but now met the problem:
+when i clicked the left button of the mouse, and did not move the mouse (no position changed), the <em><strong>startSystemMove</strong></em> had been sent anyway. and now the <em><strong>titleMouseArea.pressedButtons</strong></em> always keep <em><strong>Qt.LeftButton</strong></em> actually equals <em><strong>1</strong></em>.Even i release the left button of my mouse quickly, the state did not change.
+so now when i clicked left button, nothing happened.
+when i clicked right button, illegal value of <em><strong>titleMouseArea.pressedButtons</strong></em> came with <em><strong>3</strong></em>, it is illegal actually like the pic below, it also means left button plus right button together.
+<img src="/2024/August/16/QtMouseButtons.png" alt="QtMouseButtons"></p>
+<h3 id="solution"><strong>solution</strong></h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>onPressed: </span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>MouseArea {</span></span>
+<span class="line"><span>    id: titleMouseArea</span></span>
+<span class="line"><span>    anchors.fill: parent</span></span>
+<span class="line"><span>    acceptedButtons: Qt.LeftButton | Qt.RightButton</span></span>
+<span class="line"><span>    preventStealing: true    </span></span>
+<span class="line"><span>    pressAndHoldInterval: 100</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    property bool isDragging: false</span></span>
+<span class="line"><span>    onPressed: {</span></span>
+<span class="line"><span>        if(SingletonModule.IfOnlyMouseLeftButtonPressed(titleMouseArea)){</span></span>
+<span class="line"><span>            isDragging = true</span></span>
+<span class="line"><span>            </span></span>
+<span class="line"><span>        }else if(SingletonModule.IfOnlyMouseRightButtonPressed(titleMouseArea)){</span></span>
+<span class="line"><span>            console.log("right")</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        console.log("\n")</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>    onPositionChanged: {</span></span>
+<span class="line"><span>            console.log("x=", mouse.x,</span></span>
+<span class="line"><span>                        "y=", mouse.y)</span></span>
+<span class="line"><span>        if(isDragging){</span></span>
+<span class="line"><span>            vp_window_id.startSystemMove()</span></span>
+<span class="line"><span>            console.log("position changed: left")</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>    onReleased: {</span></span>
+<span class="line"><span>        isDragging = false</span></span>
+<span class="line"><span>        console.log("Button released. Current pressedButtons:", titleMouseArea.pressedButtons)</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>the solution is a logic control that when i click left button, onPressed set the flag variable <em><strong>TRUE</strong></em>, and if i do not move the cursor away, the onRelease slot will set the flag variable to <em><strong>FALSE</strong></em>.
+Until i click and at the same time move the cursor away(position changed), the <em><strong>onPositionChanged</strong></em> slot will send <em><strong>vp_window_id.startSystemMove()</strong></em> out to the system.</p>
+<h3 id="conclusion"><strong>conclusion</strong></h3>
+<p>actually higher level language is boring because of that they could not control the low layer system at some times.
+and personaly customize the titlebar of a window is such a heave job.</p>
+<h2 id="007-mouseareamousexy-vs-container_idxy"><strong>007. MouseArea.mouseX(y) VS ${Container_ID}.x(y)</strong></h2>
+<p>i have a sub module</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>import QtQuick</span></span>
+<span class="line"><span>import QtQuick.Controls</span></span>
+<span class="line"><span>import SingletonForVolumeMixer 1.0</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Menu {</span></span>
+<span class="line"><span>    id: bID_Private_contextualMenu</span></span>
+<span class="line"><span>    MenuItem {</span></span>
+<span class="line"><span>        text: qsTr("最小化")</span></span>
+<span class="line"><span>        onTriggered: {</span></span>
+<span class="line"><span>            // 实现最小化逻辑</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>    MenuItem {</span></span>
+<span class="line"><span>        text: qsTr("最大化")</span></span>
+<span class="line"><span>        onTriggered: {</span></span>
+<span class="line"><span>            // 实现最大化逻辑</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>    MenuItem {</span></span>
+<span class="line"><span>        text: qsTr("关闭")</span></span>
+<span class="line"><span>        onTriggered: {</span></span>
+<span class="line"><span>            // 实现关闭逻辑</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>and when i try to instantiate this module as container of my main.qml
+error method:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>    CustomizedMenu {</span></span>
+<span class="line"><span>        id: rightkeyMenu</span></span>
+<span class="line"><span>        x: MouseArea.mouseX</span></span>
+<span class="line"><span>        y: MouseArea.mouseY</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    onPressed: {            </span></span>
+<span class="line"><span>                rightkeyMenu.open()</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>have a warning:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>qrc:/qt/qml/content/Title/xxx.qml:50:9: Unable to assign [undefined] to double</span></span>
+<span class="line"><span>qrc:/qt/qml/content/Title/xxx.qml:49:9: Unable to assign [undefined] to double</span></span></code></pre>
+<p>correct method:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span>    CustomizedMenu {</span></span>
+<span class="line"><span>        id: rightkeyMenu</span></span>
+<span class="line"><span>        // x: MouseArea.mouseX</span></span>
+<span class="line"><span>        // y: MouseArea.mouseY</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    onPressed: {            </span></span>
+<span class="line"><span>        rightkeyMenu.x = mouse.X                </span></span>
+<span class="line"><span>        rightkeyMenu.y = mouse.y</span></span>
+<span class="line"><span>        rightkeyMenu.open()</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>why-from GPT4o:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>你遇到的问题主要与QML中的**属性绑定机制**以及**组件生命周期**有关。当你在`Menu`容器中直接尝试绑定 `x: mouseArea.mouseX` 和 `y: mouseArea.mouseY` 时，可能会遇到以下问题：</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### 1. **属性未初始化**</span></span>
+<span class="line"><span>`mouseArea.mouseX` 和 `mouseArea.mouseY` 这类属性在`MouseArea`中表示相对坐标，但它们在某些情况下可能未初始化，特别是在组件刚刚加载时。这可能导致`Menu`组件在初始化时尝试访问这些属性，而它们尚未定义，导致出现`undefined`错误。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### 2. **组件加载顺序**</span></span>
+<span class="line"><span>QML中，属性的绑定通常在组件加载和初始化时执行。如果在`Menu`的定义中试图直接访问这些属性，而`MouseArea`还没有触发任何事件，属性值可能未被设置。因此，在菜单加载时，这些属性可能仍然是`undefined`，这会导致无法将`undefined`分配给`Menu`的`x`或`y`属性。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### 3. **绑定的时机**</span></span>
+<span class="line"><span>在 `Menu` 容器中直接绑定 `x: mouseArea.mouseX` 和 `y: mouseArea.mouseY` 是静态绑定，在QML的生命周期内，可能不会动态更新。只有当 `MouseArea` 触发点击事件时，`mouse.x` 和 `mouse.y` 才会有值，这意味着这些值只有在事件发生时才是有效的。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### 为什么`mouse.x` 和 `mouse.y` 方式有效？</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>通过在 `MouseArea` 的 `onClicked` 处理器中动态设置 `Menu` 的 `x` 和 `y` 属性，你确保了在鼠标点击事件发生时，这些值是最新的、有效的。因为点击事件发生后，鼠标的坐标已经被正确捕获并可以使用，所以这种方式不会遇到属性未定义的问题。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>### 总结</span></span>
+<span class="line"><span>直接在`Menu`容器中绑定鼠标坐标可能会遇到初始化顺序和属性绑定的时机问题。而在`MouseArea`的点击事件中动态设置`Menu`的坐标确保了这些坐标是在事件发生后获取的，因此是有效的。这是两种方法表现不同的主要原因。</span></span></code></pre>
+<h2 id="008-属性property-vs-容器container">008: 属性property vs 容器container</h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>属性（Property）：</span></span>
+<span class="line"><span>    属性在 QML 中是一种定义对象或元素特征的方式。属性可以是简单的值（如 color、width、height），也可以是更复杂的对象（如 Item、Rectangle）。</span></span>
+<span class="line"><span>    当属性持有复杂对象时，这些对象可以被视为容器，因为它们可以包含其他元素，并通过大括号 {} 来定义。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>容器（Container）：</span></span>
+<span class="line"><span>    容器通常是指那些能够包含其他 QML 元素的对象。例如，Rectangle、Item、Column 都是典型的容器元素，因为它们可以在大括号 {} 内定义其他元素。</span></span></code></pre></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

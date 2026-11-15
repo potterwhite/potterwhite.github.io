@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>第二类：嵌入式 BSP（板级支持包） · PotterWhite</title><meta name="description" content="把 SoC 从 datasheet 第一页读到最后一页——TRM 阅读法、debug 三角、knowledge 沉淀。涵盖 RK3568 bringup、RK3588 PCIE 调试两个核心实战案例。"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>第二类：嵌入式 BSP（板级支持包）</h1><p class="article-desc">把 SoC 从 datasheet 第一页读到最后一页——TRM 阅读法、debug 三角、knowledge 沉淀。涵盖 RK3568 bringup、RK3588 PCIE 调试两个核心实战案例。</p></header><div class="pw-prose"><h2 id="一句话">一句话</h2>
+<blockquote>
+<p>做嵌入式 BSP：从 datasheet 第一页读到最后一页，把每个 bug 写成 milestone，下次直接复用。</p>
+</blockquote>
+<h2 id="这是什么--不是什么">这是什么 / 不是什么</h2>
+<p><strong>这是</strong>：我关于”嵌入式系统底层开发”的工作方法论 + 两个核心实战案例。
+<strong>不是</strong>：某个具体芯片的入门教程、某个 SoC 的移植手册。</p>
+<p>如果你正在招一个能做 BSP 的工程师，看完这一页 + 两个核心 case study 的链接，你应该能判断这个人是不是值得面。</p>
+<hr>
+<h2 id="方法论">方法论</h2>
+<h3 id="1-trm-阅读法不是从头读到尾">1. TRM 阅读法（不是从头读到尾）</h3>
+<p>TRM 上千页，从头读到尾几乎不可能。我的做法：</p>
+<ol>
+<li><strong>先看时钟表</strong>（Clock Overview）。每个模块有几根时钟、源头在哪里、有没有内部 PLL——这一张表决定 80% 的”为什么不通”。</li>
+<li><strong>再看寄存器表</strong>（Register Description）。只读和当前 bug 相关的章节，但顺手把 chapter 里所有寄存器扫一遍名字。</li>
+<li><strong>最后看电源域</strong>（Power Domain）。看哪些模块受哪个 PD 控制、reset 来源是什么。</li>
+</ol>
+<p><strong>好处</strong>：对一个 SoC 做 1-2 次 debug 之后，下次遇到同 SoC 其他子系统 bug，时钟表 + 寄存器表 + 电源域这三张图就能立刻定位 80% 的问题。</p>
+<h3 id="2-debug-三角代码--log--系统结构图">2. Debug 三角：代码 + log + 系统结构图</h3>
+<p>任何一个”为什么挂”的问题，我用三个证据来源交叉验证：</p>
+<ul>
+<li><strong>代码分析</strong>：grep kernel source，看 call stack 走的哪条路径</li>
+<li><strong>实测 log</strong>：printk / devmem / clk_summary / devtree 反证猜测</li>
+<li><strong>系统结构图</strong>：让 AI 帮我画硬件模块框图，反推”数据从哪来到哪去”</li>
+</ul>
+<p><strong>三个里至少两个对得上</strong>才下结论。单一证据的猜测不下结论。</p>
+<h3 id="3-每个-bug-写成-milestone">3. 每个 bug 写成 milestone</h3>
+<p>参考 PKB 里的 <a href="_TODO_">milestones-pcie</a> 格式：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MS-&#x3C;ID>-&#x3C;slug></span></span>
+<span class="line"><span>├─ Date</span></span>
+<span class="line"><span>├─ Context（为什么做这一步）</span></span>
+<span class="line"><span>├─ Method（具体动作 + 关键代码引用）</span></span>
+<span class="line"><span>├─ Result（原始 log 摘录）</span></span>
+<span class="line"><span>├─ Interpretation（排除了什么、锁定了什么）</span></span>
+<span class="line"><span>└─ Next（下一步动作）</span></span></code></pre>
+<p><strong>好处</strong>：下次遇到类似问题，milestone 是直接复用的，不从零开始。</p>
+<hr>
+<h2 id="实战案例">实战案例</h2>
+<h3 id="案例-1--rk3568-平台-bringup">案例 1 · RK3568 平台 bringup</h3>
+<p><a href="/pages/zh/portfolio/embedded-bsp/bringup-rk3568/">→ 查看完整 portfolio</a></p>
+<p>RK3568 SoC 启动到用户态全流程：bootrom → ATF → u-boot → kernel → rootfs。涉及 pinctrl、clock、regulator、PMIC 各子系统初始化。</p>
+<h3 id="案例-2--rk3588-pcie-phypll-时钟域调试">案例 2 · RK3588 PCIE PHY/PLL 时钟域调试</h3>
+<p><a href="/blog/zh/linux/workflow-bringup-rk3588-pcie/">→ 配套长文：<em>不靠猜：如何用 TRM 推导出 PCIe 模块的问题</em></a></p>
+<p>7 天解谜 <code>readl()</code> 挂死。从”沉默”信号 + ARM64 <code>ldr</code> 语义出发，用 APB 通 + DBI 挂的对比实验 + TRM 三行原文 + 时钟表，把 hang 锁定到 PHY PLL 时钟域。</p>
+<blockquote>
+<p><strong>亮点</strong>：这一个 case 完整实践了”TRM 阅读法”+“Debug 三角”+“milestone 沉淀”三套方法论。如果你只读一个案例，读这个。</p>
+</blockquote>
+<hr>
+<h2 id="我用什么工具">我用什么工具</h2>
+<ul>
+<li><strong>DTS</strong>：device tree 是”硬件的另一种说明书”</li>
+<li><strong>printk</strong>：最朴素的 debug，但配合 tag 前缀能立刻 grep</li>
+<li><strong>clk_summary</strong> (<code>/sys/kernel/debug/clk/clk_summary</code>)：CCF 输出，看时钟是否真的开起来</li>
+<li><strong>devmem / devmem2</strong>：从 userspace 戳寄存器</li>
+<li><strong>devtree</strong> (<code>/proc/device-tree</code>)：运行时 DTS</li>
+<li><strong>反汇编</strong>：当 source 跟 binary 不一致时（CONFIG_* 关闭、宏展开不同），直接 objdump</li>
+</ul>
+<h2 id="推荐阅读">推荐阅读</h2>
+<ul>
+<li>ARM AMBA AXI / APB Spec — 总线协议层</li>
+<li>PCI Express Base Spec — PCIe 协议层</li>
+<li>Rockchip RK3588 TRM（公开可查）</li>
+<li>Synopsys DesignWare PCIe Controller Databook（<strong>NDA</strong>，部分内容可从 kernel source 反推）</li>
+<li>Linux kernel source: <code>drivers/pci/controller/dwc/</code></li>
+</ul></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

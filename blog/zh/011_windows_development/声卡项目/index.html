@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>声卡项目 · PotterWhite</title><meta name="description" content><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>声卡项目</h1><div class="article-meta"><time datetime="2024-07-11" class="mono">2024-07-11</time><a class="pill teal" href="/blog/categories/windows/">windows</a></div></header><div class="pw-prose"><!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
+<h1 id="一介绍">一、介绍</h1>
+<p>这本身是一个跨操作系统的项目，但是windows是客户群体最多的一个平台，所以主力是开发win下</p>
+<h1 id="二主要的函数">二、主要的函数</h1>
+<details>
+    <summary>流程图1 _EnumerateAudioEndpoints</summary>
+<!-- ![_EnumerateAudioEndpoints](/2024/July/11/soundcard_flow_1.svg) -->
+<p>this is the first operation of our process<br>
+A. and it start with CoCreateInstance() to create object of <code>IMMDeviceEnumerator</code><br>
+B. then if success, use <code>IMMDeviceEnumerator.EnumAudioEndpoint()</code> to enumerate all endpoints(actually include all input &#x26; output devices, but API can choose i or o or both devices) in this machine.<br>
+C. if there exist endpoint, to check the number of endpoints with <code>IMMDeviceCollection.GetCount()</code>.<br>
+D. use for loop to enum every endpoint, retrieve its data with <code>IMMDeviceCollection.Item()</code><br>
+E. finally, if retrieving process runs smoothly and there is data who came with Item() operation, push it into endpoint global data pool.<br></p>
+<!-- <object type="image/svg+xml" data="/2024/July/17/flowchart_of_EnumerateEndpoint.svg" style="width: 100%; height: 1000%;">
+    Your browser does not support SVG
+</object> -->
+<iframe src="/2024/July/17/flow_no_zoom.svg" width="900" height="2000" style="border:none; overflow:scroll; background: #333333;">
+</iframe>
+<!-- ![_EnumerateAudioEndpoints](/2024/July/17/flowchart_of_EnumerateEndpoint.svg) -->
+</details>
+<details>
+    <summary> 001. 创建com的对象 CoCreateInstance </summary>
+<div style="padding-left: 2em;">
+<br>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>_Check_return_</span></span>
+<span class="line"><span>WINOLEAPI</span></span>
+<span class="line"><span>CoCreateInstance(</span></span>
+<span class="line"><span>    _In_ REFCLSID rclsid,</span></span>
+<span class="line"><span>    _In_opt_ LPUNKNOWN pUnkOuter,</span></span>
+<span class="line"><span>    _In_ DWORD dwClsContext,</span></span>
+<span class="line"><span>    _In_ REFIID riid,</span></span>
+<span class="line"><span>    _COM_Outptr_ _At_(*ppv, _Post_readable_size_(_Inexpressible_(varies))) LPVOID  FAR * ppv</span></span>
+<span class="line"><span>);</span></span></code></pre>
+<br>
+<h3 id="refrence"><strong>Refrence</strong></h3>
+<p><a href="https://learn.microsoft.com/en-us/windows/win32/api/combaseapi/nf-combaseapi-cocreateinstance">1. CoCreateInstance MS Learning</a><br>
+<a href="https://developer.aliyun.com/article/48371">2. COM basic tutorial</a><br></p>
+<br>
+<h3 id="introduce"><strong>Introduce</strong></h3>
+<p><strong>CoCreateInstance</strong> is used for instance of object creating in local machine.
+<strong>CoCreateInstanceEx</strong> is used for instance of object creating in REMOTE machine.
+<strong>CoGetClassObject</strong> is used for MULTI instances of object creating in local machine.
+CoCreateInstance encapsulates the CoGetClassObject in the low-level.
+CoCreateInstance connects the object with the ID.
+<br><br></p>
+<h3 id="requirement"><strong>Requirement</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Name</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Library</td>
+<td>Ole32.lib</td>
+<td></td>
+</tr>
+<tr>
+<td>Dynamic Link Library</td>
+<td>Ole32.dll</td>
+<td></td>
+</tr>
+<tr>
+<td>Header file</td>
+<td>combaseapi.h</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>…\Windows Kits\10\Include\10.0.22621.0\shared\guiddef.h</td>
+<td>REFCLSID &#x26; IID definition</td>
+</tr>
+<tr>
+<td></td>
+<td>…\Windows Kits\10\Include\10.0.22621.0\um\mmdeviceapi.h</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Minimum System Version</td>
+<td>Windows 2000 and above</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><br><br></p>
+<h3 id="parameters"><strong>Parameters</strong></h3>
+<p><span style="background-color: gray;">(1/5)[in] rclsid</span><br>
+<br></p>
+<div style="padding-left: 2em;">
+The CLSID associated with the data and code that will be used to create the object.<br>
+<p>REFCLSID:<br>
+REF=Reference<br>
+CLS=Class<br>
+ID=Identifier<br>
+REFCLSID rclsid：是 const CLSID&#x26; 的别名，表示对 CLSID 的引用。这样传递参数时，不需要复制整个 CLSID 对象，只需要传递它的引用，从而提高效率。</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>/*mmdeviceapi.h</span></span>
+<span class="line"><span> * here is the definition of MMDevice Enumerator</span></span>
+<span class="line"><span> * we are using "__uuidof(MMDeviceEnumerator)"</span></span>
+<span class="line"><span> */</span></span>
+<span class="line"><span>#ifdef __cplusplus</span></span>
+<span class="line"><span>class DECLSPEC_UUID("BCDE0395-E52F-467C-8E3D-C4579291692E")</span></span>
+<span class="line"><span>MMDeviceEnumerator;</span></span>
+<span class="line"><span>#endif</span></span></code></pre>
+<details>
+    <summary>UUID为什么有中间的“-”连字符</summary>
+    UUID（Universally Unique Identifier）或 GUID（Globally Unique Identifier）中使用连字符（`-`）是为了增加可读性和标准化。虽然连字符没有任何技术上的必要性，但它们有助于分隔和识别 UUID 的不同部分。
+<h3 id="uuid-格式">UUID 格式</h3>
+<p>一个标准的 UUID 格式为 8-4-4-4-12，即总共 32 个十六进制字符分为五个部分，每个部分用连字符分隔。这种格式定义在 RFC 4122 中。</p>
+<p>例如：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BCDE0395-E52F-467C-8E3D-C4579291692E</span></span></code></pre>
+<h3 id="格式的分隔意义">格式的分隔意义</h3>
+<ol>
+<li><strong>时间戳部分（8个字符）</strong>：UUID 的前 8 个字符通常表示时间戳的高位部分。</li>
+<li><strong>时间戳的中间部分（4个字符）</strong>：接下来的 4 个字符表示时间戳的中间部分。</li>
+<li><strong>时间戳的低位部分和版本号（4个字符）</strong>：接下来的 4 个字符表示时间戳的低位部分和版本号。</li>
+<li><strong>时钟序列（4个字符）</strong>：接下来的 4 个字符表示时钟序列。</li>
+<li><strong>节点（12个字符）</strong>：最后的 12 个字符表示节点信息（通常是基于网络地址）。</li>
+</ol>
+<p>这种分隔方式有助于解析和理解 UUID 的不同部分，并确保它们的唯一性。</p>
+<h3 id="使用连字符的好处">使用连字符的好处</h3>
+<ol>
+<li><strong>可读性</strong>：连字符使得 UUID 更加可读，更容易分辨和检查。</li>
+<li><strong>标准化</strong>：按照 RFC 4122 标准定义的格式，有助于在不同系统和平台之间保持一致性。</li>
+<li><strong>解析和验证</strong>：连字符分隔使得解析和验证 UUID 更加简单和明确。</li>
+</ol>
+<h3 id="无连字符表示">无连字符表示</h3>
+<p>在一些情况下，可以去掉连字符并连续地写下所有字符。例如：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>BCDE0395E52F467C8E3DC4579291692E</span></span></code></pre>
+<p>这种形式在某些编程语言和库中也是支持的，但为了确保一致性和标准化，通常还是建议使用带有连字符的格式。</p>
+<h3 id="总结">总结</h3>
+<ul>
+<li><strong>连字符的作用</strong>：主要是增加可读性和标准化。</li>
+<li><strong>UUID 格式</strong>：8-4-4-4-12 的格式有助于分隔和识别不同的部分。</li>
+<li><strong>使用连字符的好处</strong>：使得 UUID 更加可读、标准化，便于解析和验证。</li>
+</ul>
+<p>尽管技术上可以省略连字符，但使用标准格式带来的可读性和一致性优势使得它成为惯用的做法。</p>
+</details>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>/*</span></span>
+<span class="line"><span> * guiddef.h</span></span>
+<span class="line"><span> */</span></span>
+<span class="line"><span>#define REFCLSID const IID &#x26;</span></span></code></pre>
+</div>
+<br>
+<p><span style="background-color: gray;">(2/5)[in] pUnkOuter</span><br>
+<br></p>
+<div style="padding-left: 2em;">
+If NULL, indicates that the object is not being created as part of an aggregate.<br>
+If non-NULL, pointer to the aggregate object's IUnknown interface (the controlling IUnknown).<br>
+<details>
+    <summary>关于Aggregate，更详尽的解释-FromGpt4o</summary>
+    在 `CoCreateInstance` 函数中，第二个参数 `pUnkOuter` 是一个指向 `IUnknown` 接口的指针，通常用于支持 COM 对象的聚合。聚合是 COM 中的一种技术，允许一个对象（外部对象）包含另一个对象（内部对象），并使内部对象的接口看起来像是外部对象的一部分。
+<h3 id="参数详细解释">参数详细解释</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="cpp"><code><span class="line"><span>HRESULT CoCreateInstance(</span></span>
+<span class="line"><span>  REFCLSID rclsid,     // Class identifier (CLSID) of the object to be created</span></span>
+<span class="line"><span>  LPUNKNOWN pUnkOuter, // Pointer to controlling IUnknown (for aggregation)</span></span>
+<span class="line"><span>  DWORD dwClsContext,  // Context in which the code that manages the newly created object will run</span></span>
+<span class="line"><span>  REFIID riid,         // Interface identifier (IID) of the interface to be used to communicate with the object</span></span>
+<span class="line"><span>  LPVOID *ppv          // Address of pointer variable that receives the interface pointer requested in riid</span></span>
+<span class="line"><span>);</span></span></code></pre>
+<h3 id="punkouter-参数"><code>pUnkOuter</code> 参数</h3>
+<ul>
+<li><strong><code>pUnkOuter</code></strong>：指向控制未知接口（<code>IUnknown</code>）的指针。如果不使用聚合，则传递 <code>NULL</code>。在聚合的情况下，<code>pUnkOuter</code> 应该是外部对象的 <code>IUnknown</code> 指针。</li>
+</ul>
+<h3 id="聚合aggregation">聚合（Aggregation）</h3>
+<p>聚合是一种将一个对象嵌入到另一个对象中的机制，使得内部对象的接口对外部对象的客户端透明。聚合在以下情况下有用：</p>
+<ol>
+<li><strong>对象组合</strong>：允许组合对象共享一个公共的 <code>IUnknown</code> 接口，从而表现为一个单一对象。</li>
+<li><strong>对象封装</strong>：允许一个对象封装另一个对象，并公开其接口，而不暴露内部实现细节。</li>
+</ol>
+<h3 id="聚合的使用">聚合的使用</h3>
+<p>当你使用聚合时，外部对象将包含内部对象，并通过内部对象的接口来实现外部对象的部分功能。在这种情况下，<code>CoCreateInstance</code> 的第二个参数 <code>pUnkOuter</code> 将指向外部对象的 <code>IUnknown</code> 接口，以便内部对象可以调用外部对象的接口。</p>
+<p>如果你不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>，表示不进行聚合。</p>
+<h3 id="示例代码">示例代码</h3>
+<h4 id="不使用聚合">不使用聚合</h4>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="cpp"><code><span class="line"><span>IMMDeviceEnumerator* deviceEnumerator = NULL;</span></span>
+<span class="line"><span>HRESULT hr = CoCreateInstance(</span></span>
+<span class="line"><span>    __uuidof(MMDeviceEnumerator),  // CLSID</span></span>
+<span class="line"><span>    NULL,                          // pUnkOuter (no aggregation)</span></span>
+<span class="line"><span>    CLSCTX_ALL,                    // Context</span></span>
+<span class="line"><span>    __uuidof(IMMDeviceEnumerator), // IID</span></span>
+<span class="line"><span>    (void**)&#x26;deviceEnumerator      // Interface pointer</span></span>
+<span class="line"><span>);</span></span></code></pre>
+<p>在这个例子中，<code>pUnkOuter</code> 被设置为 <code>NULL</code>，表示不使用聚合。</p>
+<h4 id="使用聚合">使用聚合</h4>
+<p>假设你有一个类 <code>COuter</code>，它希望包含一个内部对象 <code>CInner</code>：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="cpp"><code><span class="line"><span>class COuter : public IUnknown {</span></span>
+<span class="line"><span>public:</span></span>
+<span class="line"><span>    // Implement IUnknown methods</span></span>
+<span class="line"><span>    HRESULT QueryInterface(REFIID riid, void** ppv) {</span></span>
+<span class="line"><span>        if (riid == IID_IUnknown) {</span></span>
+<span class="line"><span>            *ppv = static_cast&#x3C;IUnknown*>(this);</span></span>
+<span class="line"><span>            AddRef();</span></span>
+<span class="line"><span>            return S_OK;</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>        // Handle other interfaces</span></span>
+<span class="line"><span>        return E_NOINTERFACE;</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    ULONG AddRef() {</span></span>
+<span class="line"><span>        return InterlockedIncrement(&#x26;m_refCount);</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    ULONG Release() {</span></span>
+<span class="line"><span>        ULONG count = InterlockedDecrement(&#x26;m_refCount);</span></span>
+<span class="line"><span>        if (count == 0) {</span></span>
+<span class="line"><span>            delete this;</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>        return count;</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>private:</span></span>
+<span class="line"><span>    ULONG m_refCount;</span></span>
+<span class="line"><span>};</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Create an instance of COuter and aggregate CInner</span></span>
+<span class="line"><span>COuter* pOuter = new COuter();</span></span>
+<span class="line"><span>IUnknown* pUnkOuter = static_cast&#x3C;IUnknown*>(pOuter);</span></span>
+<span class="line"><span>CInner* pInner = NULL;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>HRESULT hr = CoCreateInstance(</span></span>
+<span class="line"><span>    CLSID_CInner,         // CLSID of the inner object</span></span>
+<span class="line"><span>    pUnkOuter,            // pUnkOuter (aggregation)</span></span>
+<span class="line"><span>    CLSCTX_INPROC_SERVER, // Context</span></span>
+<span class="line"><span>    IID_IUnknown,         // IID of the interface</span></span>
+<span class="line"><span>    (void**)&#x26;pInner       // Interface pointer</span></span>
+<span class="line"><span>);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>if (SUCCEEDED(hr)) {</span></span>
+<span class="line"><span>    // Use pInner</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>在这个例子中，<code>pUnkOuter</code> 被设置为外部对象的 <code>IUnknown</code> 指针，以便内部对象可以进行聚合。</p>
+<h3 id="总结-1">总结</h3>
+<ul>
+<li><strong><code>pUnkOuter</code></strong> 是一个指向 <code>IUnknown</code> 接口的指针，用于支持聚合。</li>
+<li><strong>聚合</strong> 允许一个对象包含另一个对象，并使内部对象的接口对外部对象的客户端透明。</li>
+<li>如果不使用聚合，则将 <code>pUnkOuter</code> 设置为 <code>NULL</code>。</li>
+</ul>
+<p>通过理解 <code>pUnkOuter</code> 参数的用途和聚合的概念，可以更好地理解和使用 COM 编程模型中的聚合特性。</p>
+</details>
+</div>
+<br>
+<p><span style="background-color: gray;">(3/5)[in] dwClsContext</span><br></p>
+<div style="padding-left: 2em;">
+Context in which the code that manages the newly created object will run.<br>
+The values are taken from the enumeration CLSCTX.<br>
+<p><code>dwClsContext</code>:<br>
+ <code>dw</code>=double world;(microsoft<code>s naming style)&#x3C;/br> &#x26;emsp;</code>Cls<code>=Class; (Class of COM object)&#x3C;/br> &#x26;emsp;</code>Context` means the environment which the object running<br></p>
+<pre class="c">    <code>
+#...\Windows Kits\10\Include\10.0.22621.0\um\combaseapi.h
+
+#define CLSCTX_ALL              (CLSCTX_INPROC_SERVER| \
+                                CLSCTX_INPROC_HANDLER| \
+                                CLSCTX_LOCAL_SERVER| \
+                                CLSCTX_REMOTE_SERVER)
+    </code>
+</pre>
+<p>and these macros are found in</p>
+<pre class="c">    <code>
+#...\Windows Kits\10\Include\10.0.22621.0\shared\WTypesbase.h
+typedef
+enum tagCLSCTX
+{
+    CLSCTX_INPROC_SERVER	= 0x1,
+    CLSCTX_INPROC_HANDLER	= 0x2,
+    CLSCTX_LOCAL_SERVER	= 0x4,
+    CLSCTX_INPROC_SERVER16	= 0x8,
+    CLSCTX_REMOTE_SERVER	= 0x10,
+    CLSCTX_INPROC_HANDLER16	= 0x20,
+    CLSCTX_RESERVED1	= 0x40,
+    CLSCTX_RESERVED2	= 0x80,
+    CLSCTX_RESERVED3	= 0x100,
+    CLSCTX_RESERVED4	= 0x200,
+    CLSCTX_NO_CODE_DOWNLOAD	= 0x400,
+    CLSCTX_RESERVED5	= 0x800,
+    CLSCTX_NO_CUSTOM_MARSHAL	= 0x1000,
+    CLSCTX_ENABLE_CODE_DOWNLOAD	= 0x2000,
+    CLSCTX_NO_FAILURE_LOG	= 0x4000,
+    CLSCTX_DISABLE_AAA	= 0x8000,
+    CLSCTX_ENABLE_AAA	= 0x10000,
+    CLSCTX_FROM_DEFAULT_CONTEXT	= 0x20000,
+    CLSCTX_ACTIVATE_X86_SERVER	= 0x40000,
+    CLSCTX_ACTIVATE_32_BIT_SERVER	= CLSCTX_ACTIVATE_X86_SERVER,
+    CLSCTX_ACTIVATE_64_BIT_SERVER	= 0x80000,
+    CLSCTX_ENABLE_CLOAKING	= 0x100000,
+    CLSCTX_APPCONTAINER	= 0x400000,
+    CLSCTX_ACTIVATE_AAA_AS_IU	= 0x800000,
+    CLSCTX_RESERVED6	= 0x1000000,
+    CLSCTX_ACTIVATE_ARM32_SERVER	= 0x2000000,
+    CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION	= 0x4000000,
+    CLSCTX_PS_DLL	= 0x80000000
+} 	CLSCTX;
+
+    </code>
+</pre>
+</div>
+<br>
+<p><span style="background-color: gray;">(4/5)[in] riid</span><br>
+<br></p>
+<div style="padding-left: 2em;">
+A reference to the identifier of the interface to be used to communicate with the object.<br>
+<br>
+<p><em>In</em> REFIID riid<br>
+<code>REFIID riid</code>：<br>
+是 const IID&#x26; 的别名，表示对 IID 的引用。它的作用与 REFCLSID 类似。<br></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>#define REFIID const IID &#x26;</span></span></code></pre>
+</div>
+<br>
+<p><span style="background-color: gray;">(5/5)[out] ppv</span><br>
+<br></p>
+<div style="padding-left: 2em;">
+Address of pointer variable that receives the interface pointer requested in riid.<br>
+Upon successful return, *ppv contains the requested interface pointer.<br>
+Upon failure, *ppv contains NULL.<br>
+</div>
+<br>
+<p><code>ppv</code>: Pointer to Pointer to Void</p>
+</div></details>
+
+<h2 id="002-immdeviceactivate"><strong>002. IMMDevice::Activate</strong></h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c++"><code><span class="line"><span>HRESULT Activate(</span></span>
+<span class="line"><span>  [in]  REFIID      iid,</span></span>
+<span class="line"><span>  [in]  DWORD       dwClsCtx,</span></span>
+<span class="line"><span>  [in]  PROPVARIANT *pActivationParams,</span></span>
+<span class="line"><span>  [out] void        **ppInterface</span></span>
+<span class="line"><span>);</span></span></code></pre>
+<p><strong>Parameters Description</strong></p>
+<p><code>iid</code>: interface identifier</p>
+<p>Exp:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c++"><code><span class="line"><span>    const IID IID_IAudioSessionControl2 = __uuidof(IAudioSessionControl2);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>1. IID_IAudioClient</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>2. IID_IAudioEndpointVolume</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>3. IID_IAudioMeterInformation</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>4. IID_IAudioSessionManager</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>5. IID_IAudioSessionManager2</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>6. IID_IBaseFilter</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>7. IID_IDeviceTopology</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>8. IID_IDirectSound</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>9. IID_IDirectSound8</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>10. IID_IDirectSoundCapture</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>11. IID_IDirectSoundCapture8</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>12. IID_IMFTrustedOutput</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>13. IID_ISpatialAudioClient</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>14. IID_ISpatialAudioMetadataClient</span></span></code></pre>
+<p><code>dwClsCtx</code>: double word Class Context</p>
+<p><code>pActivationParams</code>:</p>
+<p><code>ppInterface</code></p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

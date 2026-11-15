@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RK3568平台显示子系统Bring-up与多接口调试 · PotterWhite</title><meta name="description" content="在RK3568平台上，系统性地调试并使能LVDS、MIPI-DSI及HDMI显示接口，实现与FPGA及标准显示器的视频流稳定对接，并成功输出超越官方手册规格的分辨率。"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>RK3568平台显示子系统Bring-up与多接口调试</h1><div class="article-meta"><time datetime="2025-08-18" class="mono">2025-08-18</time><span class="pill teal">BSP</span></div><p class="article-desc">在RK3568平台上，系统性地调试并使能LVDS、MIPI-DSI及HDMI显示接口，实现与FPGA及标准显示器的视频流稳定对接，并成功输出超越官方手册规格的分辨率。</p></header><div class="pw-prose"><ul>
+<li><strong>作者:</strong> Potter White</li>
+<li><strong>日期:</strong> 2025年8月</li>
+</ul>
+<h1 id="项目概述-project-overview"><strong>项目概述 (Project Overview)</strong></h1>
+<p><strong>背景 (Situation):</strong>
+在一个基于Rockchip RK3568 SoC的定制化项目中，需要同时或独立地使能LVDS、MIPI-DSI和HDMI 2.0三大显示接口。其中，LVDS接口需向FPGA输出超越官方规格的1920x1080@30Hz视频流；HDMI与MIPI则需要绕过EDID检测，强制输出固定的1080p@60Hz信号。初始BSP中这些通路均未配置，需要从零开始进行Bring-up。</p>
+<p><strong>我的职责与贡献 (My Role &#x26; Contributions):</strong>
+作为项目的BSP工程师，我独立负责整个显示子系统的Bring-up与对接任务。我的核心贡献在于<strong>通过对数据手册和内核源码的深度挖掘，完成了纯软件层面的配置与调试</strong>：</p>
+<ul>
+<li><strong>深入研究并梳理了RK3568显示子系统的数据流</strong>，清晰地描绘了从内存(Memory) -> VOP -> 各接口控制器 -> Combo PHY的完整硬件链路。</li>
+<li><strong>主导并完成了设备树(DTS)的精确配置</strong>，为LVDS、MIPI-DSI、HDMI三大接口正确设置了VOP路由、时序参数(Timings)以及PHY复用关系。</li>
+<li><strong>通过精密的DTS配置，成功驱动SoC物理层(PHY)输出正确的数字视频信号</strong>，为后续与FPGA的信号握手及HDMI显示器的点亮奠定了坚实基础。</li>
+<li><strong>成功实现了超越官方规格的视频流输出</strong>，在满足时钟频率限制的前提下，稳定实现了LVDS接口1920x1080@30Hz的信号输出，并获得FPGA端的成功接收。</li>
+<li><strong>将整个调试过程提炼并撰写成一套标准作业程序(SOP)与技术文档</strong>，为团队未来所有显示接口的调试工作提供了清晰、高效的指导框架。</li>
+</ul>
+<hr>
+<h1 id="我的方法论显示接口调试标准作业程序-sop"><strong>我的方法论：显示接口调试标准作业程序 (SOP)</strong></h1>
+<p>为了系统性地解决此类“点屏”或“信号对接”问题，我沉淀了一套分为四个阶段的SOP。该流程将模糊的调试任务分解为清晰、可验证的步骤，能够快速定位问题是在SoC软件配置侧，还是在对端设备(FPGA/屏幕)侧。</p>
+<h3 id="项目相关技术文档-project-related-technical-documents"><strong>项目相关技术文档 (Project-Related Technical Documents)</strong></h3>
+<ul>
+<li><strong><a href="/blog/zh/linux/bringup-methodology/">SoC 板级 Bring-up 工程手册</a></strong>: 其中「底层验证」一节，详细阐述了从信息收集到底层验证的四个关键阶段。</li>
+<li><strong><a href="/blog/zh/linux/howto_force-hdmi-settings-on-rk3568/">How-to: RK3568下强制HDMI的配置</a></strong>: 记录了如何通过修改驱动代码和DTS来强制HDMI连接状态与分辨率。</li>
+<li><strong><a href="/blog/zh/linux/rockchip-display-subsystem-concepts/">Rockchip显示子系统关键概念解析</a></strong>: 总结了VOP、DRM端口路由等核心概念。</li>
+<li><strong><a href="/blog/zh/linux/workflow-bringup-rk3568-lvds/">LCDs(lvds) Bring-Up 数据流研究</a></strong>: 深入分析了LVDS从内存到物理引脚的完整数据链路。</li>
+</ul>
+<hr>
+<h1 id="项目成果与验证-results--verification"><strong>项目成果与验证 (Results &#x26; Verification)</strong></h1>
+<p>遵循SOP，我成功使能了RK3568的所有目标显示接口。所有配置均通过软件工具和对端设备的反馈得到验证。</p>
+<h2 id="内核模式验证-modetest"><strong>内核模式验证 (modetest)</strong></h2>
+<p><code>modetest</code>工具的输出确认内核已为各个接口成功创建并应用了我们强制指定的模式，绕过了EDID检测。以下是LVDS接口的示例：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>Connectors:</span></span>
+<span class="line"><span>id      encoder status          name            size (mm)       modes   encoders</span></span>
+<span class="line"><span>172     171     connected       LVDS-1          0x0             1       171</span></span>
+<span class="line"><span>  modes:</span></span>
+<span class="line"><span>        index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot</span></span>
+<span class="line"><span>  #0 1920x1080 29.41 1920 1968 2000 2040 1080 1083 1088 1111 66660 flags: nhsync, nvsync; type: preferred, driver</span></span>
+<span class="line"><span>  ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>174     173     connected       HDMI-A-1        0x0             1       173</span></span>
+<span class="line"><span>  modes:</span></span>
+<span class="line"><span>        index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot</span></span>
+<span class="line"><span>  #0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferred</span></span>
+<span class="line"><span>  ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>190     189     connected       DSI-1           68x121          1       189</span></span>
+<span class="line"><span>  modes:</span></span>
+<span class="line"><span>        index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot</span></span>
+<span class="line"><span>  #0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: nhsync, nvsync; type: preferred, driver</span></span>
+<span class="line"><span>  ...</span></span>
+<span class="line"><span></span></span></code></pre>
+<p><strong>结论:</strong> 内核DRM框架已按DTS预期工作，<code>clock-frequency</code>与时序参数均正确加载。HDMI与MIPI接口也通过类似方式得到验证。</p>
+<h2 id="最终成果"><strong>最终成果</strong></h2>
+<ul>
+<li><strong>多接口Bring-up成功:</strong> LVDS、MIPI-DSI、HDMI 2.0均可按需输出指定分辨率的视频流。</li>
+<li><strong>FPGA对接成功:</strong> FPGA开发人员确认已稳定接收到来自RK3568的1920x1080@30Hz LVDS视频流，无丢帧或花屏现象。</li>
+<li><strong>超越手册规格:</strong> 本次调试验证了RK3568的LVDS接口在满足特定时钟约束下，具备输出高于官方手册规格分辨率的能力，为未来产品设计提供了宝贵的数据支持。</li>
+</ul>
+<hr>
+<h1 id="技术栈与工具-tech-stack--tools"><strong>技术栈与工具 (Tech Stack &#x26; Tools)</strong></h1>
+<ul>
+<li><strong>硬件平台:</strong> Rockchip RK3568 SoC, FPGA (作为三屏幕的接收端)</li>
+<li><strong>软件环境:</strong> Linux Kernel 5.10, U-Boot, Device Tree</li>
+<li><strong>核心技术:</strong> Embedded Linux BSP, DRM (Direct Rendering Manager), VOP2, LVDS/MIPI D-PHY Combo, HDMI 2.0, Device Tree (DTS)</li>
+<li><strong>调试工具:</strong>
+<ul>
+<li><strong>硬件:</strong> 串口调试器</li>
+<li><strong>软件:</strong> <code>dmesg</code>, <code>sysfs</code>, <code>modetest</code>, 内核源码阅读与分析</li>
+</ul>
+</li>
+</ul>
+<hr></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

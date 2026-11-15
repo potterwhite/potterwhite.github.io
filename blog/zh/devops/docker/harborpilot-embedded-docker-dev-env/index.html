@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>为嵌入式 Linux（RK3588、RV1126、RK3568）构建可复现的 Docker 开发环境 · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>为嵌入式 Linux（RK3588、RV1126、RK3568）构建可复现的 Docker 开发环境</h1><div class="article-meta"><time datetime="2026-03-28" class="mono">2026-03-28</time><a class="pill teal" href="/blog/categories/devops/">devops</a><a class="pill teal" href="/blog/categories/docker/">docker</a><a class="pill teal" href="/blog/categories/嵌入式-linux/">嵌入式-linux</a></div></header><div class="pw-prose"><h1 id="为嵌入式-linux-构建可复现的-docker-开发环境">为嵌入式 Linux 构建可复现的 Docker 开发环境</h1>
+<h2 id="问题背景">问题背景</h2>
+<p>如果你在做 RK3588、RK3588S、RV1126、RK3568 等 Rockchip SoC 的嵌入式 Linux 开发，一定遇到过这些问题：</p>
+<ul>
+<li>团队里每个人安装的工具链版本都略有差异 → 构建结果不一致</li>
+<li>维护多个差异越来越大的 Dockerfile（每个芯片一个）</li>
+<li>同时支持 Ubuntu 20.04、22.04、24.04，改一处就破坏另一处</li>
+<li>多个平台的容器同时运行时端口冲突</li>
+<li>镜像推送到私有 Harbor registry 需要一堆没人维护的粘合脚本</li>
+</ul>
+<p>标准答案是”把开发环境容器化” — 但容器定义本身变成了新的维护负担。</p>
+<hr>
+<h2 id="解决方案harborpilot">解决方案：HarborPilot</h2>
+<p><a href="https://github.com/potterwhite/HarborPilot">HarborPilot</a> 是一个全脚本化的工具链，
+自动化嵌入式 Linux Docker 开发镜像的构建-标签-推送全流程。</p>
+<p>核心思路如下：</p>
+<h3 id="1-单一的-5-阶段-dockerfile">1. 单一的 5 阶段 Dockerfile</h3>
+<p>不再是 5 个 Dockerfile，只有一个：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Stage 1: 基础 OS（apt 源替换、软件包、用户创建、locale）</span></span>
+<span class="line"><span>Stage 2: 开发工具（cmake、gdb、CUDA、OpenCV、Node.js、Python）</span></span>
+<span class="line"><span>Stage 3: SDK 初始化（git init、符号链接、辅助脚本）</span></span>
+<span class="line"><span>Stage 4: 环境配置（代理、profile.d 变量）</span></span>
+<span class="line"><span>Stage 5: 工作区 + entrypoint + 测试</span></span></code></pre>
+<p>平台特定行为通过构建时注入的 <code>ARG</code>/<code>ENV</code> 变量控制，而不是靠不同的 Dockerfile。</p>
+<h3 id="2-三层配置继承">2. 三层配置继承</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Layer 1:  configs/defaults/*.env        ← 全局默认（10 个按领域分类的文件）</span></span>
+<span class="line"><span>Layer 2:  configs/platform-independent/common.env  ← 项目版本和常量</span></span>
+<span class="line"><span>Layer 3:  configs/platforms/&#x3C;name>.env  ← 平台专属覆盖（≤20 行）</span></span></code></pre>
+<p>一个真实的平台配置文件（RK3568 Ubuntu 20.04）：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span># configs/platforms/rk3568-rk3568_ubuntu-20.04.env</span></span>
+<span class="line"><span>PRODUCT_NAME="rk3568-rk3568_ubuntu-20-04"</span></span>
+<span class="line"><span>CHIP_FAMILY="rk3568"</span></span>
+<span class="line"><span>CHIP_EXTRACT_NAME="rk3568"</span></span>
+<span class="line"><span>OS_VERSION="20.04"</span></span>
+<span class="line"><span>OS_VERSION_ID="20-04"</span></span>
+<span class="line"><span>PORT_SLOT=2</span></span>
+<span class="line"><span>HOST_VOLUME_DIR="/mnt/disk/volumes/rk3568-rk3568_ubuntu-20.04"</span></span>
+<span class="line"><span>HAS_PROXY=true</span></span>
+<span class="line"><span>HTTP_PROXY_IP="192.168.3.152"</span></span>
+<span class="line"><span>HTTPS_PROXY_IP="192.168.3.152"</span></span>
+<span class="line"><span>HAVE_GITLAB_SERVER=TRUE</span></span>
+<span class="line"><span>GITLAB_SERVER_IP="192.168.3.67"</span></span></code></pre>
+<p>就这些。其他所有变量从默认层继承。</p>
+<h3 id="3-port_slot彻底消除端口冲突">3. PORT_SLOT：彻底消除端口冲突</h3>
+<p>同时运行 RK3588 和 RK3568 容器？给每个平台设置不同的 <code>PORT_SLOT</code>：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>PORT_SLOT=0 → SSH: 2109, GDB: 2345</span></span>
+<span class="line"><span>PORT_SLOT=1 → SSH: 2119, GDB: 2355</span></span>
+<span class="line"><span>PORT_SLOT=2 → SSH: 2129, GDB: 2365</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p>一个整数驱动所有端口映射，无需手动管理，永不冲突。</p>
+<hr>
+<h2 id="ubuntu-2404-支持三个具体的修复">Ubuntu 24.04 支持：三个具体的修复</h2>
+<p>Ubuntu 24.04 会让 20.04/22.04 上工作正常的东西挂掉。HarborPilot 全部处理好了：</p>
+<h3 id="修复-1deb822-apt-格式">修复 1：DEB822 apt 格式</h3>
+<p>Ubuntu 24.04 废弃了旧的 <code>/etc/apt/sources.list</code> 格式。中国镜像源替换脚本会自动检测版本并生成正确格式。</p>
+<h3 id="修复-2uid-1000-已被占用">修复 2：UID 1000 已被占用</h3>
+<p>Ubuntu 24.04 默认的 <code>ubuntu</code> 用户已占用 UID 1000。<code>setup_base.sh</code> 会检测并先重新分配该 UID，再创建开发用户。</p>
+<h3 id="修复-3pip-pep-668">修复 3：pip PEP 668</h3>
+<p>Ubuntu 24.04 强制执行 PEP 668（Python 外部管理环境）。pip 安装现在需要加 <code>--break-system-packages</code> 参数。HarborPilot 通过 OS_VERSION 条件判断自动处理。</p>
+<hr>
+<h2 id="一条命令构建一条命令运行">一条命令构建，一条命令运行</h2>
+<p><strong>构建：</strong></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>./harbor</span></span>
+<span class="line"><span># 交互式选择平台 → 构建 → 打标签 → 推送 → 验证 manifest digest</span></span></code></pre>
+<p><strong>在任何 Ubuntu 宿主机上运行：</strong></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>./project_handover/clientside/ubuntu/ubuntu_only_entrance.sh start</span></span></code></pre>
+<p><strong>非交互式创建新平台（CI 友好）：</strong></p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>./scripts/create_platform.sh --non-interactive \</span></span>
+<span class="line"><span>    --name rk3566-debian12 --os debian --os-version 12 \</span></span>
+<span class="line"><span>    --harbor-ip 192.168.3.68 --port-slot 6</span></span></code></pre>
+<hr>
+<h2 id="支持的平台">支持的平台</h2>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>Ubuntu</th>
+<th>SSH 端口</th>
+<th>GDB 端口</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rk3588-rk3588s_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2109</td>
+<td>2345</td>
+<td>支持 NVIDIA GPU</td>
+</tr>
+<tr>
+<td><code>rv1126-rv1126bp_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2119</td>
+<td>2355</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rk3568-rk3568_ubuntu-20.04</code></td>
+<td>20.04</td>
+<td>2129</td>
+<td>2365</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rv1126-rv1126_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2139</td>
+<td>2375</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rk3568-rk3568_ubuntu-22.04</code></td>
+<td>22.04</td>
+<td>2149</td>
+<td>2385</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rk3588-rk3588s_ubuntu-24.04</code></td>
+<td>24.04</td>
+<td>2159</td>
+<td>2395</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="ai-agent-支持">AI Agent 支持</h2>
+<p><code>.env</code> 配置文件是意图层 — 纯文本、人类可读，AI 编码助手可以直接读取和修改。
+<code>docs/en/1-for-ai/</code> 目录包含专为 AI Agent 准备的完整代码库地图和工作规则。</p>
+<hr>
+<h2 id="github">GitHub</h2>
+<p>→ <a href="https://github.com/potterwhite/HarborPilot">github.com/potterwhite/HarborPilot</a></p>
+<p>MIT 协议，欢迎贡献。</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

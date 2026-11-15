@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform</h1><div class="article-meta"><time datetime="2025-08-21" class="mono">2025-08-21</time><span class="pill teal">Edge AI</span></div></header><div class="pw-prose"><h3 id="project-retrospective-report-v30-independent-model-conversion-overcoming-the-technical-challenges-of-converting-dynamic-onnx-models-to-rknn-final-version"><strong>[Project Retrospective Report V3.0] Independent Model Conversion: Overcoming the Technical Challenges of Converting Dynamic ONNX Models to RKNN (Final Version)</strong></h3>
+<table>
+<thead>
+<tr>
+<th align="left">Project Attribute</th>
+<th align="left">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Project Name</strong></td>
+<td align="left">Part 3: Independent RKNN Model Conversion for Sherpa ASR on the RV1126BP Platform</td>
+</tr>
+<tr>
+<td align="left"><strong>Project Timeline</strong></td>
+<td align="left">2025-07-31 ~ 2025-08-09 (Estimated)</td>
+</tr>
+<tr>
+<td align="left"><strong>Project Duration</strong></td>
+<td align="left">31.5 hours (Approx. 3.9 person-days)</td>
+</tr>
+<tr>
+<td align="left"><strong>Review Date</strong></td>
+<td align="left">2025-08-20</td>
+</tr>
+<tr>
+<td align="left"><strong>Core Personnel</strong></td>
+<td align="left">Potter White</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="1-project-background-and-kick-off"><strong>1. Project Background and Kick-off</strong></h3>
+<p>In the V2.0 project, we verified that the <code>sherpa-onnx</code> framework could not directly use NPU acceleration due to the outdated RKNN SDK version on the target platform. At the same time, the pure CPU solution with <code>sherpa-ncnn</code> had already reached its performance bottleneck. Therefore, to fully leverage the NPU hardware of the RV1126b platform, the core objective of this project (V3.0) was to <strong>bypass the compilation limitations of <code>sherpa-onnx</code> and independently complete the conversion from ONNX models to RKNN models</strong>.</p>
+<p>The starting point for this work was to address the dynamic input dimension issue prevalent in Sherpa ASR models.</p>
+<h3 id="2-foundational-problem-analysis-and-general-conversion-strategy"><strong>2. Foundational Problem Analysis and General Conversion Strategy</strong></h3>
+<h4 id="21-understanding-dynamic-dimension-n-"><strong>2.1 Understanding Dynamic Dimension <code>[N, ...]</code></strong></h4>
+<p>In ONNX models, the dimension <code>N</code> typically serves as a placeholder for a dynamic batch size. For example, an input shape of <code>[N, 39, 80]</code> means the model can process <code>N</code> input samples at once. However, to achieve the most efficient computation on embedded NPUs, the RKNN toolchain usually requires the model’s input shape to be fixed and static.</p>
+<h4 id="22-establishing-a-general-technical-workflow"><strong>2.2 Establishing a General Technical Workflow</strong></h4>
+<p>Based on this analysis, I established a general three-step strategy for model conversion:</p>
+<ol>
+<li><strong>Statically Reshape the ONNX Model:</strong> Write a script to fix all dynamic dimensions <code>N</code> in the original ONNX model to a specific value, typically <code>1</code>, to indicate single-input processing.</li>
+<li><strong>Extract Model Metadata:</strong> Analyze and extract the unique <code>custom_string</code> metadata from the <code>sherpa-onnx</code> model. This data contains essential parameters for inference, such as <code>vocab_size</code>, which need to be provided to the RKNN toolchain during conversion.</li>
+<li><strong>Perform the Conversion:</strong> Use <code>rknn-toolkit2</code> to convert the statically reshaped ONNX model.</li>
+</ol>
+<p>This general workflow is effective for model components with relatively simple structures.</p>
+<hr>
+<h3 id="3-standard-conversion-process-for-encoder-and-joiner-models"><strong>3. Standard Conversion Process for <code>encoder</code> and <code>joiner</code> Models</strong></h3>
+<p>The <code>encoder</code> and <code>joiner</code> models do not contain complex dynamic control flow operators internally. Therefore, they could strictly follow the general conversion strategy outlined above. The automated script I designed for this purpose executes as follows:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    subgraph "User Action"</span></span>
+<span class="line"><span>        A[Execute conversion script: ./convert.py encoder]</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "Automated Script Execution Flow"</span></span>
+<span class="line"><span>        B(1. Load original encoder.onnx) --> C{2. Check input dimensions};</span></span>
+<span class="line"><span>        C -- Dynamic dimension 'N' found --> D[3. Change 'N' to 1];</span></span>
+<span class="line"><span>        D --> E[4. Save as encoder_fixed.onnx];</span></span>
+<span class="line"><span>        E --> F(5. Load original onnx to get metadata);</span></span>
+<span class="line"><span>        F --> G[6. Construct custom_string];</span></span>
+<span class="line"><span>        G &#x26; E --> H(7. Call rknn-toolkit2);</span></span>
+<span class="line"><span>        H --> I[8. Generate encoder.rknn];</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    A --> B</span></span>
+<span class="line"><span>    I --> J((Success))</span></span></code></pre>
+<p><strong>Workflow Description:</strong></p>
+<ol>
+<li>The script first loads the original <code>encoder.onnx</code> model.</li>
+<li>It programmatically inspects the dimensions of its input tensors to identify the dynamic dimension <code>N</code>.</li>
+<li><code>N</code> is then modified to the static value <code>1</code>, generating an intermediate <code>_fixed.onnx</code> file.</li>
+<li>Concurrently, the script reads the original model’s metadata using <code>onnxruntime</code> and formats it into the <code>custom_string</code> required by RKNN.</li>
+<li>Finally, the statically reshaped model and the metadata string are fed into <code>rknn-toolkit2</code>, successfully completing the conversion and generating the final <code>encoder.rknn</code> file.</li>
+</ol>
+<p>The conversion process for the <code>joiner</code> model is identical to that of the <code>encoder</code>. However, when this standard process was applied to the <code>decoder</code> model, it resulted in a critical conversion failure.</p>
+<hr>
+<h3 id="4-special-challenges-and-in-depth-debugging-of-the-decoder-model"><strong>4. Special Challenges and In-depth Debugging of the <code>decoder</code> Model</strong></h3>
+<p>The <code>decoder</code> model, due to its internal dynamic control flow (an <code>If</code> operator) based on input shapes, caused the standard conversion process to fail. It required additional, more complex preprocessing.</p>
+<h4 id="41-failure-of-initial-attempts-and-problem-identification"><strong>4.1 Failure of Initial Attempts and Problem Identification</strong></h4>
+<p>I first attempted two direct methods, both of which failed, but these failures helped me precisely identify the root cause of the problem.</p>
+<ul>
+<li><strong>Attempt 1 - Direct Conversion of Dynamic Model:</strong> <code>rknn-toolkit2</code> failed immediately during the model loading phase, explicitly stating that it does not support the dynamic input dimension <code>N</code>.</li>
+<li><strong>Attempt 2 - Specifying Input Size During Conversion:</strong> By forcing the input size through a parameter in <code>rknn.load_onnx</code>, the model loaded successfully. However, it failed during the build phase (<code>rknn.build</code>) with the error: <code>All outputs ['decoder_out'] of model are constants</code>.</li>
+</ul>
+<h4 id="42-the-core-problem-logical-failure-caused-by-constant-folding-optimization"><strong>4.2 The Core Problem: Logical Failure Caused by Constant Folding Optimization</strong></h4>
+<p>To resolve the core error, “<code>All outputs are constants</code>,” I shifted my focus to preprocessing the ONNX model itself.</p>
+<ul>
+<li><strong>Action:</strong> I first executed the initial step of the standard process, fixing the dynamic input dimension <code>N</code> of <code>decoder.onnx</code> to <code>1</code> and generating <code>decoder_fixed.onnx</code>.</li>
+<li><strong>Observation:</strong> When I used this static model for conversion, it reproduced the exact same error as in “Attempt 2.”</li>
+<li><strong>Root Cause Analysis:</strong>
+<ol>
+<li><strong>Dynamic Control Flow:</strong> By analyzing the <code>decoder</code> model with the Netron visualization tool, I discovered an <code>If</code> operator inside it. The condition for this <code>If</code> operator depended on the shape of an intermediate tensor calculated by preceding <code>Shape</code> and <code>Gather</code> operators.</li>
+<li><strong>Logic Solidification:</strong> In the original dynamic model, this shape was variable, making the path of the <code>If</code> branch non-deterministic. However, once I fixed the input dimension <code>N</code> to <code>1</code>, this shape-dependent condition also <strong>became a constant</strong> (always <code>True</code> or always <code>False</code>).</li>
+<li><strong>Over-Optimization:</strong> During its <code>build</code> process, the RKNN toolchain performs an optimization called “constant folding” (<code>fold_constant</code>). When it detected that the <code>If</code> operator’s condition was now constant, it “intelligently” pruned the branch that would never be executed. In the <code>decoder</code> model, this pruning triggered a chain reaction, causing an entire computation path from <code>Shape_7</code> to <code>Gemm_15</code> to be removed. Ultimately, this led to the model’s output, <code>decoder_out</code>, being incorrectly identified as a constant value independent of the input, thus throwing the “invalid model” error.</li>
+</ol>
+</li>
+</ul>
+<h4 id="43-the-final-solution-introducing-a-professional-model-simplification-tool"><strong>4.3 The Final Solution: Introducing a Professional Model Simplification Tool</strong></h4>
+<p>The root of the problem was how to handle the now-static <code>If</code> operator. After failed attempts at disabling optimizations and manually modifying the computation graph, I identified the final solution.</p>
+<ul>
+<li><strong>Final Strategy:</strong> Add a crucial “model simplification” step to the standard workflow. I introduced the professional Python library <code>onnx-simplifier</code>.</li>
+<li><strong>The Role of <code>onnx-simplifier</code>:</strong> This tool correctly performs constant folding. It automatically evaluates the <code>If</code> operator’s condition, safely prunes the static branch, and, most importantly, <strong>ensures that the resulting simplified ONNX model is topologically valid</strong>.</li>
+</ul>
+<h4 id="44-final-conversion-workflow-for-the-decoder-model"><strong>4.4 Final Conversion Workflow for the <code>decoder</code> Model</strong></h4>
+<p>Based on the above analysis, I designed a specialized and more robust four-step conversion process for the <code>decoder</code> model and codified it into the automation script.</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    subgraph "User Action"</span></span>
+<span class="line"><span>        A[Execute conversion script: ./convert.py decoder]</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "Automated Script Execution Flow (Special Handling for Decoder)"</span></span>
+<span class="line"><span>        B(1. Load original decoder.onnx) --> C{2. Check input dimensions};</span></span>
+<span class="line"><span>        C -- Dynamic dimension 'N' found --> D[3. Change 'N' to 1];</span></span>
+<span class="line"><span>        D --> E[4. Save as decoder_fixed.onnx];</span></span>
+<span class="line"><span>        E --> F(5. **Call onnx-simplifier**);</span></span>
+<span class="line"><span>        F --> G[6. **Prune static branches &#x26; reorder graph**];</span></span>
+<span class="line"><span>        G --> H[7. Save as decoder_simplified.onnx];</span></span>
+<span class="line"><span>        H --> I(8. Load original onnx to get metadata);</span></span>
+<span class="line"><span>        I --> J[9. Construct custom_string];</span></span>
+<span class="line"><span>        J &#x26; H --> K(10. Call rknn-toolkit2);</span></span>
+<span class="line"><span>        K --> L[11. Generate decoder.rknn];</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    A --> B</span></span>
+<span class="line"><span>    L --> M((Success))</span></span></code></pre>
+<p><strong>Workflow Description:</strong>
+Compared to the standard process for <code>encoder</code>, the <code>decoder</code>’s workflow adds a critical step at <strong>step 5</strong>: using <code>onnx-simplifier</code> to deeply optimize the statically reshaped <code>_fixed.onnx</code> model. This step not only safely removed the problematic <code>If</code> operator but also ensured that the output <code>_simplified.onnx</code> was a legitimate model with a complete and topologically correct computation graph. Finally, this perfectly “sanitized” model could be converted by <code>rknn-toolkit2</code> without any issues.</p>
+<hr>
+<h3 id="5-project-outcomes-and-conclusion"><strong>5. Project Outcomes and Conclusion</strong></h3>
+<h4 id="51-key-achievements"><strong>5.1 Key Achievements</strong></h4>
+<ol>
+<li><strong>Successfully established a conversion pipeline for complex ONNX models with dynamic control flow to RKNN models.</strong></li>
+<li><strong>Created a differentiated, standardized model conversion process:</strong> a standard workflow for simple models and an enhanced workflow with an extra simplification step for complex models (like <code>decoder</code>).</li>
+<li><strong>Produced a reusable, automated model conversion script (<code>unified_onnx_to_rknn_converter.py</code>).</strong> This script can intelligently identify the model type and automatically apply the corresponding conversion workflow, enabling “one-click” conversion for all model components.</li>
+</ol>
+<h4 id="52-conclusion"><strong>5.2 Conclusion</strong></h4>
+<p>This technical effort demonstrates that when converting models with dynamic control flow (like <code>If</code> operators) for embedded platforms, the core challenge lies in bridging the gap between a dynamic model and static hardware requirements. Simply fixing input dimensions often breaks the internal computation logic of the model, causing the conversion tool’s optimization process to make incorrect judgments. In such cases, <strong>introducing a professional, validated model optimization tool (like <code>onnx-simplifier</code>) to preprocess and sanitize the model <em>before</em> feeding it into the hardware vendor’s toolchain is a more reliable and efficient solution than attempting to manually modify the computation graph or tweak conversion tool parameters.</strong></p>
+<p>The success of this phase lays a solid foundation for the subsequent development of a high-performance, NPU-based inference engine on the RV1126b platform.</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

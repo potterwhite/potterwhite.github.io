@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证 · PotterWhite</title><meta name="description" content="基于LT8911EXB的MIPI转eDP的驱动调试"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>RK3568平台MIPI转eDP芯片LT8911EXB Bring-up与验证</h1><div class="article-meta"><time datetime="2025-09-26" class="mono">2025-09-26</time><span class="pill teal">BSP</span></div><p class="article-desc">基于LT8911EXB的MIPI转eDP的驱动调试</p></header><div class="pw-prose"><h3 id="项目总结rockchip-rk3568-平台-mipi-dsi-转-edp-接口调试与验证"><strong>项目总结：Rockchip RK3568 平台 MIPI-DSI 转 eDP 接口调试与验证</strong></h3>
+<ul>
+<li><strong>作者:</strong> Potter White</li>
+<li><strong>日期:</strong> 2025年9月</li>
+<li><strong>项目类型:</strong> Rockchip, Bring-Up, Linux Kernel Driver, Device Tree, I2C</li>
+</ul>
+<hr>
+<h3 id="1-项目概述-project-overview"><strong>1. 项目概述 (Project Overview)</strong></h3>
+<p><strong>背景 (Situation):</strong>
+在一个基于 Rockchip RK3568 SoC 的定制化项目中，需要将 MIPI-DSI 视频信号通过 Lontium LT8911EXB 桥接芯片转换为 eDP 信号，以驱动一块 eDP 接口的显示屏。在初始的 BSP (Board Support Package) 集成后，显示屏未能正常点亮，内核日志（<code>dmesg</code>）中也未出现 LT8911EXB 相关驱动的加载信息。</p>
+<p><strong>我的职责与贡献 (My Role &#x26; Contributions):</strong>
+作为项目的 BSP 工程师，我负责从硬件原理到内核驱动的全链路调试，以实现该显示通路的功能 Bring-up。我的核心贡献包括：</p>
+<ul>
+<li><strong>执行了系统性的硬件健康检查</strong>，验证了 LT8911EXB 芯片工作的基本条件，包括电源、时钟和复位电路。</li>
+<li><strong>深入分析了 Linux 设备驱动模型</strong>，厘清了设备树 (DTS)、内核驱动与硬件之间的交互与触发机制。</li>
+<li><strong>精确定位了驱动加载失败的根本原因</strong>：设备树中 I2C 地址与 GPIO 属性的配置与驱动代码及硬件规范不符。</li>
+<li><strong>主导并实施了设备树的修正方案</strong>，成功使内核驱动与硬件设备匹配，并正确加载。</li>
+<li><strong>沉淀了调试过程中的关键知识点</strong>，形成了包括 RC 电路、I2C 地址表示法、示波器探头使用等在内的技术笔记，为团队知识库做出了贡献。</li>
+</ul>
+<hr>
+<h3 id="2-我的方法论嵌入式外设-bring-up-诊断流程"><strong>2. 我的方法论：嵌入式外设 Bring-up 诊断流程</strong></h3>
+<p>本次调试过程遵循了一套从硬件到软件、由表及里的系统性排查方法。这个流程旨在快速收敛问题范围，避免在不确定的方向上浪费时间。</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    %% === 定义与样式 ===</span></span>
+<span class="line"><span>    classDef main fill:#2c3e50,color:white,stroke:#8e9eab;</span></span>
+<span class="line"><span>    classDef check fill:#4b3e58,color:white,stroke:#b8a3d3;</span></span>
+<span class="line"><span>    classDef decision fill:#27ae60,color:white,stroke:#88d1a1;</span></span>
+<span class="line"><span>    classDef result_ok fill:#16a085,color:white,stroke:#72d6c1;</span></span>
+<span class="line"><span>    classDef result_fail fill:#c0392b,color:white,stroke:#e69a93;</span></span>
+<span class="line"><span>    classDef note fill:#f39c12,color:white,stroke:#f8c471;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === 流程 ===</span></span>
+<span class="line"><span>    S[&#x3C;b>开始: 显示不工作&#x3C;/b>]:::main</span></span>
+<span class="line"><span>    A["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>1. 硬件层健康检查 (L1)&#x3C;/b>&#x3C;br>- &#x3C;b>电源 (Power):&#x3C;/b> 测量各电源域电压 (1.8V)&#x3C;br>- &#x3C;b>时钟 (Clock):&#x3C;/b> 用示波器测量晶振 (25MHz)&#x3C;br>- &#x3C;b>复位 (Reset):&#x3C;/b> 分析RC电路, 确认复位电平&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    B["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>2. 控制通路验证 (L2)&#x3C;/b>&#x3C;br>- &#x3C;b>Pinctrl:&#x3C;/b> 确认DTS中的I2C引脚复用(i2c2m1)&#x3C;br>- &#x3C;b>I2C总线:&#x3C;/b> 使用 `i2cdetect` 扫描总线&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    C{"&#x3C;div style='text-align:center'>&#x3C;b>驱动是否加载?&#x3C;/b>&#x3C;br>(dmesg / printk)&#x3C;/div>"}:::decision</span></span>
+<span class="line"><span>    D["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>3. 驱动-设备匹配分析 (L3)&#x3C;/b>&#x3C;br>- 检查内核编译配置 (CONFIG_*)&#x3C;br>- 检查DTS节点是否存在于/sys&#x3C;br>- &#x3C;b>核心:&#x3C;/b> 匹配 `compatible` 字符串&#x3C;br>- &#x3C;b>核心:&#x3C;/b> 匹配 `reg` (I2C地址)&#x3C;br>- &#x3C;b>核心:&#x3C;/b> 匹配 `*-gpios` 属性&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    E["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>4. 驱动逻辑调试 (L4)&#x3C;/b>&#x3C;br>- 分析 `probe` 函数执行流程&#x3C;br>- I2C读写时序分析&#x3C;br>- 芯片初始化序列验证&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    SUCCESS[&#x3C;b>&#x3C;i class='fa fa-check-circle'>&#x3C;/i> 成功点亮&#x3C;/b>]:::result_ok</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    S --> A --> B --> C</span></span>
+<span class="line"><span>    C -- "否 (No)" --> D</span></span>
+<span class="line"><span>    C -- "是 (Yes)" --> E</span></span>
+<span class="line"><span>    D --> |修正DTS| C</span></span>
+<span class="line"><span>    E --> SUCCESS</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "关键知识点沉淀"</span></span>
+<span class="line"><span>        direction LR</span></span>
+<span class="line"><span>        K1[探头负载效应]:::note</span></span>
+<span class="line"><span>        K2[7/8位I2C地址]:::note</span></span>
+<span class="line"><span>        K3[RC复位电路]:::note</span></span>
+<span class="line"><span>        K4[DTS与驱动绑定机制]:::note</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    A --> K1 &#x26; K3</span></span>
+<span class="line"><span>    B --> K2</span></span>
+<span class="line"><span>    D --> K4</span></span></code></pre>
+<h3 id="3-调试过程与关键问题解决-debugging-journey"><strong>3. 调试过程与关键问题解决 (Debugging Journey)</strong></h3>
+<p>整个调试过程充满了挑战，但也收获颇丰。以下是几个关键的转折点：</p>
+<h4 id="问题一i2c-设备扫描缓慢且无任何从设备被发现"><strong>问题一：I2C 设备扫描缓慢且无任何从设备被发现</strong></h4>
+<p>最初，<code>i2cdetect</code> 无法在 <code>i2c2</code> 总线上发现任何设备。通过核对硬件原理图与 RK3568 TRM，发现设备树中的 <code>pinctrl</code> 配置错误，将引脚功能切换到正确的 <code>i2c2m1_xfer</code> 后，<code>i2cdetect</code> 成功扫描到地址为 <code>0x29</code> 的设备。</p>
+<h4 id="问题2lt8911exb-在-i2c-上的设备地址是多少0x52-vs-0x29"><strong>问题2：LT8911EXB 在 I2C 上的设备地址是多少？0x52 vs 0x29</strong></h4>
+<p>原理图上 <code>S_ADR</code> 引脚拉低，所对应的地址是 <code>0x52</code>。但是我用 <code>i2cdetect</code> 扫描发现并没有 <code>52</code> 的从设备，只有一个 <code>0x29</code> 的从设备。
+通过查阅驱动文档和 I2C 协议规范，确认了<strong>Linux 内核使用 7 位地址，而硬件手册常提供 8 位地址（含 R/W 位）</strong>。
+<code>0x52</code>（8位写地址）右移一位即为 <code>0x29</code>（7位地址），与 <code>i2cdetect</code> 结果完美吻合。</p>
+<ul>
+<li><strong>结论</strong>: I2C 物理通路正常，地址应配置为 <code>0x29</code>。</li>
+</ul>
+<h4 id="问题3驱动-probe-函数始终不被调用-核心"><strong>问题3：驱动 <code>probe</code> 函数始终不被调用 (核心)</strong></h4>
+<p>通过检查 <code>/sys/firmware/devicetree/base</code>，发现内核虽然正确解析了 <code>lt8911exb@29</code> 节点及其 <code>compatible</code> 属性。
+即使 I2C 通路正常，<code>dmesg</code> 中依然没有任何驱动加载信息。</p>
+<ul>
+<li><strong>根因定位</strong>: 移植 Lontium 给的驱动代码时，我没有修改其中的 Makefile 里的 <strong><code>obj-m = </code></strong> 这句话，这句的意思是把这个模块编译成模块的形式（.ko）。</li>
+<li><strong>解决方案</strong>: 只要把 Makefile 里那句代码改成 <strong><code>obj-y = </code></strong>，编译的时候就默认把模块编译进内核了，且开机自动加载了。</li>
+</ul>
+<h4 id="问题4复位信号明明写着需要接入-gpio但设备上没接却也可以工作呢"><strong>问题4：复位信号明明写着需要接入 GPIO，但设备上没接，却也可以工作呢？</strong></h4>
+<ul>
+<li><strong>根因定位</strong>: 这要谈到一个 RC 电路的概念。简单来说，这个电路是复位脚在一个电阻 R (Resistor) 和一个电容 C (Capacitor) 中间。而且电阻一端接电源，一端接电容；电容一端接地，一端接复位脚和电阻。一旦电源开始供电，电容无法立刻达到电源的高电压，这是一个缓慢的升压过程（具体升压时间与电容和电阻的值是一个方程来计算的，R * C = Time）。而因为电容接地，因此一开始电容都是低电压，所以复位脚会一直被拉低，直到电容升压完成，复位脚就开始拉高。这就是一个 RC 电路的原理，它是使用电容器的电气特性来达到自动复位的效果。但其实这种做法就无法受到 GPIO 的控制，失去了灵活性。</li>
+<li><strong>解决方案</strong>: dts (设备树) 里不要写 <code>reset-gpio</code>，直接放空，就可以了。硬件会自动完成那个复位的操作。</li>
+</ul>
+<hr>
+<h3 id="4-项目成果与反思-results--reflections"><strong>4. 项目成果与反思 (Results &#x26; Reflections)</strong></h3>
+<p>通过上述系统性的调试，LT8911EXB 驱动被成功加载，并通过 I2C 完成了芯片的初始化，最终成功点亮了 eDP 显示屏。</p>
+<p>此次 Bring-up 过程只是把路搭好，让各个方向的数据能通罢了。但这个过程不仅是需要了解一个总线，还得对复位电路、Makefile、DTS 引脚复用、I2C 的 R/W 读写位，都要有认识，才能够把这条路搭好。
+此次其实是透过一个具体的工程问题，全面地让我对嵌入式 Linux 系统中软硬件的交互有了更深刻的扫盲：</p>
+<ul>
+<li><strong>硬件是基础</strong>: 对电源、时钟、复位等物理层面的验证是基础，这次之后，进一步夯实了硬件调试的套路，拿到手一块无法工作的板子，也有处着手。</li>
+<li><strong>DTS 是桥梁</strong>: 设备树不仅是硬件的静态描述，更是内核驱动模型进行资源匹配和依赖解析的“活地图”，任何一个微小的错误都可能导致驱动加载失败。</li>
+<li><strong>工具是利器</strong>: 熟练运用示波器、<code>dmesg</code>、<code>i2cdetect</code> 以及 <code>sysfs</code>，是将问题从“黑盒”变为“白盒”的关键。</li>
+<li><strong>文档与源码是真相</strong>: 原理图注释、驱动文档和内核源码是解决问题的最终依据，三者结合才能洞察全貌。</li>
+</ul>
+<hr>
+<h3 id="5-技术栈与工具-tech-stack--tools"><strong>5. 技术栈与工具 (Tech Stack &#x26; Tools)</strong></h3>
+<ul>
+<li><strong>硬件平台:</strong> Rockchip RK3568 SoC, Lontium LT8911EXB MIPI-to-eDP Bridge IC</li>
+<li><strong>软件环境:</strong> Linux Kernel 5.10, Buildroot</li>
+<li><strong>核心技术:</strong> Embedded Linux BSP, Device Tree (DTS), I2C Subsystem, Pinctrl, GPIO, Kernel Drivers, Makefile</li>
+<li><strong>调试工具:</strong>
+<ul>
+<li><strong>硬件:</strong> Siglent SDS2204X Plus 示波器, 万用表, 串口</li>
+<li><strong>软件:</strong> <code>dmesg</code>, <code>printk</code>, <code>i2cdetect</code>, <code>sysfs</code> (<code>/sys/kernel/debug/</code>, <code>/sys/firmware/devicetree/</code>)</li>
+</ul>
+</li>
+</ul></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

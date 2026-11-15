@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>选择文生图工具之路 · PotterWhite</title><meta name="description" content="记录自己选择文生图工具之路"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>选择文生图工具之路</h1><div class="article-meta"><time datetime="2024-06-14" class="mono">2024-06-14</time></div><p class="article-desc">记录自己选择文生图工具之路</p></header><div class="pw-prose"><h1 id="一最后的结论">一、最后的结论</h1>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>选择stable diffusion。</span></span></code></pre>
+<h1 id="二起因">二、起因</h1>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>美工的重要工具之一：文生图/图生图</span></span></code></pre>
+<h1 id="三求知的过程">三、求知的过程</h1>
+<h2 id="产品候选清单">产品候选清单</h2>
+<h2 id="01-midjourney">01. MidJourney</h2>
+<h3 id="快问快答">快问快答：</h3>
+<h3 id="--痛点1-关于隐私">- 痛点1-关于隐私</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    - midjourney 的Subscription有一段话：we are building an open by default community focused on collective exploration and fun. if you have a need to opt-out of this and be private-by-default you can subscribe to the 60 dollor per month pro plan and activate stealth generation with the /stealth command.请你帮我翻译这段话，并且帮我搜索mj的官方资料，确认：是否我们生成的图像都会被公开出来呢？</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        这段话的翻译如下：</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        我们正在建立一个默认开放的社区，专注于集体探索和乐趣。如果您需要选择退出并默认保持隐私，您可以订阅每月60美元的专业计划，并通过/stealth命令激活隐秘生成。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        接下来我会帮您搜索MidJourney的官方资料，确认生成的图像是否都会被公开。稍等片刻。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        MidJourney operates an open-by-default community, which means that by default, all images generated are publicly visible on their website, including those created in private Discord servers, direct messages, and through the MidJourney web app. This approach encourages a community-focused environment aimed at collective exploration and enjoyment.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        However, if you prefer your creations to remain private, you can opt for the Pro plan ($60 per month) or the Mega plan ($120 per month). These plans offer a feature called Stealth Mode, which allows you to keep your generated images private by using the `/stealth` command. This feature ensures that your images will not be visible to others on the MidJourney website as long as you generate them in private Discord channels or direct messages.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        It's important to note that even in Stealth Mode, images generated in public Discord channels will still be visible to other users in those channels. To fully utilise Stealth Mode, you should generate images in private settings. Furthermore, if you cancel or downgrade your subscription, any previously created Stealth Mode images will remain unpublished and private【7†source】【8†source】【9†source】.</span></span></code></pre>
+<h3 id="--痛点2-关于共享">- 痛点2-关于共享</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    - 你再帮我查询mj的官方资料，如果我建立一个私人的server，我的subscription可否供给整个群友使用。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        根据MidJourney的官方资料，如果你建立一个私人服务器，并将MidJourney机器人添加到该服务器上，你的订阅仍然是个人使用的，并不能直接共享给整个群友使用。每位用户在你的服务器中使用MidJourney机器人时，都需要有自己单独的订阅【16†source】【17†source】。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        不过，MidJourney确实提供了一种**“房间”功能**，允许你创建一个私密的房间，并与朋友分享这个房间的链接和密码。在这个房间内，你和你的朋友可以一起创建图像【19†source】。尽管如此，每个参与的用户仍需要有自己的MidJourney订阅，才能在这个私密房间中使用MidJourney机器人。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        另外，MidJourney的图像生成默认是公开的，包括在私人服务器中生成的图像。如果你想要保持图像的私密性，只有订阅Pro计划（每月60美元）或Mega计划（每月120美元），并使用/stealth命令，才能开启隐身模式，确保图像不被公开【15†source】【16†source】。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        总结：</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        1. 你无法通过建立私人服务器将你的MidJourney订阅分享给整个群友使用。</span></span>
+<span class="line"><span>        2. 每位用户都需要拥有自己的MidJourney订阅。</span></span>
+<span class="line"><span>        3. 默认情况下，所有生成的图像都是公开的，除非你使用Pro或Mega订阅并启用隐身模式。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        更多信息可以访问MidJourney的官方文档和帮助页面：[MidJourney帮助中心](https://help.midjourney.com/en/)。</span></span></code></pre>
+<h3 id="--痛点3-关于api接入">- 痛点3-关于API接入</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>    - gpt4o-jun13.2024</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        MidJourney currently does not offer API access for external integration. Users interact with MidJourney through Discord, either within the MidJourney official server or on private servers where the MidJourney Bot has been added.MidJourney 目前不提供用于外部集成的 API 访问。用户通过 Discord 与 MidJourney 进行交互，无论是在 MidJourney 官方服务器内还是在添加了 MidJourney Bot 的私人服务器上。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        Regarding creating private rooms or servers for collaborative image generation:关于创建用于协作图像生成的私人房间或服务器：</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        1. **Private Rooms:** MidJourney allows users to create private rooms where they can invite friends to collaborate. However, each participant must have their own MidJourney subscription to use the bot in these rooms.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>            私人房间：MidJourney 允许用户创建私人房间，他们可以邀请朋友进行协作。但是，每个参与者必须拥有自己的 MidJourney 订阅才能在这些房间中使用机器人。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        2. **Private Servers:** If you create a private Discord server and invite the MidJourney Bot, the images generated there will still be visible on MidJourney's website unless generated in Stealth Mode, which requires a Pro subscription. Each user on the private server must also have their own subscription to generate images.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>            私人服务器：如果您创建私人 Discord 服务器并邀请 MidJourney 机器人，则那里生成的图像仍将在 MidJourney 的网站上可见，除非在隐身模式下生成，这需要 Pro 订阅。专用服务器上的每个用户还必须有自己的订阅才能生成图像。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        Free plan users do not count as having a subscription; they have limited capabilities and cannot access some features available to paid subscribers, such as the Stealth Mode.免费计划用户不算作订阅；他们的功能有限，无法访问付费订阅者可用的某些功能，例如隐形模式。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        To manage or add the MidJourney Bot to a server:要管理 MidJourney 机器人或将 MidJourney 机器人添加到服务器：</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        - Invite the MidJourney Bot from the [MidJourney website](https://www.midjourney.com/) or through Discord's app directory.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>            从 MidJourney 网站或通过 Discord 的应用程序目录邀请 MidJourney 机器人。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        - Follow the instructions to authorize and add the bot to your desired server.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>            按照说明授权机器人并将其添加到您所需的服务器。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        - You can restrict the bot’s usage to specific channels by modifying channel permissions.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>            您可以通过修改频道权限来限制机器人对特定频道的使用。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        For direct messages with the MidJourney Bot:对于使用 MidJourney 机器人的直接消息：</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        - Direct message the bot within Discord to generate images. These images are also publicly visible unless generated in Stealth Mode.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>            直接向 Discord 中的机器人发送消息以生成图像。除非以隐身模式生成，否则这些图像也是公开可见的。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        For detailed information, you can refer to the [MidJourney Quick Start Guide](https://docs.midjourney.com/docs/quick-start) and the [MidJourney Bot Management](https://docs.midjourney.com/docs/add-the-bot) pages.有关详细信息，您可以参阅 MidJourney 快速入门指南和 MidJourney 机器人管理页面。</span></span></code></pre>
+<h2 id="--02-leonardoai">- 02. Leonardo.ai</h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>- 对比mj</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    [Midjourney为什么无法留住用户？](https://m.huxiu.com/article/2785233.html)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[AI Image Generator - Create Art, Images &#x26; Video | Leonardo AI](https://leonardo.ai/)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Leo是可以做API接入的，而且应该是有150个credit可以使用（每天）。</span></span>
+<span class="line"><span>这些都是强项。</span></span></code></pre>
+<h2 id="--03-开源腾讯混元">- 03. [开源][腾讯]混元</h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>**机器学习框架方面**，腾讯采用的是自主研发的**机器学习框架Angel**，训练速度相比业界主流框架提升1倍，推理速度比业界主流框架提升1.3倍。</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[腾讯和OpenAI盯上了同一条赛道](https://wallstreetcn.com/articles/3714968)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[后发而先至的腾讯混元大模型，到底有哪些技术亮点？-电子工程专辑](https://www.google.com/url?sa=t&#x26;source=web&#x26;rct=j&#x26;opi=89978449&#x26;url=https://www.eet-china.com/mp/a250911.html&#x26;ved=2ahUKEwiIzcDhw9eGAxUmzDgGHXpMDRQQFnoECBMQAQ&#x26;usg=AOvVaw0bdpdrKYA_6L5QzeOKQCQh)</span></span></code></pre>
+<h2 id="--04-阿里通义万相">- 04. [阿里]通义万相</h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>- 1</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    通义万相-文本生成图像是基于自研的**Composer组合生成框架**的AI绘画创作大模型，能够根据用户输入的文字内容，生成符合语义描述的多样化风格的图像。通过知识重组与可变维度扩散模型，加速收敛并提升最终生成图片的效果，布局自然、细节丰富、画面细腻、结果逼真。AI深度理解中英文文本语义，让文字秒变精致AI画作。</span></span></code></pre>
+<h2 id="--05-谷歌ai-test-kitchen">- 05. [谷歌]AI Test Kitchen</h2>
+<h2 id="--06-sora">- 06. Sora</h2>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Sora is still in the research phase; therefore, this text-to-video AI tool is not yet available to the public. Currently, Sora can only be used by a limited group of AI researchers and machine learning experts.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[Exploring OpenAI's Sora: An In-Depth Look at the Next-Generation AI System](https://litslink.com/blog/sora-a-cutting-edge-ai-system)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[OpenAI Sora and Open Source Efforts to Catch Up](https://ranko-mosic.medium.com/the-anatomy-of-openai-sora-a3c4780753f2)</span></span></code></pre>
+<h2 id="--07cogvideo">- 07.CogVideo</h2>
+<h1 id="阶段性总结">阶段性总结</h1></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

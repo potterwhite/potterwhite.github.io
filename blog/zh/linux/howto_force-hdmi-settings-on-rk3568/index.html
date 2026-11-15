@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How-to: RK3568下强制HDMI的配置 · PotterWhite</title><meta name="description" content="A guide on how to force the HDMI connection status (HPD) and set a fixed resolution via DTS on Rockchip RK3568, bypassing EDID."><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/" aria-current="page">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>How-to: RK3568下强制HDMI的配置</h1><div class="article-meta"><time datetime="2025-08-18" class="mono">2025-08-18</time><a class="pill teal" href="/blog/categories/linux/">linux</a><a class="pill teal" href="/blog/categories/rockchip/">rockchip</a><a class="pill teal" href="/blog/categories/display-subsystem/">display-subsystem</a><a class="pill teal" href="/blog/categories/rk3568/">rk3568</a></div><p class="article-desc">A guide on how to force the HDMI connection status (HPD) and set a fixed resolution via DTS on Rockchip RK3568, bypassing EDID.</p></header><div class="pw-prose"><h1 id="how-tohdmi-keep-connected-no-matter-what">How-to:hdmi keep connected no matter what</h1>
+<h2 id="原理图">原理图:</h2>
+<p><img src="/2025/lcds-rk3568-bringup-aar-aug2025/rk3568-hdmi-schema.png" alt=""></p>
+<h2 id="检测-不是用gpio控制的">检测: 不是用gpio控制的</h2>
+<ul>
+<li>不管是设置hpd-state还是force_hpd;都是不起作用</li>
+<li>display-timings 也不行</li>
+<li>接下来就得考虑改变cmdline了…这是唯一可用的方式</li>
+</ul>
+<h2 id="解决办法成功">解决办法(成功)</h2>
+<p>打开<strong>kernel/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c</strong>
+修改函数<strong>dw_hdmi_phy_read_hpd</strong>
+修改为如下:</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>enum drm_connector_status dw_hdmi_phy_read_hpd(struct dw_hdmi *hdmi,void *data)</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>	// return hdmi_readb(hdmi, HDMI_PHY_STAT0) &#x26; HDMI_PHY_HPD ?</span></span>
+<span class="line"><span>	// connector_status_connected : connector_status_disconnected;</span></span>
+<span class="line"><span>	return connector_status_connected;</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h1 id="how-to-hdmi强制分辨率">How-to: hdmi强制分辨率</h1>
+<h2 id="做法solution">做法(solution)</h2>
+<p>打开<strong>kernel/arch/arm64/boot/dts/rockchip/submodule-display.dtsi</strong>
+修改hdmi节点(rk3568只有一个hdmi)
+修改为如下(<strong>可以添加其他内容,但是必须得有以下的几个语句和块</strong>):</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>&#x26;hdmi {</span></span>
+<span class="line"><span>	status = "okay";</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	/*</span></span>
+<span class="line"><span>	 * Use 'force-output' to trigger the driver's logic to ignore EDID</span></span>
+<span class="line"><span>	 * and use the 'force-timing' node below.</span></span>
+<span class="line"><span>	 * The properties 'force_hpd' and 'hpd-state' are not standard</span></span>
+<span class="line"><span>	 * for this driver and should be removed.</span></span>
+<span class="line"><span>	 */</span></span>
+<span class="line"><span>	force-output;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	/*</span></span>
+<span class="line"><span>	 * This node provides the specific timing information that the driver</span></span>
+<span class="line"><span>	 * will use when 'force-output' is present.</span></span>
+<span class="line"><span>	 * The name 'force_timing' is not what the driver looks for.</span></span>
+<span class="line"><span>	 * It must be a child node named "force-timing".</span></span>
+<span class="line"><span>	 */</span></span>
+<span class="line"><span>	force_timing {</span></span>
+<span class="line"><span>		clock-frequency = &#x3C;148500000>;</span></span>
+<span class="line"><span>		hactive = &#x3C;1920>;</span></span>
+<span class="line"><span>		vactive = &#x3C;1080>;</span></span>
+<span class="line"><span>		hfront-porch = &#x3C;88>;</span></span>
+<span class="line"><span>		hsync-len = &#x3C;44>;</span></span>
+<span class="line"><span>		hback-porch = &#x3C;148>;</span></span>
+<span class="line"><span>		vfront-porch = &#x3C;4>;</span></span>
+<span class="line"><span>		vsync-len = &#x3C;5>;</span></span>
+<span class="line"><span>		vback-porch = &#x3C;36>;</span></span>
+<span class="line"><span>		hsync-active = &#x3C;1>; /* &#x3C;1> for positive sync, as per standard 1080p60 */</span></span>
+<span class="line"><span>		vsync-active = &#x3C;1>; /* &#x3C;1> for positive sync, as per standard 1080p60 */</span></span>
+<span class="line"><span>	};</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	/* 'display-timings' is typically used by simple-panel drivers,</span></span>
+<span class="line"><span>	 * not by the dw-hdmi bridge driver for forcing modes.</span></span>
+<span class="line"><span>	 * We should remove this section to avoid confusion.</span></span>
+<span class="line"><span>	 */</span></span>
+<span class="line"><span>	// display-timings { ... };</span></span>
+<span class="line"><span>};</span></span></code></pre>
+<h2 id="做法思路解析">做法思路解析</h2>
+<h3 id="重要步骤">重要步骤</h3>
+<ol>
+<li>display-timings不适合rk的hdmi驱动</li>
+<li>一定要是force_timing, 尤其是下划线不可以写错</li>
+<li>一定要写force-output,否则force_timing写了也没用</li>
+</ol>
+<h3 id="依据-源代码-dw_hdmi-rockchipc">依据-源代码-(dw_hdmi-rockchip.c)</h3>
+<ul>
+<li><strong>kernel/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c</strong></li>
+<li><em>static int rockchip_hdmi_parse_dt(struct rockchip_hdmi *hdmi)</em></li>
+<li>这个函数有一段代码:</li>
+</ul>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="c"><code><span class="line"><span>if (of_property_read_bool(np, "force-output")) {</span></span>
+<span class="line"><span>	hdmi->timing_force_output = true;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	ret = of_get_display_timing(np, "force_timing", &#x26;timing);</span></span>
+<span class="line"><span>	if (ret &#x3C; 0) {</span></span>
+<span class="line"><span>		dev_err(hdmi->dev, "can't get force timing\n");</span></span>
+<span class="line"><span>		hdmi->timing_force_output = false;</span></span>
+<span class="line"><span>		return ret;</span></span>
+<span class="line"><span>	}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	videomode_from_timing(&#x26;timing, &#x26;vm);</span></span>
+<span class="line"><span>	drm_display_mode_from_videomode(&#x26;vm, &#x26;hdmi->force_mode);</span></span>
+<span class="line"><span>	hdmi->force_mode.type |= DRM_MODE_TYPE_PREFERRED;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>	if (of_property_read_u32(np, "force-bus-format", &#x26;hdmi->force_bus_format))</span></span>
+<span class="line"><span>		hdmi->force_bus_format = MEDIA_BUS_FMT_RGB888_1X24;</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>这里就是说如果去读到force-output,就进一步去读force_timing.
+然后就会内核中读取到正确的强制时序,接着就进一步按照强制时序来设置</p>
+<h3 id="开机log">开机log</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>[    3.075190] rockchip-vop2 fe040000.vop: Adding to iommu group 8</span></span>
+<span class="line"><span>[    3.081939] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp0 assign plane mask: 0x3f, primary plane phy id: 4</span></span>
+<span class="line"><span>[    3.081965] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp1 assign plane mask: 0x0, primary plane phy id: -1</span></span>
+<span class="line"><span>[    3.081975] rockchip-vop2 fe040000.vop: [drm:vop2_bind] vp2 assign plane mask: 0x0, primary plane phy id: -1</span></span>
+<span class="line"><span>[    3.082097] rockchip-vop2 fe040000.vop: [drm:vop2_bind] Cluster0-win0 as cursor plane for vp0</span></span>
+<span class="line"><span>[    3.082151] rockchip-vop2 fe040000.vop: [drm:vop2_bind] VP1 plane_mask is zero, so ignore register crtc</span></span>
+<span class="line"><span>[    3.082174] rockchip-vop2 fe040000.vop: [drm:vop2_bind] VP2 plane_mask is zero, so ignore register crtc</span></span>
+<span class="line"><span>[    3.082249] [drm] failed to init overlay plane Cluster0-win1</span></span>
+<span class="line"><span>[    3.082288] [drm] failed to init overlay plane Cluster1-win1</span></span>
+<span class="line"><span>[    3.082369] rockchip-drm display-subsystem: bound fe040000.vop (ops 0xffffffc009381478)</span></span>
+<span class="line"><span>[    3.082647] dwhdmi-rockchip fe0a0000.hdmi: Detected HDMI TX controller v2.11a with HDCP (DWC HDMI 2.0 TX PHY)</span></span>
+<span class="line"><span>[    3.083208] dwhdmi-rockchip fe0a0000.hdmi: registered DesignWare HDMI I2C bus driver</span></span>
+<span class="line"><span>[    3.083434] dwhdmi-rockchip fe0a0000.hdmi: IRQ index 1 not found</span></span>
+<span class="line"><span>[    3.083783] rockchip-drm display-subsystem: bound fe0a0000.hdmi (ops 0xffffffc009390598)</span></span>
+<span class="line"><span>[    3.084132] rockchip-drm display-subsystem: route-edp: failed to get logo,offset</span></span>
+<span class="line"><span>[    3.084146] rockchip-drm display-subsystem: route-hdmi: failed to get logo,offset</span></span>
+<span class="line"><span>[    3.084156] rockchip-drm display-subsystem: can't not find any logo display</span></span>
+<span class="line"><span>[    3.084166] rockchip-drm display-subsystem: failed to show kernel logo</span></span>
+<span class="line"><span>[    3.091830] rockchip-vop2 fe040000.vop: [drm:vop2_crtc_atomic_enable] Update mode to 1920x1080p60, type: 11(if:800, flag:0x0) for vp0 dclk: 148500000</span></span>
+<span class="line"><span>[    3.093308] rockchip-drm display-subsystem: [drm] fb0: rockchipdrmfb frame buffer device</span></span>
+<span class="line"><span>[    3.101205] [drm] Initialized rockchip 3.0.0 20140818 for display-subsystem on minor 0</span></span>
+<span class="line"><span>[    3.101392] rockchip-drm display-subsystem: [drm] run display error_event monitor</span></span>
+<span class="line"><span>[    3.106409] input: hdmi_cec_key as /devices/platform/fe0a0000.hdmi/dw-hdmi-cec.1.auto/input/input0</span></span>
+<span class="line"><span></span></span></code></pre>
+<h3 id="log-modetest">log-(modetest)</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>        crtc    type    possible crtcs  possible clones</span></span>
+<span class="line"><span>153     0       Virtual 0x00000001      0x00000001</span></span>
+<span class="line"><span>155     85      TMDS    0x00000001      0x00000002</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Connectors:</span></span>
+<span class="line"><span>id      encoder status          name            size (mm)       modes   encoders</span></span>
+<span class="line"><span>156     155     connected       HDMI-A-1        0x0             1       155</span></span>
+<span class="line"><span>  modes:</span></span>
+<span class="line"><span>        index name refresh (Hz) hdisp hss hse htot vdisp vss vse vtot</span></span>
+<span class="line"><span>  #0 1920x1080 60.00 1920 2008 2052 2200 1080 1084 1089 1125 148500 flags: phsync, pvsync; type: preferrd</span></span>
+<span class="line"><span>  props:</span></span>
+<span class="line"><span>        1 EDID:</span></span>
+<span class="line"><span>                flags: immutable blob</span></span>
+<span class="line"><span>                blobs:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                value:</span></span>
+<span class="line"><span>        2 DPMS:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: On=0 Standby=1 Suspend=2 Off=3</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        5 link-status:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: Good=0 Bad=1</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        6 non-desktop:</span></span>
+<span class="line"><span>                flags: immutable range</span></span>
+<span class="line"><span>                values: 0 1</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        4 TILE:</span></span>
+<span class="line"><span>                flags: immutable blob</span></span>
+<span class="line"><span>                blobs:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                value:</span></span>
+<span class="line"><span>        157 max bpc:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 8 16</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        7 HDR_OUTPUT_METADATA:</span></span>
+<span class="line"><span>                flags: blob</span></span>
+<span class="line"><span>                blobs:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                value:</span></span>
+<span class="line"><span>        158 color_depth:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: Automatic=0 24bit=8 30bit=10</span></span>
+<span class="line"><span>                value: 8</span></span>
+<span class="line"><span>        159 color_format:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: rgb=0 ycbcr444=1 ycbcr422=2 ycbcr420=3 ycbcr_high_subsampling=4 ycbcr_low_subsamp6</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        160 color_depth_caps:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 0 255</span></span>
+<span class="line"><span>                value: 1</span></span>
+<span class="line"><span>        161 color_format_caps:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 0 15</span></span>
+<span class="line"><span>                value: 1</span></span>
+<span class="line"><span>        162 HDR_PANEL_METADATA:</span></span>
+<span class="line"><span>                flags: immutable blob</span></span>
+<span class="line"><span>                blobs:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                value:</span></span>
+<span class="line"><span>        163 NEXT_HDR_SINK_DATA:</span></span>
+<span class="line"><span>                flags: immutable blob</span></span>
+<span class="line"><span>                blobs:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>                value:</span></span>
+<span class="line"><span>        164 output_hdmi_dvi:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: auto=0 force_hdmi=1 force_dvi=2</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        165 output_type_capacity:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: DVI=0 HDMI=1</span></span>
+<span class="line"><span>                value: 1</span></span>
+<span class="line"><span>        166 hdmi_quant_range:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: default=0 limit=1 full=2</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        167 Colorspace:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: Default=0 SMPTE_170M_YCC=1 BT709_YCC=2 XVYCC_601=3 XVYCC_709=4 SYCC_601=5 opYCC_62</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        168 Content Protection:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: Undesired=0 Desired=1 Enabled=2</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        169 HDCP Content Type:</span></span>
+<span class="line"><span>                flags: enum</span></span>
+<span class="line"><span>                enums: HDCP Type0=0 HDCP Type1=1</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        170 hdcp_encrypted:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 0 2</span></span>
+<span class="line"><span>                value: 0</span></span>
+<span class="line"><span>        51 brightness:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 0 100</span></span>
+<span class="line"><span>                value: 50</span></span>
+<span class="line"><span>        52 contrast:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 0 100</span></span>
+<span class="line"><span>                value: 50</span></span>
+<span class="line"><span>        55 saturation:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 0 100</span></span>
+<span class="line"><span>                value: 50</span></span>
+<span class="line"><span>        56 hue:</span></span>
+<span class="line"><span>                flags: range</span></span>
+<span class="line"><span>                values: 0 100</span></span>
+<span class="line"><span>                value: 50</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre>
+<h5 id="dts里写的时序要去哪里抄">dts里写的时序要去哪里抄?</h5>
+<ol>
+<li>
+<p>谷歌搜索Video Timings Calculator
+例如: <a href="https://tomverbeure.github.io/video_timings_calculator?horiz_pixels=1920&#x26;vert_pixels=1080&#x26;refresh_rate=60&#x26;margins=false&#x26;interlaced=false&#x26;bpc=8&#x26;color_fmt=rgb444&#x26;video_opt=false&#x26;custom_hblank=80&#x26;custom_vblank=6">https://tomverbeure.github.io/video_timings_calculator?horiz_pixels=1920&#x26;vert_pixels=1080&#x26;refresh_rate=60&#x26;margins=false&#x26;interlaced=false&#x26;bpc=8&#x26;color_fmt=rgb444&#x26;video_opt=false&#x26;custom_hblank=80&#x26;custom_vblank=6</a></p>
+</li>
+<li>
+<p>内核源代码
+例如drivers/gpu/drm/drm_modes.c</p>
+</li>
+</ol></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

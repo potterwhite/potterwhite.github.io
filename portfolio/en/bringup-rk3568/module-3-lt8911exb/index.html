@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bring-up and Verification of MIPI-to-eDP Chip LT8911EXB on RK3568 Platform · PotterWhite</title><meta name="description" content="Driver debugging for the MIPI-to-eDP conversion based on the LT8911EXB."><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Bring-up and Verification of MIPI-to-eDP Chip LT8911EXB on RK3568 Platform</h1><div class="article-meta"><time datetime="2025-09-26" class="mono">2025-09-26</time><span class="pill teal">BSP</span></div><p class="article-desc">Driver debugging for the MIPI-to-eDP conversion based on the LT8911EXB.</p></header><div class="pw-prose"><h3 id="project-summary-debugging-and-verification-of-mipi-dsi-to-edp-interface-on-rockchip-rk3568-platform"><strong>Project Summary: Debugging and Verification of MIPI-DSI to eDP Interface on Rockchip RK3568 Platform</strong></h3>
+<ul>
+<li><strong>Author:</strong> Potter White</li>
+<li><strong>Date:</strong> September 2025</li>
+<li><strong>Project Types:</strong> Rockchip, Bring-Up, Linux Kernel Driver, Device Tree, I2C</li>
+</ul>
+<hr>
+<h3 id="1-project-overview"><strong>1. Project Overview</strong></h3>
+<p><strong>Situation:</strong>
+In a custom project based on the Rockchip RK3568 SoC, it was necessary to convert a MIPI-DSI video signal to an eDP signal using the Lontium LT8911EXB bridge chip to drive an eDP display. After the initial Board Support Package (BSP) integration, the display failed to light up, and the kernel log (<code>dmesg</code>) showed no loading messages for the LT8911EXB driver.</p>
+<p><strong>My Role &#x26; Contributions:</strong>
+As the project’s BSP engineer, I was responsible for the full-stack debugging, from hardware schematics to the kernel driver, to achieve the functional bring-up of this display path. My core contributions include:</p>
+<ul>
+<li><strong>Conducted systematic hardware health checks</strong>, verifying the fundamental operating conditions of the LT8911EXB chip, including its power, clock, and reset circuits.</li>
+<li><strong>Performed an in-depth analysis of the Linux device driver model</strong>, clarifying the interaction and triggering mechanisms between the Device Tree (DTS), kernel drivers, and hardware.</li>
+<li><strong>Pinpointed the root cause of the driver loading failure</strong>: a mismatch between the I2C address and GPIO attribute configurations in the Device Tree and the specifications of the driver code and hardware.</li>
+<li><strong>Led and implemented the correction plan for the Device Tree</strong>, successfully enabling the kernel driver to match with the hardware device and load correctly.</li>
+<li><strong>Distilled key knowledge points from the debugging process</strong>, creating technical notes on topics such as RC circuits, I2C address notation, and oscilloscope probe usage, thereby contributing to the team’s knowledge base.</li>
+</ul>
+<hr>
+<h3 id="2-my-methodology-embedded-peripheral-bring-up-diagnostic-flow"><strong>2. My Methodology: Embedded Peripheral Bring-up Diagnostic Flow</strong></h3>
+<p>The debugging process followed a systematic troubleshooting methodology, moving from hardware to software and from surface-level symptoms to underlying causes. This flow is designed to rapidly narrow down the problem scope and avoid wasting time on uncertain paths.</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    %% === Definitions &#x26; Styling ===</span></span>
+<span class="line"><span>    classDef main fill:#2c3e50,color:white,stroke:#8e9eab;</span></span>
+<span class="line"><span>    classDef check fill:#4b3e58,color:white,stroke:#b8a3d3;</span></span>
+<span class="line"><span>    classDef decision fill:#27ae60,color:white,stroke:#88d1a1;</span></span>
+<span class="line"><span>    classDef result_ok fill:#16a085,color:white,stroke:#72d6c1;</span></span>
+<span class="line"><span>    classDef result_fail fill:#c0392b,color:white,stroke:#e69a93;</span></span>
+<span class="line"><span>    classDef note fill:#f39c12,color:white,stroke:#f8c471;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === Flow ===</span></span>
+<span class="line"><span>    S[&#x3C;b>Start: Display Not Working&#x3C;/b>]:::main</span></span>
+<span class="line"><span>    A["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>1. Hardware Health Check (L1)&#x3C;/b>&#x3C;br>- &#x3C;b>Power:&#x3C;/b> Measure voltage on all power rails (1.8V)&#x3C;br>- &#x3C;b>Clock:&#x3C;/b> Measure crystal oscillator with an oscilloscope (25MHz)&#x3C;br>- &#x3C;b>Reset:&#x3C;/b> Analyze RC circuit and confirm reset level&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    B["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>2. Control Path Verification (L2)&#x3C;/b>&#x3C;br>- &#x3C;b>Pinctrl:&#x3C;/b> Verify I2C pin muxing in DTS (i2c2m1)&#x3C;br>- &#x3C;b>I2C Bus:&#x3C;/b> Scan the bus using `i2cdetect`&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    C{"&#x3C;div style='text-align:center'>&#x3C;b>Driver Loaded?&#x3C;/b>&#x3C;br>(dmesg / printk)&#x3C;/div>"}:::decision</span></span>
+<span class="line"><span>    D["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>3. Driver-Device Matching Analysis (L3)&#x3C;/b>&#x3C;br>- Check kernel build config (CONFIG_*)&#x3C;br>- Check if DTS node exists in /sys&#x3C;br>- &#x3C;b>Core:&#x3C;/b> Match `compatible` string&#x3C;br>- &#x3C;b>Core:&#x3C;/b> Match `reg` (I2C address)&#x3C;br>- &#x3C;b>Core:&#x3C;/b> Match `*-gpios` attributes&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    E["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;b>4. Driver Logic Debugging (L4)&#x3C;/b>&#x3C;br>- Analyze `probe` function execution flow&#x3C;br>- Analyze I2C read/write timing&#x3C;br>- Verify chip initialization sequence&#x3C;/div>"]:::check</span></span>
+<span class="line"><span>    SUCCESS[&#x3C;b>&#x3C;i class='fa fa-check-circle'>&#x3C;/i> Display On&#x3C;/b>]:::result_ok</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    S --> A --> B --> C</span></span>
+<span class="line"><span>    C -- "No" --> D</span></span>
+<span class="line"><span>    C -- "Yes" --> E</span></span>
+<span class="line"><span>    D --> |Correct DTS| C</span></span>
+<span class="line"><span>    E --> SUCCESS</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    subgraph "Key Knowledge Distilled"</span></span>
+<span class="line"><span>        direction LR</span></span>
+<span class="line"><span>        K1[Probe Loading Effect]:::note</span></span>
+<span class="line"><span>        K2[7/8-bit I2C Address]:::note</span></span>
+<span class="line"><span>        K3[RC Reset Circuit]:::note</span></span>
+<span class="line"><span>        K4[DTS/Driver Binding]:::note</span></span>
+<span class="line"><span>    end</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    A --> K1 &#x26; K3</span></span>
+<span class="line"><span>    B --> K2</span></span>
+<span class="line"><span>    D --> K4</span></span></code></pre>
+<h3 id="3-debugging-journey-and-key-issues-solved"><strong>3. Debugging Journey and Key Issues Solved</strong></h3>
+<p>The entire debugging process was challenging but highly rewarding. The following were several key turning points:</p>
+<h4 id="issue-1-i2c-device-scan-was-slow-and-found-no-slave-devices"><strong>Issue 1: I2C Device Scan Was Slow and Found No Slave Devices</strong></h4>
+<p>Initially, <code>i2cdetect</code> could not find any devices on the <code>i2c2</code> bus. By cross-referencing the hardware schematic and the RK3568 TRM, I found that the <code>pinctrl</code> configuration in the Device Tree was incorrect. After switching the pin function to the correct <code>i2c2m1_xfer</code>, <code>i2cdetect</code> successfully scanned and found a device at address <code>0x29</code>.</p>
+<h4 id="issue-2-what-is-the-i2c-device-address-of-lt8911exb-0x52-vs-0x29"><strong>Issue 2: What is the I2C Device Address of LT8911EXB? 0x52 vs. 0x29</strong></h4>
+<p>According to the schematic, pulling the <code>S_ADR</code> pin low corresponds to an address of <code>0x52</code>. However, when I scanned with <code>i2cdetect</code>, there was no slave device at <code>52</code>, only one at <code>0x29</code>. By consulting the driver documentation and the I2C protocol specification, I confirmed that <strong>the Linux kernel uses 7-bit addresses, whereas hardware datasheets often provide 8-bit addresses (which include the R/W bit)</strong>. Right-shifting the 8-bit write address <code>0x52</code> by one bit yields the 7-bit address <code>0x29</code>, which perfectly matched the <code>i2cdetect</code> result.</p>
+<ul>
+<li><strong>Conclusion</strong>: The I2C physical path is functional, and the address should be configured as <code>0x29</code>.</li>
+</ul>
+<h4 id="issue-3-the-drivers-probe-function-was-never-called-core-issue"><strong>Issue 3: The Driver’s <code>probe</code> Function Was Never Called (Core Issue)</strong></h4>
+<p>Even with a functional I2C path, there were still no driver loading messages in <code>dmesg</code>. By inspecting <code>/sys/firmware/devicetree/base</code>, I found that although the kernel correctly parsed the <code>lt8911exb@29</code> node and its <code>compatible</code> property, the crucial information was still missing.</p>
+<ul>
+<li><strong>Root Cause</strong>: When porting the driver code provided by Lontium, I did not modify the line <strong><code>obj-m = </code></strong> in its Makefile. This statement means the driver is compiled as a module (.ko).</li>
+<li><strong>Solution</strong>: By simply changing that line in the Makefile to <strong><code>obj-y = </code></strong>, the driver was built into the kernel by default and loaded automatically at boot.</li>
+</ul>
+<h4 id="issue-4-the-reset-signal-documentation-stated-it-required-a-gpio-but-it-worked-without-one-why"><strong>Issue 4: The Reset Signal Documentation Stated It Required a GPIO, but It Worked Without One. Why?</strong></h4>
+<ul>
+<li><strong>Root Cause</strong>: This relates to the concept of an RC circuit. Simply put, the reset pin is situated between a resistor (R) and a capacitor (C). The resistor connects the power supply to the capacitor, while the capacitor is connected between ground, the reset pin, and the resistor. When power is applied, the capacitor cannot instantly reach the high voltage of the supply; it charges up slowly (the charging time is calculated by the equation R * C = Time). Because the capacitor is connected to ground, its initial voltage is low, pulling the reset pin low. The reset pin remains low until the capacitor is sufficiently charged, at which point the pin is pulled high. This is the principle of an RC circuit, which uses the electrical properties of a capacitor to achieve an automatic reset. However, this approach lacks the flexibility of GPIO control.</li>
+<li><strong>Solution</strong>: Do not write <code>reset-gpio</code> in the DTS; simply leave it empty. The hardware will automatically handle the reset operation.</li>
+</ul>
+<hr>
+<h3 id="4-results-and-reflections"><strong>4. Results and Reflections</strong></h3>
+<p>Through the systematic debugging process described above, the LT8911EXB driver was successfully loaded, the chip was initialized via I2C, and the eDP display was finally lit up.</p>
+<p>This bring-up process was more than just establishing a data path; it required an understanding of not just one bus, but also reset circuits, Makefiles, DTS pin multiplexing, and the I2C R/W bit to successfully build the path. This project, through a concrete engineering problem, provided a comprehensive primer on the software-hardware interaction in embedded Linux systems:</p>
+<ul>
+<li><strong>Hardware is the Foundation</strong>: Verifying the physical layer—power, clock, reset—is fundamental. This experience has solidified my hardware debugging routine, giving me a clear starting point when faced with a non-functional board.</li>
+<li><strong>DTS is the Bridge</strong>: The Device Tree is not just a static hardware description but a “living map” for the kernel’s driver model to perform resource matching and dependency resolution. Any minor error can lead to driver loading failure.</li>
+<li><strong>Tools are Levers</strong>: Proficiency with tools like an oscilloscope, <code>dmesg</code>, <code>i2cdetect</code>, and <code>sysfs</code> is key to transforming a “black box” problem into a “white box” one.</li>
+<li><strong>Documentation and Source Code are the Truth</strong>: Schematic notes, driver documentation, and kernel source code are the ultimate sources of truth. A holistic view emerges only when all three are combined.</li>
+</ul>
+<hr>
+<h3 id="5-tech-stack--tools"><strong>5. Tech Stack &#x26; Tools</strong></h3>
+<ul>
+<li><strong>Hardware Platform:</strong> Rockchip RK3568 SoC, Lontium LT8911EXB MIPI-to-eDP Bridge IC</li>
+<li><strong>Software Environment:</strong> Linux Kernel 5.10, Buildroot</li>
+<li><strong>Core Technologies:</strong> Embedded Linux BSP, Device Tree (DTS), I2C Subsystem, Pinctrl, GPIO, Kernel Drivers, Makefile</li>
+<li><strong>Debugging Tools:</strong>
+<ul>
+<li><strong>Hardware:</strong> Siglent SDS2204X Plus Oscilloscope, Multimeter, Serial Console</li>
+<li><strong>Software:</strong> <code>dmesg</code>, <code>printk</code>, <code>i2cdetect</code>, <code>sysfs</code> (<code>/sys/kernel/debug/</code>, <code>/sys/firmware/devicetree/</code>)</li>
+</ul>
+</li>
+</ul></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

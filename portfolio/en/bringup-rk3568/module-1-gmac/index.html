@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification · PotterWhite</title><meta name="description" content="Debugging Gigabit Ethernet based on the YT8521SC"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>RK3568 Platform Gigabit Ethernet Controller Bring-up and Verification</h1><div class="article-meta"><time datetime="2025-07-25" class="mono">2025-07-25</time><span class="pill teal">BSP</span></div><p class="article-desc">Debugging Gigabit Ethernet based on the YT8521SC</p></header><div class="pw-prose"><ul>
+<li><strong>Author:</strong> Potter White</li>
+<li><strong>Date:</strong> July 2025</li>
+</ul>
+<h1 id="project-overview"><strong>Project Overview</strong></h1>
+<p><strong>Situation:</strong>
+In a custom product development project based on the Rockchip RK3568 SoC, I was responsible for the initial functional Bring-up of the onboard Gigabit Ethernet interface (GMAC1, <code>ethernet@fe010000</code>). Under the initial BSP configuration, the network interface failed to be correctly initialized by the kernel, with logs indicating errors such as <code>Cannot attach to PHY</code> and <code>Failed to reset the dma</code>.</p>
+<p><strong>My Role &#x26; Contributions:</strong>
+As the project’s BSP engineer, I was responsible for diagnosing and resolving this low-level hardware/software integration issue. My primary work included:</p>
+<ul>
+<li><strong>Executed an end-to-end systematic investigation</strong>, covering the entire chain from the physical circuit layer to the kernel driver layer.</li>
+<li><strong>Pinpointed the root cause</strong>, attributing it to a mismatch between the hardware design and the Device Tree (DTS) configurations for the GMAC1’s clock tree and pin functions (pinctrl).</li>
+<li><strong>Led and implemented the corrective Device Tree solution</strong>, successfully enabling the network interface and ensuring its stable operation.</li>
+<li><strong>Conducted performance verification using <code>iperf</code></strong>, confirming that the network throughput met the design standards for Gigabit Ethernet.</li>
+<li><strong>Codified the debugging process into a Standard Operating Procedure (SOP)</strong> to guide future bring-up tasks for similar peripherals.</li>
+</ul>
+<hr>
+<h1 id="my-methodology-standard-operating-procedure-sop-for-embedded-peripheral-bring-up"><strong>My Methodology: Standard Operating Procedure (SOP) for Embedded Peripheral Bring-up</strong></h1>
+<p>I have summarized a systematic workflow for hardware bring-up. This process structures the troubleshooting, enabling the localization and resolution of some complex issues from the physical layer to the driver layer through phased, multi-level verification, and significantly reduces debugging time.</p>
+<h3 id="part-1-standard-porting-workflow"><strong>Part 1: Standard Porting Workflow</strong></h3>
+<p>This workflow is applied for debugging the Device Tree (DTS) and PHY driver when the hardware design is known and likely correct, and the serial console is stable and available.</p>
+<ul>
+<li>For those interested, see my log: <a href="/blog/en/linux/gmac-bringup-workflow/">GMAC Bring Up Work Flow</a></li>
+</ul>
+<h3 id="part-2-troubleshooting-checklist"><strong>Part 2: Troubleshooting Checklist</strong></h3>
+<p>When the standard workflow is unsuccessful, or if unknown hardware issues are suspected, this checklist provides a systematic investigation path from the physical layer to the control path.</p>
+<ul>
+<li>For those interested, see the methodology I distilled: <a href="/blog/zh/linux/bringup-methodology/">SoC Peripheral Bring-up Handbook</a></li>
+</ul>
+<h3 id="sop-flowchart">SOP Flowchart</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span>graph TD</span></span>
+<span class="line"><span>    %% === Definitions &#x26; Styling ===</span></span>
+<span class="line"><span>    classDef dark_main fill:#2c3e50,color:white,stroke:#8e9eab,stroke-width:2px;</span></span>
+<span class="line"><span>    classDef dark_debug fill:#4b3e58,color:white,stroke:#b8a3d3,stroke-width:2px;</span></span>
+<span class="line"><span>    classDef dark_decision fill:#27ae60,color:white,stroke:#88d1a1,stroke-width:2px;</span></span>
+<span class="line"><span>    classDef dark_result_ok fill:#16a085,color:white,stroke:#72d6c1,stroke-width:2px;</span></span>
+<span class="line"><span>    classDef dark_result_fail fill:#c0392b,color:white,stroke:#e69a93,stroke-width:2px;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === Workflow Nodes Definition ===</span></span>
+<span class="line"><span>    S[&#x3C;b>Start&#x3C;/b>]:::dark_main</span></span>
+<span class="line"><span>    A[&#x3C;b>1. Hardware Interface Identification&#x3C;/b>&#x3C;br>GMAC0 or GMAC1]:::dark_main</span></span>
+<span class="line"><span>    B[&#x3C;b>2. Clock Scheme Analysis&#x3C;/b>&#x3C;br>Direction of 25MHz &#x26; 125MHz clocks]:::dark_main</span></span>
+<span class="line"><span>    C[&#x3C;b>3. Device Tree DTS Adaptation&#x3C;/b>&#x3C;br>Select correct DTS config from Rockchip's manual]:::dark_main</span></span>
+<span class="line"><span>    D[&#x3C;b>4. Compile &#x26; Verify&#x3C;/b>]:::dark_main</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    F{"&#x3C;div style='text-align:center'>&#x3C;i class='fa fa-question-circle'>&#x3C;/i> &#x3C;b>Validation&#x3C;/b>&#x3C;br>Is the network operational?&#x3C;/div>"}:::dark_decision</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    G_Title["&#x3C;b>Troubleshooting Checklist&#x3C;/b>"]:::dark_debug</span></span>
+<span class="line"><span>    G["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-bolt'>&#x3C;/i> &#x3C;b>L1: Physical Layer Health Check&#x3C;/b>&#x3C;br>- Power Rails&#x3C;br>- Reset Signal&#x3C;br>- Reference Clock&#x3C;/div>"]:::dark_debug</span></span>
+<span class="line"><span>    H["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-bullseye'>&#x3C;/i> &#x3C;b>L2: Control Path Verification&#x3C;/b>&#x3C;br>- U-Boot 'mii read'&#x3C;br>- Kernel 'sysfs'&#x3C;/div>"]:::dark_debug</span></span>
+<span class="line"><span>    I["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-cogs'>&#x3C;/i> &#x3C;b>L3: Key Logic Review&#x3C;/b>&#x3C;br>- Hardware Mode Strapping Pins&#x3C;br>- Clock Direction&#x3C;/div>"]:::dark_debug</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    SUCCESS[&#x3C;b>&#x3C;i class='fa fa-check-circle'>&#x3C;/i> Success&#x3C;/b>]:::dark_result_ok</span></span>
+<span class="line"><span>    FAILURE["&#x3C;div style='text-align:left; padding:10px;'>&#x3C;i class='fa fa-undo'>&#x3C;/i> &#x3C;b>Correct &#x26; Iterate&#x3C;/b>&#x3C;br>Based on diagnostics,&#x3C;br>return to &#x3C;b>Stage 3&#x3C;/b>&#x3C;br>to re-adapt DTS&#x3C;/div>"]:::dark_result_fail</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    %% === Connections ===</span></span>
+<span class="line"><span>    S --> A --> B --> C --> D --> F</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    F -- "Yes" --> SUCCESS</span></span>
+<span class="line"><span>    F -- "No" --> G_Title</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    G_Title --> G --> H --> I --> FAILURE</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    FAILURE -.-> C</span></span>
+<span class="line"><span></span></span></code></pre>
+<hr>
+<h1 id="results--verification"><strong>Results &#x26; Verification</strong></h1>
+<p>Following the methodology above, the issue was precisely located and resolved. Through systematic correction of the Device Tree, the <code>dma reset</code> error disappeared, and the network interface was successfully initialized.</p>
+<p>To verify functional completeness and performance, I conducted comprehensive network throughput tests using the <code>iperf</code> tool. The results showed excellent performance, fully meeting the design expectations.</p>
+<h2 id="tcp-throughput-test-rk3568---pc"><strong>TCP Throughput Test (RK3568 &#x3C;-> PC)</strong></h2>
+<ul>
+<li>
+<p><strong>Uplink (RK3568 -> PC):</strong> <code>941 Mbits/sec</code>
+<img src="/2025/gmac-rk3568-bring-up/test-first-arm-tx.png" alt=""></p>
+</li>
+<li>
+<p><strong>Downlink (PC -> RK3568):</strong> <code>928 Mbits/sec</code>
+<img src="/2025/gmac-rk3568-bring-up/test-first-arm-rx.png" alt=""></p>
+</li>
+</ul>
+<p><strong>Conclusion:</strong> The TCP throughput reached the theoretical limit of Gigabit Ethernet, proving the data path is both efficient and stable.</p>
+<h2 id="udp-stress-test-rk3568---pc-1gbps"><strong>UDP Stress Test (RK3568 &#x3C;-> PC, @1Gbps)</strong></h2>
+<ul>
+<li><strong>Downlink Packet Loss:</strong> <code>0.023%</code>
+<img src="/2025/gmac-rk3568-bring-up/test-second-arm-loss.png" alt="Figure 3: UDP Packet Loss Test Result - ARM Side"></li>
+</ul>
+<p><strong>Conclusion:</strong> Under maximum bandwidth stress, the packet loss rate was extremely low, indicating a very robust system capability for handling network packets.</p>
+<hr>
+<h1 id="tech-stack--tools"><strong>Tech Stack &#x26; Tools</strong></h1>
+<ul>
+<li><strong>Hardware Platform:</strong> Rockchip RK3568 SoC, YT8251SC Gigabit Ethernet PHY</li>
+<li><strong>Software Environment:</strong> Linux Kernel 5.10, U-Boot, Buildroot</li>
+<li><strong>Core Technologies:</strong> Embedded Linux BSP, Device Tree (DTS), Kernel Drivers (stmmac), MDIO/RGMII Protocols</li>
+<li><strong>Debugging Tools:</strong>
+<ul>
+<li><strong>Hardware:</strong> Oscilloscope, Multimeter, Serial Console</li>
+<li><strong>Software:</strong> <code>dmesg</code>, <code>printk</code>, <code>sysfs</code>, <code>iperf</code>, <code>mii-tool</code></li>
+</ul>
+</li>
+</ul>
+<hr></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>

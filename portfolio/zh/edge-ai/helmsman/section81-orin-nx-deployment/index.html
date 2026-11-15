@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Section 8.1: Orin NX 上给 RVM 测 FPS 基线 · PotterWhite</title><meta name="description" content="PotterWhite 的个人站：嵌入式作品与技术博客"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
+    try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"><link rel="stylesheet" href="/_astro/katex.Cp-YI5mj.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/" aria-current="page">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><article class="article"><header class="article-head"><h1>Section 8.1: Orin NX 上给 RVM 测 FPS 基线</h1><div class="article-meta"><time datetime="2026-08-28" class="mono">2026-08-28</time><span class="pill teal">Edge AI</span></div></header><div class="pw-prose"><h1 id="orin-nx-上给-rvm-测-fps-基线">Orin NX 上给 RVM 测 FPS 基线</h1>
+<blockquote>
+<p><strong>状态</strong>：骨架，待填肉。数字已核对，散文全部待写。
+<strong>归属</strong>：Helmsman / CUDA 平台线（与现有 7 章 Rockchip 线并列，勿插入编号）
+<strong>数据来源</strong>：<code>deploy/cuda/day3-docker-pytorch-and-rvm-fp32.md</code>（2026-08-26/27 实测）</p>
+</blockquote>
+<hr>
+<h2 id="〇--流水账">〇 · 流水账</h2>
+<ul>
+<li>镜像选型 → 容器起来 → CUDA 可用性验证 → RVM 仓库 + 权重就位</li>
+<li>出图成功：363 帧 1080p，vlc 确认抠图正常、发丝边缘干净</li>
+<li>端到端 <code>1.83 it/s</code></li>
+</ul>
+<!-- 填肉：镜像 tag 怎么选的、踩了哪些环境坑（cv2/X11 那些扔附录，别进正文） -->
+<p>ClaudeCode用来建立课程，尤其是自己不太熟悉的领域，效果不错。</p>
+<p>虽然RVM的模型部署对我来说并不陌生了，但是毕竟Jetson是陌生的，所以最初的基础还是CC给我建立的。</p>
+<p>拿到硬件的检查，打印外壳，模组压力测试，温度曲线，GPU使用率曲线等都属于BSP的内容，我在此就以BSP环节都完成为起点，直接展开RVM的部署记载。</p>
+<h3 id="第一件事选择什么容器镜像">第一件事，选择什么容器镜像</h3>
+<p>虽然我觉得在arm板上再部署docker,对于最终性能的损耗总会有担心，但AI给的回答是：</p>
+<ol>
+<li>现在以快速上线为第一，而英伟达给的容器镜像就把这部分依赖环境都给建立好，所以用容器的学习成本是小于投入时间研究环境的代价的。</li>
+<li>容器不会留到最终生产阶段，所以性能的微弱影响可以在此忽略不计。</li>
+<li>Jetson上部署容器，以及nvidia-container-toolkit关系是什么，能用docker官网给出的<a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository">安装命令</a>吗？（反正都是apt去做）为什么？</li>
+</ol>
+<p>带着这些问题，我决定跟着课程走。第一件事，就是选择什么镜像呢？</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. 打开 https://catalog.ngc.nvidia.com/</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>2. 左侧筛选栏先勾 【Containers】     ← ⭐ 第一下就勾这个</span></span>
+<span class="line"><span>        ↓  （NGC 上还有 Models / Resources / Helm Charts / Collections，</span></span>
+<span class="line"><span>        ↓    跟找镜像无关，勾掉之后页面立刻清爽）</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>3. 搜索框输 "pytorch"               ← ⭐ 只输容器名，永远不要输版本号</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>4. 点进 【PyTorch】 那张卡片（因为rvm的模型用的就是pytorch）</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>5. 点页面上的 【Tags】 标签页        ← ⭐ 关键就是这一下，tag 只在这里</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>6. 在 tag 列表里找名字带 -igpu 的</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>7. 有N个带-igpu的镜像，选择哪一个得看pytorch对应的cuda版本</span></span>
+<span class="line"><span>     a. ssh到jetson,输入'ls -lhat /usr/local/cuda-*'，此处我显示出是cuda-12.6。因此接下来就是要找到对应cuda12.6的pytorch-xx-igpu镜像</span></span>
+<span class="line"><span>     b. 打开 https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/</span></span>
+<span class="line"><span>     c. 左侧目录点 "PyTorch Release 24.12"</span></span>
+<span class="line"><span>     （或直接改 URL：.../rel-24-12.html  ← 把年月换成我要查的那个版本）</span></span>
+<span class="line"><span>     d. 页面开头 "This container image contains..." 那段，看两行：</span></span>
+<span class="line"><span>          NVIDIA CUDA xxxx      ← ⭐ 这个跟宿主比</span></span>
+<span class="line"><span>          PyTorch 2.6.yyyy</span></span>
+<span class="line"><span>     e. 如果不匹配，就继续回到b,寻找其他pytorch的版本，直到找到为止；</span></span>
+<span class="line"><span>        如果已找到匹配，那就记下这个版本号，例如24.12</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>8. 回到5的tags标签页，找到你要的标签，例如上面举例的24.12，然后用每行右边的 【Copy】 按钮取完整 pull 路径（别手打，容易出错）</span></span></code></pre>
+<h3 id="第二件事-初始化开发环境">第二件事. 初始化开发环境</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>cd /workspace/rvm</span></span>
+<span class="line"><span>git clone https://github.com/PeterL1n/RobustVideoMatting.git</span></span>
+<span class="line"><span>cd RobustVideoMatting.git</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 下预训练权重</span></span>
+<span class="line"><span>wget https://github.com/PeterL1n/RobustVideoMatting/releases/download/v1.0.0/rvm_mobilenetv3.pth \</span></span>
+<span class="line"><span>     -O /workspace/rvm/weights/rvm_mobilenetv3.pth</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># 依赖</span></span>
+<span class="line"><span>pip3 install numpy==1.26.4 av==12.3.0 pims==0.7 slicerator==1.1.0 imageio==2.34.2 tqdm==4.67.1 tifffile==2024.8.30 --proxy="http://192.168.3.164:7890"</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>这些依赖都在我的docker of jetson里跑通了。</p>
+<h3 id="第三件事-官方脚本跑端到端">第三件事. 官方脚本跑端到端</h3>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>time python3 inference.py     --variant mobilenetv3     --checkpoint /workspace/rvm/weights/rvm_mobilenetv3.pth     --device cuda     --input-source /workspace/rvm/media/showreel/dance.mp4     --output-type video     --output-composition /workspace/rvm/out/day3_comp_10mbps.mp4     --output-alpha      /workspace/rvm/out/day3_pha_10mbps.mp4     --output-foreground /workspace/rvm/out/day3_fgr_10mbps.mp4     --output-video-mbps 10     --downsample-ratio 0.25     --seq-chunk 1</span></span>
+<span class="line"><span>/workspace/rvm/RobustVideoMatting.git/inference.py:163: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.</span></span>
+<span class="line"><span>  self.model.load_state_dict(torch.load(checkpoint, map_location=device))</span></span>
+<span class="line"><span>100%|████████████████████████████████████████████████████| 363/363 [03:21&#x3C;00:00,  1.80it/s]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>real	3m31.280s</span></span>
+<span class="line"><span>user	7m23.524s</span></span>
+<span class="line"><span>sys	0m10.772s</span></span>
+<span class="line"><span></span></span></code></pre>
+<p>只有1.8it/s，我的视频有363frames，耗时211秒，帧率约1.71。
+跑了多次，后来结合’tegrastats —interval 1000’的log发现，gpu出现周期性的起伏，基本上可以判断是因为编解码的原因，导致gpu实际大部分时间都在等待数据处理。</p>
+<h3 id="第四件事-跑官方测速脚本inference_speed_testpy">第四件事. 跑官方测速脚本’inference_speed_test.py’</h3>
+<p>照官方脚本（‘inference_speed_test.py’）跑，拿到一个不该出现的排序</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>--precision float16  →  27.74 it/s</span></span>
+<span class="line"><span>--precision float32  →  28.95 it/s</span></span></code></pre>
+<p>排序反常的两条原因是 AI 给出的。我没有独立想到，也不打算冒认 —— 我的工作是判断它说得对不对，然后决定要不要照着改。两条我都觉得成立，于是采纳。</p>
+<p><strong>一、脚本没有 warmup。</strong> 官方脚本开了 <code>cudnn.benchmark = True</code>，首次遇到一个卷积形状会试跑各种算法挑最快的；没有 warmup，这笔一次性开销就被算进了均值。FP16 的候选算法更多（多一批 Tensor Core 的），挑起来更贵，于是恰好造出「FP16 更慢」。首帧耗时对得上：FP16 是三档里最高的（1641 / 1444 ms）。</p>
+<p><strong>二、「FP32」那一档其实不是 FP32。</strong> 容器里 <code>allow_tf32</code> 默认是开的，卷积实际走 TF32。跑 <code>check_tf32.py</code> 三组对照确认了：默认档与显式关闭 TF32 的结果差 6.5e-04，而 <code>NVIDIA_TF32_OVERRIDE=0</code> 与显式关闭只差 2.1e-06。所以原来那组对比比的是 TF32 vs FP16，不是 FP32 vs FP16。</p>
+<p>留下两条我以后会自己用的检查：<strong>拿到 benchmark 数字先问有没有 warmup；看到精度标签先验证它是不是真的。</strong></p>
+<h3 id="第五件事--重测纯模型推理速度48--42--39">第五件事 · 重测纯模型推理速度：48 / 42 / 39</h3>
+<p>基于上面的测试有发现，因此改动了rvm仓库里的原生’inference_speed_test.py’脚本。
+改动了三处，其余全部保持与官方脚本一致（改动越少，跨平台可比性越强）：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>改法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无 warmup</td>
+<td><code>--warmup 200</code>，warmup 帧不计入；单独打印首帧耗时以暴露 autotune 成本</td>
+</tr>
+<tr>
+<td>TF32 未隔离</td>
+<td><code>--tf32 on/off</code> 显式控制，测 FP16 / TF32 / 纯 FP32 三档</td>
+</tr>
+<tr>
+<td>动态调频</td>
+<td>测前 <code>jetson_clocks</code> 锁 1173MHz，测后还原</td>
+</tr>
+</tbody>
+</table>
+<p>结果（median，1000 iters，三档 × 2 轮交错，轮间偏差 &#x3C; 0.4%）：</p>
+<table>
+<thead>
+<tr>
+<th>精度</th>
+<th>单帧</th>
+<th>FPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP16</td>
+<td>20.83 ms</td>
+<td><strong>48</strong></td>
+</tr>
+<tr>
+<td>TF32</td>
+<td>23.60 ms</td>
+<td><strong>42</strong></td>
+</tr>
+<tr>
+<td>纯 FP32</td>
+<td>—</td>
+<td><strong>39</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="收获-1瓶颈根本不在模型最重要">收获 1：瓶颈根本不在模型（最重要）</h2>
+<p>做完上面的实验，我把端到端和纯模型放在一起：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>单帧</th>
+<th>占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>端到端（1.83 it/s）</td>
+<td>546.4 ms</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>其中纯模型</td>
+<td>20.9 ms</td>
+<td><strong>3.8%</strong></td>
+</tr>
+<tr>
+<td>其余（解码 + 三路编码 + 拷贝）</td>
+<td>525.5 ms</td>
+<td>96.2%</td>
+</tr>
+</tbody>
+</table>
+<p>tegrastats 同期观测：</p>
+<ul>
+<li><code>GR3D_FREQ</code> 未饱和</li>
+<li>CPU 频率在 729 ↔ 1984 MHz 之间反复跳（若 CPU 是瓶颈会锁死在最高频不动）</li>
+<li><code>EMC_FREQ</code> 8–9% —— 内存带宽远远没跑满</li>
+<li><strong><code>NVDEC off</code> / <code>NVENC off</code> —— 硬件编解码器全程闲置</strong></li>
+</ul>
+<p>三项资源都没饱和 ⇒ <strong>瓶颈不是「算不过来」，是各环节在互相等（串行化）。</strong></p>
+<p><strong>优化前先量占比</strong>：模型只占 3.8%，就算 TensorRT 把它优化到零，端到端也只从 1.83 到 1.90。</p>
+<p>⇒ 优化顺序因此定了：</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>第 1 步  换 NVDEC/NVENC + 让解码/推理/编码三级重叠   → 动的是 96.2%</span></span>
+<span class="line"><span>第 2 步  上 TensorRT / CUDA Graph                    → 动的是 3.8%</span></span></code></pre>
+<p><strong>顺序不能反。</strong> 先上 TRT 的话，端到端从 1.83 变成 1.90，会得出「TRT 没用」的错误结论。</p>
+<!-- 填肉：这里跟 Rockchip 线第 5 章呼应 —— RGA/DMA/MPP 拿到 203%，
+     同样是流水线不是模型。两个平台、两套工具链、同一条规律。
+     这是双平台并列的最大价值，值得单独一段 -->
+<hr>
+<h2 id="还不知道什么">还不知道什么</h2>
+<ul>
+<li><strong>端到端实时未验证</strong> —— 目前 1.83 FPS，距 24 fps 差 13 倍。修完流水线才有资格谈实时</li>
+<li><strong>不锁频的稳态没系统测过</strong> —— 29 FPS 是按频率比折算的，不是实测</li>
+<li><strong>长时间运行的热节流未测</strong> —— 现有数据都是短时运行，没跑到降频</li>
+<li><strong>流水线重叠之后，模型会重新变成瓶颈</strong> —— 那时 TRT 才开始有意义，48 → 约 55 是待验证的预期</li>
+<li><strong>跨平台对比口径未统一</strong> —— 3090 那个 78 FPS 同样来自无 warmup、默认开 TF32 的官方脚本，
+要严格对比得在 3090 上用同一套脚本重测</li>
+</ul>
+<hr>
+<h2 id="附录a中途被砍掉的计划">附录A：中途被砍掉的计划</h2>
+<p>中间其实我做过一个计划，要直接在docker里把推理的视频显示出来，都把docker里显示UI的链路调通了，用x11-apps的xeyes程序来测试，成功了。</p>
+<pre class="astro-code none" style="background-color:;color:; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span>sudo docker run -it -d \</span></span>
+<span class="line"><span>	--name rvm \</span></span>
+<span class="line"><span>	--restart unless-stopped \</span></span>
+<span class="line"><span>    --runtime nvidia \</span></span>
+<span class="line"><span>    --network host \</span></span>
+<span class="line"><span>    --shm-size=8g \</span></span>
+<span class="line"><span>    --ulimit memlock=-1 \</span></span>
+<span class="line"><span>	--ulimit stack=67108864 \</span></span>
+<span class="line"><span>    -v /home/$USER/Development/rvm:/workspace/rvm \</span></span>
+<span class="line"><span>    -w /workspace/rvm \</span></span>
+<span class="line"><span>    -e DISPLAY=:1 \</span></span>
+<span class="line"><span>    -v /tmp/.X11-unix:/tmp/.X11-unix \</span></span>
+<span class="line"><span>    -e QT_X11_NO_MITSHM=1 \</span></span>
+<span class="line"><span>    nvcr.io/nvidia/pytorch:24.12-py3-igpu \</span></span>
+<span class="line"><span>	sleep infinity</span></span></code></pre>
+<p>但是遇到了问题是：镜像自带的 opencv 编译时没带 GUI 模块，<code>cv2.imshow</code> 用不了。按常规做法 <code>pip install opencv-python</code> 装完，<code>getBuildInformation()</code> 里 <code>GUI</code> 仍然是 <code>NONE</code>。</p>
+<p>卡点在这里：<code>pip list</code> 显示 <code>opencv-python 4.14.0.94</code>，但 <code>cv2.__version__</code> 是 <code>4.10.0</code>。<strong>装的和用的不是同一个</strong> —— pip 没失败，只是新装的没被加载。镜像那个和 pip 那个落在同一个 <code>cv2/</code> 目录里，<code>.so</code> 命名规范不同，Python 优先加载了镜像自带的；pip 也不报冲突，因为两者注册的包名不一样。</p>
+<p>所以判据不是重查 <code>getBuildInformation()</code>（查到的还是旧那个，怎么装都是 NONE），而是<strong>先比 <code>pip list</code> 的版本号和 <code>cv2.__version__</code> 是否一致</strong>。</p>
+<p>这条机制是 AI 指出的，我提供的是现象。给的修法是把镜像那个 <code>.so</code> 改名，让 Python 回退到 pip 版 —— 没执行，因为这时已经判定容器出画不是必要项。</p>
+<p><strong>为什么放弃</strong>：出画是为了看流畅度，但当时端到端只有 1.83 FPS。修通了也只能得到一个「确认它确实很卡」的窗口，不构成新证据。等硬件编解码接通再做。</p></div></article></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>
