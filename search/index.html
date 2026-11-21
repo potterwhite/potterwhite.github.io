@@ -1,6 +1,14 @@
 <!DOCTYPE html><html lang="zh-cn" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>站内搜索 · PotterWhite</title><meta name="description" content="搜索本站全部公开文章"><link rel="icon" type="image/svg+xml" href="/favicons/logo.svg"><script>
     try { var t = localStorage.getItem('pw-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
-  </script><link rel="stylesheet" href="/_astro/BaseLayout.DoAmdk8b.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><section class="page-head"><h1>站内搜索</h1><p>索引在构建时于本地生成，搜索请求不经过任何第三方服务。</p></section><div id="search"></div><link rel="stylesheet" href="/pagefind/pagefind-ui.css"><script src="/pagefind/pagefind-ui.js"></script><script>
+  </script><script>
+    try { var z = parseFloat(localStorage.getItem('pw-zoom')); if (z && z !== 1) document.documentElement.style.zoom = z; } catch (e) {}
+  </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-35CC6ZMK7G"></script><script>(function(){const ga4Id = "G-35CC6ZMK7G";
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', ga4Id, { anonymize_ip: true });
+    })();</script><link rel="stylesheet" href="/_astro/BaseLayout.BfhI3OUM.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="/">PotterWhite</a><nav class="nav" aria-label="主导航"><a href="/portfolio/">作品</a><a href="/blog/">博客</a><a href="/about/">关于</a><a href="/contact/">联系</a></nav><a class="icon-link" href="/search/" aria-label="站内搜索"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换深浅主题"><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></button></div></header><main class="wrap"><section class="page-head"><h1>站内搜索</h1><p>索引在构建时于本地生成，搜索请求不经过任何第三方服务。</p></section><div id="search" data-pw-state="idle"><p id="pw-search-zero" role="status" aria-live="polite" hidden></p></div><link rel="stylesheet" href="/pagefind/pagefind-ui.css"><script src="/pagefind/pagefind-ui.js"></script><script>
     window.addEventListener('DOMContentLoaded', () => {
       new PagefindUI({
         element: '#search',
@@ -19,5 +27,62 @@
           showing_results_for: '[SEARCH_TERM] 的搜索结果',
         },
       });
+
+      // 防回退：与 UI 的 300ms debounce 对齐，逐词精确探测，不存在就不展示 UI 的宽松结果
+      const root = document.getElementById('search');
+      const zero = document.getElementById('pw-search-zero');
+      const input = root.querySelector('.pagefind-ui__search-input');
+      let corePromise = null;
+      let timer = null;
+      let seq = 0;
+
+      const getCore = () => {
+        if (!corePromise) {
+          corePromise = import('/pagefind/pagefind.js').then(async (m) => {
+            await m.init();
+            return m;
+          });
+        }
+        return corePromise;
+      };
+
+      const evaluate = async (raw) => {
+        const q = raw.trim();
+        const my = ++seq;
+        if (!q) {
+          zero.hidden = true;
+          root.dataset.pwState = 'idle';
+          return;
+        }
+        root.dataset.pwState = 'checking';
+        const pf = await getCore();
+        if (my !== seq) return;
+        // 去掉 +/− 前缀（− 词是排除项，不要求存在）；用户自带引号的短语按原样探测
+        const terms = q.split(/\s+/).filter(Boolean).map((t) => t.replace(/^[+-]/, ''));
+        let ok = true;
+        for (const t of terms) {
+          const probe = /^".*"$/.test(t) ? t : `"${t}"`;
+          const r = await pf.search(probe);
+          if (my !== seq) return;
+          if (r.results.length === 0) {
+            ok = false;
+            break;
+          }
+        }
+        if (my !== seq) return;
+        if (ok) {
+          zero.hidden = true;
+          root.dataset.pwState = 'valid';
+        } else {
+          zero.textContent = `没有找到与「${q}」相关的内容`;
+          zero.hidden = false;
+          root.dataset.pwState = 'invalid';
+        }
+      };
+
+      input.addEventListener('input', (e) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => evaluate(e.target.value), 300);
+      });
     });
-  </script></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.J4nFiQdU.js"></script></body></html>
+  </script></main><footer><div class="wrap"><div class="foot-row"><div class="foot-links"><a href="/index.xml">RSS 订阅</a><a href="https://github.com/potterwhite" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/potter_whi3340" target="_blank" rel="noopener">X</a><a href="https://huggingface.co/PotterWhite" target="_blank" rel="noopener">HuggingFace</a><a href="/guestbook/">留言板</a></div></div><div class="copyright">© 2026 PotterWhite</div></div></footer><nav class="mobile-dock" aria-label="手机端导航"><a href="/portfolio/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>作品</a><a href="/blog/"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h4"></path></svg>博客</a><a href="/about/"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path></svg>关于</a><a href="/contact/"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>联系</a><button type="button" id="zoom-out" aria-label="整页缩小，双击复位">A−</button><button type="button" id="zoom-in" aria-label="整页放大，双击复位">A+</button></nav><script type="module" src="/_astro/BaseLayout.astro_astro_type_script_index_0_lang.DTREciCy.js"></script></body></html>
